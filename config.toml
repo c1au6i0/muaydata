@@ -1,5 +1,5 @@
-baseURL = "http://localhost:1313/"
-title = "Jane - A super concise theme for Hugo"
+baseURL = "https://muaydata.netlify.com/"
+title = "MuayData blog"
 enableRobotsTXT = true
 enableEmoji = true
 theme = "hugo-theme-jane"
