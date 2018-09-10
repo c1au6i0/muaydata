@@ -1,0 +1,797 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jane - A super concise theme for Hugo</title>
+    <link>/</link>
+    <description>Recent content on Jane - A super concise theme for Hugo</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 10 Sep 2018 00:00:00 +0000</lastBuildDate>
+    
+        <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      
+        <description>&lt;p&gt;Sono un farmacologo comportamentale appassionato di data science e &lt;em&gt;R&lt;/em&gt;. Vivo nella città di Frank Zappa e
+Dwight Schultz.&lt;/p&gt;
+
+&lt;p&gt;Questo sito è stato construito in &lt;em&gt;R Studio&lt;/em&gt; con &lt;em&gt;R Markdown&lt;/em&gt;, &lt;em&gt;R blogdown&lt;/em&gt;, &lt;em&gt;Hugo&lt;/em&gt;.&lt;/p&gt;
+</description>
+      
+    </item>
+    
+    <item>
+      <title>Il Re di Twitter? (PARTE I)</title>
+      <link>/post/il-re-di-twitter-parte-i/</link>
+      <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/il-re-di-twitter-parte-i/</guid>
+      
+        <description>
+
+&lt;h1 id=&#34;premessa&#34;&gt;Premessa&lt;/h1&gt;
+
+&lt;p&gt;Social media come Twitter sono diventati anche in Italia uno dei mezzi di comunicazione più usati dai politici per rivolgersi direttamente al loro elettorato. Una quantità di informazioni enorme su abitudini, messaggio elettorale e tipo di elettori si nasconde tra quei tweets di poche centinaia di byte. Un famoso post di &lt;a href=&#34;http://varianceexplained.org/r/trump-tweets/&#34;&gt;David Robinson&lt;/a&gt; ha dimostrato come queste informazioni possono essere scovate dall&amp;rsquo;occhio attento del Data Scientist attraverso l&amp;rsquo;uso sapiente &lt;em&gt;R&lt;/em&gt; e alcuni sui pacchetti (&lt;a href=&#34;https://cran.r-project.org/web/packages/twitteR/index.html&#34;&gt;&lt;em&gt;twitteR&lt;/em&gt;&lt;/a&gt;, &lt;em&gt;tidyverse&lt;/em&gt; e &lt;em&gt;tidytext&lt;/em&gt;).&lt;/p&gt;
+
+&lt;p&gt;Eccomi qui perciò anche io, munito di &lt;em&gt;R&lt;/em&gt;, &lt;em&gt;RStudio&lt;/em&gt; e computer con l&amp;rsquo;obiettivo di &lt;strong&gt;esplorare&lt;/strong&gt; e &lt;strong&gt;comparare&lt;/strong&gt; i &lt;strong&gt;tweets dei leader dei 3 &lt;a href=&#34;https://it.wikipedia.org/wiki/Partiti_politici_italiani#Partiti_principali&#34;&gt;maggiori&lt;/a&gt; partiti italiani&lt;/strong&gt; (leader in ordine alfabetico per username Twitter):&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Movimento a 5 stelle: Luigi Di Maio (luigidimaio).&lt;/li&gt;
+&lt;li&gt;Lega: Matteo Salvini (matteosalvinimi).&lt;/li&gt;
+&lt;li&gt;Partito Democratico: Maurizio Martina (maumartina).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Il mio studio sarà diviso in varie parti:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Nella &lt;strong&gt;parte I&lt;/strong&gt; analizzeremo le abitudini dei 3 leader e  scopriremo chi dei 3 è il più attivo, quando durante la giornata, quanto sono popolari i loro tweets e molte altre informazioni.&lt;/li&gt;
+&lt;li&gt;Nella &lt;strong&gt;parte II&lt;/strong&gt; ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.&lt;/li&gt;
+&lt;li&gt;Nella &lt;strong&gt;parte III&lt;/strong&gt; cercherò di effettuare una analisi dei sentimenti espressi nei tweets (anche se gli strumenti a disposizione per la lingua italiana sono limitati).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I post saranno densi di codice (dopo tutto sto facendo tutto questo anche per rimanere un attivo &lt;em&gt;R user&lt;/em&gt;) ma inserirò delle conclusioni con i punti chiave dell&amp;rsquo;analisi.&lt;/p&gt;
+
+&lt;h1 id=&#34;analisi&#34;&gt;Analisi&lt;/h1&gt;
+
+&lt;h2 id=&#34;preparazione-e-download-dati&#34;&gt;Preparazione e download dati&lt;/h2&gt;
+
+&lt;p&gt;Per avere accesso a Twitter su &lt;em&gt;R&lt;/em&gt; è necessario come prima cosa creare una app su Twitter. Michael Galarnyk ha creato un ottimo tutorial che dà istruzioni passo per passo per completare questa prima fase (&lt;a href=&#34;https://medium.com/@GalarnykMichael/accessing-data-from-Twitter-api-using-r-part1-b387a1c7d3e&#34;&gt;guida di Michael Galarnyk&lt;/a&gt;).
+Una volta creata la app, il pacchetto &lt;em&gt;twitteR&lt;/em&gt; ci permetterà di accedere all&amp;rsquo;API e lavorare con &lt;em&gt;R&lt;/em&gt; sui dati ottenuti.&lt;/p&gt;
+
+&lt;p&gt;Iniziamo con il caricare &lt;em&gt;twitteR&lt;/em&gt; e una serie di altre librerie che ci saranno utili successivamente.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;twitteR&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;ggridges&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;gridExtra&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lubridate&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;RSQLite&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# I save the data in a database&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;scales&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;tidyverse&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Ci autentichiamo utilizzando le chiavi ottenute seguendo la &lt;a href=&#34;https://medium.com/@GalarnykMichael/accessing-data-from-twitter-api-using-r-part1-b387a1c7d3e&#34;&gt;guida di Michael Galarnyk&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;twitteR&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+API_key &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; 	&lt;span class=&#34;s&#34;&gt;&amp;#34;XXX&amp;#34;&lt;/span&gt;
+API_secret &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;XXX&amp;#34;&lt;/span&gt;
+access_token &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;XXX&amp;#34;&lt;/span&gt;
+access_secret &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;XXX&amp;#34;&lt;/span&gt;
+
+setup_twitter_oauth&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;API_key&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; API_secret&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; access_token&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; access_secret&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Otteniamo i 3200 tweets di luigidimaio, maumartina, matteosalvinimi usando il comando &lt;em&gt;userTimeline&lt;/em&gt; e diamo una pulita al dataframe (twdat = tweets data) ottenuto.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;pol &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;luigidimaio&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;matteosalvinimi&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;maumartina&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+twdat &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; as_tibble&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;map_dfr&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; pol&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                            &lt;span class=&#34;kr&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; twListToDF&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;userTimeline&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;  includeRts &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; n &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;3200&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))))&lt;/span&gt;
+
+ 
+twdat&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;statusSource &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; str_extract&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;twdat&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;statusSource&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+                  &lt;span class=&#34;s&#34;&gt;&amp;#34;iPhone|Web Client|Android|TweetDeck|iPad|Hootsuite|Facebook|IoResto|Websites|IFTTT|Instagram|iOS|Periscope&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# this is to extract the important info&lt;/span&gt;
+
+twdat&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;created &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt;  with_tz&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;twdat&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;created &lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;CET&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# time-zone&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;OK, abbiamo a questo punto un dataframe/tibble con cui possiamo lavorare.&lt;/p&gt;
+
+&lt;!-- Database --&gt;
+
+&lt;h2 id=&#34;quanto-twittano&#34;&gt;QuanTo twittano&lt;/h2&gt;
+
+&lt;p&gt;Iniziamo con il vedere chi è il più attivo tra i tre e numero di tweets al giorno attraverso differenti misure di tendenza centrale.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;daily_tw &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+   count&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; round_date&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;created&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;day&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+   group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+   dplyr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;summarize&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;max &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;max&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;n&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+                    min &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; min &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;n&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+                    IQR &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; IQR&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;n&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+                    mean &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;round&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;mean&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;n&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; 
+                    meadian &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; median&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;n&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+                    mode &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;names&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;sort&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;table&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;n&lt;span class=&#34;p&#34;&gt;)))[&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt;
+                    St_Dev &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; sd&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;n&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+                    &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; 
+knitr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;kable&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;daily_tw&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; align &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;ccccc&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;tab.1: Daily Tweets&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;center&#34;&gt;screenName&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;max&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;min&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;IQR&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;mean&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;meadian&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;mode&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;St_Dev&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;luigidimaio&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;54&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;3.559438&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;matteosalvinimi&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;93&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;9&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;12&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;8&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;5&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;11.192814&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;maumartina&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;24&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1.840639&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;Salvini è di gran lunga il più attivo&lt;/strong&gt;,  4-6 volte più di Di Maio e di Martina. Salvini è riuscito a pubblicare un massimo di 93 tweets in un giorno (2018-02-25), ma tipicamente (moda) pubblica 5 tweets al giorno e una media di 12 tweets al giorno (la distribuzione è chiaramente positive skewed). Martina e Di Maio tendono ad utilizzare con simile frequenza Twitter ma Di Maio tende ad essere più variabile (vedi range e St_Dev).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Salvini è dei tre l&amp;rsquo;unico che pubblica quasi esclusivamente materiale originale&lt;/strong&gt;. &lt;strong&gt;Circa un terzo dei tweets di Di Maio e un quarto di quelli di Martina sono invece retweets&lt;/strong&gt; (tab.2 sottostante).&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;retw &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt;twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  summarize&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; tot_retw &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;isRetweet&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; perc_retw &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; percent&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tot_retw&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;n&lt;span class=&#34;p&#34;&gt;()))&lt;/span&gt;
+
+knitr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;kable&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;retw&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; align &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;ccc&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;tab.2: Percent of retweets&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;center&#34;&gt;screenName&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;tot_retw&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;perc_retw&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;luigidimaio&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;1153&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;36.1%&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;matteosalvinimi&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;92&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2.88%&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;maumartina&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;802&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;25.1%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&#34;quando-twittano&#34;&gt;QuanDo twittano&lt;/h2&gt;
+
+&lt;h3 id=&#34;ora-e-giorno-della-settimana&#34;&gt;Ora e giorno della settimana&lt;/h3&gt;
+
+&lt;p&gt;Andiamo ora a vedere il pattern con il quale i nostri 3 politici twittano e in particolare l&amp;rsquo;ora e giorno della settimana. I dati verranno espressi come percentuale dei tweets calcolati per ogni politico.&lt;/p&gt;
+
+&lt;p&gt;Il codice sottostante serve a creare il primo grafico.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# this creates the plots of tweets by hours&lt;/span&gt;
+theme_set&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;theme_grey&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;
+tw_h &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  
+  count&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; h &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; hour&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;created&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;perc_h &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; n&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;n&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+    
+  ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;h&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+             perc_h&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+             group &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+             color &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_line&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_point&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  scale_y_continuous&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; percent_format&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Hour of day (CET)&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+       y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+       color &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+       title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0.85&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0.92&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; legend.background &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_blank&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt; legend.key &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_blank&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Qui creiamo il secondo grafico e plottiamo entrambi i grafici utilizzando il pacchetto &lt;em&gt;extraGrid&lt;/em&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# this create the plot of tweets by weekday&lt;/span&gt;
+tw_d &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  
+  count&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; w &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; wday&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;created&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; label &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;perc_d &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; n&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;n&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+    
+  ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;factor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;w&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; wday&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; label &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)),&lt;/span&gt; 
+             perc_d&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+             group &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+             color &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_line&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_point&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  scale_y_continuous&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; percent_format&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Day of the week&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+       y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+       color &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+       title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+       caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;fig.1&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+  &lt;span class=&#34;c1&#34;&gt;# we use grid.arrange of the package gridExtra to assemble together the 2 plots &lt;/span&gt;
+  &lt;span class=&#34;c1&#34;&gt;# we could have used the package cowplot too&lt;/span&gt;
+  grid.arrange&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tw_h&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; tw_d&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; ncol &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; top &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Percentage of tweets          &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.1_plot_tw_wdays-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;strong&gt;Salvini&lt;/strong&gt; tende ad iniziare a twittare al mattino come Di Maio e Martina, ma  rispetto a loro, tende a continuare ad essere &lt;strong&gt;attivo anche la sera (7-23)&lt;/strong&gt;. Per &lt;strong&gt;Martina&lt;/strong&gt; il picco di attività è &lt;strong&gt;la mattina (9-11)&lt;/strong&gt; mentre per &lt;strong&gt;Di Maio è dalle 9 alle 16&lt;/strong&gt; (fig.2, sinistra). &lt;strong&gt;Tutti e tre i politici hanno un giorno durante il week-end in cui sono molto meno attivi&lt;/strong&gt;: sia per Di Maio che Salvini è il Sabato, mentre per Martina la Domenica (fig.2, destra).&lt;/p&gt;
+
+&lt;p&gt;Ho usato &lt;em&gt;ggridges&lt;/em&gt;, una extention di &lt;em&gt;ggplot2&lt;/em&gt;, per creare dei &lt;em&gt;density plots&lt;/em&gt; e visualizzare in dettaglio l&amp;rsquo;interazione tra giorno della settimana ed ora del giorno dei tweets (fig.3 sottostante). L&amp;rsquo;analisi tende comunque a supportare la generabilità delle osservazioni precedenti ma con alcune precisazioni: la Domenica è Di Maio a distribuire i sui tweets  più tardi la sera. Inoltre, il Lunedì Salvini è, diversamente dagli altri giorni della settimana, molto più attivo nel primo pomeriggio tra le 14 e le 16 (fig.3).&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hour&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;created&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; 
+             &lt;span class=&#34;kp&#34;&gt;factor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;wday&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;created&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; label &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; wday&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; label &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)),&lt;/span&gt;
+             fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+             col  &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    geom_density_ridges&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;alpha &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; scale &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1.2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    scale_y_discrete&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    scale_x_continuous&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;limits &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;seq&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; breaks &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;seq&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;23&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    coord_equal&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;ratio &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Hour of day (CET)&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+         y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+         color &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+         caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;fig.2&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+         title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Density of tweets during the day&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    theme_ridges&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; 
+    theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;face &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;bold&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+          axis.title.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+                 &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    guides&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;FALSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.2_ridges-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&#34;ultimi-mesi&#34;&gt;Ultimi mesi&lt;/h3&gt;
+
+&lt;p&gt;Gli ultimi mesi della politica italiana sono stati estremamente densi di eventi importanti, a partire dalle elezioni per poi proseguire con le  varie consultazioni e la formazione del governo. È perciò legittimo domandarsi se questa serie di avvenimenti abbia spinto i politici ad utilizzare più frequentemente Twitter per comunicare con i propri elettori.&lt;/p&gt;
+
+&lt;p&gt;Un caveat dei dati ottenuti è che &lt;em&gt;twitteR&lt;/em&gt; non permette di scaricare più di 3200 tweets. Dal momento che Salvini è estremamente più attivo degli altri due politici, i mesi sui 3200 tweets sono stati pubblicati in un periodo inferiore rispetto a quelli di Di Maio e Martina (tab.3).&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;date_lim_screenName &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;   
+  dplyr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;summarize&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;first_tweet &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;min&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;created&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; last_tweet &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;max&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;created&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; 
+
+knitr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;kable&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;date_lim_screenName &lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; align &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;cc&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;  caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;tab.3: Interval of tweets&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;center&#34;&gt;screenName&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;first_tweet&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;last_tweet&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;luigidimaio&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2014-09-09 17:47:51&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2018-08-14 10:56:16&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;matteosalvinimi&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2017-11-30 13:46:14&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2018-08-26 19:35:21&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;center&#34;&gt;maumartina&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2014-02-19 11:40:18&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2018-08-26 15:59:43&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Per poter comparare l&amp;rsquo;attività dei 3 politici è necessario andare a monitorare lo stesso intervallo di tempo.&lt;/p&gt;
+
+&lt;p&gt;Il codice sottostante serve a trovare qual&amp;rsquo;è l&amp;rsquo;intervallo in mesi in cui disponiamo di dati per tutti e 3 i politici.
+Andremo a plottare il seguente intervallo di tempo.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;date_lim &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;   
+  dplyr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;summarize&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;min_tw &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; ceiling_date&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;min&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;created&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;month&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; max_tw &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; floor_date&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;max&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;created&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;month&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# we do approximate dates to have full months&lt;/span&gt;
+  dplyr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;summarize&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;min_shared &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;max&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;min_tw&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; max_shared &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;min&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;max_tw&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+
+date_lim &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; as_datetime&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;unlist&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;date_lim&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; tz &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;CET&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+knitr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;kable&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;as_data_frame&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;date_lim&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; align &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;cc&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;&lt;/th&gt;
+&lt;th align=&#34;center&#34;&gt;value&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;min_shared&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2017-12-01 01:00:00&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;max_shared&lt;/td&gt;
+&lt;td align=&#34;center&#34;&gt;2018-08-01 02:00:00&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Creiamo quindi i grafici riguardanti il numero di tweets al mese per l&amp;rsquo;intervallo di Dicembre-Luglio.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;timeline_abs &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;month_r &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; floor_date&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;created&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;month&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;created &lt;span class=&#34;o&#34;&gt;&amp;gt;=&lt;/span&gt; date_lim&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; created &lt;span class=&#34;o&#34;&gt;&amp;lt;=&lt;/span&gt; date_lim&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  count&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;month_r&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; month_r&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; n&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;  group &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_point&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_line &lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  scale_x_datetime&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; date_format&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;%Y %b&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; date_breaks&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;1 months&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  scale_y_continuous&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;breaks &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;seq&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;700&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;seq&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;700&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.subtitle &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+    plot.caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+    axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.25&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; angle &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; group &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Number of tweets&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;  &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0.8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0.92&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; legend.background &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_blank&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt; legend.key &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_blank&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Ho usato il codice indicato sopra sui dati normalizzati usando come baseline il numero di tweets di Dicembre (con &lt;em&gt;group_by&lt;/em&gt; e &lt;em&gt;do&lt;/em&gt; di &lt;em&gt;dyplyr&lt;/em&gt;).&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;grid.arrange&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;timeline_abs&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; timeline_perc&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; ncol &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.4_timeline-1.png&#34; width=&#34;960&#34; /&gt;
+Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale. Questa normalizzazione ci permette di comparare meglio gli andamenti e i cambiamenti di attività tra i politici.&lt;/p&gt;
+
+&lt;p&gt;Salvini twitta molto più di Di Maio e Martina ma &lt;strong&gt;l&amp;rsquo;attività di tutti e 3 i politici aumenta drasticamente in Febbraio&lt;/strong&gt; di quest&amp;rsquo;anno, mese di &lt;a href=&#34;https://it.wikipedia.org/wiki/XVIII_legislatura_della_Repubblica_Italiana&#34;&gt;campagna elettorale&lt;/a&gt;) (con un inizio precoce per Salvini già in Gennaio). Questo picco di attività &lt;strong&gt;crolla velocemente&lt;/strong&gt; e in &lt;strong&gt;Marzo&lt;/strong&gt; già si ritorna a quei livelli di attività pre-elettorali (o anche inferiori nel caso di Di Maio). Un altro &lt;strong&gt;aumento dell&amp;rsquo;attività&lt;/strong&gt; di &lt;strong&gt;Salvini e Martina&lt;/strong&gt; si osserva &lt;strong&gt;negli ultimi mesi&lt;/strong&gt;, sospetto sia in qualche modo collegato alle vicenda dell&amp;rsquo;Acquarius e della &amp;ldquo;chiusura dei porti&amp;rdquo; (fig.3).&lt;/p&gt;
+
+&lt;h2 id=&#34;il-successo-dei-tweets&#34;&gt;Il successo dei tweets&lt;/h2&gt;
+
+&lt;h3 id=&#34;likes-per-tweet&#34;&gt;Likes per tweet&lt;/h3&gt;
+
+&lt;p&gt;Ma quanto sono apprezzati i tweets dei 3 politici dai rispettivi followers? Iniziamo vedendo il totale numero di like ottenuti e alcuni indici di tendenza centrale riguardanti likes per ogni tweet.&lt;/p&gt;
+
+&lt;p&gt;I numeri sono molto chiari. Con 3200 tweets, &lt;strong&gt;Salivini ha totalizzato più di 4 milioni e mezzo di likes&lt;/strong&gt;, una media di quasi 1500 likes a tweet. &lt;strong&gt;Salivini ha ottenuto 5 volte i like di Di Maio e più di dieci volte quelli di Martina (il meno popolare dei tre)&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Visto che anche in questo caso stiamo avendo a che fare con distribuzioni molto skewed, vale la pena ricorrere a qualche rappresentazione grafica.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;favoriteCount&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_histogram&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; position_dodge&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt; bins &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;40&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+       fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+       x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Likes per 40 tweets&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+       y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Occurances &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+       caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;fig.4&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  scale_x_continuous&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;limits &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;10000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  guides&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;FALSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.4_distribution_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Tutte e tre le distribuzioni sono estremamente skewed verso destra ma anche da questo grafico è possibile cogliere che i tweets di Salvini con alti numeri di likes sono più numerosi rispetto a quelli degli altri 2 politici (barre verdi sono più alte rispetto alle rosse e verdi quando ci spostiamo verso destra,fig.4)&lt;/p&gt;
+
+&lt;p&gt;Un altro modo per osservare e comparare i tweets è attraverso il &lt;em&gt;jitter plot&lt;/em&gt; sottostante.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; favoriteCount&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_jitter&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;alpha &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Likes&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; group &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Liked tweets&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;fig.5&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig5_jitter_likes-1.png&#34; width=&#34;480&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Nella figura ogni tweet è rappresentato da un punto che è in alto se il tweet ha ricevuto molti likes. Anche da questa rappresentazione si evince che &lt;strong&gt;Salvini è estremamente più popolare tra i suoi followers di Di Maio e Martina&lt;/strong&gt; (fig.5).&lt;/p&gt;
+
+&lt;h3 id=&#34;andamento-della-popolarità&#34;&gt;Andamento della popolarità&lt;/h3&gt;
+
+&lt;p&gt;Come è cambiata la popolarità dei vari politici negli ultimi mesi? Andiamo ad analizzarlo attraverso la visualizzazione di numero di like per tweet (fig.6, sinistra) e totale di like (fig.5) nei mesi di Dicembre 2017 fino a Luglio 2018. Utilizzeremo lo stesso codice impiegato per le fig.1.&lt;/p&gt;
+
+&lt;p&gt;Sia per &lt;strong&gt;Di Maio&lt;/strong&gt; che per &lt;strong&gt;Salvini&lt;/strong&gt; in numero di &lt;strong&gt;like per tweet è aumentato drasticamente&lt;/strong&gt; a partire &lt;strong&gt;da Marzo del 2018&lt;/strong&gt; con un &lt;strong&gt;picco quest&amp;rsquo;estaste&lt;/strong&gt; (fig.6 sinistra). Anche &lt;strong&gt;i like  per tweet di Martina sono aumentati&lt;/strong&gt;, ma &lt;strong&gt;in misura molto minore&lt;/strong&gt; rispetto a quelli degli altri 2 politici (fig.6 sinistra). Un altra considerazione interessante è che &lt;strong&gt;negli ultimi mesi la popolarità dei tweets di Di Maio e Salvini&lt;/strong&gt; in termini di likes per tweets &lt;strong&gt;non è&lt;/strong&gt; stata tutto sommato &lt;strong&gt;molto differente&lt;/strong&gt; (&lt;strong&gt;2500-4000 likes per tweet&lt;/strong&gt;, fig.6 sinistra) e il maggiore numero totale di likes da parte di Salvini è imputabile al sua maggiore presenza sul social media (fig.6 destra).&lt;/p&gt;
+
+&lt;h3 id=&#34;i-tweets-più-famosi&#34;&gt;I tweets più famosi&lt;/h3&gt;
+
+&lt;p&gt;Ho deciso di dare una sbirciata ai tweets che hanno riscosso più successo: i 10 tweets di ogni politico con più likes (ordinati in maniera discendente).&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# for each screenName takes the 10 tweets with motst likes---&lt;/span&gt;
+twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  do&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;arrange&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;desc&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;favoriteCount&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+       &lt;span class=&#34;kp&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;favoriteCount&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; reorder&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;text&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; favoriteCount&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    geom_point&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Number of likes&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;10 most liked&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;fig.7&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    facet_grid&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; scale &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;free_y&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; 
+          legend.position&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+
+          axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.25&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; angle &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.6_10_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Alcuni dei temi più cari ai m5s e Lega emergono nei  tweets più apprezzati:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Per Di Maio i vitalizi (&lt;sup&gt;3&lt;/sup&gt;&amp;frasl;&lt;sub&gt;10&lt;/sub&gt;) e  il decreto dignità&amp;rsquo;.&lt;/li&gt;
+&lt;li&gt;Per Salivini, le navi di immigrati, i porti e Saviano.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I 10 tweets di Marina con più like sono invece quelli in cui viene presa di mira la politica di m5s e  la Lega. Anche in questo grafico si può notare che i 10 tweets di Salvini hanno ottenuto un numero di like molto maggiore rispetto a quelli di Di Maio e Martina  (i punti sono più spostati verso destra).&lt;/p&gt;
+
+&lt;h2 id=&#34;i-dispositivi-utilizzati&#34;&gt;I dispositivi utilizzati&lt;/h2&gt;
+
+&lt;p&gt;Per ultimo andiamo a vedere quali sono i dispositivi utilizzati e preferiti dai 3 politici. Un dettaglio forse triviale ma che come ha mostrato &lt;a href=&#34;http://varianceexplained.org/r/trump-tweets/&#34;&gt;David Robinson&lt;/a&gt; può fornire intuizioni importanti.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# calculate tweets per device and label the one &amp;lt;5% as Other&lt;/span&gt;
+
+count_dev &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  count&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;statusSource&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# count the number of tweets by screenName&lt;/span&gt;
+  rename&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tw_n &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; n&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  do&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;tw_perc &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; tw_n&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tw_n&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;perc_lab &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;round&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tw_perc&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# will be labels&lt;/span&gt;
+
+         
+count_dev&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;perc_lab&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;count_dev&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;perc_lab &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# remove values &amp;lt; 5 to not have a messy plot &lt;/span&gt;
+
+count_dev&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;statusSource&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;count_dev&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;tw_perc &lt;span class=&#34;o&#34;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;  &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Other&amp;#34;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Creiamo 3 pie charts con percentuali di tweets dai diversi dispositivi.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Plot percentage of tweets wrote from different devices---&lt;/span&gt;
+
+count_dev &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;factor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; tw_perc&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; statusSource&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      geom_col&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;width &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      coord_polar&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;theta &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;y&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      geom_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;label &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; perc_lab&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; position_stack&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;3.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      facet_grid&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      scale_fill_brewer&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;palette &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Spectral&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      scale_x_discrete&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;breaks &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_blank&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt; axis.text.y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_blank&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;fig.8&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.7_pie-1.png&#34; width=&#34;960&#34; /&gt;
+Sono piuttosto chiare le differenze tra i 3 politici:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Di Maio principalmente utilizza android e twitta post da facebook&lt;/li&gt;
+&lt;li&gt;Salvini usa iPhone e computer&lt;/li&gt;
+&lt;li&gt;Martina usa quasi esclusivamente il suo iPhone per twittare.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Non vi fanno pensare questi dati? La cosa che a me è balzata agli occhi è che dei 3 è &lt;strong&gt;Salvini&lt;/strong&gt; (o chi per lui) ad utilizzare di  più un Web Client e quindi con molto probabilità  &lt;strong&gt;ad essere seduto alla sua scrivania di fronte al computer per twittare&lt;/strong&gt; (a meno che Di Maio non abbiamo sempre utilizzato Facebook da computer e non da cellulare). Non so voi, ma io quando devo scrivere una email importante, devo leggere un articolo con attenzione o scrivere qualcosa per lavoro, difficilmente uso il mio cellulare: mi siedo alla scrivania e uso il mio PC. È molto probabile che queste differenze nell&amp;rsquo;uso dei dispositivi sia correlato con altre variabili, ma è senz&amp;rsquo;altro invitante l&amp;rsquo;ipotesi che il successo di Salvini su Twitter sia dovuto almeno in una piccola parte fatto che consideri molto seriamente la sua attività comunicativa, forse tanto da dedicarne appositamente del tempo al computer. Si tratta ovviamente di speculazioni, ed è altrettanto possibile che semplicemente Salvini passi più tempo alla scrivania rispetto agli altri, che abbia notifiche di Twitter attivate sul desktop, o che ami fare breve pause mentre lavora al computer.&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusione&#34;&gt;Conclusione&lt;/h1&gt;
+
+&lt;p&gt;I dati non lasciano molti dubbi.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Dei tre politici è &lt;strong&gt;Salvini&lt;/strong&gt;, con una media di 12 tweets al giorno, di gran lunga &lt;strong&gt;il più attivo su Twitter&lt;/strong&gt;(tab.1, fig.1, fig.3 sinistra).&lt;/li&gt;
+&lt;li&gt;Dei tre politici, è lui quello &lt;strong&gt;con più materiale originale&lt;/strong&gt; (pochissimi retweets, tab.2) e che &lt;strong&gt;twitta in un intervallo di ore più lungo durante giorno&lt;/strong&gt; (fig.1 sinistra).&lt;/li&gt;
+&lt;li&gt;Questa maggiore presenza sul social paga (o ne è la sua conseguenza) in termini di apprezzamento da parte dei followers. &lt;strong&gt;Salvini è tra i tre quello con più successo&lt;/strong&gt; in Twitter: con 3200 tweets ha totalizzato &lt;strong&gt;4 milioni e mezzo di likes&lt;/strong&gt;, una media di quasi 1500 likes a tweet, &lt;strong&gt;5 volte piu di Di Maio e oltre 10 più di Martina&lt;/strong&gt; (tab.4, fig.5).&lt;/li&gt;
+&lt;li&gt;Per tutti e tre i politici c&amp;rsquo;è stato un &lt;strong&gt;aumento di popolarità negli ultimi mesi di quest&amp;rsquo;anno&lt;/strong&gt;, ma per Salvini e Di Maio in misura estremamente maggiore rispetto a Martina (fig.6).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Negli ultimi mesi sia i tweets di Salvini che Di Maio hanno ricevuto ampio apprezzamento&lt;/strong&gt;(2500-4000 likes per tweet).&lt;/li&gt;
+&lt;li&gt;I temi più apprezzati? Abbiamo dato una sbirciata ai 10 tweets più popolari e per &lt;strong&gt;Salvini&lt;/strong&gt; i temi sono &lt;strong&gt;immigrazione, porti, Saviano&lt;/strong&gt;; per &lt;strong&gt;Di Maio sono i vitalizi e il decreto dignità&lt;/strong&gt;; &lt;strong&gt;per Martina opposizione alle misure di Lega e Salvini&lt;/strong&gt; (fig.7).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Seduto alla sua scrivania e con il suo iphone (fig.8), &lt;strong&gt;Salivini ha fatto di &lt;em&gt;Twitter&lt;/em&gt; il suo regno incontrastato&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Per commenti o segnalazioni di errori contattatemi alla mia email: clau6ioHH$gmail.com&lt;/em&gt;&lt;/p&gt;
+</description>
+      
+    </item>
+    
+  </channel>
+</rss>
