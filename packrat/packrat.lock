@@ -289,6 +289,12 @@ Source: CRAN
 Version: 0.5
 Hash: 463550cf44fb6f0a2359368f42eebe62
 
+Package: miniUI
+Source: CRAN
+Version: 0.1.1.1
+Hash: c7e3ea486421c2fa5b03bb7fcd0415f6
+Requires: htmltools, shiny
+
 Package: modelr
 Source: CRAN
 Version: 0.1.2
@@ -443,6 +449,18 @@ Version: 0.10
 Hash: cc88f9556a7f8d65c4a60624a118b2da
 Requires: httpuv, jsonlite, mime, xfun
 
+Package: shiny
+Source: CRAN
+Version: 1.1.0
+Hash: ab653b45dba6dc82eef68fb1e18a3b1a
+Requires: R6, crayon, digest, htmltools, httpuv, jsonlite, later, mime,
+    promises, rlang, sourcetools, xtable
+
+Package: sourcetools
+Source: CRAN
+Version: 0.1.7
+Hash: d093478ac90064e670cd4bf1a99b47b6
+
 Package: stringi
 Source: CRAN
 Version: 1.2.4
@@ -524,6 +542,11 @@ Source: CRAN
 Version: 1.2.0
 Hash: 1ee43aa8f57efa79384f290459c138b6
 Requires: Rcpp
+
+Package: xtable
+Source: CRAN
+Version: 1.8-3
+Hash: 857a3e7f33eac216c8d0d2fdbf0a3798
 
 Package: yaml
 Source: CRAN
