@@ -51,6 +51,13 @@
   </url>
   
   <url>
+    <loc>/categories/r/</loc>
+    <lastmod>2018-09-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/tags/</loc>
     <lastmod>2018-09-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -66,13 +73,6 @@
   
   <url>
     <loc>/tags/twitter/</loc>
-    <lastmod>2018-09-10T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/categories/twitter/</loc>
     <lastmod>2018-09-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>

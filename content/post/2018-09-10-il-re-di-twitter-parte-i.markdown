@@ -4,7 +4,7 @@ author: C1au6i0_HH
 date: '2018-09-10'
 slug: il-re-di-twitter-parte-i
 categories:
-  - twitter
+  - R
 tags:
   - R
   - twitteR
@@ -13,6 +13,7 @@ tags:
   - textmining
 output:
   blogdown::html_page:
+      fig_caption: yes
       toc: true
       number_sections: true
 ---
@@ -167,7 +168,7 @@ tw_h <- twdat %>%
        y = "",
        color = "",
        title = "",
-       caption = " ") +
+       caption = "  ") +
   theme(legend.position = c(0.85,0.92), legend.background = element_blank(), legend.key = element_blank())
 ```
 
