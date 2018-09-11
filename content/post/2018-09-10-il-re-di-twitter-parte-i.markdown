@@ -364,7 +364,7 @@ Nella figura ogni tweet è rappresentato da un punto che è in alto se il tweet 
 
 Come è cambiata la popolarità dei vari politici negli ultimi mesi? Andiamo ad analizzarlo attraverso la visualizzazione di numero di like per tweet (fig.6, sinistra) e totale di like (fig.5) nei mesi di Dicembre 2017 fino a Luglio 2018. Utilizzeremo lo stesso codice impiegato per le fig.1.
 
-
+<img src="/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.6_plot_timeline_likes-1.png" width="960" />
 Sia per __Di Maio__ che per __Salvini__ in numero di __like per tweet è aumentato drasticamente__ a partire __da Marzo del 2018__ con un __picco quest'estaste__ (fig.6 sinistra). Anche __i like  per tweet di Martina sono aumentati__, ma __in misura molto minore__ rispetto a quelli degli altri 2 politici (fig.6 sinistra). Un altra considerazione interessante è che __negli ultimi mesi la popolarità dei tweets di Di Maio e Salvini__ in termini di likes per tweets __non è__ stata tutto sommato __molto differente__ (__2500-4000 likes per tweet__, fig.6 sinistra) e il maggiore numero totale di likes da parte di Salvini è imputabile al sua maggiore presenza sul social media (fig.6 destra).
 
 
