@@ -439,7 +439,7 @@ tw_d &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&
 
 &lt;p&gt;Gli ultimi mesi della politica italiana sono stati estremamente densi di eventi importanti, a partire dalle elezioni per poi proseguire con le  varie consultazioni e la formazione del governo. È perciò legittimo domandarsi se questa serie di avvenimenti abbia spinto i politici ad utilizzare più frequentemente Twitter per comunicare con i propri elettori.&lt;/p&gt;
 
-&lt;p&gt;Un caveat dei dati ottenuti è che &lt;em&gt;twitteR&lt;/em&gt; non permette di scaricare più di 3200 tweets. Dal momento che Salvini è estremamente più attivo degli altri due politici, i mesi sui 3200 tweets sono stati pubblicati in un periodo inferiore rispetto a quelli di Di Maio e Martina (tab.3).&lt;/p&gt;
+&lt;p&gt;Un caveat dei dati ottenuti è che &lt;em&gt;twitteR&lt;/em&gt; non permette di scaricare più di 3200 tweets. Dal momento che Salvini è estremamente più attivo degli altri due politici, i suoi 3200 tweets sono stati pubblicati in un periodo inferiore rispetto a quelli di Di Maio e Martina (tab.3).&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
