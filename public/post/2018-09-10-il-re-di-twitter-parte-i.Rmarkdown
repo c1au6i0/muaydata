@@ -369,7 +369,7 @@ Nella figura ogni tweet è rappresentato da un punto che è in alto se il tweet 
 
 Come è cambiata la popolarità dei vari politici negli ultimi mesi? Andiamo ad analizzarlo attraverso la visualizzazione di numero di like per tweet (fig.6, sinistra) e totale di like (fig.5) nei mesi di Dicembre 2017 fino a Luglio 2018. Utilizzeremo lo stesso codice impiegato per le fig.1.
 
-```{r fig.6_plot_timeline_likes, echo = FALSE, eval=TRUE, fig.width=10, fig.height=5}
+```{r fig.6_plot_timeline_likes, echo=FALSE, fig.width=10, fig.height=5}
 timeline_mlike<- twdat %>% 
   mutate(month_r = floor_date(created, "month") ) %>%
   filter(created >= date_lim[1], created <= date_lim[2]) %>% 
