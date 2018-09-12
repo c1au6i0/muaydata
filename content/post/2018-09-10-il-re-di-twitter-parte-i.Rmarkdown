@@ -1,7 +1,7 @@
 ---
 title: Il Re di Twitter? (PARTE I)
 author: C1au6i0_HH
-date: '2018-09-10'
+date: '2018-09-12'
 slug: il-re-di-twitter-parte-i
 categories:
   - R
@@ -98,7 +98,7 @@ OK, abbiamo a questo punto un dataframe/tibble con cui possiamo lavorare.
 
 <!-- Database -->
 ```{r database, include=FALSE}
-mydb <- dbConnect(RSQLite::SQLite(), "D:\\R_projects\\ItalianBirds\\tweets2_polit.sqlite")
+mydb <- dbConnect(RSQLite::SQLite(), "/Users/NCCU/Documents/R_Projects/muaydata/public/tweets2_polit.sqlite")
 
 # dbRemoveTable(mydb, "twdat2")
 # dbWriteTable(mydb, "twdat", twdat)
@@ -162,6 +162,7 @@ tw_h <- twdat %>%
   geom_line() +
   geom_point(size = 2.5) +
   scale_y_continuous(labels = percent_format()) +
+  scale_color_manual(values = c("#FFC125","#00BA38","#F8766D")) +
   labs(x = "Hour of day (CET)",
        y = "",
        color = "",
@@ -187,6 +188,7 @@ tw_d <- twdat %>%
              color = screenName)) +
   geom_line() +
   geom_point(size = 2.5) +
+  scale_color_manual(values = c("#FFC125","#00BA38","#F8766D")) +
   scale_y_continuous(labels = percent_format()) +
   labs(x = "Day of the week",
        y = "",
@@ -212,6 +214,7 @@ twdat %>%
     geom_density_ridges(alpha = 0.2, scale = 1.2) +
     scale_y_discrete() +
     scale_x_continuous(limits = c(0,23), labels = seq(0,23,2), breaks = seq(0,23,2)) +
+    scale_color_manual(values = c("#FFC125","#00BA38","#F8766D")) +
     coord_equal(ratio = 5) +
     labs(x = "Hour of day (CET)",
          y = NULL,
@@ -274,6 +277,7 @@ timeline_abs <- twdat %>%
   geom_line () +
   scale_x_datetime(labels = date_format("%Y %b"), date_breaks= "1 months") +
   scale_y_continuous(breaks = seq(0, 700, 100), labels = seq(0, 700, 100)) +
+  scale_color_manual(values = c("#FFC125","#00BA38","#F8766D")) +
   theme(plot.subtitle = element_text(vjust = 1),
     plot.caption = element_text(vjust = 1),
     axis.text.x = element_text(vjust = 0.25, angle = 45)
@@ -302,6 +306,7 @@ timeline_perc <- twdat %>%
   geom_line () +
   scale_x_datetime(labels = date_format("%Y %b"), date_breaks= "1 months") +
   scale_y_continuous(labels = percent_format()) +
+  scale_color_manual(values = c("#FFC125","#00BA38","#F8766D")) +
   theme(plot.subtitle = element_text(vjust = 1),
     plot.caption = element_text(vjust = 1),
     axis.text.x = element_text(vjust = 0.25, angle = 45)
@@ -334,7 +339,7 @@ tab_fav <- twdat %>%
             St_Dev = sd(favoriteCount))
 knitr::kable(tab_fav, align = "cccccc", caption = "tab.4: Likes per tweets")
 ```
-I numeri sono molto chiari. Con 3200 tweets, __Salivini ha totalizzato più di 4 milioni e mezzo di likes__, una media di quasi 1500 likes a tweet. __Salivini ha ottenuto 5 volte i like di Di Maio e più di dieci volte quelli di Martina (il meno popolare dei tre)__.
+I numeri sono molto chiari. Con 3200 tweets, __Salvini ha totalizzato più di 4 milioni e mezzo di likes__, una media di quasi 1500 likes a tweet. __Salvini ha ottenuto 5 volte i like di Di Maio e più di dieci volte quelli di Martina (il meno popolare dei tre)__.
 
 
 Visto che anche in questo caso stiamo avendo a che fare con distribuzioni molto skewed, vale la pena ricorrere a qualche rappresentazione grafica.
@@ -342,6 +347,8 @@ Visto che anche in questo caso stiamo avendo a che fare con distribuzioni molto 
 twdat %>% 
   ggplot(aes(favoriteCount, col = screenName, fill = screenName)) +
   geom_histogram(position = position_dodge(), bins = 40) +
+  scale_color_manual(values = c("#FFC125","#00BA38","#F8766D")) +
+  scale_fill_manual(values = c("#FFC125","#00BA38","#F8766D")) +
   labs(col = NULL,
        fill = NULL,
        x = "Likes per 40 tweets",
@@ -351,7 +358,7 @@ twdat %>%
   guides(col = FALSE)
 ```
 
-Tutte e tre le distribuzioni sono estremamente skewed verso destra ma anche da questo grafico è possibile cogliere che i tweets di Salvini con alti numeri di likes sono più numerosi rispetto a quelli degli altri 2 politici (barre verdi sono più alte rispetto alle rosse e verdi quando ci spostiamo verso destra,fig.4)
+Tutte e tre le distribuzioni sono estremamente skewed verso destra ma anche da questo grafico è possibile cogliere che i tweets di Salvini con alti numeri di likes sono più numerosi rispetto a quelli degli altri 2 politici (barre verdi sono più alte rispetto alle gialle e rosse quando ci spostiamo verso destra,fig.4)
 
 Un altro modo per osservare e comparare i tweets è attraverso il *jitter plot* sottostante.
 
@@ -359,6 +366,7 @@ Un altro modo per osservare e comparare i tweets è attraverso il *jitter plot* 
 twdat %>% 
   ggplot(aes(screenName, favoriteCount, col = screenName)) +
   geom_jitter(alpha = 0.2) +
+  scale_color_manual(values = c("#FFC125","#00BA38","#F8766D")) +
   labs(x = NULL, y = "Likes", col = "", group = "", title = "Liked tweets", caption = "fig.5") +
   theme(plot.title = element_text(hjust = 0.5),legend.position = "none") 
 ```
@@ -380,6 +388,7 @@ timeline_mlike<- twdat %>%
   geom_line () +
   scale_x_datetime(labels = date_format("%Y %b"), date_breaks= "1 months") +
 #  scale_y_continuous(breaks = seq(0, 700, 100), labels = seq(0, 700, 100)) +
+  scale_color_manual(values = c("#FFC125","#00BA38","#F8766D")) +
   theme(plot.subtitle = element_text(vjust = 1),
     plot.caption = element_text(vjust = 1),
     axis.text.x = element_text(vjust = 0.25, angle = 45)
@@ -397,6 +406,7 @@ timeline_totlike <- twdat %>%
   geom_point( size = 2.5) +
   geom_line () +
   scale_x_datetime(labels = date_format("%Y %b"), date_breaks= "1 months") +
+  scale_color_manual(values = c("#FFC125","#00BA38","#F8766D")) +
 #  scale_y_continuous(breaks = seq(0, 700, 100), labels = seq(0, 700, 100)) +
   theme(plot.subtitle = element_text(vjust = 1),
     plot.caption = element_text(vjust = 1),
@@ -424,6 +434,7 @@ twdat %>%
        head(10)) %>% 
   ggplot(aes(favoriteCount, reorder(text, favoriteCount), col = screenName)) +
     geom_point() +
+    scale_color_manual(values = c("#FFC125","#00BA38","#F8766D")) +
     labs(x = "Number of likes", y = NULL, title = "10 most liked", caption = "fig.7" ) +
     facet_grid(screenName~., scale = "free_y") +
     theme(plot.title = element_text(hjust = 0.5), 
@@ -436,7 +447,7 @@ twdat %>%
 Alcuni dei temi più cari ai m5s e Lega emergono nei  tweets più apprezzati:
 
  * Per Di Maio i vitalizi (3/10) e  il decreto dignità.
- * Per Salivini, le navi di immigrati, i porti e Saviano.
+ * Per Salvini, le navi di immigrati, i porti e Saviano.
 
 I 10 tweets di Marina con più like sono invece quelli in cui viene presa di mira la politica di m5s e  la Lega. Anche in questo grafico si può notare che i 10 tweets di Salvini hanno ottenuto un numero di like molto maggiore rispetto a quelli di Di Maio e Martina  (i punti sono più spostati verso destra).
 
@@ -496,7 +507,7 @@ I dati non lasciano molti dubbi.
 * __Negli ultimi mesi sia i tweets di Salvini che Di Maio hanno ricevuto ampio apprezzamento__(2500-4000 likes per tweet).
 * I temi più apprezzati? Abbiamo dato una sbirciata ai 10 tweets più popolari e per __Salvini__ i temi sono __immigrazione, porti, Saviano__; per __Di Maio sono i vitalizi e il decreto dignità__; __per Martina opposizione alle misure di Lega e Salvini__ (fig.7). 
 
-Seduto alla sua scrivania e con il suo iphone (fig.8), __Salivini ha fatto di *Twitter* il suo regno incontrastato__.
+Seduto alla sua scrivania e con il suo iphone (fig.8), __Salvini ha fatto di *Twitter* il suo regno incontrastato__.
 
 
 

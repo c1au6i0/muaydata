@@ -6,7 +6,7 @@
     <description>Recent content in Textmining on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 10 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/textmining/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>Il Re di Twitter? (PARTE I)</title>
       <link>/post/il-re-di-twitter-parte-i/</link>
-      <pubDate>Mon, 10 Sep 2018 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>/post/il-re-di-twitter-parte-i/</guid>
       <description>Premessa Social media come Twitter sono diventati anche in Italia uno dei mezzi di comunicazione più usati dai politici per rivolgersi direttamente al loro elettorato. Una quantità di informazioni enorme su abitudini, messaggio elettorale e tipo di elettori si nasconde tra quei tweets di poche centinaia di byte. Un famoso post di David Robinson ha dimostrato come queste informazioni possono essere scovate dall&amp;rsquo;occhio attento del Data Scientist attraverso l&amp;rsquo;uso sapiente R e alcuni sui pacchetti (twitteR, tidyverse e tidytext).</description>

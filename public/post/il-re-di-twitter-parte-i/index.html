@@ -60,15 +60,15 @@
 <meta property="og:title" content="Il Re di Twitter? (PARTE I)" />
 <meta property="og:description" content="Premessa Social media come Twitter sono diventati anche in Italia uno dei mezzi di comunicazione più usati dai politici per rivolgersi direttamente al loro elettorato. Una quantità di informazioni enorme su abitudini, messaggio elettorale e tipo di elettori si nasconde tra quei tweets di poche centinaia di byte. Un famoso post di David Robinson ha dimostrato come queste informazioni possono essere scovate dall&rsquo;occhio attento del Data Scientist attraverso l&rsquo;uso sapiente R e alcuni sui pacchetti (twitteR, tidyverse e tidytext)." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/il-re-di-twitter-parte-i/" /><meta property="article:published_time" content="2018-09-10T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2018-09-10T00:00:00&#43;00:00"/>
+<meta property="og:url" content="/post/il-re-di-twitter-parte-i/" /><meta property="article:published_time" content="2018-09-12T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-09-12T00:00:00&#43;00:00"/>
 <meta itemprop="name" content="Il Re di Twitter? (PARTE I)">
 <meta itemprop="description" content="Premessa Social media come Twitter sono diventati anche in Italia uno dei mezzi di comunicazione più usati dai politici per rivolgersi direttamente al loro elettorato. Una quantità di informazioni enorme su abitudini, messaggio elettorale e tipo di elettori si nasconde tra quei tweets di poche centinaia di byte. Un famoso post di David Robinson ha dimostrato come queste informazioni possono essere scovate dall&rsquo;occhio attento del Data Scientist attraverso l&rsquo;uso sapiente R e alcuni sui pacchetti (twitteR, tidyverse e tidytext).">
 
 
-<meta itemprop="datePublished" content="2018-09-10T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2018-09-10T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="3191">
+<meta itemprop="datePublished" content="2018-09-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-09-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3231">
 
 
 
@@ -271,13 +271,13 @@
       <h1 class="post-title">Il Re di Twitter? (PARTE I)</h1>
       
       <div class="post-meta">
-        <span class="post-time"> 2018-09-10 </span>
+        <span class="post-time"> 2018-09-12 </span>
         <div class="post-category">
             <a href="/categories/r/"> R </a>
             
           </div>
-        <span class="more-meta"> 3191 words </span>
-          <span class="more-meta"> 15 min read </span>
+        <span class="more-meta"> 3231 words </span>
+          <span class="more-meta"> 16 min read </span>
 
         
         
@@ -391,7 +391,7 @@ Una volta creata la app, il pacchetto <em>twitteR</em> ci permetterà di acceder
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span><span class="s">&#34;twitteR&#34;</span><span class="p">)</span>
 
-API_key <span class="o">&lt;-</span>  <span class="s">&#34;XXX&#34;</span>
+API_key <span class="o">&lt;-</span> 	<span class="s">&#34;XXX&#34;</span>
 API_secret <span class="o">&lt;-</span> <span class="s">&#34;XXX&#34;</span>
 access_token <span class="o">&lt;-</span> <span class="s">&#34;XXX&#34;</span>
 access_secret <span class="o">&lt;-</span> <span class="s">&#34;XXX&#34;</span>
@@ -592,6 +592,7 @@ knitr<span class="o">::</span>kable<span class="p">(</span>retw<span class="p">,
 </span><span class="lnt">19
 </span><span class="lnt">20
 </span><span class="lnt">21
+</span><span class="lnt">22
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="c1"># this creates the plots of tweets by hours</span>
@@ -609,6 +610,7 @@ tw_h <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span>
   geom_line<span class="p">()</span> <span class="o">+</span>
   geom_point<span class="p">(</span>size <span class="o">=</span> <span class="m">2.5</span><span class="p">)</span> <span class="o">+</span>
   scale_y_continuous<span class="p">(</span>labels <span class="o">=</span> percent_format<span class="p">())</span> <span class="o">+</span>
+  scale_color_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
   labs<span class="p">(</span>x <span class="o">=</span> <span class="s">&#34;Hour of day (CET)&#34;</span><span class="p">,</span>
        y <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span>
        color <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span>
@@ -644,6 +646,7 @@ tw_h <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span>
 </span><span class="lnt">22
 </span><span class="lnt">23
 </span><span class="lnt">24
+</span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="c1"># this create the plot of tweets by weekday</span>
@@ -659,6 +662,7 @@ tw_d <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span>
              color <span class="o">=</span> screenName<span class="p">))</span> <span class="o">+</span>
   geom_line<span class="p">()</span> <span class="o">+</span>
   geom_point<span class="p">(</span>size <span class="o">=</span> <span class="m">2.5</span><span class="p">)</span> <span class="o">+</span>
+  scale_color_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
   scale_y_continuous<span class="p">(</span>labels <span class="o">=</span> percent_format<span class="p">())</span> <span class="o">+</span>
   labs<span class="p">(</span>x <span class="o">=</span> <span class="s">&#34;Day of the week&#34;</span><span class="p">,</span>
        y <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span>
@@ -697,6 +701,7 @@ tw_d <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span>
 </span><span class="lnt">17
 </span><span class="lnt">18
 </span><span class="lnt">19
+</span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">twdat <span class="o">%&gt;%</span>
@@ -707,6 +712,7 @@ tw_d <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span>
     geom_density_ridges<span class="p">(</span>alpha <span class="o">=</span> <span class="m">0.2</span><span class="p">,</span> scale <span class="o">=</span> <span class="m">1.2</span><span class="p">)</span> <span class="o">+</span>
     scale_y_discrete<span class="p">()</span> <span class="o">+</span>
     scale_x_continuous<span class="p">(</span>limits <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">23</span><span class="p">),</span> labels <span class="o">=</span> <span class="kp">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">23</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> breaks <span class="o">=</span> <span class="kp">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">23</span><span class="p">,</span><span class="m">2</span><span class="p">))</span> <span class="o">+</span>
+    scale_color_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
     coord_equal<span class="p">(</span>ratio <span class="o">=</span> <span class="m">5</span><span class="p">)</span> <span class="o">+</span>
     labs<span class="p">(</span>x <span class="o">=</span> <span class="s">&#34;Hour of day (CET)&#34;</span><span class="p">,</span>
          y <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
@@ -839,6 +845,7 @@ knitr<span class="o">::</span>kable<span class="p">(</span>as_data_frame<span cl
 </span><span class="lnt">14
 </span><span class="lnt">15
 </span><span class="lnt">16
+</span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">timeline_abs <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span> 
@@ -850,6 +857,7 @@ knitr<span class="o">::</span>kable<span class="p">(</span>as_data_frame<span cl
   geom_line <span class="p">()</span> <span class="o">+</span>
   scale_x_datetime<span class="p">(</span>labels <span class="o">=</span> date_format<span class="p">(</span><span class="s">&#34;%Y %b&#34;</span><span class="p">),</span> date_breaks<span class="o">=</span> <span class="s">&#34;1 months&#34;</span><span class="p">)</span> <span class="o">+</span>
   scale_y_continuous<span class="p">(</span>breaks <span class="o">=</span> <span class="kp">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">700</span><span class="p">,</span> <span class="m">100</span><span class="p">),</span> labels <span class="o">=</span> <span class="kp">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">700</span><span class="p">,</span> <span class="m">100</span><span class="p">))</span> <span class="o">+</span>
+  scale_color_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
   theme<span class="p">(</span>plot.subtitle <span class="o">=</span> element_text<span class="p">(</span>vjust <span class="o">=</span> <span class="m">1</span><span class="p">),</span>
     plot.caption <span class="o">=</span> element_text<span class="p">(</span>vjust <span class="o">=</span> <span class="m">1</span><span class="p">),</span>
     axis.text.x <span class="o">=</span> element_text<span class="p">(</span>vjust <span class="o">=</span> <span class="m">0.25</span><span class="p">,</span> angle <span class="o">=</span> <span class="m">45</span><span class="p">)</span>
@@ -879,7 +887,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
 
 <p>Ma quanto sono apprezzati i tweets dei 3 politici dai rispettivi followers? Iniziamo vedendo il totale numero di like ottenuti e alcuni indici di tendenza centrale riguardanti likes per ogni tweet.</p>
 
-<p>I numeri sono molto chiari. Con 3200 tweets, <strong>Salivini ha totalizzato più di 4 milioni e mezzo di likes</strong>, una media di quasi 1500 likes a tweet. <strong>Salivini ha ottenuto 5 volte i like di Di Maio e più di dieci volte quelli di Martina (il meno popolare dei tre)</strong>.</p>
+<p>I numeri sono molto chiari. Con 3200 tweets, <strong>Salvini ha totalizzato più di 4 milioni e mezzo di likes</strong>, una media di quasi 1500 likes a tweet. <strong>Salvini ha ottenuto 5 volte i like di Di Maio e più di dieci volte quelli di Martina (il meno popolare dei tre)</strong>.</p>
 
 <p>Visto che anche in questo caso stiamo avendo a che fare con distribuzioni molto skewed, vale la pena ricorrere a qualche rappresentazione grafica.</p>
 <div class="highlight"><div class="chroma">
@@ -894,11 +902,15 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">twdat <span class="o">%&gt;%</span> 
   ggplot<span class="p">(</span>aes<span class="p">(</span>favoriteCount<span class="p">,</span> col <span class="o">=</span> screenName<span class="p">,</span> fill <span class="o">=</span> screenName<span class="p">))</span> <span class="o">+</span>
   geom_histogram<span class="p">(</span>position <span class="o">=</span> position_dodge<span class="p">(),</span> bins <span class="o">=</span> <span class="m">40</span><span class="p">)</span> <span class="o">+</span>
+  scale_color_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
+  scale_fill_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
   labs<span class="p">(</span>col <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
        fill <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
        x <span class="o">=</span> <span class="s">&#34;Likes per 40 tweets&#34;</span><span class="p">,</span>
@@ -910,7 +922,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
 </div>
 <p><img src="/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.4_distribution_fav-1.png" width="960" /></p>
 
-<p>Tutte e tre le distribuzioni sono estremamente skewed verso destra ma anche da questo grafico è possibile cogliere che i tweets di Salvini con alti numeri di likes sono più numerosi rispetto a quelli degli altri 2 politici (barre verdi sono più alte rispetto alle rosse e verdi quando ci spostiamo verso destra,fig.4)</p>
+<p>Tutte e tre le distribuzioni sono estremamente skewed verso destra ma anche da questo grafico è possibile cogliere che i tweets di Salvini con alti numeri di likes sono più numerosi rispetto a quelli degli altri 2 politici (barre verdi sono più alte rispetto alle gialle e rosse quando ci spostiamo verso destra,fig.4)</p>
 
 <p>Un altro modo per osservare e comparare i tweets è attraverso il <em>jitter plot</em> sottostante.</p>
 <div class="highlight"><div class="chroma">
@@ -920,11 +932,13 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
+</span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">twdat <span class="o">%&gt;%</span> 
   ggplot<span class="p">(</span>aes<span class="p">(</span>screenName<span class="p">,</span> favoriteCount<span class="p">,</span> col <span class="o">=</span> screenName<span class="p">))</span> <span class="o">+</span>
   geom_jitter<span class="p">(</span>alpha <span class="o">=</span> <span class="m">0.2</span><span class="p">)</span> <span class="o">+</span>
+  scale_color_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
   labs<span class="p">(</span>x <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> y <span class="o">=</span> <span class="s">&#34;Likes&#34;</span><span class="p">,</span> col <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span> group <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span> title <span class="o">=</span> <span class="s">&#34;Liked tweets&#34;</span><span class="p">,</span> caption <span class="o">=</span> <span class="s">&#34;fig.5&#34;</span><span class="p">)</span> <span class="o">+</span>
   theme<span class="p">(</span>plot.title <span class="o">=</span> element_text<span class="p">(</span>hjust <span class="o">=</span> <span class="m">0.5</span><span class="p">),</span>legend.position <span class="o">=</span> <span class="s">&#34;none&#34;</span><span class="p">)</span> </code></pre></td></tr></table>
 </div>
@@ -958,6 +972,7 @@ Sia per <strong>Di Maio</strong> che per <strong>Salvini</strong> in numero di <
 </span><span class="lnt">11
 </span><span class="lnt">12
 </span><span class="lnt">13
+</span><span class="lnt">14
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="c1"># for each screenName takes the 10 tweets with motst likes---</span>
@@ -967,6 +982,7 @@ twdat <span class="o">%&gt;%</span>
        <span class="kp">head</span><span class="p">(</span><span class="m">10</span><span class="p">))</span> <span class="o">%&gt;%</span> 
   ggplot<span class="p">(</span>aes<span class="p">(</span>favoriteCount<span class="p">,</span> reorder<span class="p">(</span>text<span class="p">,</span> favoriteCount<span class="p">),</span> col <span class="o">=</span> screenName<span class="p">))</span> <span class="o">+</span>
     geom_point<span class="p">()</span> <span class="o">+</span>
+    scale_color_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
     labs<span class="p">(</span>x <span class="o">=</span> <span class="s">&#34;Number of likes&#34;</span><span class="p">,</span> y <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> title <span class="o">=</span> <span class="s">&#34;10 most liked&#34;</span><span class="p">,</span> caption <span class="o">=</span> <span class="s">&#34;fig.7&#34;</span> <span class="p">)</span> <span class="o">+</span>
     facet_grid<span class="p">(</span>screenName<span class="o">~</span><span class="m">.</span><span class="p">,</span> scale <span class="o">=</span> <span class="s">&#34;free_y&#34;</span><span class="p">)</span> <span class="o">+</span>
     theme<span class="p">(</span>plot.title <span class="o">=</span> element_text<span class="p">(</span>hjust <span class="o">=</span> <span class="m">0.5</span><span class="p">),</span> 
@@ -981,7 +997,7 @@ twdat <span class="o">%&gt;%</span>
 
 <ul>
 <li>Per Di Maio i vitalizi (<sup>3</sup>&frasl;<sub>10</sub>) e  il decreto dignità.</li>
-<li>Per Salivini, le navi di immigrati, i porti e Saviano.</li>
+<li>Per Salvini, le navi di immigrati, i porti e Saviano.</li>
 </ul>
 
 <p>I 10 tweets di Marina con più like sono invece quelli in cui viene presa di mira la politica di m5s e  la Lega. Anche in questo grafico si può notare che i 10 tweets di Salvini hanno ottenuto un numero di like molto maggiore rispetto a quelli di Di Maio e Martina  (i punti sono più spostati verso destra).</p>
@@ -1076,7 +1092,7 @@ Sono piuttosto chiare le differenze tra i 3 politici:</p>
 <li>I temi più apprezzati? Abbiamo dato una sbirciata ai 10 tweets più popolari e per <strong>Salvini</strong> i temi sono <strong>immigrazione, porti, Saviano</strong>; per <strong>Di Maio sono i vitalizi e il decreto dignità</strong>; <strong>per Martina opposizione alle misure di Lega e Salvini</strong> (fig.7).</li>
 </ul>
 
-<p>Seduto alla sua scrivania e con il suo iphone (fig.8), <strong>Salivini ha fatto di <em>Twitter</em> il suo regno incontrastato</strong>.</p>
+<p>Seduto alla sua scrivania e con il suo iphone (fig.8), <strong>Salvini ha fatto di <em>Twitter</em> il suo regno incontrastato</strong>.</p>
 
 <p><em>Per commenti o segnalazioni di errori contattatemi alla mia email: clau6ioHH@gmail.com</em></p>
 
@@ -1091,7 +1107,7 @@ Sono piuttosto chiare le differenze tra i 3 politici:</p>
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2018-09-10</span>
+    <span class="item-content">2018-09-12</span>
   </p>
   
   <p class="copyright-item">
