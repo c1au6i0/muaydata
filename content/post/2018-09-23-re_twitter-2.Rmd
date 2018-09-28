@@ -1,0 +1,217 @@
+---
+title: Il Re di Twitter? (PART II)
+subtitle: Analisi di 3200 tweets di Di Maio, Salvini e Martina
+author: C1au6i0_HH
+date: "`r format(Sys.time(), '%d %B %Y')`"
+slug: il-re-di-twitter-part-ii
+categories:
+  - R
+tags:
+  - textmining
+  - twitter
+  - twitteR
+lastmod: '2018-09-20T00:31:20-04:00'
+output:
+  blogdown::html_page:
+      fig_caption: yes
+      toc: true
+      number_sections: true
+comment: yes
+toc: yes
+autoCollapseToc: no
+contentCopyright: no
+reward: no
+mathjax: no
+---
+# Premessa
+Nella prima parte di questa serie di [posts]{https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/} ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (*twitteR*) abbiamo analizzato l'uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell'apparente causualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e cosí siamo stati in grado di rilevare trends e differenze nell'uso di twitter da parte dei 3 politici italiani. In questa __seconda parte__ andremo ad analizzare il contenuto dei vari tweets utilizzando un pacchetto di *textmining* estremamemente popolare in *R*: [*tidytext*](https://www.tidytextmining.com/). 
+
+In particolare andremo a xxxxxx
+
+# Analisi
+
+## Preparazione dati e tokenizzazione
+La procedura per ottenere un detafrane/tibble dei tweets dei 3 politici (a cui assegneremo il nome di __twdat__) è spiegata in dettaglio nel mio primo [post]{https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/} della serie e nella [guida di Michael Galarnyk](https://medium.com/@GalarnykMichael/accessing-data-from-Twitter-api-using-r-part1-b387a1c7d3e). 
+
+Queste sono le librerie che ci serviranno per le nostre analisi.
+```{r libraries, include=TRUE, message=FALSE, results='hide', collapse=TRUE}
+library("ggridges")
+library("ggrepel")
+library("lubridate")
+library("RSQLite")
+library("scales")
+library("stringr")
+library("tidytext")
+library("tidyverse")
+library("xtable")
+```
+
+<!-- Database -->
+```{r database, include=FALSE}
+mydb <- dbConnect(RSQLite::SQLite(), "~/Documents/R_Projects/muaydata/public/tweets2_polit.sqlite")
+
+# dbRemoveTable(mydb, "twdat2")
+# dbWriteTable(mydb, "twdat", twdat)
+# dbListTables(mydb)
+twdat <- as_tibble(tbl(mydb, "twdat"))
+twdat$created <- as_datetime(twdat$created)
+dbDisconnect(mydb)
+```
+
+Il primo processo necessario prima di qualunque analisi del testo è la *tokenizzazione*, ovvero l'estrazione di singole unità di testo con significato, nel nostro caso singole parole.
+Il codice sottostante che è stato adattato da quello di [David Robinson](http://varianceexplained.org/r/trump-tweets/) serve a:
+
+* tokenizzare il contenuto della colonna *text* del dataframe *twdat* attraverso il comando *unnest_tokens*.
+* rimuove *stop words*, ossia parole come articoli e proposizioni prive di significato.
+* rimuovere links, simboli e particelle come *https* o *rt*.
+
+```{r tokenized}
+reg <- "([^[:alpha:]\\d#@']|'(?![[:alpha:]\\d#@]))"
+ita_stop_words <- get_stopwords(language = "it", source = "snowball")
+
+tweet_words <- twdat %>%
+  filter(!str_detect(text, '^"')) %>%
+  mutate(text = str_replace_all(text, "(http|https)://t.co/[A-Za-z\\d]+|&amp;", "")) %>% # remove links
+  mutate(text = str_replace_all(text, "[[:punct:]]", " ")) %>% # removes punctualization
+  unnest_tokens(word, text, token = "regex", pattern = reg) %>% 
+  filter(!word %in% ita_stop_words$word,
+         str_detect(word, "[[:alpha:]]"),
+         nchar(word) > 1,
+         !word %in% c("rt", "http", "https", "gt") #remove other not meanigful words
+         )
+```
+
+Il risultato viene assegnato ad un dataframe/tibble in cui le informazioni originali di *twdat* vengono conservate ma la colonna che contiene tweets (chiamata *text*) viene sostituita con una chiamata *word* in cui ogni osservazione è una singola parola (*one token per row"). Abbiamo a questo punto un dataframe/tibble con cui possiamo lavorare.
+
+## Frequenza delle parole
+
+Come prima cosa andiamo a vedere quali sono le parole più usate dai 3 politici. Calcoliamo in percentuale quanto ogni parola è stata rispetto al totale per ogni politico, prendiamo le prime 20 parole e assegnamole ad un nuovo database/tibble (*ftweet_words*).
+
+```{r calc_mostused}
+# filtered tweets with percent times a word has been used
+ftweet_words <- tweet_words %>%
+  count(word, screenName, sort = TRUE) %>%
+  group_by(screenName) %>%
+  mutate(perc = n/sum(n)) %>%
+  do(top_n(.,20, perc)) 
+```
+
+Per il grafico che disegneremo con  *ggplot* è necessario ordinare i levelli della colonna *word*  a seconda di quella delle percentuali *perc* per ognuono dei politici (grazie [@MrFlick](https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value))
+
+```{r order_factors}
+new_order <-
+  ftweet_words %>%
+  do(data_frame(al=levels(reorder(interaction(.$screenName, .$word, drop=TRUE), .$perc)))) %>%
+  pull(al)
+```
+
+Creaiamo a questo punto il grafico in cui le parole usate da ogni politico saronno nell'asse delle Y e la loro frequenza in quello delle X.
+
+```{r fig1_most_used_words, fig.height=6, fig.width=4}
+ftweet_words %>%
+  mutate(al = factor(interaction(screenName, word), levels = new_order)) %>%
+  ggplot(aes(x = perc, y = al, col = screenName)) +
+    geom_point() +
+    facet_grid(screenName~., scales = 'free_y') +
+    scale_y_discrete(breaks = new_order, labels = gsub("^.*\\.", "", new_order)) + # this is to sort the y-axis breaks by the order created in previous chunck
+    scale_x_continuous(labels = percent_format()) +
+    scale_color_manual(values = c("#FFC125","#00BA38","#F8766D")) +
+    labs(y = NULL, x = "Percent time used", caption ="fig.1") +
+    theme(plot.title = element_text(hjust = 0.5),
+          legend.position = "none")
+```
+__Per Salvini e Martina la parola più usata è il proprio nome/screenname__, mentre per __Di Maio è il partito__ "m5s". In termini di frequenza d'uso, __il primo riferimento diretto Di Maio a se stesso (*luigidimaio*) è all'undicesimo posto__,  __dopo 6 riferimemnti al partito e al suo fondatore__(fig.1). È approssimativamente __3 volte più probabile trovare le parole _renzi_ o _pd_ in un tweet di Di Maio che la parola *luigidimaio*__!. 
+  Sono tuttavia neccessarie alcune precisazioni per meglio interpretare questi risultati. Il riferimento a se stessi dei vari politici è di *natura* diversa. Per Salvini il riferimento al proprio nome è nell'ambito dell'hastag #salvini mentre per Martina e Di Maio è dovuta a retweet in cui vengono citati (*@luididimaio*, *@maumartina*).
+  
+```{r check_tweets, include=FALSE, echo=FALSE, eval=FALSE}
+ids_self <- tweet_words %>% 
+  filter(screenName == "luigidimaio", word == "m5s") %>% 
+  select(id)
+
+twdat %>% 
+  filter( id %in% unlist(ids_self)) %>% 
+  select(text) 
+  
+```
+```{r}
+ids_self <- tweet_words %>% 
+  filter(screenName == "matteosalvinimi", word == "salvini") %>% 
+  select(id)
+
+twdat %>% 
+  filter( id %in% unlist(ids_self)) %>% 
+  select(text) 
+
+```
+  I temi/slogan (agricoltura, primagliitaliani) e espressioni (amici) care ai 3 politici emergono tra le 20 parole più usate, con alcuni elementi chiaramente in comune. Quali sono questi temi condivisi? Andiamo a vedere con alcuni semplici comandi per intersecare le tre liste di parole.
+```{r tab.2_words_in_common}
+# Split dataframe, select words  column and create a list. Intersect list
+words_m <- map(split.data.frame(ftweet_words , ftweet_words$screenName),
+              function(x) {ungroup(x) %>% select(word)})
+
+xtable(Reduce(intersect, words_m), type ="html", caption = "tab.2")
+```
+I temi in comune tra i 3 politici sono la patria (*italia*), il presente (*ora*) e il...partito democratico (*pd*). 
+
+La parola con frequenza più alta viene usata dalle 1 alle 4 volte ogni 100 parole. Anche 
+```{r tab.1_n_words_tweet}
+tweet_words %>% 
+  group_by(id) %>% 
+  summarize(tweet_words = n()) %>% 
+  select(tweet_words) %>% 
+  summary() %>% 
+  xtable(type = "html", caption = "tab.1")
+```
+
+```{r worcloud, fig.height=3, fig.width=3}
+ftweet_words %>%
+    ggplot(aes(x = 1, y = 1, size = perc, label = word, col = screenName)) +
+      geom_text_repel(segment.size = NA, force = 100) +
+      scale_size(range = c(2, 15), guide = FALSE) +
+      scale_y_continuous(breaks = NULL) +
+      scale_x_continuous(breaks = NULL) +
+      scale_color_manual(values = c("#FFC125","#00BA38","#F8766D")) +
+      labs(x = '', y = '', caption="fig.2") +
+      theme(legend.position = "none", panel.background = element_rect(fill = NA)) +
+      facet_grid(screenName~., scales = 'free_y', labeller = labeller(screenName = NULL))
+```
+
+## Andamento nel tempo
+
+
+
+```{r minimum_max_date, include=FALSE}
+date_lim <- twdat %>%
+  group_by(screenName) %>%   
+  dplyr::summarize(min_tw = ceiling_date(min(created), "month"), max_tw = floor_date(max(created) , "month")) %>% # we do approximate dates to have full months
+  dplyr::summarize(min_shared = max(min_tw), max_shared = min(max_tw))
+
+date_lim <- as_datetime(unlist(date_lim), tz = "CET")
+```
+
+
+```{r tab.2_sharedtime}
+# formattable(as_data_frame(date_lim) , align = "cc")
+```
+
+
+
+
+```{r}
+# library(udpipe)
+# str(twdat)
+# udmodel <- udpipe_download_model(language = "italian")
+# udmodel <- udpipe_load_model(file = udmodel$file_model)
+# x <- udpipe_annotate(udmodel,
+#                     twdat$text)
+# x <- as_data_frame(x)
+# 
+# str(x)
+
+```
+
+
+```{r get_sentiment}
+# install_github("gragusa/sentiment-lang-italian")
+```
+

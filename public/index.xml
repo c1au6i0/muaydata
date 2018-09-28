@@ -27,6 +27,185 @@ Dwight Schultz.&lt;/p&gt;
     </item>
     
     <item>
+      <title>Il Re di Twitter? (PART II)</title>
+      <link>/post/il-re-di-twitter-part-ii/</link>
+      <pubDate>Thu, 20 Sep 2018 00:31:20 -0400</pubDate>
+      
+      <guid>/post/il-re-di-twitter-part-ii/</guid>
+      
+        <description>&lt;div id=&#34;TOC&#34;&gt;
+true
+&lt;/div&gt;
+
+&lt;div id=&#34;premessa&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;1&lt;/span&gt; Premessa&lt;/h1&gt;
+&lt;p&gt;Nella prima parte di questa serie di [posts]{&lt;a href=&#34;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/&#34; class=&#34;uri&#34;&gt;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/&lt;/a&gt;} ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (&lt;em&gt;twitteR&lt;/em&gt;) abbiamo analizzato l’uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell’apparente causualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e cosí siamo stati in grado di rilevare trends e differenze nell’uso di twitter da parte dei 3 politici italiani. In questa &lt;strong&gt;seconda parte&lt;/strong&gt; andremo ad analizzare il contenuto dei vari tweets utilizzando un pacchetto di &lt;em&gt;textmining&lt;/em&gt; estremamemente popolare in &lt;em&gt;R&lt;/em&gt;: &lt;a href=&#34;https://www.tidytextmining.com/&#34;&gt;&lt;em&gt;tidytext&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In particolare andremo a xxxxxx&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;analisi&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;2&lt;/span&gt; Analisi&lt;/h1&gt;
+&lt;div id=&#34;preparazione-dati-e-tokenizzazione&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;2.1&lt;/span&gt; Preparazione dati e tokenizzazione&lt;/h2&gt;
+&lt;p&gt;La procedura per ottenere un detafrane/tibble dei tweets dei 3 politici (a cui assegneremo il nome di &lt;strong&gt;twdat&lt;/strong&gt;) è spiegata in dettaglio nel mio primo [post]{&lt;a href=&#34;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/&#34; class=&#34;uri&#34;&gt;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/&lt;/a&gt;} della serie e nella &lt;a href=&#34;https://medium.com/@GalarnykMichael/accessing-data-from-Twitter-api-using-r-part1-b387a1c7d3e&#34;&gt;guida di Michael Galarnyk&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Queste sono le librerie che ci serviranno per le nostre analisi.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;ggridges&amp;quot;)
+library(&amp;quot;ggrepel&amp;quot;)
+library(&amp;quot;lubridate&amp;quot;)
+library(&amp;quot;RSQLite&amp;quot;)
+library(&amp;quot;scales&amp;quot;)
+library(&amp;quot;stringr&amp;quot;)
+library(&amp;quot;tidytext&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)
+library(&amp;quot;xtable&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;!-- Database --&gt;
+&lt;p&gt;Il primo processo necessario prima di qualunque analisi del testo è la &lt;em&gt;tokenizzazione&lt;/em&gt;, ovvero l’estrazione di singole unità di testo con significato, nel nostro caso singole parole. Il codice sottostante che è stato adattato da quello di &lt;a href=&#34;http://varianceexplained.org/r/trump-tweets/&#34;&gt;David Robinson&lt;/a&gt; serve a:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;tokenizzare il contenuto della colonna &lt;em&gt;text&lt;/em&gt; del dataframe &lt;em&gt;twdat&lt;/em&gt; attraverso il comando &lt;em&gt;unnest_tokens&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;rimuove &lt;em&gt;stop words&lt;/em&gt;, ossia parole come articoli e proposizioni prive di significato.&lt;/li&gt;
+&lt;li&gt;rimuovere links, simboli e particelle come &lt;em&gt;https&lt;/em&gt; o &lt;em&gt;rt&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;reg &amp;lt;- &amp;quot;([^[:alpha:]\\d#@&amp;#39;]|&amp;#39;(?![[:alpha:]\\d#@]))&amp;quot;
+ita_stop_words &amp;lt;- get_stopwords(language = &amp;quot;it&amp;quot;, source = &amp;quot;snowball&amp;quot;)
+
+tweet_words &amp;lt;- twdat %&amp;gt;%
+  filter(!str_detect(text, &amp;#39;^&amp;quot;&amp;#39;)) %&amp;gt;%
+  mutate(text = str_replace_all(text, &amp;quot;(http|https)://t.co/[A-Za-z\\d]+|&amp;amp;amp;&amp;quot;, &amp;quot;&amp;quot;)) %&amp;gt;% # remove links
+  mutate(text = str_replace_all(text, &amp;quot;[[:punct:]]&amp;quot;, &amp;quot; &amp;quot;)) %&amp;gt;% # removes punctualization
+  unnest_tokens(word, text, token = &amp;quot;regex&amp;quot;, pattern = reg) %&amp;gt;% 
+  filter(!word %in% ita_stop_words$word,
+         str_detect(word, &amp;quot;[[:alpha:]]&amp;quot;),
+         nchar(word) &amp;gt; 1,
+         !word %in% c(&amp;quot;rt&amp;quot;, &amp;quot;http&amp;quot;, &amp;quot;https&amp;quot;, &amp;quot;gt&amp;quot;) #remove other not meanigful words
+         )&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Il risultato viene assegnato ad un dataframe/tibble in cui le informazioni originali di &lt;em&gt;twdat&lt;/em&gt; vengono conservate ma la colonna che contiene tweets (chiamata &lt;em&gt;text&lt;/em&gt;) viene sostituita con una chiamata &lt;em&gt;word&lt;/em&gt; in cui ogni osservazione è una singola parola (*one token per row“). Abbiamo a questo punto un dataframe/tibble con cui possiamo lavorare.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;frequenza-delle-parole&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;2.2&lt;/span&gt; Frequenza delle parole&lt;/h2&gt;
+&lt;p&gt;Come prima cosa andiamo a vedere quali sono le parole più usate dai 3 politici. Calcoliamo in percentuale quanto ogni parola è stata rispetto al totale per ogni politico, prendiamo le prime 20 parole e assegnamole ad un nuovo database/tibble (&lt;em&gt;ftweet_words&lt;/em&gt;).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# filtered tweets with percent times a word has been used
+ftweet_words &amp;lt;- tweet_words %&amp;gt;%
+  count(word, screenName, sort = TRUE) %&amp;gt;%
+  group_by(screenName) %&amp;gt;%
+  mutate(perc = n/sum(n)) %&amp;gt;%
+  do(top_n(.,20, perc)) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Per il grafico che disegneremo con &lt;em&gt;ggplot&lt;/em&gt; è necessario ordinare i levelli della colonna &lt;em&gt;word&lt;/em&gt; a seconda di quella delle percentuali &lt;em&gt;perc&lt;/em&gt; per ognuono dei politici (grazie &lt;span class=&#34;citation&#34;&gt;[@MrFlick]&lt;/span&gt;(&lt;a href=&#34;https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value&#34; class=&#34;uri&#34;&gt;https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value&lt;/a&gt;))&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;new_order &amp;lt;-
+  ftweet_words %&amp;gt;%
+  do(data_frame(al=levels(reorder(interaction(.$screenName, .$word, drop=TRUE), .$perc)))) %&amp;gt;%
+  pull(al)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Creaiamo a questo punto il grafico in cui le parole usate da ogni politico saronno nell’asse delle Y e la loro frequenza in quello delle X.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ftweet_words %&amp;gt;%
+  mutate(al = factor(interaction(screenName, word), levels = new_order)) %&amp;gt;%
+  ggplot(aes(x = perc, y = al, col = screenName)) +
+    geom_point() +
+    facet_grid(screenName~., scales = &amp;#39;free_y&amp;#39;) +
+    scale_y_discrete(breaks = new_order, labels = gsub(&amp;quot;^.*\\.&amp;quot;, &amp;quot;&amp;quot;, new_order)) + # this is to sort the y-axis breaks by the order created in previous chunck
+    scale_x_continuous(labels = percent_format()) +
+    scale_color_manual(values = c(&amp;quot;#FFC125&amp;quot;,&amp;quot;#00BA38&amp;quot;,&amp;quot;#F8766D&amp;quot;)) +
+    labs(y = NULL, x = &amp;quot;Percent time used&amp;quot;, caption =&amp;quot;fig.1&amp;quot;) +
+    theme(plot.title = element_text(hjust = 0.5),
+          legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-23-re_twitter-2_files/figure-html/fig1_most_used_words-1.png&#34; width=&#34;384&#34; /&gt; &lt;strong&gt;Per Salvini e Martina la parola più usata è il proprio nome/screenname&lt;/strong&gt;, mentre per &lt;strong&gt;Di Maio è il partito&lt;/strong&gt; “m5s”. In termini di frequenza d’uso, &lt;strong&gt;il primo riferimento diretto Di Maio a se stesso (&lt;em&gt;luigidimaio&lt;/em&gt;) è all’undicesimo posto&lt;/strong&gt;, &lt;strong&gt;dopo 6 riferimemnti al partito e al suo fondatore&lt;/strong&gt;(fig.1). È approssimativamente &lt;strong&gt;3 volte più probabile trovare le parole &lt;em&gt;renzi&lt;/em&gt; o &lt;em&gt;pd&lt;/em&gt; in un tweet di Di Maio che la parola &lt;em&gt;luigidimaio&lt;/em&gt;&lt;/strong&gt;!. Sono tuttavia neccessarie alcune precisazioni per meglio interpretare questi risultati. Il riferimento a se stessi dei vari politici è di &lt;em&gt;natura&lt;/em&gt; diversa. Per Salvini il riferimento al proprio nome è nell’ambito dell’hastag #salvini mentre per Martina e Di Maio è dovuta a retweet in cui vengono citati (&lt;em&gt;&lt;span class=&#34;citation&#34;&gt;@luididimaio&lt;/span&gt;&lt;/em&gt;, &lt;em&gt;&lt;span class=&#34;citation&#34;&gt;@maumartina&lt;/span&gt;&lt;/em&gt;).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ids_self &amp;lt;- tweet_words %&amp;gt;% 
+  filter(screenName == &amp;quot;matteosalvinimi&amp;quot;, word == &amp;quot;salvini&amp;quot;) %&amp;gt;% 
+  select(id)
+
+twdat %&amp;gt;% 
+  filter( id %in% unlist(ids_self)) %&amp;gt;% 
+  select(text) &lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1,095 x 1
+##    text                                                                    
+##    &amp;lt;chr&amp;gt;                                                                   
+##  1 #Salvini: Oggi UE ha dato l’ennesima prova di essere un ente ASTRATTO. …
+##  2 #Salvini: Reati commessi da stranieri l’anno scorso sono 241mila, 700 a…
+##  3 #Salvini: Torneremo a far valere l’INTERESSE NAZIONALE.  #Zapping #RaiR…
+##  4 #Salvini: A bordo della nave daremo tutta l’assistenza necessaria. Ma n…
+##  5 #Salvini: un solo Paese non può gestire tutto quello che sta accadendo.…
+##  6 #Salvini: sto valutando di fare procedure di riconoscimento prima ancor…
+##  7 #Salvini: Con 5 milioni di italiani in povertà assoluta, di cui 1,2mili…
+##  8 #Salvini: per quanto mi riguarda dalla #Diciotti non sbarca NESSUNO. #Z…
+##  9 &amp;quot;“Salvini muori”.\nAnche a Rovereto i vigliacchi cercano, inutilmente, …
+## 10 #Salvini: Pedaggi autostradali tra i più cari in assoluto. Follia. #non…
+## # ... with 1,085 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I temi/slogan (agricoltura, primagliitaliani) e espressioni (amici) care ai 3 politici emergono tra le 20 parole più usate, con alcuni elementi chiaramente in comune. Quali sono questi temi condivisi? Andiamo a vedere con alcuni semplici comandi per intersecare le tre liste di parole.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Split dataframe, select words  column and create a list. Intersect list
+words_m &amp;lt;- map(split.data.frame(ftweet_words , ftweet_words$screenName),
+              function(x) {ungroup(x) %&amp;gt;% select(word)})
+
+xtable(Reduce(intersect, words_m), type =&amp;quot;html&amp;quot;, caption = &amp;quot;tab.2&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## % latex table generated in R 3.5.1 by xtable 1.8-3 package
+## % Wed Sep 26 22:44:37 2018
+## \begin{table}[ht]
+## \centering
+## \begin{tabular}{rl}
+##   \hline
+##  &amp;amp; word \\ 
+##   \hline
+## 1 &amp;amp; italia \\ 
+##   2 &amp;amp; oggi \\ 
+##   3 &amp;amp; pd \\ 
+##    \hline
+## \end{tabular}
+## \caption{tab.2} 
+## \end{table}&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I temi in comune tra i 3 politici sono la patria (&lt;em&gt;italia&lt;/em&gt;), il presente (&lt;em&gt;ora&lt;/em&gt;) e il…partito democratico (&lt;em&gt;pd&lt;/em&gt;).&lt;/p&gt;
+&lt;p&gt;La parola con frequenza più alta viene usata dalle 1 alle 4 volte ogni 100 parole. Anche&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tweet_words %&amp;gt;% 
+  group_by(id) %&amp;gt;% 
+  summarize(tweet_words = n()) %&amp;gt;% 
+  select(tweet_words) %&amp;gt;% 
+  summary() %&amp;gt;% 
+  xtable(type = &amp;quot;html&amp;quot;, caption = &amp;quot;tab.1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## % latex table generated in R 3.5.1 by xtable 1.8-3 package
+## % Wed Sep 26 22:44:37 2018
+## \begin{table}[ht]
+## \centering
+## \begin{tabular}{rl}
+##   \hline
+##  &amp;amp;  tweet\_words \\ 
+##   \hline
+## X &amp;amp; Min.   : 1.000   \\ 
+##   X.1 &amp;amp; 1st Qu.: 8.000   \\ 
+##   X.2 &amp;amp; Median :10.000   \\ 
+##   X.3 &amp;amp; Mean   : 9.405   \\ 
+##   X.4 &amp;amp; 3rd Qu.:11.000   \\ 
+##   X.5 &amp;amp; Max.   :26.000   \\ 
+##    \hline
+## \end{tabular}
+## \caption{tab.1} 
+## \end{table}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ftweet_words %&amp;gt;%
+    ggplot(aes(x = 1, y = 1, size = perc, label = word, col = screenName)) +
+      geom_text_repel(segment.size = NA, force = 100) +
+      scale_size(range = c(2, 15), guide = FALSE) +
+      scale_y_continuous(breaks = NULL) +
+      scale_x_continuous(breaks = NULL) +
+      scale_color_manual(values = c(&amp;quot;#FFC125&amp;quot;,&amp;quot;#00BA38&amp;quot;,&amp;quot;#F8766D&amp;quot;)) +
+      labs(x = &amp;#39;&amp;#39;, y = &amp;#39;&amp;#39;, caption=&amp;quot;fig.2&amp;quot;) +
+      theme(legend.position = &amp;quot;none&amp;quot;, panel.background = element_rect(fill = NA)) +
+      facet_grid(screenName~., scales = &amp;#39;free_y&amp;#39;, labeller = labeller(screenName = NULL))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-23-re_twitter-2_files/figure-html/worcloud-1.png&#34; width=&#34;288&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;andamento-nel-tempo&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;2.3&lt;/span&gt; Andamento nel tempo&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# formattable(as_data_frame(date_lim) , align = &amp;quot;cc&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# library(udpipe)
+# str(twdat)
+# udmodel &amp;lt;- udpipe_download_model(language = &amp;quot;italian&amp;quot;)
+# udmodel &amp;lt;- udpipe_load_model(file = udmodel$file_model)
+# x &amp;lt;- udpipe_annotate(udmodel,
+#                     twdat$text)
+# x &amp;lt;- as_data_frame(x)
+# 
+# str(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# install_github(&amp;quot;gragusa/sentiment-lang-italian&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+      
+    </item>
+    
+    <item>
       <title>Il Re di Twitter? (PARTE I)</title>
       <link>/post/il-re-di-twitter-parte-i/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
@@ -389,7 +568,7 @@ tw_d &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&
   grid.arrange&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tw_h&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; tw_d&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; ncol &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; top &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Percentage of tweets          &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.1_plot_tw_wdays-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-twitter-1_files/figure-html/fig.1_plot_tw_wdays-1.png&#34; width=&#34;960&#34; /&gt;
 &lt;strong&gt;Salvini&lt;/strong&gt; tende ad iniziare a twittare al mattino come Di Maio e Martina, ma  rispetto a loro, tende a continuare ad essere &lt;strong&gt;attivo anche la sera (7-23)&lt;/strong&gt;. Per &lt;strong&gt;Martina&lt;/strong&gt; il picco di attività è &lt;strong&gt;la mattina (9-11)&lt;/strong&gt; mentre per &lt;strong&gt;Di Maio è dalle 9 alle 16&lt;/strong&gt; (fig.2, sinistra). &lt;strong&gt;Tutti e tre i politici hanno un giorno durante il week-end in cui sono molto meno attivi&lt;/strong&gt;: sia per Di Maio che Salvini è il Sabato, mentre per Martina la Domenica (fig.2, destra).&lt;/p&gt;
 
 &lt;p&gt;Ho usato &lt;em&gt;ggridges&lt;/em&gt;, una extention di &lt;em&gt;ggplot2&lt;/em&gt;, per creare dei &lt;em&gt;density plots&lt;/em&gt; e visualizzare in dettaglio l&amp;rsquo;interazione tra giorno della settimana ed ora del giorno dei tweets (fig.3 sottostante). L&amp;rsquo;analisi tende comunque a supportare la generabilità delle osservazioni precedenti ma con alcune precisazioni: la Domenica è Di Maio a distribuire i sui tweets  più tardi la sera. Inoltre, il Lunedì Salvini è, diversamente dagli altri giorni della settimana, molto più attivo nel primo pomeriggio tra le 14 e le 16 (fig.3).&lt;/p&gt;
@@ -439,7 +618,7 @@ tw_d &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&
     guides&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;FALSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.2_ridges-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-twitter-1_files/figure-html/fig.2_ridges-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;ultimi-mesi&#34;&gt;Ultimi mesi&lt;/h3&gt;
 
@@ -589,7 +768,7 @@ knitr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;kable&lt;span class=&#34;p&#34
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;grid.arrange&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;timeline_abs&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; timeline_perc&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; ncol &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.4_timeline-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-twitter-1_files/figure-html/fig.4_timeline-1.png&#34; width=&#34;960&#34; /&gt;
 Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale. Questa normalizzazione ci permette di comparare meglio gli andamenti e i cambiamenti di attività tra i politici.&lt;/p&gt;
 
 &lt;p&gt;Salvini twitta molto più di Di Maio e Martina ma &lt;strong&gt;l&amp;rsquo;attività di tutti e 3 i politici aumenta drasticamente in Febbraio&lt;/strong&gt; di quest&amp;rsquo;anno, mese di &lt;a href=&#34;https://it.wikipedia.org/wiki/XVIII_legislatura_della_Repubblica_Italiana&#34;&gt;campagna elettorale&lt;/a&gt;) (con un inizio precoce per Salvini già in Gennaio). Questo picco di attività &lt;strong&gt;crolla velocemente&lt;/strong&gt; e in &lt;strong&gt;Marzo&lt;/strong&gt; già si ritorna a quei livelli di attività pre-elettorali (o anche inferiori nel caso di Di Maio). Un altro &lt;strong&gt;aumento dell&amp;rsquo;attività&lt;/strong&gt; di &lt;strong&gt;Salvini e Martina&lt;/strong&gt; si osserva &lt;strong&gt;negli ultimi mesi&lt;/strong&gt;, sospetto sia in qualche modo collegato alle vicenda dell&amp;rsquo;Acquarius e della &amp;ldquo;chiusura dei porti&amp;rdquo; (fig.3).&lt;/p&gt;
@@ -633,7 +812,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
   guides&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;FALSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.4_distribution_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-twitter-1_files/figure-html/fig.4_distribution_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Tutte e tre le distribuzioni sono estremamente skewed verso destra ma anche da questo grafico è possibile cogliere che i tweets di Salvini con alti numeri di likes sono più numerosi rispetto a quelli degli altri 2 politici (barre verdi sono più alte rispetto alle gialle e rosse quando ci spostiamo verso destra,fig.4)&lt;/p&gt;
 
@@ -656,7 +835,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
   theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig5_jitter_likes-1.png&#34; width=&#34;480&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-twitter-1_files/figure-html/fig5_jitter_likes-1.png&#34; width=&#34;480&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Nella figura ogni tweet è rappresentato da un punto che è in alto se il tweet ha ricevuto molti likes. Anche da questa rappresentazione si evince che &lt;strong&gt;Salvini è estremamente più popolare tra i suoi followers di Di Maio e Martina&lt;/strong&gt; (fig.5).&lt;/p&gt;
 
@@ -664,7 +843,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
 
 &lt;p&gt;Come è cambiata la popolarità dei vari politici negli ultimi mesi? Andiamo ad analizzarlo attraverso la visualizzazione di numero di like per tweet (fig.6, sinistra) e totale di like (fig.5) nei mesi di Dicembre 2017 fino a Luglio 2018. Utilizzeremo lo stesso codice impiegato per le fig.1.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.6_plot_timeline_likes-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-twitter-1_files/figure-html/fig.6_plot_timeline_likes-1.png&#34; width=&#34;960&#34; /&gt;
 Sia per &lt;strong&gt;Di Maio&lt;/strong&gt; che per &lt;strong&gt;Salvini&lt;/strong&gt; in numero di &lt;strong&gt;like per tweet è aumentato drasticamente&lt;/strong&gt; a partire &lt;strong&gt;da Marzo del 2018&lt;/strong&gt; con un &lt;strong&gt;picco quest&amp;rsquo;estaste&lt;/strong&gt; (fig.6 sinistra). Anche &lt;strong&gt;i like  per tweet di Martina sono aumentati&lt;/strong&gt;, ma &lt;strong&gt;in misura molto minore&lt;/strong&gt; rispetto a quelli degli altri 2 politici (fig.6 sinistra). Un altra considerazione interessante è che &lt;strong&gt;negli ultimi mesi la popolarità dei tweets di Di Maio e Salvini&lt;/strong&gt; in termini di likes per tweets &lt;strong&gt;non è&lt;/strong&gt; stata tutto sommato &lt;strong&gt;molto differente&lt;/strong&gt; (&lt;strong&gt;2500-4000 likes per tweet&lt;/strong&gt;, fig.6 sinistra) e il maggiore numero totale di likes da parte di Salvini è imputabile al sua maggiore presenza sul social media (fig.6 destra).&lt;/p&gt;
 
 &lt;h3 id=&#34;i-tweets-più-famosi&#34;&gt;I tweets più famosi&lt;/h3&gt;
@@ -704,7 +883,7 @@ twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
           axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.25&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; angle &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.6_10_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-twitter-1_files/figure-html/fig.6_10_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Alcuni dei temi più cari ai m5s e Lega emergono nei  tweets più apprezzati:&lt;/p&gt;
 
@@ -781,7 +960,7 @@ count_dev &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
       labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;fig.8&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.7_pie-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-twitter-1_files/figure-html/fig.7_pie-1.png&#34; width=&#34;960&#34; /&gt;
 Sono piuttosto chiare le differenze tra i 3 politici:&lt;/p&gt;
 
 &lt;ul&gt;

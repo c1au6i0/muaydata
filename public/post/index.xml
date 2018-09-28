@@ -6,10 +6,19 @@
     <description>Recent content in Posts on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 12 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Sep 2018 00:31:20 -0400</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Il Re di Twitter? (PART II)</title>
+      <link>/post/il-re-di-twitter-part-ii/</link>
+      <pubDate>Thu, 20 Sep 2018 00:31:20 -0400</pubDate>
+      
+      <guid>/post/il-re-di-twitter-part-ii/</guid>
+      <description>true  1 Premessa Nella prima parte di questa serie di [posts]{https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/} ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (twitteR) abbiamo analizzato l’uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell’apparente causualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e cosí siamo stati in grado di rilevare trends e differenze nell’uso di twitter da parte dei 3 politici italiani.</description>
+    </item>
     
     <item>
       <title>Il Re di Twitter? (PARTE I)</title>

@@ -676,7 +676,7 @@ tw_d <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span>
   grid.arrange<span class="p">(</span>tw_h<span class="p">,</span> tw_d<span class="p">,</span> ncol <span class="o">=</span>  <span class="m">2</span><span class="p">,</span> top <span class="o">=</span> <span class="s">&#34;Percentage of tweets          &#34;</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
-<p><img src="/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.1_plot_tw_wdays-1.png" width="960" />
+<p><img src="/post/2018-09-10-re-twitter-1_files/figure-html/fig.1_plot_tw_wdays-1.png" width="960" />
 <strong>Salvini</strong> tende ad iniziare a twittare al mattino come Di Maio e Martina, ma  rispetto a loro, tende a continuare ad essere <strong>attivo anche la sera (7-23)</strong>. Per <strong>Martina</strong> il picco di attività è <strong>la mattina (9-11)</strong> mentre per <strong>Di Maio è dalle 9 alle 16</strong> (fig.2, sinistra). <strong>Tutti e tre i politici hanno un giorno durante il week-end in cui sono molto meno attivi</strong>: sia per Di Maio che Salvini è il Sabato, mentre per Martina la Domenica (fig.2, destra).</p>
 
 <p>Ho usato <em>ggridges</em>, una extention di <em>ggplot2</em>, per creare dei <em>density plots</em> e visualizzare in dettaglio l&rsquo;interazione tra giorno della settimana ed ora del giorno dei tweets (fig.3 sottostante). L&rsquo;analisi tende comunque a supportare la generabilità delle osservazioni precedenti ma con alcune precisazioni: la Domenica è Di Maio a distribuire i sui tweets  più tardi la sera. Inoltre, il Lunedì Salvini è, diversamente dagli altri giorni della settimana, molto più attivo nel primo pomeriggio tra le 14 e le 16 (fig.3).</p>
@@ -726,7 +726,7 @@ tw_d <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span>
     guides<span class="p">(</span>fill <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
-<p><img src="/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.2_ridges-1.png" width="672" /></p>
+<p><img src="/post/2018-09-10-re-twitter-1_files/figure-html/fig.2_ridges-1.png" width="672" /></p>
 
 <h3 id="ultimi-mesi">Ultimi mesi</h3>
 
@@ -876,7 +876,7 @@ knitr<span class="o">::</span>kable<span class="p">(</span>as_data_frame<span cl
 <pre class="chroma"><code class="language-r" data-lang="r">grid.arrange<span class="p">(</span>timeline_abs<span class="p">,</span> timeline_perc<span class="p">,</span> ncol <span class="o">=</span>  <span class="m">2</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
-<p><img src="/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.4_timeline-1.png" width="960" />
+<p><img src="/post/2018-09-10-re-twitter-1_files/figure-html/fig.4_timeline-1.png" width="960" />
 Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale. Questa normalizzazione ci permette di comparare meglio gli andamenti e i cambiamenti di attività tra i politici.</p>
 
 <p>Salvini twitta molto più di Di Maio e Martina ma <strong>l&rsquo;attività di tutti e 3 i politici aumenta drasticamente in Febbraio</strong> di quest&rsquo;anno, mese di <a href="https://it.wikipedia.org/wiki/XVIII_legislatura_della_Repubblica_Italiana">campagna elettorale</a>) (con un inizio precoce per Salvini già in Gennaio). Questo picco di attività <strong>crolla velocemente</strong> e in <strong>Marzo</strong> già si ritorna a quei livelli di attività pre-elettorali (o anche inferiori nel caso di Di Maio). Un altro <strong>aumento dell&rsquo;attività</strong> di <strong>Salvini e Martina</strong> si osserva <strong>negli ultimi mesi</strong>, sospetto sia in qualche modo collegato alle vicenda dell&rsquo;Acquarius e della &ldquo;chiusura dei porti&rdquo; (fig.3).</p>
@@ -920,7 +920,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
   guides<span class="p">(</span>col <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
-<p><img src="/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.4_distribution_fav-1.png" width="960" /></p>
+<p><img src="/post/2018-09-10-re-twitter-1_files/figure-html/fig.4_distribution_fav-1.png" width="960" /></p>
 
 <p>Tutte e tre le distribuzioni sono estremamente skewed verso destra ma anche da questo grafico è possibile cogliere che i tweets di Salvini con alti numeri di likes sono più numerosi rispetto a quelli degli altri 2 politici (barre verdi sono più alte rispetto alle gialle e rosse quando ci spostiamo verso destra,fig.4)</p>
 
@@ -943,7 +943,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
   theme<span class="p">(</span>plot.title <span class="o">=</span> element_text<span class="p">(</span>hjust <span class="o">=</span> <span class="m">0.5</span><span class="p">),</span>legend.position <span class="o">=</span> <span class="s">&#34;none&#34;</span><span class="p">)</span> </code></pre></td></tr></table>
 </div>
 </div>
-<p><img src="/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig5_jitter_likes-1.png" width="480" /></p>
+<p><img src="/post/2018-09-10-re-twitter-1_files/figure-html/fig5_jitter_likes-1.png" width="480" /></p>
 
 <p>Nella figura ogni tweet è rappresentato da un punto che è in alto se il tweet ha ricevuto molti likes. Anche da questa rappresentazione si evince che <strong>Salvini è estremamente più popolare tra i suoi followers di Di Maio e Martina</strong> (fig.5).</p>
 
@@ -951,7 +951,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
 
 <p>Come è cambiata la popolarità dei vari politici negli ultimi mesi? Andiamo ad analizzarlo attraverso la visualizzazione di numero di like per tweet (fig.6, sinistra) e totale di like (fig.5) nei mesi di Dicembre 2017 fino a Luglio 2018. Utilizzeremo lo stesso codice impiegato per le fig.1.</p>
 
-<p><img src="/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.6_plot_timeline_likes-1.png" width="960" />
+<p><img src="/post/2018-09-10-re-twitter-1_files/figure-html/fig.6_plot_timeline_likes-1.png" width="960" />
 Sia per <strong>Di Maio</strong> che per <strong>Salvini</strong> in numero di <strong>like per tweet è aumentato drasticamente</strong> a partire <strong>da Marzo del 2018</strong> con un <strong>picco quest&rsquo;estaste</strong> (fig.6 sinistra). Anche <strong>i like  per tweet di Martina sono aumentati</strong>, ma <strong>in misura molto minore</strong> rispetto a quelli degli altri 2 politici (fig.6 sinistra). Un altra considerazione interessante è che <strong>negli ultimi mesi la popolarità dei tweets di Di Maio e Salvini</strong> in termini di likes per tweets <strong>non è</strong> stata tutto sommato <strong>molto differente</strong> (<strong>2500-4000 likes per tweet</strong>, fig.6 sinistra) e il maggiore numero totale di likes da parte di Salvini è imputabile al sua maggiore presenza sul social media (fig.6 destra).</p>
 
 <h3 id="i-tweets-più-famosi">I tweets più famosi</h3>
@@ -991,7 +991,7 @@ twdat <span class="o">%&gt;%</span>
           axis.text.x <span class="o">=</span> element_text<span class="p">(</span>vjust <span class="o">=</span> <span class="m">0.25</span><span class="p">,</span> angle <span class="o">=</span> <span class="m">45</span><span class="p">))</span> </code></pre></td></tr></table>
 </div>
 </div>
-<p><img src="/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.6_10_fav-1.png" width="960" /></p>
+<p><img src="/post/2018-09-10-re-twitter-1_files/figure-html/fig.6_10_fav-1.png" width="960" /></p>
 
 <p>Alcuni dei temi più cari ai m5s e Lega emergono nei  tweets più apprezzati:</p>
 
@@ -1068,7 +1068,7 @@ count_dev <span class="o">%&gt;%</span>
       labs<span class="p">(</span>y <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> x <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> fill <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> caption <span class="o">=</span> <span class="s">&#34;fig.8&#34;</span> <span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
-<p><img src="/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.7_pie-1.png" width="960" />
+<p><img src="/post/2018-09-10-re-twitter-1_files/figure-html/fig.7_pie-1.png" width="960" />
 Sono piuttosto chiare le differenze tra i 3 politici:</p>
 
 <ul>
@@ -1132,6 +1132,11 @@ Sono piuttosto chiare le differenze tra i 3 politici:</p>
       
       <nav class="post-nav">
         
+          <a class="prev" href="/post/il-re-di-twitter-part-ii/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Il Re di Twitter? (PART II)</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
         
       </nav>
     </footer>
@@ -1147,7 +1152,30 @@ Sono piuttosto chiare le differenze tra i 3 politici:</p>
 
   
 
+  <div class="disqus-comment">
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+    Show Disqus Comments
+  </div>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    function load_disqus() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'muaydata';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+      $('#load_disqus').remove();
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+  </noscript>
   
+  </div>
 
         </div>
       </div>

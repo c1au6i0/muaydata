@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>/post/il-re-di-twitter-part-ii/</loc>
+    <lastmod>2018-09-20T00:31:20-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/post/il-re-di-twitter-parte-i/</loc>
     <lastmod>2018-09-12T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -38,7 +45,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-09-12T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-20T00:31:20-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -52,7 +59,7 @@
   
   <url>
     <loc>/categories/r/</loc>
-    <lastmod>2018-09-12T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-20T00:31:20-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -66,14 +73,14 @@
   
   <url>
     <loc>/tags/textmining/</loc>
-    <lastmod>2018-09-12T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-20T00:31:20-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/tags/twitter/</loc>
-    <lastmod>2018-09-12T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-20T00:31:20-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

@@ -1,0 +1,121 @@
+---
+title: Il Re di Twitter? (PART II)
+author: C1au6i0_HH
+date: '2018-09-20'
+slug: il-re-di-twitter-part-ii
+categories:
+  - R
+tags:
+  - textmining
+  - twitter
+  - twitteR
+lastmod: '2018-09-20T00:31:20-04:00'
+output:
+  blogdown::html_page:
+      fig_caption: yes
+      toc: true
+      number_sections: true
+keywords: []
+comment: yes
+toc: yes
+autoCollapseToc: no
+contentCopyright: no
+reward: no
+mathjax: no
+---
+
+```{r include=TRUE, message=FALSE, results='hide', collapse=TRUE}
+
+library("devtools")
+library("ggridges")
+library("ggrepel")
+library("gridExtra")
+library("lubridate")
+library("RSQLite")
+library("scales")
+library("stringr")
+library("tidyverse")
+library("twitteR")
+```
+
+
+<!-- ```{r tokenized} -->
+<!-- reg <- "([^[:alpha:]\\d#@']|'(?![[:alpha:]\\d#@]))" -->
+<!-- ita_stop_words <- get_stopwords(language = "it", source = "snowball") -->
+
+<!-- tweet_words <- twdat %>% -->
+<!--   filter(!str_detect(text, '^"')) %>% -->
+<!--   mutate(text = str_replace_all(text, "(http|https)://t.co/[A-Za-z\\d]+|&amp;", "")) %>% -->
+<!--   mutate(text = str_replace_all(text, "[[:punct:]]", " ")) %>% -->
+<!--   unnest_tokens(word, text, token = "regex", pattern = reg) %>% -->
+<!--   filter(!word %in% ita_stop_words$word, -->
+<!--          str_detect(word, "[[:alpha:]]"),  -->
+<!--          nchar(word) > 1, -->
+<!--          !word %in% c("rt", "http", "https", "gt") -->
+<!--          ) -->
+<!-- ``` -->
+
+
+<!-- Thanks @MrFlick for the solution [link](https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value) -->
+<!-- ```{r calc_mostused} -->
+<!-- # filtered tweets with percent times a word has been used -->
+<!-- ftweet_words <- tweet_words %>%  -->
+<!--   count(word, screenName, sort = TRUE) %>%  -->
+<!--   group_by(screenName) %>%  -->
+<!--   mutate(perc = n/sum(n)) %>%  -->
+<!--   filter(perc >= 0.003)  -->
+
+<!-- new_order <-  -->
+<!--   ftweet_words %>%  -->
+<!--   do(data_frame(al=levels(reorder(interaction(.$screenName, .$word, drop=TRUE), .$perc)))) %>%  -->
+<!--   pull(al) -->
+
+<!-- ``` -->
+
+
+
+<!-- ```{r most_used_words, fig.height= 8} -->
+<!-- ftweet_words %>%  -->
+<!--   mutate(al = factor(interaction(screenName, word), levels=new_order)) %>% -->
+<!--   ggplot(aes(x = perc, y = al, col = screenName)) + -->
+<!--     geom_point() +  -->
+<!--     facet_grid(screenName~., scales = 'free_y') + -->
+<!--     scale_y_discrete(breaks= new_order, labels=gsub("^.*\\.", "", new_order)) + -->
+<!--     scale_x_continuous(labels = percent_format()) + -->
+<!--     labs(y = NULL, x = "Percent time used") + -->
+<!--     theme(plot.title = element_text(hjust = 0.5),  -->
+<!--           legend.position = "none")  -->
+
+<!-- ``` -->
+
+
+<!-- ```{r} -->
+<!-- ftweet_words %>%  -->
+<!--     ggplot(aes(x = 1, y = 1, size = perc, label = word, col = screenName)) + -->
+<!--       geom_text_repel(segment.size = NA, force = 100) + -->
+<!--       scale_size(range = c(2, 15), guide = FALSE) + -->
+<!--       scale_y_continuous(breaks = NULL) + -->
+<!--       scale_x_continuous(breaks = NULL) + -->
+<!--       labs(x = '', y = '') + -->
+<!--       theme(legend.position = "none", panel.background = element_rect(fill = NA)) + -->
+<!--       facet_grid(screenName~., scales = 'free_y', labeller = labeller(screenName = NULL))  -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- library(udpipe) -->
+<!-- str(twdat) -->
+<!-- udmodel <- udpipe_download_model(language = "italian") -->
+<!-- udmodel <- udpipe_load_model(file = udmodel$file_model) -->
+<!-- x <- udpipe_annotate(udmodel,  -->
+<!--                     twdat$text) -->
+<!-- x <- as_data_frame(x) -->
+
+<!-- str(x) -->
+
+<!-- ``` -->
+
+
+<!-- ```{r get_sentiment} -->
+<!-- install_github("gragusa/sentiment-lang-italian") -->
+<!-- ``` -->
+
+

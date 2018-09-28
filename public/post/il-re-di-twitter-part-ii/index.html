@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Il Re di Twitter? (PART II) - MuayData blog</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="C1au6i0_HH" />
+  <meta name="description" content="true  1 Premessa Nella prima parte di questa serie di [posts]{https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/} ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (twitteR) abbiamo analizzato l’uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell’apparente causualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e cosí siamo stati in grado di rilevare trends e differenze nell’uso di twitter da parte dei 3 politici italiani." />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.48" />
+
+
+<link rel="canonical" href="/post/il-re-di-twitter-part-ii/" />
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Il Re di Twitter? (PART II)" />
+<meta property="og:description" content="true  1 Premessa Nella prima parte di questa serie di [posts]{https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/} ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (twitteR) abbiamo analizzato l’uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell’apparente causualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e cosí siamo stati in grado di rilevare trends e differenze nell’uso di twitter da parte dei 3 politici italiani." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/il-re-di-twitter-part-ii/" /><meta property="article:published_time" content="2018-09-20T00:31:20-04:00"/>
+<meta property="article:modified_time" content="2018-09-20T00:31:20-04:00"/>
+<meta itemprop="name" content="Il Re di Twitter? (PART II)">
+<meta itemprop="description" content="true  1 Premessa Nella prima parte di questa serie di [posts]{https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/} ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (twitteR) abbiamo analizzato l’uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell’apparente causualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e cosí siamo stati in grado di rilevare trends e differenze nell’uso di twitter da parte dei 3 politici italiani.">
+
+
+<meta itemprop="dateModified" content="2018-09-20T00:31:20-04:00" />
+<meta itemprop="wordCount" content="1236">
+
+
+
+<meta itemprop="keywords" content="textmining,twitter,twitteR," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Il Re di Twitter? (PART II)"/>
+<meta name="twitter:description" content="true  1 Premessa Nella prima parte di questa serie di [posts]{https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/} ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (twitteR) abbiamo analizzato l’uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell’apparente causualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e cosí siamo stati in grado di rilevare trends e differenze nell’uso di twitter da parte dei 3 politici italiani."/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">muaydata</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/">Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/categories/">Categories</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/about/">About</a>
+          
+        
+      </li>
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      muaydata
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/">Home</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/about/">About</a>
+          
+
+        
+
+      </li>
+    
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Il Re di Twitter? (PART II)</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2018-09-20 </span>
+        <div class="post-category">
+            <a href="/categories/r/"> R </a>
+            
+          </div>
+        <span class="more-meta"> 1236 words </span>
+          <span class="more-meta"> 6 min read </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <div id="TOC">
+true
+</div>
+
+<div id="premessa" class="section level1">
+<h1><span class="header-section-number">1</span> Premessa</h1>
+<p>Nella prima parte di questa serie di [posts]{<a href="https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/" class="uri">https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/</a>} ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (<em>twitteR</em>) abbiamo analizzato l’uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell’apparente causualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e cosí siamo stati in grado di rilevare trends e differenze nell’uso di twitter da parte dei 3 politici italiani. In questa <strong>seconda parte</strong> andremo ad analizzare il contenuto dei vari tweets utilizzando un pacchetto di <em>textmining</em> estremamemente popolare in <em>R</em>: <a href="https://www.tidytextmining.com/"><em>tidytext</em></a>.</p>
+<p>In particolare andremo a xxxxxx</p>
+</div>
+<div id="analisi" class="section level1">
+<h1><span class="header-section-number">2</span> Analisi</h1>
+<div id="preparazione-dati-e-tokenizzazione" class="section level2">
+<h2><span class="header-section-number">2.1</span> Preparazione dati e tokenizzazione</h2>
+<p>La procedura per ottenere un detafrane/tibble dei tweets dei 3 politici (a cui assegneremo il nome di <strong>twdat</strong>) è spiegata in dettaglio nel mio primo [post]{<a href="https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/" class="uri">https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/</a>} della serie e nella <a href="https://medium.com/@GalarnykMichael/accessing-data-from-Twitter-api-using-r-part1-b387a1c7d3e">guida di Michael Galarnyk</a>.</p>
+<p>Queste sono le librerie che ci serviranno per le nostre analisi.</p>
+<pre class="r"><code>library(&quot;ggridges&quot;)
+library(&quot;ggrepel&quot;)
+library(&quot;lubridate&quot;)
+library(&quot;RSQLite&quot;)
+library(&quot;scales&quot;)
+library(&quot;stringr&quot;)
+library(&quot;tidytext&quot;)
+library(&quot;tidyverse&quot;)
+library(&quot;xtable&quot;)</code></pre>
+<!-- Database -->
+<p>Il primo processo necessario prima di qualunque analisi del testo è la <em>tokenizzazione</em>, ovvero l’estrazione di singole unità di testo con significato, nel nostro caso singole parole. Il codice sottostante che è stato adattato da quello di <a href="http://varianceexplained.org/r/trump-tweets/">David Robinson</a> serve a:</p>
+<ul>
+<li>tokenizzare il contenuto della colonna <em>text</em> del dataframe <em>twdat</em> attraverso il comando <em>unnest_tokens</em>.</li>
+<li>rimuove <em>stop words</em>, ossia parole come articoli e proposizioni prive di significato.</li>
+<li>rimuovere links, simboli e particelle come <em>https</em> o <em>rt</em>.</li>
+</ul>
+<pre class="r"><code>reg &lt;- &quot;([^[:alpha:]\\d#@&#39;]|&#39;(?![[:alpha:]\\d#@]))&quot;
+ita_stop_words &lt;- get_stopwords(language = &quot;it&quot;, source = &quot;snowball&quot;)
+
+tweet_words &lt;- twdat %&gt;%
+  filter(!str_detect(text, &#39;^&quot;&#39;)) %&gt;%
+  mutate(text = str_replace_all(text, &quot;(http|https)://t.co/[A-Za-z\\d]+|&amp;amp;&quot;, &quot;&quot;)) %&gt;% # remove links
+  mutate(text = str_replace_all(text, &quot;[[:punct:]]&quot;, &quot; &quot;)) %&gt;% # removes punctualization
+  unnest_tokens(word, text, token = &quot;regex&quot;, pattern = reg) %&gt;% 
+  filter(!word %in% ita_stop_words$word,
+         str_detect(word, &quot;[[:alpha:]]&quot;),
+         nchar(word) &gt; 1,
+         !word %in% c(&quot;rt&quot;, &quot;http&quot;, &quot;https&quot;, &quot;gt&quot;) #remove other not meanigful words
+         )</code></pre>
+<p>Il risultato viene assegnato ad un dataframe/tibble in cui le informazioni originali di <em>twdat</em> vengono conservate ma la colonna che contiene tweets (chiamata <em>text</em>) viene sostituita con una chiamata <em>word</em> in cui ogni osservazione è una singola parola (*one token per row“). Abbiamo a questo punto un dataframe/tibble con cui possiamo lavorare.</p>
+</div>
+<div id="frequenza-delle-parole" class="section level2">
+<h2><span class="header-section-number">2.2</span> Frequenza delle parole</h2>
+<p>Come prima cosa andiamo a vedere quali sono le parole più usate dai 3 politici. Calcoliamo in percentuale quanto ogni parola è stata rispetto al totale per ogni politico, prendiamo le prime 20 parole e assegnamole ad un nuovo database/tibble (<em>ftweet_words</em>).</p>
+<pre class="r"><code># filtered tweets with percent times a word has been used
+ftweet_words &lt;- tweet_words %&gt;%
+  count(word, screenName, sort = TRUE) %&gt;%
+  group_by(screenName) %&gt;%
+  mutate(perc = n/sum(n)) %&gt;%
+  do(top_n(.,20, perc)) </code></pre>
+<p>Per il grafico che disegneremo con <em>ggplot</em> è necessario ordinare i levelli della colonna <em>word</em> a seconda di quella delle percentuali <em>perc</em> per ognuono dei politici (grazie <span class="citation">[@MrFlick]</span>(<a href="https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value" class="uri">https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value</a>))</p>
+<pre class="r"><code>new_order &lt;-
+  ftweet_words %&gt;%
+  do(data_frame(al=levels(reorder(interaction(.$screenName, .$word, drop=TRUE), .$perc)))) %&gt;%
+  pull(al)</code></pre>
+<p>Creaiamo a questo punto il grafico in cui le parole usate da ogni politico saronno nell’asse delle Y e la loro frequenza in quello delle X.</p>
+<pre class="r"><code>ftweet_words %&gt;%
+  mutate(al = factor(interaction(screenName, word), levels = new_order)) %&gt;%
+  ggplot(aes(x = perc, y = al, col = screenName)) +
+    geom_point() +
+    facet_grid(screenName~., scales = &#39;free_y&#39;) +
+    scale_y_discrete(breaks = new_order, labels = gsub(&quot;^.*\\.&quot;, &quot;&quot;, new_order)) + # this is to sort the y-axis breaks by the order created in previous chunck
+    scale_x_continuous(labels = percent_format()) +
+    scale_color_manual(values = c(&quot;#FFC125&quot;,&quot;#00BA38&quot;,&quot;#F8766D&quot;)) +
+    labs(y = NULL, x = &quot;Percent time used&quot;, caption =&quot;fig.1&quot;) +
+    theme(plot.title = element_text(hjust = 0.5),
+          legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2018-09-23-re_twitter-2_files/figure-html/fig1_most_used_words-1.png" width="384" /> <strong>Per Salvini e Martina la parola più usata è il proprio nome/screenname</strong>, mentre per <strong>Di Maio è il partito</strong> “m5s”. In termini di frequenza d’uso, <strong>il primo riferimento diretto Di Maio a se stesso (<em>luigidimaio</em>) è all’undicesimo posto</strong>, <strong>dopo 6 riferimemnti al partito e al suo fondatore</strong>(fig.1). È approssimativamente <strong>3 volte più probabile trovare le parole <em>renzi</em> o <em>pd</em> in un tweet di Di Maio che la parola <em>luigidimaio</em></strong>!. Sono tuttavia neccessarie alcune precisazioni per meglio interpretare questi risultati. Il riferimento a se stessi dei vari politici è di <em>natura</em> diversa. Per Salvini il riferimento al proprio nome è nell’ambito dell’hastag #salvini mentre per Martina e Di Maio è dovuta a retweet in cui vengono citati (<em><span class="citation">@luididimaio</span></em>, <em><span class="citation">@maumartina</span></em>).</p>
+<pre class="r"><code>ids_self &lt;- tweet_words %&gt;% 
+  filter(screenName == &quot;matteosalvinimi&quot;, word == &quot;salvini&quot;) %&gt;% 
+  select(id)
+
+twdat %&gt;% 
+  filter( id %in% unlist(ids_self)) %&gt;% 
+  select(text) </code></pre>
+<pre><code>## # A tibble: 1,095 x 1
+##    text                                                                    
+##    &lt;chr&gt;                                                                   
+##  1 #Salvini: Oggi UE ha dato l’ennesima prova di essere un ente ASTRATTO. …
+##  2 #Salvini: Reati commessi da stranieri l’anno scorso sono 241mila, 700 a…
+##  3 #Salvini: Torneremo a far valere l’INTERESSE NAZIONALE.  #Zapping #RaiR…
+##  4 #Salvini: A bordo della nave daremo tutta l’assistenza necessaria. Ma n…
+##  5 #Salvini: un solo Paese non può gestire tutto quello che sta accadendo.…
+##  6 #Salvini: sto valutando di fare procedure di riconoscimento prima ancor…
+##  7 #Salvini: Con 5 milioni di italiani in povertà assoluta, di cui 1,2mili…
+##  8 #Salvini: per quanto mi riguarda dalla #Diciotti non sbarca NESSUNO. #Z…
+##  9 &quot;“Salvini muori”.\nAnche a Rovereto i vigliacchi cercano, inutilmente, …
+## 10 #Salvini: Pedaggi autostradali tra i più cari in assoluto. Follia. #non…
+## # ... with 1,085 more rows</code></pre>
+<p>I temi/slogan (agricoltura, primagliitaliani) e espressioni (amici) care ai 3 politici emergono tra le 20 parole più usate, con alcuni elementi chiaramente in comune. Quali sono questi temi condivisi? Andiamo a vedere con alcuni semplici comandi per intersecare le tre liste di parole.</p>
+<pre class="r"><code># Split dataframe, select words  column and create a list. Intersect list
+words_m &lt;- map(split.data.frame(ftweet_words , ftweet_words$screenName),
+              function(x) {ungroup(x) %&gt;% select(word)})
+
+xtable(Reduce(intersect, words_m), type =&quot;html&quot;, caption = &quot;tab.2&quot;)</code></pre>
+<pre><code>## % latex table generated in R 3.5.1 by xtable 1.8-3 package
+## % Wed Sep 26 22:44:37 2018
+## \begin{table}[ht]
+## \centering
+## \begin{tabular}{rl}
+##   \hline
+##  &amp; word \\ 
+##   \hline
+## 1 &amp; italia \\ 
+##   2 &amp; oggi \\ 
+##   3 &amp; pd \\ 
+##    \hline
+## \end{tabular}
+## \caption{tab.2} 
+## \end{table}</code></pre>
+<p>I temi in comune tra i 3 politici sono la patria (<em>italia</em>), il presente (<em>ora</em>) e il…partito democratico (<em>pd</em>).</p>
+<p>La parola con frequenza più alta viene usata dalle 1 alle 4 volte ogni 100 parole. Anche</p>
+<pre class="r"><code>tweet_words %&gt;% 
+  group_by(id) %&gt;% 
+  summarize(tweet_words = n()) %&gt;% 
+  select(tweet_words) %&gt;% 
+  summary() %&gt;% 
+  xtable(type = &quot;html&quot;, caption = &quot;tab.1&quot;)</code></pre>
+<pre><code>## % latex table generated in R 3.5.1 by xtable 1.8-3 package
+## % Wed Sep 26 22:44:37 2018
+## \begin{table}[ht]
+## \centering
+## \begin{tabular}{rl}
+##   \hline
+##  &amp;  tweet\_words \\ 
+##   \hline
+## X &amp; Min.   : 1.000   \\ 
+##   X.1 &amp; 1st Qu.: 8.000   \\ 
+##   X.2 &amp; Median :10.000   \\ 
+##   X.3 &amp; Mean   : 9.405   \\ 
+##   X.4 &amp; 3rd Qu.:11.000   \\ 
+##   X.5 &amp; Max.   :26.000   \\ 
+##    \hline
+## \end{tabular}
+## \caption{tab.1} 
+## \end{table}</code></pre>
+<pre class="r"><code>ftweet_words %&gt;%
+    ggplot(aes(x = 1, y = 1, size = perc, label = word, col = screenName)) +
+      geom_text_repel(segment.size = NA, force = 100) +
+      scale_size(range = c(2, 15), guide = FALSE) +
+      scale_y_continuous(breaks = NULL) +
+      scale_x_continuous(breaks = NULL) +
+      scale_color_manual(values = c(&quot;#FFC125&quot;,&quot;#00BA38&quot;,&quot;#F8766D&quot;)) +
+      labs(x = &#39;&#39;, y = &#39;&#39;, caption=&quot;fig.2&quot;) +
+      theme(legend.position = &quot;none&quot;, panel.background = element_rect(fill = NA)) +
+      facet_grid(screenName~., scales = &#39;free_y&#39;, labeller = labeller(screenName = NULL))</code></pre>
+<p><img src="/post/2018-09-23-re_twitter-2_files/figure-html/worcloud-1.png" width="288" /></p>
+</div>
+<div id="andamento-nel-tempo" class="section level2">
+<h2><span class="header-section-number">2.3</span> Andamento nel tempo</h2>
+<pre class="r"><code># formattable(as_data_frame(date_lim) , align = &quot;cc&quot;)</code></pre>
+<pre class="r"><code># library(udpipe)
+# str(twdat)
+# udmodel &lt;- udpipe_download_model(language = &quot;italian&quot;)
+# udmodel &lt;- udpipe_load_model(file = udmodel$file_model)
+# x &lt;- udpipe_annotate(udmodel,
+#                     twdat$text)
+# x &lt;- as_data_frame(x)
+# 
+# str(x)</code></pre>
+<pre class="r"><code># install_github(&quot;gragusa/sentiment-lang-italian&quot;)</code></pre>
+</div>
+</div>
+
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/textmining/">textmining</a>
+          <a href="/tags/twitter/">twitter</a>
+          <a href="/tags/twitter/">twitteR</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/il-re-di-twitter-parte-i/">
+            <span class="next-text nav-default">Il Re di Twitter? (PARTE I)</span>
+            <span class="prev-text nav-mobile">Next</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+
+  <div class="disqus-comment">
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+    Show Disqus Comments
+  </div>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    function load_disqus() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'muaydata';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+      $('#load_disqus').remove();
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+  </noscript>
+  
+  </div>
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="clau6ioHH@email.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://twitter.com/c1au6i0" rel="me noopener" class="iconfont icon-twitter"
+        title="twitter" target="_blank">
+      </a>
+  <a href="/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+  </div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">
+        c1au6i0HH
+        
+      </span></span>
+
+  
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
