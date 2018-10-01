@@ -245,10 +245,6 @@ knitr::kable(date_lim_screenName , align = "cc",  caption = "tab.3: Interval of 
 
 ```
 
-
-
-
-
 Per poter comparare l'attività dei 3 politici è necessario andare a monitorare lo stesso intervallo di tempo.
 
 Il codice sottostante serve a trovare qual'è l'intervallo in mesi in cui disponiamo di dati per tutti e 3 i politici.
@@ -274,7 +270,7 @@ timeline_abs <- twdat %>%
   filter(created >= date_lim[1], created <= date_lim[2]) %>% 
   count(month_r, screenName) %>% 
   ggplot(aes(x = month_r, y = n,  group = screenName, col = screenName)) +
-  geom_point( size = 2.5) +
+  geom_point(size = 2.5) +
   geom_line () +
   scale_x_datetime(labels = date_format("%Y %b"), date_breaks= "1 months") +
   scale_y_continuous(breaks = seq(0, 700, 100), labels = seq(0, 700, 100)) +

@@ -69,8 +69,7 @@ Il codice sottostante che è stato adattato da quello di [David Robinson](http:/
 reg <- "([^[:alpha:]\\d#@']|'(?![[:alpha:]\\d#@]))"
 ita_stop_words <- get_stopwords(language = "it", source = "snowball")
 
-tweet_words <- twdat %>%
-  filter(!str_detect(text, '^"')) %>%
+twwords <- twdat %>%
   mutate(text = str_replace_all(text, "(http|https)://t.co/[A-Za-z\\d]+|&amp;", "")) %>% # remove links
   mutate(text = str_replace_all(text, "[[:punct:]]", " ")) %>% # removes punctualization
   unnest_tokens(word, text, token = "regex", pattern = reg) %>% 
@@ -85,22 +84,24 @@ Il risultato viene assegnato ad un dataframe/tibble in cui le informazioni origi
 
 ## Frequenza delle parole
 
-Come prima cosa andiamo a vedere quali sono le parole più usate dai 3 politici. Calcoliamo in percentuale quanto ogni parola è stata rispetto al totale per ogni politico, prendiamo le prime 20 parole e assegnamole ad un nuovo database/tibble (*ftweet_words*).
+Come prima cosa andiamo a vedere quali sono le parole più usate dai 3 politici. Calcoliamo in percentuale il numero di tweets per ogni politico che contiene le varie parole, prendiamo le prime 20 parole e assegnamole ad un nuovo database/tibble (*f_twwords*).
 
 ```{r calc_mostused}
 # filtered tweets with percent times a word has been used
-ftweet_words <- tweet_words %>%
-  count(word, screenName, sort = TRUE) %>%
-  group_by(screenName) %>%
-  mutate(perc = n/sum(n)) %>%
-  do(top_n(.,20, perc)) 
+f_twwords <- twwords %>%
+  group_by(screenName) %>% 
+  mutate(tot = length(unique(id))) %>% # here calculate the tot number of tweets 
+  group_by(word, screenName) %>% 
+  summarize(n = length(unique(id)), perc = length(unique(id))/first(tot)) %>% 
+  group_by(screenName) %>% 
+  do(top_n(., 20, perc)) # discovered top_n thanks to We are R-Ladies
 ```
 
 Per il grafico che disegneremo con  *ggplot* è necessario ordinare i levelli della colonna *word*  a seconda di quella delle percentuali *perc* per ognuono dei politici (grazie [@MrFlick](https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value))
 
 ```{r order_factors}
 new_order <-
-  ftweet_words %>%
+  f_twwords %>%
   do(data_frame(al=levels(reorder(interaction(.$screenName, .$word, drop=TRUE), .$perc)))) %>%
   pull(al)
 ```
@@ -108,63 +109,38 @@ new_order <-
 Creaiamo a questo punto il grafico in cui le parole usate da ogni politico saronno nell'asse delle Y e la loro frequenza in quello delle X.
 
 ```{r fig1_most_used_words, fig.height=6, fig.width=4}
-ftweet_words %>%
+f_twwords %>% # frequency tweet words
   mutate(al = factor(interaction(screenName, word), levels = new_order)) %>%
   ggplot(aes(x = perc, y = al, col = screenName)) +
     geom_point() +
     facet_grid(screenName~., scales = 'free_y') +
     scale_y_discrete(breaks = new_order, labels = gsub("^.*\\.", "", new_order)) + # this is to sort the y-axis breaks by the order created in previous chunck
-    scale_x_continuous(labels = percent_format()) +
+    scale_x_continuous(labels = percent) +
     scale_color_manual(values = c("#FFC125","#00BA38","#F8766D")) +
-    labs(y = NULL, x = "Percent time used", caption ="fig.1") +
+    labs(y = NULL, x = "Percent tweets", caption ="fig.1") +
     theme(plot.title = element_text(hjust = 0.5),
           legend.position = "none")
 ```
-__Per Salvini e Martina la parola più usata è il proprio nome/screenname__, mentre per __Di Maio è il partito__ "m5s". In termini di frequenza d'uso, __il primo riferimento diretto Di Maio a se stesso (*luigidimaio*) è all'undicesimo posto__,  __dopo 6 riferimemnti al partito e al suo fondatore__(fig.1). È approssimativamente __3 volte più probabile trovare le parole _renzi_ o _pd_ in un tweet di Di Maio che la parola *luigidimaio*__!. 
-  Sono tuttavia neccessarie alcune precisazioni per meglio interpretare questi risultati. Il riferimento a se stessi dei vari politici è di *natura* diversa. Per Salvini il riferimento al proprio nome è nell'ambito dell'hastag #salvini mentre per Martina e Di Maio è dovuta a retweet in cui vengono citati (*@luididimaio*, *@maumartina*).
+__Per Salvini e Martina la parola più usata è il proprio nome/screenname__, mentre per __Di Maio è il partito__ "m5s". __Salvini menziona il suo nome in circa 1 tweets ogni 3, Martina e Di Maio menziona in 1 tweet ogni 10 nome e partito, rispettivamente__.
+
+In termini di frequenza d'uso, __il primo riferimento diretto Di Maio a se stesso (*luigidimaio*) è all'undicesimo posto__, dopo 6 riferimemnti al partito e al suo fondatore (fig.1). __È inoltre più probabile trovare le parole _renzi_ o _pd_ in un tweet di Di Maio che la parola *luigidimaio*!È più probabile trovare la parola *pd* in un tweet di Di Maio che di Martina*__
+
+Sono tuttavia neccessarie alcune precisazioni per meglio interpretare questi risultati. Il riferimento a se stessi dei vari politici è di *natura* diversa. Per Salvini il riferimento al proprio nome è nell'ambito dell'hastag *#salvini* mentre per Martina e Di Maio in retweet di tweets in cui vengono citati (*@luididimaio*, *@maumartina*).
   
-```{r check_tweets, include=FALSE, echo=FALSE, eval=FALSE}
-ids_self <- tweet_words %>% 
-  filter(screenName == "luigidimaio", word == "m5s") %>% 
-  select(id)
-
-twdat %>% 
-  filter( id %in% unlist(ids_self)) %>% 
-  select(text) 
+I temi/slogan (*agricoltura, primagliitaliani*) e espressioni (*amici*) cari ai 3 politici emergono tra le 20 parole più usate, con alcuni elementi chiaramente in comune. Quali sono questi temi condivisi? Andiamo a vedere con alcuni semplici comandi per intersecare le tre liste di parole.
   
-```
-```{r}
-ids_self <- tweet_words %>% 
-  filter(screenName == "matteosalvinimi", word == "salvini") %>% 
-  select(id)
-
-twdat %>% 
-  filter( id %in% unlist(ids_self)) %>% 
-  select(text) 
-
-```
-  I temi/slogan (agricoltura, primagliitaliani) e espressioni (amici) care ai 3 politici emergono tra le 20 parole più usate, con alcuni elementi chiaramente in comune. Quali sono questi temi condivisi? Andiamo a vedere con alcuni semplici comandi per intersecare le tre liste di parole.
 ```{r tab.2_words_in_common}
 # Split dataframe, select words  column and create a list. Intersect list
-words_m <- map(split.data.frame(ftweet_words , ftweet_words$screenName),
+words_m <- map(split.data.frame(f_twwords , f_twwords$screenName),
               function(x) {ungroup(x) %>% select(word)})
 
 xtable(Reduce(intersect, words_m), type ="html", caption = "tab.2")
 ```
-I temi in comune tra i 3 politici sono la patria (*italia*), il presente (*ora*) e il...partito democratico (*pd*). 
+I temi in comune tra i 3 politici sono la patria (*italia*), il presente (*ora*) e il...__partito democratico __(*pd*). I sostenitori del m5s sono stati spesso bersaglio di satira per l'uso considerato eccessivo di riferimenti e confronti con il PD [link](https://www.lercio.it/maturita-al-posto-della-soluzione-scrive-e-allora-il-pd-e-passa-la-prova-di-matematica/)
 
-La parola con frequenza più alta viene usata dalle 1 alle 4 volte ogni 100 parole. Anche 
-```{r tab.1_n_words_tweet}
-tweet_words %>% 
-  group_by(id) %>% 
-  summarize(tweet_words = n()) %>% 
-  select(tweet_words) %>% 
-  summary() %>% 
-  xtable(type = "html", caption = "tab.1")
-```
-
-```{r worcloud, fig.height=3, fig.width=3}
-ftweet_words %>%
+In fine ricorriamo ad una diverso strumento, il *wordcloud* per rappresentare in maniera più accattivante i dati della figura precedente. Ho usato la libreria *ggrepel* per evitare che le parole si sovrappongano.
+```{r fig.2_worcloud, fig.height=3, fig.width=3}
+f_twwords %>%
     ggplot(aes(x = 1, y = 1, size = perc, label = word, col = screenName)) +
       geom_text_repel(segment.size = NA, force = 100) +
       scale_size(range = c(2, 15), guide = FALSE) +
@@ -176,40 +152,95 @@ ftweet_words %>%
       facet_grid(screenName~., scales = 'free_y', labeller = labeller(screenName = NULL))
 ```
 
-## Andamento nel tempo
+Nella fig.2, le parole più usate hanno una dimensione maggiore.
+
+## Andamento 
 
 
+Le anilisi svolte finora hanno evidenziato una serie di parole che con più probabilità di altre si trovano nei tweets dei tre politici. La parola *pd* è una di queste, non soltanto per Martina ma anche per Salvini e Di Maio. Una così alta attenzione per il PD da parte di forze politiche ormai al governo mi ha sorpreso. Tuttavia un importante fattore era stato finora ignorato: __il tempo!__
 
-```{r minimum_max_date, include=FALSE}
-date_lim <- twdat %>%
-  group_by(screenName) %>%   
-  dplyr::summarize(min_tw = ceiling_date(min(created), "month"), max_tw = floor_date(max(created) , "month")) %>% # we do approximate dates to have full months
-  dplyr::summarize(min_shared = max(min_tw), max_shared = min(max_tw))
 
-date_lim <- as_datetime(unlist(date_lim), tz = "CET")
+Nelle analisi precedenti abbiamo infatti accorpando insieme gli ultimi ≈3200 tweets di ogni politico, andando perciò a *riassumere*  periodi di attività anche molti lunghi, e nel caso Di Maio, circa 4 anni.
+
+Andiamo perciò a vedere come l'uso di alcune delle parole più frequenti è cambiato nel tempo. Iniziamo con creare la lista delle 7 parole (*top_w*) piu usate da ogni politico come mostrato in fig.1. Per motivi pratici salveremo queste informazioni in un unica lista (invece che un dataframe) in cui ogni elemento sara nel formato nomepolitico_parola.
+
+```{r select_top_w}
+top_w <- f_twwords %>%   
+  group_by(screenName) %>% 
+  do(top_n(., 7, perc)) %>% 
+  unite(screenName_word, screenName, word, remove = FALSE) %>% 
+  ungroup() %>% 
+  select(screenName_word) %>% 
+  unlist()
+```
+A questo punto calcoliamo per ogni mese il totale dei tweets, il numero di tweets che contengono ogni diversa parola, e relativa percentuale. Uniamo anche per questo dataframe/tibble la colonna con il nome del politico e quella delle parole.
+
+```{r calc_word_month}
+fm_twwords <- twwords %>% 
+  mutate(month_r = floor_date(created, "month") ) %>%
+  group_by(screenName, month_r) %>% 
+  mutate(tot = length(unique(id))) %>% # here calculate the tot number of tweets 
+  group_by(word, screenName, month_r) %>% 
+  summarize(n = length(unique(id)), perc = length(unique(id))/first(tot), tot = first(tot)) %>% 
+  unite(screenName_word, screenName, word, remove = FALSE) %>%  #
+  arrange(screenName, desc(perc))
 ```
 
 
-```{r tab.2_sharedtime}
-# formattable(as_data_frame(date_lim) , align = "cc")
+Mi concentrerò sui dati di Di Maio che sono quelli in cui un analisi temporale rivela informazioni più interessanti. Il codice sottostante serve filtrare il dataframe/tibble con le 7 parole più usate (*top_w*), a riordinarle per il grafico e codificarle in modo da creare delle appropriate *facet* nel grafico successivo.
+
+```{r recode_facet}
+fm_twwords_lm <- fm_twwords %>% 
+  filter(screenName == "luigidimaio", screenName_word %in% top_w)
+
+wd_lm <- c("beppe",
+           "stelle",
+           "m5s",
+           "governo", 
+           "oggi",
+           "pd",
+           "renzi"
+           ) 
+fm_twwords_lm$word <- factor(fm_twwords_lm$word, levels = wd_lm)
+letters_lm <- LETTERS [c(1, 1, 1, 2, 2, 3, 3)]
+
+newnames <- setNames(letters_lm, wd_lm)
+
+fm_twwords_lm[, "facet_w"] <- newnames[fm_twwords_lm$word]
 ```
 
+Andiamo finalmente a rappresentare graficamente le 7 parole più usate da Di Maio in funzione del tempo, oer gli ultimi 3 anni.
 
-
-
-```{r}
-# library(udpipe)
-# str(twdat)
-# udmodel <- udpipe_download_model(language = "italian")
-# udmodel <- udpipe_load_model(file = udmodel$file_model)
-# x <- udpipe_annotate(udmodel,
-#                     twdat$text)
-# x <- as_data_frame(x)
-# 
-# str(x)
-
+```{r fig.3_timeline_dimaioa, fig.width=3, fig.height=3}
+  fm_twwords_lm  %>% 
+  filter(month_r >= ymd("2014-07-01"), month_r <=  ymd("2018-07-01")) %>% 
+  ggplot(aes(x = month_r, y = perc,  col = word)) +
+  geom_point(size = 2) +
+  geom_line() +
+  scale_x_datetime(labels = date_format("%Y %b"), date_breaks= "4 months") +
+  scale_y_continuous(labels = percent) +
+  scale_color_brewer(type = "qual", palette = 2) +
+  facet_grid(facet_w ~ .) +
+  theme(plot.subtitle = element_text(vjust = 1),
+    plot.caption = element_text(vjust = 1),
+    axis.text.x = element_text(vjust = 0.25, angle = 45)
+    ) +
+  labs(x = NULL, y = NULL, col = NULL, group = NULL, title = "Di Maio - Percent tweets", caption= "  ") +
+  theme(plot.title = element_text(hjust = 0.5)) 
 ```
 
+```{r tab.3_lastword_lm}
+fm_twwords  %>% 
+  filter(screenName == "luigidimaio") %>% 
+  filter(month_r >= ymd("2018-04-01"), month_r <= ymd("2018-07-01")) %>% 
+  mutate(perc = perc * 100) %>% 
+  group_by(month_r) %>% 
+  do(top_n(., 2, perc)) %>% 
+  arrange(desc(month_r)) %>% 
+  select(word, month_r, n, tot, perc) %>% 
+  xtable(type ="html", caption = "tab.3")
+```
+## Popolarità e parole
 
 ```{r get_sentiment}
 # install_github("gragusa/sentiment-lang-italian")
