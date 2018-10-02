@@ -68,7 +68,7 @@
 
 <meta itemprop="datePublished" content="2018-09-12T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-09-12T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="3231">
+<meta itemprop="wordCount" content="3230">
 
 
 
@@ -276,7 +276,7 @@
             <a href="/categories/r/"> R </a>
             
           </div>
-        <span class="more-meta"> 3231 words </span>
+        <span class="more-meta"> 3230 words </span>
           <span class="more-meta"> 16 min read </span>
 
         
@@ -853,7 +853,7 @@ knitr<span class="o">::</span>kable<span class="p">(</span>as_data_frame<span cl
   filter<span class="p">(</span>created <span class="o">&gt;=</span> date_lim<span class="p">[</span><span class="m">1</span><span class="p">],</span> created <span class="o">&lt;=</span> date_lim<span class="p">[</span><span class="m">2</span><span class="p">])</span> <span class="o">%&gt;%</span> 
   count<span class="p">(</span>month_r<span class="p">,</span> screenName<span class="p">)</span> <span class="o">%&gt;%</span> 
   ggplot<span class="p">(</span>aes<span class="p">(</span>x <span class="o">=</span> month_r<span class="p">,</span> y <span class="o">=</span> n<span class="p">,</span>  group <span class="o">=</span> screenName<span class="p">,</span> col <span class="o">=</span> screenName<span class="p">))</span> <span class="o">+</span>
-  geom_point<span class="p">(</span> size <span class="o">=</span> <span class="m">2.5</span><span class="p">)</span> <span class="o">+</span>
+  geom_point<span class="p">(</span>size <span class="o">=</span> <span class="m">2.5</span><span class="p">)</span> <span class="o">+</span>
   geom_line <span class="p">()</span> <span class="o">+</span>
   scale_x_datetime<span class="p">(</span>labels <span class="o">=</span> date_format<span class="p">(</span><span class="s">&#34;%Y %b&#34;</span><span class="p">),</span> date_breaks<span class="o">=</span> <span class="s">&#34;1 months&#34;</span><span class="p">)</span> <span class="o">+</span>
   scale_y_continuous<span class="p">(</span>breaks <span class="o">=</span> <span class="kp">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">700</span><span class="p">,</span> <span class="m">100</span><span class="p">),</span> labels <span class="o">=</span> <span class="kp">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">700</span><span class="p">,</span> <span class="m">100</span><span class="p">))</span> <span class="o">+</span>

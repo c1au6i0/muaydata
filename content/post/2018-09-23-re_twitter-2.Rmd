@@ -24,7 +24,7 @@ reward: no
 mathjax: no
 ---
 # Premessa
-Nella prima parte di questa serie di [posts]{https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/} ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (*twitteR*) abbiamo analizzato l'uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell'apparente causualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e cosí siamo stati in grado di rilevare trends e differenze nell'uso di twitter da parte dei 3 politici italiani. In questa __seconda parte__ andremo ad analizzare il contenuto dei vari tweets utilizzando un pacchetto di *textmining* estremamemente popolare in *R*: [*tidytext*](https://www.tidytextmining.com/). 
+Nella prima parte di questa serie di [posts]{https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/} ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (*twitteR*) abbiamo analizzato l'uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell'apparente causualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e così siamo stati in grado di rilevare trends e differenze nell'uso di twitter da parte dei 3 politici italiani. In questa __seconda parte__ andremo ad analizzare il contenuto dei vari tweets utilizzando un pacchetto di *textmining* estremamemente popolare in *R*: [*tidytext*](https://www.tidytextmining.com/). 
 
 In particolare andremo a xxxxxx
 
@@ -97,7 +97,7 @@ f_twwords <- twwords %>%
   do(top_n(., 20, perc)) # discovered top_n thanks to We are R-Ladies
 ```
 
-Per il grafico che disegneremo con  *ggplot* è necessario ordinare i levelli della colonna *word*  a seconda di quella delle percentuali *perc* per ognuono dei politici (grazie [@MrFlick](https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value))
+Per il grafico che disegneremo con  *ggplot* è necessario ordinare i levelli della colonna *word*  a seconda di quella delle percentuali *perc* per ognuno dei politici (grazie [@MrFlick](https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value))
 
 ```{r order_factors}
 new_order <-
@@ -106,7 +106,7 @@ new_order <-
   pull(al)
 ```
 
-Creaiamo a questo punto il grafico in cui le parole usate da ogni politico saronno nell'asse delle Y e la loro frequenza in quello delle X.
+Creiamo a questo punto il grafico in cui le parole usate da ogni politico saranno nell'asse delle Y e la loro frequenza in quello delle X.
 
 ```{r fig1_most_used_words, fig.height=6, fig.width=4}
 f_twwords %>% # frequency tweet words
@@ -123,7 +123,7 @@ f_twwords %>% # frequency tweet words
 ```
 __Per Salvini e Martina la parola più usata è il proprio nome/screenname__, mentre per __Di Maio è il partito__ "m5s". __Salvini menziona il suo nome in circa 1 tweets ogni 3, Martina e Di Maio menziona in 1 tweet ogni 10 nome e partito, rispettivamente__.
 
-In termini di frequenza d'uso, __il primo riferimento diretto Di Maio a se stesso (*luigidimaio*) è all'undicesimo posto__, dopo 6 riferimemnti al partito e al suo fondatore (fig.1). __È inoltre più probabile trovare le parole _renzi_ o _pd_ in un tweet di Di Maio che la parola *luigidimaio*!È più probabile trovare la parola *pd* in un tweet di Di Maio che di Martina*__
+In termini di frequenza d'uso, __il primo riferimento diretto Di Maio a se stesso (*luigidimaio*) è all'undicesimo posto__, dopo 6 riferimemnti al partito e al suo fondatore (fig.1). __È inoltre più probabile trovare le parole _renzi_ o _pd_ in un tweet di Di Maio che la parola *luigidimaio*! È più probabile trovare la parola *pd* in un tweet di Di Maio che im uno di Martina*__
 
 Sono tuttavia neccessarie alcune precisazioni per meglio interpretare questi risultati. Il riferimento a se stessi dei vari politici è di *natura* diversa. Per Salvini il riferimento al proprio nome è nell'ambito dell'hastag *#salvini* mentre per Martina e Di Maio in retweet di tweets in cui vengono citati (*@luididimaio*, *@maumartina*).
   
@@ -186,7 +186,6 @@ fm_twwords <- twwords %>%
   arrange(screenName, desc(perc))
 ```
 
-
 Mi concentrerò sui dati di Di Maio che sono quelli in cui un analisi temporale rivela informazioni più interessanti. Il codice sottostante serve filtrare il dataframe/tibble con le 7 parole più usate (*top_w*), a riordinarle per il grafico e codificarle in modo da creare delle appropriate *facet* nel grafico successivo.
 
 ```{r recode_facet}
@@ -209,7 +208,7 @@ newnames <- setNames(letters_lm, wd_lm)
 fm_twwords_lm[, "facet_w"] <- newnames[fm_twwords_lm$word]
 ```
 
-Andiamo finalmente a rappresentare graficamente le 7 parole più usate da Di Maio in funzione del tempo, oer gli ultimi 3 anni.
+Andiamo finalmente a rappresentare graficamente le 7 parole più usate da Di Maio in funzione del tempo, per gli ultimi 3 anni.
 
 ```{r fig.3_timeline_dimaioa, fig.width=3, fig.height=3}
   fm_twwords_lm  %>% 
@@ -225,9 +224,11 @@ Andiamo finalmente a rappresentare graficamente le 7 parole più usate da Di Mai
     plot.caption = element_text(vjust = 1),
     axis.text.x = element_text(vjust = 0.25, angle = 45)
     ) +
-  labs(x = NULL, y = NULL, col = NULL, group = NULL, title = "Di Maio - Percent tweets", caption= "  ") +
+  labs(x = NULL, y = NULL, col = NULL, group = NULL, title = "Di Maio - Percent tweets", caption= "fig.3") +
   theme(plot.title = element_text(hjust = 0.5)) 
 ```
+Le 3 parole relative al movimento e al suo fondatore (fig.3 panello A) sono state usate da Di Maio costantemente ma con frequenza variabile negli ultimi anni. È tuttavia negli ultimi mesi (da Marzo a Luglio 2018) che il loro uso è andato quasi scomparendo. Questa dimunizione si è verifica nel concitato periodo di consultazioni con il quirinale e formazione del governo (Febraio-Giugno), mesi in cui la parola *governo* è usata ogni 2-5 tweets (fig.3 panello B). 
+E le parole relative al PD? I riferimenti da parte di Di Maio al attuale partito di opposizione (parola *pd*) e al suo precedente segretario (parola *renzi*) se pure a tratti molto frequenti tra il 2014-2017, scompaiono completamente da Aprile 2018 e nel periodo in cui il movimento a 5 stelle diventa partito di maggioranza (fig.3 pannello C). 
 
 ```{r tab.3_lastword_lm}
 fm_twwords  %>% 

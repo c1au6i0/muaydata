@@ -27,6 +27,32 @@ Dwight Schultz.&lt;/p&gt;
     </item>
     
     <item>
+      <title>prova</title>
+      <link>/post/prova/</link>
+      <pubDate>Sun, 30 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/prova/</guid>
+      
+        <description>&lt;p&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;kp&#34;&gt;cat&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#39;prova&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;## prova&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+      
+    </item>
+    
+    <item>
       <title>Il Re di Twitter? (PART II)</title>
       <link>/post/il-re-di-twitter-part-ii/</link>
       <pubDate>Thu, 20 Sep 2018 00:31:20 -0400</pubDate>
@@ -39,7 +65,7 @@ true
 
 &lt;div id=&#34;premessa&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;&lt;span class=&#34;header-section-number&#34;&gt;1&lt;/span&gt; Premessa&lt;/h1&gt;
-&lt;p&gt;Nella prima parte di questa serie di [posts]{&lt;a href=&#34;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/&#34; class=&#34;uri&#34;&gt;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/&lt;/a&gt;} ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (&lt;em&gt;twitteR&lt;/em&gt;) abbiamo analizzato l’uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell’apparente causualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e cosí siamo stati in grado di rilevare trends e differenze nell’uso di twitter da parte dei 3 politici italiani. In questa &lt;strong&gt;seconda parte&lt;/strong&gt; andremo ad analizzare il contenuto dei vari tweets utilizzando un pacchetto di &lt;em&gt;textmining&lt;/em&gt; estremamemente popolare in &lt;em&gt;R&lt;/em&gt;: &lt;a href=&#34;https://www.tidytextmining.com/&#34;&gt;&lt;em&gt;tidytext&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Nella prima parte di questa serie di [posts]{&lt;a href=&#34;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/&#34; class=&#34;uri&#34;&gt;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/&lt;/a&gt;} ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (&lt;em&gt;twitteR&lt;/em&gt;) abbiamo analizzato l’uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell’apparente causualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e così siamo stati in grado di rilevare trends e differenze nell’uso di twitter da parte dei 3 politici italiani. In questa &lt;strong&gt;seconda parte&lt;/strong&gt; andremo ad analizzare il contenuto dei vari tweets utilizzando un pacchetto di &lt;em&gt;textmining&lt;/em&gt; estremamemente popolare in &lt;em&gt;R&lt;/em&gt;: &lt;a href=&#34;https://www.tidytextmining.com/&#34;&gt;&lt;em&gt;tidytext&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;In particolare andremo a xxxxxx&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;analisi&#34; class=&#34;section level1&#34;&gt;
@@ -67,8 +93,7 @@ library(&amp;quot;xtable&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;reg &amp;lt;- &amp;quot;([^[:alpha:]\\d#@&amp;#39;]|&amp;#39;(?![[:alpha:]\\d#@]))&amp;quot;
 ita_stop_words &amp;lt;- get_stopwords(language = &amp;quot;it&amp;quot;, source = &amp;quot;snowball&amp;quot;)
 
-tweet_words &amp;lt;- twdat %&amp;gt;%
-  filter(!str_detect(text, &amp;#39;^&amp;quot;&amp;#39;)) %&amp;gt;%
+twwords &amp;lt;- twdat %&amp;gt;%
   mutate(text = str_replace_all(text, &amp;quot;(http|https)://t.co/[A-Za-z\\d]+|&amp;amp;amp;&amp;quot;, &amp;quot;&amp;quot;)) %&amp;gt;% # remove links
   mutate(text = str_replace_all(text, &amp;quot;[[:punct:]]&amp;quot;, &amp;quot; &amp;quot;)) %&amp;gt;% # removes punctualization
   unnest_tokens(word, text, token = &amp;quot;regex&amp;quot;, pattern = reg) %&amp;gt;% 
@@ -81,60 +106,43 @@ tweet_words &amp;lt;- twdat %&amp;gt;%
 &lt;/div&gt;
 &lt;div id=&#34;frequenza-delle-parole&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;2.2&lt;/span&gt; Frequenza delle parole&lt;/h2&gt;
-&lt;p&gt;Come prima cosa andiamo a vedere quali sono le parole più usate dai 3 politici. Calcoliamo in percentuale quanto ogni parola è stata rispetto al totale per ogni politico, prendiamo le prime 20 parole e assegnamole ad un nuovo database/tibble (&lt;em&gt;ftweet_words&lt;/em&gt;).&lt;/p&gt;
+&lt;p&gt;Come prima cosa andiamo a vedere quali sono le parole più usate dai 3 politici. Calcoliamo in percentuale il numero di tweets per ogni politico che contiene le varie parole, prendiamo le prime 20 parole e assegnamole ad un nuovo database/tibble (&lt;em&gt;f_twwords&lt;/em&gt;).&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# filtered tweets with percent times a word has been used
-ftweet_words &amp;lt;- tweet_words %&amp;gt;%
-  count(word, screenName, sort = TRUE) %&amp;gt;%
-  group_by(screenName) %&amp;gt;%
-  mutate(perc = n/sum(n)) %&amp;gt;%
-  do(top_n(.,20, perc)) &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Per il grafico che disegneremo con &lt;em&gt;ggplot&lt;/em&gt; è necessario ordinare i levelli della colonna &lt;em&gt;word&lt;/em&gt; a seconda di quella delle percentuali &lt;em&gt;perc&lt;/em&gt; per ognuono dei politici (grazie &lt;span class=&#34;citation&#34;&gt;[@MrFlick]&lt;/span&gt;(&lt;a href=&#34;https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value&#34; class=&#34;uri&#34;&gt;https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value&lt;/a&gt;))&lt;/p&gt;
+f_twwords &amp;lt;- twwords %&amp;gt;%
+  group_by(screenName) %&amp;gt;% 
+  mutate(tot = length(unique(id))) %&amp;gt;% # here calculate the tot number of tweets 
+  group_by(word, screenName) %&amp;gt;% 
+  summarize(n = length(unique(id)), perc = length(unique(id))/first(tot)) %&amp;gt;% 
+  group_by(screenName) %&amp;gt;% 
+  do(top_n(., 20, perc)) # discovered top_n thanks to We are R-Ladies&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Per il grafico che disegneremo con &lt;em&gt;ggplot&lt;/em&gt; è necessario ordinare i levelli della colonna &lt;em&gt;word&lt;/em&gt; a seconda di quella delle percentuali &lt;em&gt;perc&lt;/em&gt; per ognuno dei politici (grazie &lt;span class=&#34;citation&#34;&gt;[@MrFlick]&lt;/span&gt;(&lt;a href=&#34;https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value&#34; class=&#34;uri&#34;&gt;https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value&lt;/a&gt;))&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;new_order &amp;lt;-
-  ftweet_words %&amp;gt;%
+  f_twwords %&amp;gt;%
   do(data_frame(al=levels(reorder(interaction(.$screenName, .$word, drop=TRUE), .$perc)))) %&amp;gt;%
   pull(al)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Creaiamo a questo punto il grafico in cui le parole usate da ogni politico saronno nell’asse delle Y e la loro frequenza in quello delle X.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ftweet_words %&amp;gt;%
+&lt;p&gt;Creiamo a questo punto il grafico in cui le parole usate da ogni politico saranno nell’asse delle Y e la loro frequenza in quello delle X.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;f_twwords %&amp;gt;% # frequency tweet words
   mutate(al = factor(interaction(screenName, word), levels = new_order)) %&amp;gt;%
   ggplot(aes(x = perc, y = al, col = screenName)) +
     geom_point() +
     facet_grid(screenName~., scales = &amp;#39;free_y&amp;#39;) +
     scale_y_discrete(breaks = new_order, labels = gsub(&amp;quot;^.*\\.&amp;quot;, &amp;quot;&amp;quot;, new_order)) + # this is to sort the y-axis breaks by the order created in previous chunck
-    scale_x_continuous(labels = percent_format()) +
+    scale_x_continuous(labels = percent) +
     scale_color_manual(values = c(&amp;quot;#FFC125&amp;quot;,&amp;quot;#00BA38&amp;quot;,&amp;quot;#F8766D&amp;quot;)) +
-    labs(y = NULL, x = &amp;quot;Percent time used&amp;quot;, caption =&amp;quot;fig.1&amp;quot;) +
+    labs(y = NULL, x = &amp;quot;Percent tweets&amp;quot;, caption =&amp;quot;fig.1&amp;quot;) +
     theme(plot.title = element_text(hjust = 0.5),
           legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-23-re_twitter-2_files/figure-html/fig1_most_used_words-1.png&#34; width=&#34;384&#34; /&gt; &lt;strong&gt;Per Salvini e Martina la parola più usata è il proprio nome/screenname&lt;/strong&gt;, mentre per &lt;strong&gt;Di Maio è il partito&lt;/strong&gt; “m5s”. In termini di frequenza d’uso, &lt;strong&gt;il primo riferimento diretto Di Maio a se stesso (&lt;em&gt;luigidimaio&lt;/em&gt;) è all’undicesimo posto&lt;/strong&gt;, &lt;strong&gt;dopo 6 riferimemnti al partito e al suo fondatore&lt;/strong&gt;(fig.1). È approssimativamente &lt;strong&gt;3 volte più probabile trovare le parole &lt;em&gt;renzi&lt;/em&gt; o &lt;em&gt;pd&lt;/em&gt; in un tweet di Di Maio che la parola &lt;em&gt;luigidimaio&lt;/em&gt;&lt;/strong&gt;!. Sono tuttavia neccessarie alcune precisazioni per meglio interpretare questi risultati. Il riferimento a se stessi dei vari politici è di &lt;em&gt;natura&lt;/em&gt; diversa. Per Salvini il riferimento al proprio nome è nell’ambito dell’hastag #salvini mentre per Martina e Di Maio è dovuta a retweet in cui vengono citati (&lt;em&gt;&lt;span class=&#34;citation&#34;&gt;@luididimaio&lt;/span&gt;&lt;/em&gt;, &lt;em&gt;&lt;span class=&#34;citation&#34;&gt;@maumartina&lt;/span&gt;&lt;/em&gt;).&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ids_self &amp;lt;- tweet_words %&amp;gt;% 
-  filter(screenName == &amp;quot;matteosalvinimi&amp;quot;, word == &amp;quot;salvini&amp;quot;) %&amp;gt;% 
-  select(id)
-
-twdat %&amp;gt;% 
-  filter( id %in% unlist(ids_self)) %&amp;gt;% 
-  select(text) &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 1,095 x 1
-##    text                                                                    
-##    &amp;lt;chr&amp;gt;                                                                   
-##  1 #Salvini: Oggi UE ha dato l’ennesima prova di essere un ente ASTRATTO. …
-##  2 #Salvini: Reati commessi da stranieri l’anno scorso sono 241mila, 700 a…
-##  3 #Salvini: Torneremo a far valere l’INTERESSE NAZIONALE.  #Zapping #RaiR…
-##  4 #Salvini: A bordo della nave daremo tutta l’assistenza necessaria. Ma n…
-##  5 #Salvini: un solo Paese non può gestire tutto quello che sta accadendo.…
-##  6 #Salvini: sto valutando di fare procedure di riconoscimento prima ancor…
-##  7 #Salvini: Con 5 milioni di italiani in povertà assoluta, di cui 1,2mili…
-##  8 #Salvini: per quanto mi riguarda dalla #Diciotti non sbarca NESSUNO. #Z…
-##  9 &amp;quot;“Salvini muori”.\nAnche a Rovereto i vigliacchi cercano, inutilmente, …
-## 10 #Salvini: Pedaggi autostradali tra i più cari in assoluto. Follia. #non…
-## # ... with 1,085 more rows&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I temi/slogan (agricoltura, primagliitaliani) e espressioni (amici) care ai 3 politici emergono tra le 20 parole più usate, con alcuni elementi chiaramente in comune. Quali sono questi temi condivisi? Andiamo a vedere con alcuni semplici comandi per intersecare le tre liste di parole.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-23-re_twitter-2_files/figure-html/fig1_most_used_words-1.png&#34; width=&#34;384&#34; /&gt; &lt;strong&gt;Per Salvini e Martina la parola più usata è il proprio nome/screenname&lt;/strong&gt;, mentre per &lt;strong&gt;Di Maio è il partito&lt;/strong&gt; “m5s”. &lt;strong&gt;Salvini menziona il suo nome in circa 1 tweets ogni 3, Martina e Di Maio menziona in 1 tweet ogni 10 nome e partito, rispettivamente&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;In termini di frequenza d’uso, &lt;strong&gt;il primo riferimento diretto Di Maio a se stesso (&lt;em&gt;luigidimaio&lt;/em&gt;) è all’undicesimo posto&lt;/strong&gt;, dopo 6 riferimemnti al partito e al suo fondatore (fig.1). __È inoltre più probabile trovare le parole &lt;em&gt;renzi&lt;/em&gt; o &lt;em&gt;pd&lt;/em&gt; in un tweet di Di Maio che la parola &lt;em&gt;luigidimaio&lt;/em&gt;! È più probabile trovare la parola &lt;em&gt;pd&lt;/em&gt; in un tweet di Di Maio che im uno di Martina*__&lt;/p&gt;
+&lt;p&gt;Sono tuttavia neccessarie alcune precisazioni per meglio interpretare questi risultati. Il riferimento a se stessi dei vari politici è di &lt;em&gt;natura&lt;/em&gt; diversa. Per Salvini il riferimento al proprio nome è nell’ambito dell’hastag &lt;em&gt;#salvini&lt;/em&gt; mentre per Martina e Di Maio in retweet di tweets in cui vengono citati (&lt;em&gt;&lt;span class=&#34;citation&#34;&gt;@luididimaio&lt;/span&gt;&lt;/em&gt;, &lt;em&gt;&lt;span class=&#34;citation&#34;&gt;@maumartina&lt;/span&gt;&lt;/em&gt;).&lt;/p&gt;
+&lt;p&gt;I temi/slogan (&lt;em&gt;agricoltura, primagliitaliani&lt;/em&gt;) e espressioni (&lt;em&gt;amici&lt;/em&gt;) cari ai 3 politici emergono tra le 20 parole più usate, con alcuni elementi chiaramente in comune. Quali sono questi temi condivisi? Andiamo a vedere con alcuni semplici comandi per intersecare le tre liste di parole.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Split dataframe, select words  column and create a list. Intersect list
-words_m &amp;lt;- map(split.data.frame(ftweet_words , ftweet_words$screenName),
+words_m &amp;lt;- map(split.data.frame(f_twwords , f_twwords$screenName),
               function(x) {ungroup(x) %&amp;gt;% select(word)})
 
 xtable(Reduce(intersect, words_m), type =&amp;quot;html&amp;quot;, caption = &amp;quot;tab.2&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## % latex table generated in R 3.5.1 by xtable 1.8-3 package
-## % Wed Sep 26 22:44:37 2018
+## % Tue Oct  2 00:19:24 2018
 ## \begin{table}[ht]
 ## \centering
 ## \begin{tabular}{rl}
@@ -148,33 +156,9 @@ xtable(Reduce(intersect, words_m), type =&amp;quot;html&amp;quot;, caption = &am
 ## \end{tabular}
 ## \caption{tab.2} 
 ## \end{table}&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I temi in comune tra i 3 politici sono la patria (&lt;em&gt;italia&lt;/em&gt;), il presente (&lt;em&gt;ora&lt;/em&gt;) e il…partito democratico (&lt;em&gt;pd&lt;/em&gt;).&lt;/p&gt;
-&lt;p&gt;La parola con frequenza più alta viene usata dalle 1 alle 4 volte ogni 100 parole. Anche&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tweet_words %&amp;gt;% 
-  group_by(id) %&amp;gt;% 
-  summarize(tweet_words = n()) %&amp;gt;% 
-  select(tweet_words) %&amp;gt;% 
-  summary() %&amp;gt;% 
-  xtable(type = &amp;quot;html&amp;quot;, caption = &amp;quot;tab.1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## % latex table generated in R 3.5.1 by xtable 1.8-3 package
-## % Wed Sep 26 22:44:37 2018
-## \begin{table}[ht]
-## \centering
-## \begin{tabular}{rl}
-##   \hline
-##  &amp;amp;  tweet\_words \\ 
-##   \hline
-## X &amp;amp; Min.   : 1.000   \\ 
-##   X.1 &amp;amp; 1st Qu.: 8.000   \\ 
-##   X.2 &amp;amp; Median :10.000   \\ 
-##   X.3 &amp;amp; Mean   : 9.405   \\ 
-##   X.4 &amp;amp; 3rd Qu.:11.000   \\ 
-##   X.5 &amp;amp; Max.   :26.000   \\ 
-##    \hline
-## \end{tabular}
-## \caption{tab.1} 
-## \end{table}&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ftweet_words %&amp;gt;%
+&lt;p&gt;I temi in comune tra i 3 politici sono la patria (&lt;em&gt;italia&lt;/em&gt;), il presente (&lt;em&gt;ora&lt;/em&gt;) e il…&lt;strong&gt;partito democratico &lt;/strong&gt;(&lt;em&gt;pd&lt;/em&gt;). I sostenitori del m5s sono stati spesso bersaglio di satira per l’uso considerato eccessivo di riferimenti e confronti con il PD &lt;a href=&#34;https://www.lercio.it/maturita-al-posto-della-soluzione-scrive-e-allora-il-pd-e-passa-la-prova-di-matematica/&#34;&gt;link&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;In fine ricorriamo ad una diverso strumento, il &lt;em&gt;wordcloud&lt;/em&gt; per rappresentare in maniera più accattivante i dati della figura precedente. Ho usato la libreria &lt;em&gt;ggrepel&lt;/em&gt; per evitare che le parole si sovrappongano.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;f_twwords %&amp;gt;%
     ggplot(aes(x = 1, y = 1, size = perc, label = word, col = screenName)) +
       geom_text_repel(segment.size = NA, force = 100) +
       scale_size(range = c(2, 15), guide = FALSE) +
@@ -184,20 +168,97 @@ xtable(Reduce(intersect, words_m), type =&amp;quot;html&amp;quot;, caption = &am
       labs(x = &amp;#39;&amp;#39;, y = &amp;#39;&amp;#39;, caption=&amp;quot;fig.2&amp;quot;) +
       theme(legend.position = &amp;quot;none&amp;quot;, panel.background = element_rect(fill = NA)) +
       facet_grid(screenName~., scales = &amp;#39;free_y&amp;#39;, labeller = labeller(screenName = NULL))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-23-re_twitter-2_files/figure-html/worcloud-1.png&#34; width=&#34;288&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-23-re_twitter-2_files/figure-html/fig.2_worcloud-1.png&#34; width=&#34;288&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Nella fig.2, le parole più usate hanno una dimensione maggiore.&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;andamento-nel-tempo&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;2.3&lt;/span&gt; Andamento nel tempo&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# formattable(as_data_frame(date_lim) , align = &amp;quot;cc&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# library(udpipe)
-# str(twdat)
-# udmodel &amp;lt;- udpipe_download_model(language = &amp;quot;italian&amp;quot;)
-# udmodel &amp;lt;- udpipe_load_model(file = udmodel$file_model)
-# x &amp;lt;- udpipe_annotate(udmodel,
-#                     twdat$text)
-# x &amp;lt;- as_data_frame(x)
-# 
-# str(x)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;andamento&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;2.3&lt;/span&gt; Andamento&lt;/h2&gt;
+&lt;p&gt;Le anilisi svolte finora hanno evidenziato una serie di parole che con più probabilità di altre si trovano nei tweets dei tre politici. La parola &lt;em&gt;pd&lt;/em&gt; è una di queste, non soltanto per Martina ma anche per Salvini e Di Maio. Una così alta attenzione per il PD da parte di forze politiche ormai al governo mi ha sorpreso. Tuttavia un importante fattore era stato finora ignorato: &lt;strong&gt;il tempo!&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Nelle analisi precedenti abbiamo infatti accorpando insieme gli ultimi ≈3200 tweets di ogni politico, andando perciò a &lt;em&gt;riassumere&lt;/em&gt; periodi di attività anche molti lunghi, e nel caso Di Maio, circa 4 anni.&lt;/p&gt;
+&lt;p&gt;Andiamo perciò a vedere come l’uso di alcune delle parole più frequenti è cambiato nel tempo. Iniziamo con creare la lista delle 7 parole (&lt;em&gt;top_w&lt;/em&gt;) piu usate da ogni politico come mostrato in fig.1. Per motivi pratici salveremo queste informazioni in un unica lista (invece che un dataframe) in cui ogni elemento sara nel formato nomepolitico_parola.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;top_w &amp;lt;- f_twwords %&amp;gt;%   
+  group_by(screenName) %&amp;gt;% 
+  do(top_n(., 7, perc)) %&amp;gt;% 
+  unite(screenName_word, screenName, word, remove = FALSE) %&amp;gt;% 
+  ungroup() %&amp;gt;% 
+  select(screenName_word) %&amp;gt;% 
+  unlist()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A questo punto calcoliamo per ogni mese il totale dei tweets, il numero di tweets che contengono ogni diversa parola, e relativa percentuale. Uniamo anche per questo dataframe/tibble la colonna con il nome del politico e quella delle parole.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fm_twwords &amp;lt;- twwords %&amp;gt;% 
+  mutate(month_r = floor_date(created, &amp;quot;month&amp;quot;) ) %&amp;gt;%
+  group_by(screenName, month_r) %&amp;gt;% 
+  mutate(tot = length(unique(id))) %&amp;gt;% # here calculate the tot number of tweets 
+  group_by(word, screenName, month_r) %&amp;gt;% 
+  summarize(n = length(unique(id)), perc = length(unique(id))/first(tot), tot = first(tot)) %&amp;gt;% 
+  unite(screenName_word, screenName, word, remove = FALSE) %&amp;gt;%  #
+  arrange(screenName, desc(perc))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Mi concentrerò sui dati di Di Maio che sono quelli in cui un analisi temporale rivela informazioni più interessanti. Il codice sottostante serve filtrare il dataframe/tibble con le 7 parole più usate (&lt;em&gt;top_w&lt;/em&gt;), a riordinarle per il grafico e codificarle in modo da creare delle appropriate &lt;em&gt;facet&lt;/em&gt; nel grafico successivo.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fm_twwords_lm &amp;lt;- fm_twwords %&amp;gt;% 
+  filter(screenName == &amp;quot;luigidimaio&amp;quot;, screenName_word %in% top_w)
+
+wd_lm &amp;lt;- c(&amp;quot;beppe&amp;quot;,
+           &amp;quot;stelle&amp;quot;,
+           &amp;quot;m5s&amp;quot;,
+           &amp;quot;governo&amp;quot;, 
+           &amp;quot;oggi&amp;quot;,
+           &amp;quot;pd&amp;quot;,
+           &amp;quot;renzi&amp;quot;
+           ) 
+fm_twwords_lm$word &amp;lt;- factor(fm_twwords_lm$word, levels = wd_lm)
+letters_lm &amp;lt;- LETTERS [c(1, 1, 1, 2, 2, 3, 3)]
+
+newnames &amp;lt;- setNames(letters_lm, wd_lm)
+
+fm_twwords_lm[, &amp;quot;facet_w&amp;quot;] &amp;lt;- newnames[fm_twwords_lm$word]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Andiamo finalmente a rappresentare graficamente le 7 parole più usate da Di Maio in funzione del tempo, per gli ultimi 3 anni.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;  fm_twwords_lm  %&amp;gt;% 
+  filter(month_r &amp;gt;= ymd(&amp;quot;2014-07-01&amp;quot;), month_r &amp;lt;=  ymd(&amp;quot;2018-07-01&amp;quot;)) %&amp;gt;% 
+  ggplot(aes(x = month_r, y = perc,  col = word)) +
+  geom_point(size = 2) +
+  geom_line() +
+  scale_x_datetime(labels = date_format(&amp;quot;%Y %b&amp;quot;), date_breaks= &amp;quot;4 months&amp;quot;) +
+  scale_y_continuous(labels = percent) +
+  scale_color_brewer(type = &amp;quot;qual&amp;quot;, palette = 2) +
+  facet_grid(facet_w ~ .) +
+  theme(plot.subtitle = element_text(vjust = 1),
+    plot.caption = element_text(vjust = 1),
+    axis.text.x = element_text(vjust = 0.25, angle = 45)
+    ) +
+  labs(x = NULL, y = NULL, col = NULL, group = NULL, title = &amp;quot;Di Maio - Percent tweets&amp;quot;, caption= &amp;quot;fig.3&amp;quot;) +
+  theme(plot.title = element_text(hjust = 0.5)) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-23-re_twitter-2_files/figure-html/fig.3_timeline_dimaioa-1.png&#34; width=&#34;288&#34; /&gt; Le 3 parole relative al movimento e al suo fondatore (fig.3 panello A) sono state usate da Di Maio costantemente ma con frequenza variabile negli ultimi anni. È tuttavia negli ultimi mesi (da Marzo a Luglio 2018) che il loro uso è andato quasi scomparendo. Questa dimunizione si è verifica nel concitato periodo di consultazioni con il quirinale e formazione del governo (Febraio-Giugno), mesi in cui la parola &lt;em&gt;governo&lt;/em&gt; è usata ogni 2-5 tweets (fig.3 panello B). E le parole relative al PD? I riferimenti da parte di Di Maio al attuale partito di opposizione (parola &lt;em&gt;pd&lt;/em&gt;) e al suo precedente segretario (parola &lt;em&gt;renzi&lt;/em&gt;) se pure a tratti molto frequenti tra il 2014-2017, scompaiono completamente da Aprile 2018 e nel periodo in cui il movimento a 5 stelle diventa partito di maggioranza (fig.3 pannello C).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fm_twwords  %&amp;gt;% 
+  filter(screenName == &amp;quot;luigidimaio&amp;quot;) %&amp;gt;% 
+  filter(month_r &amp;gt;= ymd(&amp;quot;2018-04-01&amp;quot;), month_r &amp;lt;= ymd(&amp;quot;2018-07-01&amp;quot;)) %&amp;gt;% 
+  mutate(perc = perc * 100) %&amp;gt;% 
+  group_by(month_r) %&amp;gt;% 
+  do(top_n(., 2, perc)) %&amp;gt;% 
+  arrange(desc(month_r)) %&amp;gt;% 
+  select(word, month_r, n, tot, perc) %&amp;gt;% 
+  xtable(type =&amp;quot;html&amp;quot;, caption = &amp;quot;tab.3&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## % latex table generated in R 3.5.1 by xtable 1.8-3 package
+## % Tue Oct  2 00:19:56 2018
+## \begin{table}[ht]
+## \centering
+## \begin{tabular}{rlrrrr}
+##   \hline
+##  &amp;amp; word &amp;amp; month\_r &amp;amp; n &amp;amp; tot &amp;amp; perc \\ 
+##   \hline
+## 1 &amp;amp; byebyevitalizi &amp;amp; 1530403200.00 &amp;amp;  22 &amp;amp;  44 &amp;amp; 50.00 \\ 
+##   2 &amp;amp; mov5stelle &amp;amp; 1530403200.00 &amp;amp;  11 &amp;amp;  44 &amp;amp; 25.00 \\ 
+##   3 &amp;amp; giuseppeconteit &amp;amp; 1527811200.00 &amp;amp;   5 &amp;amp;  16 &amp;amp; 31.25 \\ 
+##   4 &amp;amp; presidente &amp;amp; 1527811200.00 &amp;amp;   3 &amp;amp;  16 &amp;amp; 18.75 \\ 
+##   5 &amp;amp; governo &amp;amp; 1525132800.00 &amp;amp;  10 &amp;amp;  22 &amp;amp; 45.45 \\ 
+##   6 &amp;amp; ilmiovotoconta &amp;amp; 1525132800.00 &amp;amp;   7 &amp;amp;  22 &amp;amp; 31.82 \\ 
+##   7 &amp;amp; movimento &amp;amp; 1522540800.00 &amp;amp;   6 &amp;amp;  21 &amp;amp; 28.57 \\ 
+##   8 &amp;amp; stelle &amp;amp; 1522540800.00 &amp;amp;   6 &amp;amp;  21 &amp;amp; 28.57 \\ 
+##    \hline
+## \end{tabular}
+## \caption{tab.3} 
+## \end{table}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;popolarita-e-parole&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;span class=&#34;header-section-number&#34;&gt;2.4&lt;/span&gt; Popolarità e parole&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# install_github(&amp;quot;gragusa/sentiment-lang-italian&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -745,7 +806,7 @@ knitr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;kable&lt;span class=&#34;p&#34
   filter&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;created &lt;span class=&#34;o&#34;&gt;&amp;gt;=&lt;/span&gt; date_lim&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;],&lt;/span&gt; created &lt;span class=&#34;o&#34;&gt;&amp;lt;=&lt;/span&gt; date_lim&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
   count&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;month_r&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
   ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; month_r&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; n&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;  group &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
-  geom_point&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_point&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
   geom_line &lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
   scale_x_datetime&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; date_format&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;%Y %b&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; date_breaks&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;1 months&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
   scale_y_continuous&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;breaks &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;seq&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;700&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;seq&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;700&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
