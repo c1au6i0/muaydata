@@ -16,6 +16,12 @@ output:
       fig_caption: yes
       toc: true
       number_sections: true
+      comment: yes
+toc: yes
+autoCollapseToc: no
+contentCopyright: no
+reward: no
+mathjax: no
 ---
 # Premessa
 
@@ -77,14 +83,13 @@ Otteniamo i 3200 tweets di luigidimaio, maumartina, matteosalvinimi usando il co
 ```r
 pol <- list("luigidimaio", "matteosalvinimi", "maumartina")
 
-twdat <- as_tibble(map_dfr( pol,
-                            function(x) twListToDF(userTimeline(x,  includeRts = TRUE, n = 3200))))
+twdat <- as_tibble(map_dfr(pol, function(x) twListToDF(userTimeline(x, includeRts = TRUE, 
+    n = 3200))))
 
- 
-twdat$statusSource <- str_extract(twdat$statusSource, 
-                  "iPhone|Web Client|Android|TweetDeck|iPad|Hootsuite|Facebook|IoResto|Websites|IFTTT|Instagram|iOS|Periscope") # this is to extract the important info
 
-twdat$created <-  with_tz(twdat$created , "CET") # time-zone
+twdat$statusSource <- str_extract(twdat$statusSource, "iPhone|Web Client|Android|TweetDeck|iPad|Hootsuite|Facebook|IoResto|Websites|IFTTT|Instagram|iOS|Periscope")  # this is to extract the important info
+
+twdat$created <- with_tz(twdat$created, "CET")  # time-zone
 ```
 
 OK, abbiamo a questo punto un dataframe/tibble con cui possiamo lavorare.

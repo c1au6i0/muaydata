@@ -16,6 +16,12 @@ output:
       fig_caption: yes
       toc: true
       number_sections: true
+      comment: yes
+toc: yes
+autoCollapseToc: no
+contentCopyright: no
+reward: no
+mathjax: no
 ---
 # Premessa
 
@@ -56,7 +62,7 @@ library("tidyverse")
 
 
 
-```{r twitter_auth,include=FALSE}
+```{r twitter_auth,include=FALSE, eval=FALSE}
 library("twitteR")
 
 API_key <- 	"nbdZkPzjq5WgtHK3yGO28bGuU"
@@ -98,7 +104,7 @@ OK, abbiamo a questo punto un dataframe/tibble con cui possiamo lavorare.
 
 <!-- Database -->
 ```{r database, include=FALSE}
-mydb <- dbConnect(RSQLite::SQLite(), "/Users/NCCU/Documents/R_Projects/muaydata/public/tweets2_polit.sqlite")
+mydb <- dbConnect(RSQLite::SQLite(), "~/Documents/R_Projects/muaydata/public/tweets2_polit.sqlite")
 
 # dbRemoveTable(mydb, "twdat2")
 # dbWriteTable(mydb, "twdat", twdat)

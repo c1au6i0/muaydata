@@ -115,28 +115,26 @@ setup_twitter_oauth&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;API_key&lt;span c
 &lt;p&gt;Otteniamo i 3200 tweets di luigidimaio, maumartina, matteosalvinimi usando il comando &lt;em&gt;userTimeline&lt;/em&gt; e diamo una pulita al dataframe (twdat = tweets data) ottenuto.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;pol &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;luigidimaio&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;matteosalvinimi&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;maumartina&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 
-twdat &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; as_tibble&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;map_dfr&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; pol&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                            &lt;span class=&#34;kr&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; twListToDF&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;userTimeline&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;  includeRts &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; n &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;3200&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))))&lt;/span&gt;
+twdat &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; as_tibble&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;map_dfr&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;pol&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kr&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; twListToDF&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;userTimeline&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; includeRts &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+    n &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;3200&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))))&lt;/span&gt;
 
- 
-twdat&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;statusSource &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; str_extract&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;twdat&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;statusSource&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
-                  &lt;span class=&#34;s&#34;&gt;&amp;#34;iPhone|Web Client|Android|TweetDeck|iPad|Hootsuite|Facebook|IoResto|Websites|IFTTT|Instagram|iOS|Periscope&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# this is to extract the important info&lt;/span&gt;
 
-twdat&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;created &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt;  with_tz&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;twdat&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;created &lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;CET&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# time-zone&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+twdat&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;statusSource &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; str_extract&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;twdat&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;statusSource&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;iPhone|Web Client|Android|TweetDeck|iPad|Hootsuite|Facebook|IoResto|Websites|IFTTT|Instagram|iOS|Periscope&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# this is to extract the important info&lt;/span&gt;
+
+twdat&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;created &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; with_tz&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;twdat&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;created&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;CET&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# time-zone&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;OK, abbiamo a questo punto un dataframe/tibble con cui possiamo lavorare.&lt;/p&gt;
