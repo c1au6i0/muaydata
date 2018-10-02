@@ -10,13 +10,6 @@
   </url>
   
   <url>
-    <loc>/post/prova/</loc>
-    <lastmod>2018-09-30T16:54:42-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>/post/il-re-di-twitter-part-ii/</loc>
     <lastmod>2018-09-20T00:31:20-04:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -52,7 +45,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-09-30T16:54:42-04:00</lastmod>
+    <lastmod>2018-09-20T00:31:20-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
