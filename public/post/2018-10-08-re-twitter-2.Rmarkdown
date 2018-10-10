@@ -12,10 +12,16 @@ tags:
 lastmod: '2018-09-20T00:31:20-04:00'
 output:
   blogdown::html_page:
-      fig_caption: yes
+      # fig_caption: yes
       toc: true
       number_sections: true
+# toc: yes
+# autoCollapseToc: no
+# contentCopyright: no
+# reward: no
+# mathjax: no
 ---
+
 # Premessa
 Nella prima parte di questa serie di [posts] (https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/) ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (*twitteR*) abbiamo analizzato l'uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell'apparente casualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e così siamo stati in grado di rilevare trends e differenze nell'uso di twitter da parte dei 3 politici italiani. In questa __seconda parte__ andremo ad analizzare il contenuto dei vari tweets utilizzando un pacchetto di *textmining* estremamente popolare in *R*: [*tidytext*](https://www.tidytextmining.com/). 
 
@@ -90,7 +96,7 @@ f_twwords <- twwords %>%
   do(top_n(., 20, perc)) # discovered top_n thanks to We are R-Ladies
 ```
 
-Per il grafico che disegneremo con  *ggplot* è necessario ordinare i livelli della colonna *word*  a seconda di quella delle percentuali *perc* per ognuno dei politici (grazie [@MrFlick](https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value))
+Per il grafico che disegneremo con  *ggplot* è necessario ordinare i livelli della colonna *word*  a seconda di quella delle percentuali *perc* per ognuno dei politici (grazie [MrFlick](https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value))
 
 ```{r order_factors}
 new_order <-
@@ -119,7 +125,7 @@ __Per Salvini e Martina la parola più usata è il proprio nome/screenname__, me
 
 In termini di frequenza d'uso, __il primo riferimento diretto Di Maio a se stesso (*luigidimaio*) è all'undicesimo posto__, dopo 6 riferimenti al partito e al suo fondatore (fig.1). __È inoltre più probabile trovare le parole _renzi_ o _pd_ in un tweet di Di Maio che la parola *luigidimaio*! È più probabile trovare la parola *pd* in un tweet di Di Maio che im uno di Martina*__
 
-Sono tuttavia necessarie alcune precisazioni per meglio interpretare questi risultati. Il riferimento a se stessi dei vari politici è di *natura* diversa. Per Salvini il riferimento al proprio nome è nell'ambito dell'hastag *#salvini* mentre per Martina e Di Maio in retweet di tweets in cui vengono citati (*@luididimaio*, *@maumartina*).
+Sono tuttavia necessarie alcune precisazioni per meglio interpretare questi risultati. Il riferimento a se stessi dei vari politici è di *natura* diversa. Per Salvini il riferimento al proprio nome è nell'ambito dell'hastag *#salvini* mentre per Martina e Di Maio in retweet di tweets in cui vengono citati (*luididimaio*, *maumartina*).
   
 I temi/slogan (*agricoltura, primagliitaliani*) e espressioni (*amici*) cari ai 3 politici emergono tra le 20 parole più usate, con alcuni elementi chiaramente in comune. Quali sono questi temi condivisi? Andiamo a vedere con alcuni semplici comandi per intersecare le tre liste di parole.
   

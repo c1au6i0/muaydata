@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Il Re di Twitter? (PARTE I) - MuayData blog</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="C1au6i0_HH" />
+  <meta name="description" content="In questa serie di Posts andremo ad analizzare gli ultimi 3200 tweets di Di Maio, Salvini e Martina. Il mio studio sarà diviso in 2 parti:
+ Nella parte I analizzeremo le abitudini dei 3 leader e scopriremo chi dei 3 è il più attivo, quando durante la giornata, quanto sono popolari i vari tweets e molte altre informazioni. Nella parte II ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.  
+" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.48" />
+
+
+<link rel="canonical" href="/post/re-di-twitter-i/" />
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+<link href="/dist/jane.min.css?v=2.7.0" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Il Re di Twitter? (PARTE I)" />
+<meta property="og:description" content="In questa serie di Posts andremo ad analizzare gli ultimi 3200 tweets di Di Maio, Salvini e Martina. Il mio studio sarà diviso in 2 parti:
+
+
+Nella parte I analizzeremo le abitudini dei 3 leader e  scopriremo chi dei 3 è il più attivo, quando durante la giornata, quanto sono popolari i vari tweets e molte altre informazioni.
+Nella parte II ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.
+
+
+" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/re-di-twitter-i/" /><meta property="article:published_time" content="2018-09-12T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2018-09-12T00:00:00&#43;00:00"/>
+<meta itemprop="name" content="Il Re di Twitter? (PARTE I)">
+<meta itemprop="description" content="In questa serie di Posts andremo ad analizzare gli ultimi 3200 tweets di Di Maio, Salvini e Martina. Il mio studio sarà diviso in 2 parti:
+
+
+Nella parte I analizzeremo le abitudini dei 3 leader e  scopriremo chi dei 3 è il più attivo, quando durante la giornata, quanto sono popolari i vari tweets e molte altre informazioni.
+Nella parte II ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.
+
+
+">
+
+
+<meta itemprop="datePublished" content="2018-09-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2018-09-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="3208">
+
+
+
+<meta itemprop="keywords" content="R,twitteR,twitter,ggplot,textmining," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Il Re di Twitter? (PARTE I)"/>
+<meta name="twitter:description" content="In questa serie di Posts andremo ad analizzare gli ultimi 3200 tweets di Di Maio, Salvini e Martina. Il mio studio sarà diviso in 2 parti:
+
+
+Nella parte I analizzeremo le abitudini dei 3 leader e  scopriremo chi dei 3 è il più attivo, quando durante la giornata, quanto sono popolari i vari tweets e molte altre informazioni.
+Nella parte II ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.
+
+
+"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">muaydata</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/">Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/categories/">Categories</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/about/">About</a>
+          
+        
+      </li>
+    
+  </ul>
+</nav>
+
+
+  
+    
+
+
+
+
+
+
+  <link rel="stylesheet" href="/lib/photoswipe/photoswipe.min.css" />
+  <link rel="stylesheet" href="/lib/photoswipe/default-skin/default-skin.min.css" />
+
+
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      muaydata
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/">Home</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+      <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="/about/">About</a>
+          
+
+        
+
+      </li>
+    
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Il Re di Twitter? (PARTE I)</h1>
+      
+      <div class="post-meta">
+        <span class="post-time"> 2018-09-12 </span>
+        <div class="post-category">
+            <a href="/categories/r/"> R </a>
+            
+          </div>
+        <span class="more-meta"> 3208 words </span>
+          <span class="more-meta"> 16 min read </span>
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#premessa">Premessa</a></li>
+<li><a href="#analisi">Analisi</a>
+<ul>
+<li><a href="#preparazione-e-download-dati">Preparazione e download dati</a></li>
+<li><a href="#quanto-twittano">QuanTo twittano</a></li>
+<li><a href="#quando-twittano">QuanDo twittano</a>
+<ul>
+<li><a href="#ora-e-giorno-della-settimana">Ora e giorno della settimana</a></li>
+<li><a href="#ultimi-mesi">Ultimi mesi</a></li>
+</ul></li>
+<li><a href="#il-successo-dei-tweets">Il successo dei tweets</a>
+<ul>
+<li><a href="#likes-per-tweet">Likes per tweet</a></li>
+<li><a href="#andamento-della-popolarità">Andamento della popolarità</a></li>
+<li><a href="#i-tweets-più-famosi">I tweets più famosi</a></li>
+</ul></li>
+<li><a href="#i-dispositivi-utilizzati">I dispositivi utilizzati</a></li>
+</ul></li>
+<li><a href="#conclusione">Conclusione</a></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>In questa serie di Posts andremo ad analizzare gli ultimi 3200 tweets di Di Maio, Salvini e Martina. Il mio studio sarà diviso in 2 parti:</p>
+
+<ul>
+<li>Nella <strong>parte I</strong> analizzeremo le abitudini dei 3 leader e  scopriremo chi dei 3 è il più attivo, quando durante la giornata, quanto sono popolari i vari tweets e molte altre informazioni.</li>
+<li>Nella <strong>parte II</strong> ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.</li>
+</ul>
+
+<p></p>
+
+<h1 id="premessa">Premessa</h1>
+
+<p>Social media come Twitter sono diventati anche in Italia uno dei mezzi di comunicazione più usati dai politici per rivolgersi direttamente al loro elettorato. Una quantità di informazioni enorme su abitudini, messaggio elettorale e tipo di elettori si nasconde tra quei tweets di poche centinaia di byte. Un famoso post di <a href="http://varianceexplained.org/r/trump-tweets/">David Robinson</a> ha dimostrato come queste informazioni possono essere scovate dall&rsquo;occhio attento del Data Scientist attraverso l&rsquo;uso sapiente <em>R</em> e alcuni sui pacchetti (<a href="https://cran.r-project.org/web/packages/twitteR/index.html"><em>twitteR</em></a>, <em>tidyverse</em> e <em>tidytext</em>).</p>
+
+<p>Eccomi qui perciò anche io, munito di <em>R</em>, <em>RStudio</em> e computer con l&rsquo;obiettivo di <strong>esplorare</strong> e <strong>comparare</strong> i <strong>tweets dei leader dei 3 <a href="https://it.wikipedia.org/wiki/Partiti_politici_italiani#Partiti_principali">maggiori</a> partiti italiani</strong> (leader in ordine alfabetico per username Twitter):</p>
+
+<ul>
+<li>Movimento a 5 stelle: Luigi Di Maio (luigidimaio).</li>
+<li>Lega: Matteo Salvini (matteosalvinimi).</li>
+<li>Partito Democratico: Maurizio Martina (maumartina).</li>
+</ul>
+
+<p>I posts saranno densi di codice (dopo tutto sto facendo tutto questo anche per rimanere un attivo <em>R user</em>) ma inserirò delle conclusioni con i punti chiave dell&rsquo;analisi.</p>
+
+<h1 id="analisi">Analisi</h1>
+
+<h2 id="preparazione-e-download-dati">Preparazione e download dati</h2>
+
+<p>Per avere accesso a Twitter su <em>R</em> è necessario come prima cosa creare una app su Twitter. Michael Galarnyk ha creato un ottimo tutorial che dà istruzioni passo per passo per completare questa prima fase (<a href="https://medium.com/@GalarnykMichael/accessing-data-from-Twitter-api-using-r-part1-b387a1c7d3e">guida di Michael Galarnyk</a>).
+Una volta creata la app, il pacchetto <em>twitteR</em> ci permetterà di accedere all&rsquo;API e lavorare con <em>R</em> sui dati ottenuti.</p>
+
+<p>Iniziamo con il caricare <em>twitteR</em> e una serie di altre librerie che ci saranno utili successivamente.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span><span class="s">&#34;twitteR&#34;</span><span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span><span class="s">&#34;ggridges&#34;</span><span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span><span class="s">&#34;gridExtra&#34;</span><span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span><span class="s">&#34;lubridate&#34;</span><span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span><span class="s">&#34;RSQLite&#34;</span><span class="p">)</span> <span class="c1"># I save the data in a database</span>
+<span class="kn">library</span><span class="p">(</span><span class="s">&#34;scales&#34;</span><span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span><span class="s">&#34;tidyverse&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Ci autentichiamo utilizzando le chiavi ottenute seguendo la <a href="https://medium.com/@GalarnykMichael/accessing-data-from-twitter-api-using-r-part1-b387a1c7d3e">guida di Michael Galarnyk</a>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span><span class="s">&#34;twitteR&#34;</span><span class="p">)</span>
+
+API_key <span class="o">&lt;-</span> 	<span class="s">&#34;XXX&#34;</span>
+API_secret <span class="o">&lt;-</span> <span class="s">&#34;XXX&#34;</span>
+access_token <span class="o">&lt;-</span> <span class="s">&#34;XXX&#34;</span>
+access_secret <span class="o">&lt;-</span> <span class="s">&#34;XXX&#34;</span>
+
+setup_twitter_oauth<span class="p">(</span>API_key<span class="p">,</span> API_secret<span class="p">,</span> access_token<span class="p">,</span> access_secret<span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Otteniamo i 3200 tweets di luigidimaio, maumartina, matteosalvinimi usando il comando <em>userTimeline</em> e diamo una pulita al dataframe (twdat = tweets data) ottenuto.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">pol <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span><span class="s">&#34;luigidimaio&#34;</span><span class="p">,</span> <span class="s">&#34;matteosalvinimi&#34;</span><span class="p">,</span> <span class="s">&#34;maumartina&#34;</span><span class="p">)</span>
+
+twdat <span class="o">&lt;-</span> as_tibble<span class="p">(</span>map_dfr<span class="p">(</span>pol<span class="p">,</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">)</span> twListToDF<span class="p">(</span>userTimeline<span class="p">(</span>x<span class="p">,</span> includeRts <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> 
+    n <span class="o">=</span> <span class="m">3200</span><span class="p">))))</span>
+
+
+twdat<span class="o">$</span>statusSource <span class="o">&lt;-</span> str_extract<span class="p">(</span>twdat<span class="o">$</span>statusSource<span class="p">,</span> <span class="s">&#34;iPhone|Web Client|Android|TweetDeck|iPad|Hootsuite|Facebook|IoResto|Websites|IFTTT|Instagram|iOS|Periscope&#34;</span><span class="p">)</span>  <span class="c1"># this is to extract the important info</span>
+
+twdat<span class="o">$</span>created <span class="o">&lt;-</span> with_tz<span class="p">(</span>twdat<span class="o">$</span>created<span class="p">,</span> <span class="s">&#34;CET&#34;</span><span class="p">)</span>  <span class="c1"># time-zone</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>OK, abbiamo a questo punto un dataframe/tibble con cui possiamo lavorare.</p>
+
+<!-- Database -->
+
+<h2 id="quanto-twittano">QuanTo twittano</h2>
+
+<p>Iniziamo con il vedere chi è il più attivo tra i tre e numero di tweets al giorno attraverso differenti misure di tendenza centrale.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">daily_tw <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span> 
+   count<span class="p">(</span>screenName<span class="p">,</span> round_date<span class="p">(</span>created<span class="p">,</span> <span class="s">&#34;day&#34;</span><span class="p">))</span> <span class="o">%&gt;%</span> 
+   group_by<span class="p">(</span>screenName<span class="p">)</span> <span class="o">%&gt;%</span> 
+   dplyr<span class="o">::</span>summarize<span class="p">(</span>max <span class="o">=</span> <span class="kp">max</span><span class="p">(</span>n<span class="p">),</span>
+                    min <span class="o">=</span> min <span class="p">(</span>n<span class="p">),</span>
+                    IQR <span class="o">=</span> IQR<span class="p">(</span>n<span class="p">),</span>
+                    mean <span class="o">=</span> <span class="kp">round</span><span class="p">(</span><span class="kp">mean</span><span class="p">(</span>n<span class="p">),</span><span class="m">0</span><span class="p">),</span> 
+                    meadian <span class="o">=</span> median<span class="p">(</span>n<span class="p">),</span>
+                    mode <span class="o">=</span> <span class="kp">names</span><span class="p">(</span><span class="kp">sort</span><span class="p">(</span><span class="o">-</span><span class="kp">table</span><span class="p">(</span>n<span class="p">)))[</span><span class="m">1</span><span class="p">],</span>
+                    St_Dev <span class="o">=</span> sd<span class="p">(</span>n<span class="p">)</span>
+                    <span class="p">)</span> 
+knitr<span class="o">::</span>kable<span class="p">(</span>daily_tw<span class="p">,</span> align <span class="o">=</span> <span class="s">&#34;ccccc&#34;</span><span class="p">,</span> caption <span class="o">=</span> <span class="s">&#34;tab.1: Daily Tweets&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<table>
+<thead>
+<tr>
+<th align="center">screenName</th>
+<th align="center">max</th>
+<th align="center">min</th>
+<th align="center">IQR</th>
+<th align="center">mean</th>
+<th align="center">meadian</th>
+<th align="center">mode</th>
+<th align="center">St_Dev</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">luigidimaio</td>
+<td align="center">54</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">3</td>
+<td align="center">2</td>
+<td align="center">1</td>
+<td align="center">3.559438</td>
+</tr>
+
+<tr>
+<td align="center">matteosalvinimi</td>
+<td align="center">93</td>
+<td align="center">2</td>
+<td align="center">9</td>
+<td align="center">12</td>
+<td align="center">8</td>
+<td align="center">5</td>
+<td align="center">11.192814</td>
+</tr>
+
+<tr>
+<td align="center">maumartina</td>
+<td align="center">24</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">1</td>
+<td align="center">1.840639</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Salvini è di gran lunga il più attivo</strong>,  4-6 volte più di Di Maio e di Martina. Salvini è riuscito a pubblicare un massimo di 93 tweets in un giorno (2018-02-25), ma tipicamente (moda) pubblica 5 tweets al giorno e una media di 12 tweets al giorno (la distribuzione è chiaramente positive skewed). Martina e Di Maio tendono ad utilizzare con simile frequenza Twitter ma Di Maio tende ad essere più variabile (vedi range e St_Dev).</p>
+
+<p><strong>Salvini è dei tre l&rsquo;unico che pubblica quasi esclusivamente materiale originale</strong>. <strong>Circa un terzo dei tweets di Di Maio e un quarto di quelli di Martina sono invece retweets</strong> (tab.2 sottostante).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">retw <span class="o">&lt;-</span>twdat <span class="o">%&gt;%</span>
+  group_by<span class="p">(</span>screenName<span class="p">)</span> <span class="o">%&gt;%</span>
+  summarize<span class="p">(</span> tot_retw <span class="o">=</span> <span class="kp">sum</span><span class="p">(</span>isRetweet<span class="p">),</span> perc_retw <span class="o">=</span> percent<span class="p">(</span>tot_retw<span class="o">/</span>n<span class="p">()))</span>
+
+knitr<span class="o">::</span>kable<span class="p">(</span>retw<span class="p">,</span> align <span class="o">=</span> <span class="s">&#34;ccc&#34;</span><span class="p">,</span> caption <span class="o">=</span> <span class="s">&#34;tab.2: Percent of retweets&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<table>
+<thead>
+<tr>
+<th align="center">screenName</th>
+<th align="center">tot_retw</th>
+<th align="center">perc_retw</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">luigidimaio</td>
+<td align="center">1153</td>
+<td align="center">36.1%</td>
+</tr>
+
+<tr>
+<td align="center">matteosalvinimi</td>
+<td align="center">92</td>
+<td align="center">2.88%</td>
+</tr>
+
+<tr>
+<td align="center">maumartina</td>
+<td align="center">802</td>
+<td align="center">25.1%</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="quando-twittano">QuanDo twittano</h2>
+
+<h3 id="ora-e-giorno-della-settimana">Ora e giorno della settimana</h3>
+
+<p>Andiamo ora a vedere il pattern con il quale i nostri 3 politici twittano e in particolare l&rsquo;ora e giorno della settimana. I dati verranno espressi come percentuale dei tweets calcolati per ogni politico.</p>
+
+<p>Il codice sottostante serve a creare il primo grafico.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="c1"># this creates the plots of tweets by hours</span>
+theme_set<span class="p">(</span>theme_grey<span class="p">())</span>
+tw_h <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span> 
+  
+  count<span class="p">(</span>screenName<span class="p">,</span> h <span class="o">=</span> hour<span class="p">(</span>created<span class="p">))</span> <span class="o">%&gt;%</span> 
+  group_by<span class="p">(</span>screenName<span class="p">)</span> <span class="o">%&gt;%</span> 
+  mutate<span class="p">(</span>perc_h <span class="o">=</span> n<span class="o">/</span><span class="kp">sum</span><span class="p">(</span>n<span class="p">))</span> <span class="o">%&gt;%</span> 
+    
+  ggplot<span class="p">(</span>aes<span class="p">(</span>h<span class="p">,</span> 
+             perc_h<span class="p">,</span>
+             group <span class="o">=</span> screenName<span class="p">,</span> 
+             color <span class="o">=</span> screenName<span class="p">))</span> <span class="o">+</span>
+  geom_line<span class="p">()</span> <span class="o">+</span>
+  geom_point<span class="p">(</span>size <span class="o">=</span> <span class="m">2.5</span><span class="p">)</span> <span class="o">+</span>
+  scale_y_continuous<span class="p">(</span>labels <span class="o">=</span> percent_format<span class="p">())</span> <span class="o">+</span>
+  scale_color_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
+  labs<span class="p">(</span>x <span class="o">=</span> <span class="s">&#34;Hour of day (CET)&#34;</span><span class="p">,</span>
+       y <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span>
+       color <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span>
+       title <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span>
+       caption <span class="o">=</span> <span class="s">&#34;  &#34;</span><span class="p">)</span> <span class="o">+</span>
+  theme<span class="p">(</span>legend.position <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.85</span><span class="p">,</span><span class="m">0.92</span><span class="p">),</span> legend.background <span class="o">=</span> element_blank<span class="p">(),</span> legend.key <span class="o">=</span> element_blank<span class="p">())</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Qui creiamo il secondo grafico e plottiamo entrambi i grafici utilizzando il pacchetto <em>extraGrid</em>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="c1"># this create the plot of tweets by weekday</span>
+tw_d <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span> 
+  
+  count<span class="p">(</span>screenName<span class="p">,</span> w <span class="o">=</span> wday<span class="p">(</span>created<span class="p">,</span> label <span class="o">=</span> <span class="kc">TRUE</span><span class="p">))</span> <span class="o">%&gt;%</span> 
+  group_by<span class="p">(</span>screenName<span class="p">)</span> <span class="o">%&gt;%</span> 
+  mutate<span class="p">(</span>perc_d <span class="o">=</span> n<span class="o">/</span><span class="kp">sum</span><span class="p">(</span>n<span class="p">))</span> <span class="o">%&gt;%</span> 
+    
+  ggplot<span class="p">(</span>aes<span class="p">(</span><span class="kp">factor</span><span class="p">(</span>w<span class="p">,</span> wday<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">2</span><span class="o">:</span><span class="m">7</span><span class="p">,</span><span class="m">1</span><span class="p">),</span> label <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)),</span> 
+             perc_d<span class="p">,</span>
+             group <span class="o">=</span> screenName<span class="p">,</span> 
+             color <span class="o">=</span> screenName<span class="p">))</span> <span class="o">+</span>
+  geom_line<span class="p">()</span> <span class="o">+</span>
+  geom_point<span class="p">(</span>size <span class="o">=</span> <span class="m">2.5</span><span class="p">)</span> <span class="o">+</span>
+  scale_color_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
+  scale_y_continuous<span class="p">(</span>labels <span class="o">=</span> percent_format<span class="p">())</span> <span class="o">+</span>
+  labs<span class="p">(</span>x <span class="o">=</span> <span class="s">&#34;Day of the week&#34;</span><span class="p">,</span>
+       y <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span>
+       color <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span>
+       title <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span>
+       caption <span class="o">=</span> <span class="s">&#34;fig.1&#34;</span> <span class="p">)</span> <span class="o">+</span>
+  theme<span class="p">(</span>legend.position <span class="o">=</span> <span class="s">&#34;none&#34;</span><span class="p">)</span>
+
+  <span class="c1"># we use grid.arrange of the package gridExtra to assemble together the 2 plots </span>
+  <span class="c1"># we could have used the package cowplot too</span>
+  grid.arrange<span class="p">(</span>tw_h<span class="p">,</span> tw_d<span class="p">,</span> ncol <span class="o">=</span>  <span class="m">2</span><span class="p">,</span> top <span class="o">=</span> <span class="s">&#34;Percentage of tweets          &#34;</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.1_plot_tw_wdays-1.png" width="960" />
+<strong>Salvini</strong> tende ad iniziare a twittare al mattino come Di Maio e Martina, ma  rispetto a loro, tende a continuare ad essere <strong>attivo anche la sera (7-23)</strong>. Per <strong>Martina</strong> il picco di attività è <strong>la mattina (9-11)</strong> mentre per <strong>Di Maio è dalle 9 alle 16</strong> (fig.2, sinistra). <strong>Tutti e tre i politici hanno un giorno durante il week-end in cui sono molto meno attivi</strong>: sia per Di Maio che Salvini è il Sabato, mentre per Martina la Domenica (fig.2, destra).</p>
+
+<p>Ho usato <em>ggridges</em>, una extention di <em>ggplot2</em>, per creare dei <em>density plots</em> e visualizzare in dettaglio l&rsquo;interazione tra giorno della settimana ed ora del giorno dei tweets (fig.3 sottostante). L&rsquo;analisi tende comunque a supportare la generabilità delle osservazioni precedenti ma con alcune precisazioni: la Domenica è Di Maio a distribuire i sui tweets  più tardi la sera. Inoltre, il Lunedì Salvini è, diversamente dagli altri giorni della settimana, molto più attivo nel primo pomeriggio tra le 14 e le 16 (fig.3).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">twdat <span class="o">%&gt;%</span>
+  ggplot<span class="p">(</span>aes<span class="p">(</span>hour<span class="p">(</span>created<span class="p">),</span> 
+             <span class="kp">factor</span><span class="p">(</span>wday<span class="p">(</span>created<span class="p">,</span> label <span class="o">=</span><span class="kc">TRUE</span><span class="p">),</span> labels <span class="o">=</span> wday<span class="p">(</span><span class="kt">c</span><span class="p">(</span> <span class="m">1</span><span class="p">,</span> <span class="m">7</span><span class="o">:</span><span class="m">2</span><span class="p">),</span> label <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)),</span>
+             fill <span class="o">=</span> screenName<span class="p">,</span> 
+             col  <span class="o">=</span> screenName<span class="p">))</span> <span class="o">+</span>
+    geom_density_ridges<span class="p">(</span>alpha <span class="o">=</span> <span class="m">0.2</span><span class="p">,</span> scale <span class="o">=</span> <span class="m">1.2</span><span class="p">)</span> <span class="o">+</span>
+    scale_y_discrete<span class="p">()</span> <span class="o">+</span>
+    scale_x_continuous<span class="p">(</span>limits <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">23</span><span class="p">),</span> labels <span class="o">=</span> <span class="kp">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">23</span><span class="p">,</span><span class="m">2</span><span class="p">),</span> breaks <span class="o">=</span> <span class="kp">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">23</span><span class="p">,</span><span class="m">2</span><span class="p">))</span> <span class="o">+</span>
+    scale_color_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
+    coord_equal<span class="p">(</span>ratio <span class="o">=</span> <span class="m">5</span><span class="p">)</span> <span class="o">+</span>
+    labs<span class="p">(</span>x <span class="o">=</span> <span class="s">&#34;Hour of day (CET)&#34;</span><span class="p">,</span>
+         y <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
+         color <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
+         caption <span class="o">=</span> <span class="s">&#34;fig.2&#34;</span><span class="p">,</span>
+         title <span class="o">=</span> <span class="s">&#34;Density of tweets during the day&#34;</span><span class="p">)</span> <span class="o">+</span>
+    theme_ridges<span class="p">()</span> <span class="o">+</span> 
+    theme<span class="p">(</span>plot.title <span class="o">=</span> element_text<span class="p">(</span>face <span class="o">=</span> <span class="s">&#34;bold&#34;</span><span class="p">,</span> hjust <span class="o">=</span> <span class="m">0.5</span><span class="p">),</span>
+          axis.title.x <span class="o">=</span> element_text<span class="p">(</span>hjust <span class="o">=</span> <span class="m">0.5</span><span class="p">)</span>
+                 <span class="p">)</span> <span class="o">+</span>
+    guides<span class="p">(</span>fill <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.2_ridges-1.png" width="672" /></p>
+
+<h3 id="ultimi-mesi">Ultimi mesi</h3>
+
+<p>Gli ultimi mesi della politica italiana sono stati estremamente densi di eventi importanti, a partire dalle elezioni per poi proseguire con le  varie consultazioni e la formazione del governo. È perciò legittimo domandarsi se questa serie di avvenimenti abbia spinto i politici ad utilizzare più frequentemente Twitter per comunicare con i propri elettori.</p>
+
+<p>Un caveat dei dati ottenuti è che <em>twitteR</em> non permette di scaricare più di 3200 tweets. Dal momento che Salvini è estremamente più attivo degli altri due politici, i suoi 3200 tweets sono stati pubblicati in un periodo inferiore rispetto a quelli di Di Maio e Martina (tab.3).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">date_lim_screenName <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span>
+  group_by<span class="p">(</span>screenName<span class="p">)</span> <span class="o">%&gt;%</span>   
+  dplyr<span class="o">::</span>summarize<span class="p">(</span>first_tweet <span class="o">=</span> <span class="kp">min</span><span class="p">(</span>created<span class="p">),</span> last_tweet <span class="o">=</span> <span class="kp">max</span><span class="p">(</span>created<span class="p">))</span> 
+
+knitr<span class="o">::</span>kable<span class="p">(</span>date_lim_screenName <span class="p">,</span> align <span class="o">=</span> <span class="s">&#34;cc&#34;</span><span class="p">,</span>  caption <span class="o">=</span> <span class="s">&#34;tab.3: Interval of tweets&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<table>
+<thead>
+<tr>
+<th align="center">screenName</th>
+<th align="center">first_tweet</th>
+<th align="center">last_tweet</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">luigidimaio</td>
+<td align="center">2014-09-09 17:47:51</td>
+<td align="center">2018-08-14 10:56:16</td>
+</tr>
+
+<tr>
+<td align="center">matteosalvinimi</td>
+<td align="center">2017-11-30 13:46:14</td>
+<td align="center">2018-08-26 19:35:21</td>
+</tr>
+
+<tr>
+<td align="center">maumartina</td>
+<td align="center">2014-02-19 11:40:18</td>
+<td align="center">2018-08-26 15:59:43</td>
+</tr>
+</tbody>
+</table>
+
+<p>Per poter comparare l&rsquo;attività dei 3 politici è necessario andare a monitorare lo stesso intervallo di tempo.</p>
+
+<p>Il codice sottostante serve a trovare qual&rsquo;è l&rsquo;intervallo in mesi in cui disponiamo di dati per tutti e 3 i politici.
+Andremo a plottare il seguente intervallo di tempo.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">date_lim <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span>
+  group_by<span class="p">(</span>screenName<span class="p">)</span> <span class="o">%&gt;%</span>   
+  dplyr<span class="o">::</span>summarize<span class="p">(</span>min_tw <span class="o">=</span> ceiling_date<span class="p">(</span><span class="kp">min</span><span class="p">(</span>created<span class="p">),</span> <span class="s">&#34;month&#34;</span><span class="p">),</span> max_tw <span class="o">=</span> floor_date<span class="p">(</span><span class="kp">max</span><span class="p">(</span>created<span class="p">)</span> <span class="p">,</span> <span class="s">&#34;month&#34;</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="c1"># we do approximate dates to have full months</span>
+  dplyr<span class="o">::</span>summarize<span class="p">(</span>min_shared <span class="o">=</span> <span class="kp">max</span><span class="p">(</span>min_tw<span class="p">),</span> max_shared <span class="o">=</span> <span class="kp">min</span><span class="p">(</span>max_tw<span class="p">))</span>
+
+date_lim <span class="o">&lt;-</span> as_datetime<span class="p">(</span><span class="kp">unlist</span><span class="p">(</span>date_lim<span class="p">),</span> tz <span class="o">=</span> <span class="s">&#34;CET&#34;</span><span class="p">)</span>
+
+knitr<span class="o">::</span>kable<span class="p">(</span>as_data_frame<span class="p">(</span>date_lim<span class="p">)</span> <span class="p">,</span> align <span class="o">=</span> <span class="s">&#34;cc&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="center">value</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">min_shared</td>
+<td align="center">2017-12-01 01:00:00</td>
+</tr>
+
+<tr>
+<td align="left">max_shared</td>
+<td align="center">2018-08-01 02:00:00</td>
+</tr>
+</tbody>
+</table>
+
+<p>Creiamo quindi i grafici riguardanti il numero di tweets al mese per l&rsquo;intervallo di Dicembre-Luglio.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">timeline_abs <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span> 
+  mutate<span class="p">(</span>month_r <span class="o">=</span> floor_date<span class="p">(</span>created<span class="p">,</span> <span class="s">&#34;month&#34;</span><span class="p">)</span> <span class="p">)</span> <span class="o">%&gt;%</span>
+  filter<span class="p">(</span>created <span class="o">&gt;=</span> date_lim<span class="p">[</span><span class="m">1</span><span class="p">],</span> created <span class="o">&lt;=</span> date_lim<span class="p">[</span><span class="m">2</span><span class="p">])</span> <span class="o">%&gt;%</span> 
+  count<span class="p">(</span>month_r<span class="p">,</span> screenName<span class="p">)</span> <span class="o">%&gt;%</span> 
+  ggplot<span class="p">(</span>aes<span class="p">(</span>x <span class="o">=</span> month_r<span class="p">,</span> y <span class="o">=</span> n<span class="p">,</span>  group <span class="o">=</span> screenName<span class="p">,</span> col <span class="o">=</span> screenName<span class="p">))</span> <span class="o">+</span>
+  geom_point<span class="p">(</span> size <span class="o">=</span> <span class="m">2.5</span><span class="p">)</span> <span class="o">+</span>
+  geom_line <span class="p">()</span> <span class="o">+</span>
+  scale_x_datetime<span class="p">(</span>labels <span class="o">=</span> date_format<span class="p">(</span><span class="s">&#34;%Y %b&#34;</span><span class="p">),</span> date_breaks<span class="o">=</span> <span class="s">&#34;1 months&#34;</span><span class="p">)</span> <span class="o">+</span>
+  scale_y_continuous<span class="p">(</span>breaks <span class="o">=</span> <span class="kp">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">700</span><span class="p">,</span> <span class="m">100</span><span class="p">),</span> labels <span class="o">=</span> <span class="kp">seq</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">700</span><span class="p">,</span> <span class="m">100</span><span class="p">))</span> <span class="o">+</span>
+  scale_color_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
+  theme<span class="p">(</span>plot.subtitle <span class="o">=</span> element_text<span class="p">(</span>vjust <span class="o">=</span> <span class="m">1</span><span class="p">),</span>
+    plot.caption <span class="o">=</span> element_text<span class="p">(</span>vjust <span class="o">=</span> <span class="m">1</span><span class="p">),</span>
+    axis.text.x <span class="o">=</span> element_text<span class="p">(</span>vjust <span class="o">=</span> <span class="m">0.25</span><span class="p">,</span> angle <span class="o">=</span> <span class="m">45</span><span class="p">)</span>
+    <span class="p">)</span> <span class="o">+</span>
+  labs<span class="p">(</span>x <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> y <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> col <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> group <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> title <span class="o">=</span> <span class="s">&#34;Number of tweets&#34;</span><span class="p">,</span> caption<span class="o">=</span> <span class="s">&#34;  &#34;</span><span class="p">)</span> <span class="o">+</span>
+  theme<span class="p">(</span>plot.title <span class="o">=</span> element_text<span class="p">(</span>hjust <span class="o">=</span> <span class="m">0.5</span><span class="p">))</span> <span class="o">+</span>
+  theme<span class="p">(</span>legend.position <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">0.8</span><span class="p">,</span><span class="m">0.92</span><span class="p">),</span> legend.background <span class="o">=</span> element_blank<span class="p">(),</span> legend.key <span class="o">=</span> element_blank<span class="p">())</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Ho usato il codice indicato sopra sui dati normalizzati usando come baseline il numero di tweets di Dicembre (con <em>group_by</em> e <em>do</em> di <em>dyplyr</em>).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">grid.arrange<span class="p">(</span>timeline_abs<span class="p">,</span> timeline_perc<span class="p">,</span> ncol <span class="o">=</span>  <span class="m">2</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.4_timeline-1.png" width="960" />
+Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale. Questa normalizzazione ci permette di comparare meglio gli andamenti e i cambiamenti di attività tra i politici.</p>
+
+<p>Salvini twitta molto più di Di Maio e Martina ma <strong>l&rsquo;attività di tutti e 3 i politici aumenta drasticamente in Febbraio</strong> di quest&rsquo;anno, mese di <a href="https://it.wikipedia.org/wiki/XVIII_legislatura_della_Repubblica_Italiana">campagna elettorale</a>) (con un inizio precoce per Salvini già in Gennaio). Questo picco di attività <strong>crolla velocemente</strong> e in <strong>Marzo</strong> già si ritorna a quei livelli di attività pre-elettorali (o anche inferiori nel caso di Di Maio). Un altro <strong>aumento dell&rsquo;attività</strong> di <strong>Salvini e Martina</strong> si osserva <strong>negli ultimi mesi</strong>, sospetto sia in qualche modo collegato alle vicenda dell&rsquo;Acquarius e della &ldquo;chiusura dei porti&rdquo; (fig.3).</p>
+
+<h2 id="il-successo-dei-tweets">Il successo dei tweets</h2>
+
+<h3 id="likes-per-tweet">Likes per tweet</h3>
+
+<p>Ma quanto sono apprezzati i tweets dei 3 politici dai rispettivi followers? Iniziamo vedendo il totale numero di like ottenuti e alcuni indici di tendenza centrale riguardanti likes per ogni tweet.</p>
+
+<p>I numeri sono molto chiari. Con 3200 tweets, <strong>Salvini ha totalizzato più di 4 milioni e mezzo di likes</strong>, una media di quasi 1500 likes a tweet. <strong>Salvini ha ottenuto 5 volte i like di Di Maio e più di dieci volte quelli di Martina (il meno popolare dei tre)</strong>.</p>
+
+<p>Visto che anche in questo caso stiamo avendo a che fare con distribuzioni molto skewed, vale la pena ricorrere a qualche rappresentazione grafica.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">twdat <span class="o">%&gt;%</span> 
+  ggplot<span class="p">(</span>aes<span class="p">(</span>favoriteCount<span class="p">,</span> col <span class="o">=</span> screenName<span class="p">,</span> fill <span class="o">=</span> screenName<span class="p">))</span> <span class="o">+</span>
+  geom_histogram<span class="p">(</span>position <span class="o">=</span> position_dodge<span class="p">(),</span> bins <span class="o">=</span> <span class="m">40</span><span class="p">)</span> <span class="o">+</span>
+  scale_color_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
+  scale_fill_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
+  labs<span class="p">(</span>col <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
+       fill <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
+       x <span class="o">=</span> <span class="s">&#34;Likes per 40 tweets&#34;</span><span class="p">,</span>
+       y <span class="o">=</span> <span class="s">&#34;Occurances &#34;</span><span class="p">,</span>
+       caption <span class="o">=</span> <span class="s">&#34;fig.4&#34;</span><span class="p">)</span> <span class="o">+</span>
+  scale_x_continuous<span class="p">(</span>limits <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">10000</span><span class="p">))</span><span class="o">+</span>
+  guides<span class="p">(</span>col <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.4_distribution_fav-1.png" width="960" /></p>
+
+<p>Tutte e tre le distribuzioni sono estremamente skewed verso destra ma anche da questo grafico è possibile cogliere che i tweets di Salvini con alti numeri di likes sono più numerosi rispetto a quelli degli altri 2 politici (barre verdi sono più alte rispetto alle gialle e rosse quando ci spostiamo verso destra,fig.4)</p>
+
+<p>Un altro modo per osservare e comparare i tweets è attraverso il <em>jitter plot</em> sottostante.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">twdat <span class="o">%&gt;%</span> 
+  ggplot<span class="p">(</span>aes<span class="p">(</span>screenName<span class="p">,</span> favoriteCount<span class="p">,</span> col <span class="o">=</span> screenName<span class="p">))</span> <span class="o">+</span>
+  geom_jitter<span class="p">(</span>alpha <span class="o">=</span> <span class="m">0.2</span><span class="p">)</span> <span class="o">+</span>
+  scale_color_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
+  labs<span class="p">(</span>x <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> y <span class="o">=</span> <span class="s">&#34;Likes&#34;</span><span class="p">,</span> col <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span> group <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">,</span> title <span class="o">=</span> <span class="s">&#34;Liked tweets&#34;</span><span class="p">,</span> caption <span class="o">=</span> <span class="s">&#34;fig.5&#34;</span><span class="p">)</span> <span class="o">+</span>
+  theme<span class="p">(</span>plot.title <span class="o">=</span> element_text<span class="p">(</span>hjust <span class="o">=</span> <span class="m">0.5</span><span class="p">),</span>legend.position <span class="o">=</span> <span class="s">&#34;none&#34;</span><span class="p">)</span> </code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/post/2018-09-10-re-di-twitter-i_files/figure-html/fig5_jitter_likes-1.png" width="480" /></p>
+
+<p>Nella figura ogni tweet è rappresentato da un punto che è in alto se il tweet ha ricevuto molti likes. Anche da questa rappresentazione si evince che <strong>Salvini è estremamente più popolare tra i suoi followers di Di Maio e Martina</strong> (fig.5).</p>
+
+<h3 id="andamento-della-popolarità">Andamento della popolarità</h3>
+
+<p>Come è cambiata la popolarità dei vari politici negli ultimi mesi? Andiamo ad analizzarlo attraverso la visualizzazione di numero di like per tweet (fig.6, sinistra) e totale di like (fig.5) nei mesi di Dicembre 2017 fino a Luglio 2018. Utilizzeremo lo stesso codice impiegato per le fig.1.</p>
+
+<p><img src="/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.6_plot_timeline_likes-1.png" width="960" />
+Sia per <strong>Di Maio</strong> che per <strong>Salvini</strong> in numero di <strong>like per tweet è aumentato drasticamente</strong> a partire <strong>da Marzo del 2018</strong> con un <strong>picco quest&rsquo;estaste</strong> (fig.6 sinistra). Anche <strong>i like  per tweet di Martina sono aumentati</strong>, ma <strong>in misura molto minore</strong> rispetto a quelli degli altri 2 politici (fig.6 sinistra). Un altra considerazione interessante è che <strong>negli ultimi mesi la popolarità dei tweets di Di Maio e Salvini</strong> in termini di likes per tweets <strong>non è</strong> stata tutto sommato <strong>molto differente</strong> (<strong>2500-4000 likes per tweet</strong>, fig.6 sinistra) e il maggiore numero totale di likes da parte di Salvini è imputabile al sua maggiore presenza sul social media (fig.6 destra).</p>
+
+<h3 id="i-tweets-più-famosi">I tweets più famosi</h3>
+
+<p>Ho deciso di dare una sbirciata ai tweets che hanno riscosso più successo: i 10 tweets di ogni politico con più likes (ordinati in maniera discendente).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="c1"># for each screenName takes the 10 tweets with motst likes---</span>
+twdat <span class="o">%&gt;%</span> 
+  group_by<span class="p">(</span>screenName<span class="p">)</span> <span class="o">%&gt;%</span> 
+  do<span class="p">(</span>arrange<span class="p">(</span><span class="m">.</span><span class="p">,</span>desc<span class="p">(</span>favoriteCount<span class="p">))</span> <span class="o">%&gt;%</span> 
+       <span class="kp">head</span><span class="p">(</span><span class="m">10</span><span class="p">))</span> <span class="o">%&gt;%</span> 
+  ggplot<span class="p">(</span>aes<span class="p">(</span>favoriteCount<span class="p">,</span> reorder<span class="p">(</span>text<span class="p">,</span> favoriteCount<span class="p">),</span> col <span class="o">=</span> screenName<span class="p">))</span> <span class="o">+</span>
+    geom_point<span class="p">()</span> <span class="o">+</span>
+    scale_color_manual<span class="p">(</span>values <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;#FFC125&#34;</span><span class="p">,</span><span class="s">&#34;#00BA38&#34;</span><span class="p">,</span><span class="s">&#34;#F8766D&#34;</span><span class="p">))</span> <span class="o">+</span>
+    labs<span class="p">(</span>x <span class="o">=</span> <span class="s">&#34;Number of likes&#34;</span><span class="p">,</span> y <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> title <span class="o">=</span> <span class="s">&#34;10 most liked&#34;</span><span class="p">,</span> caption <span class="o">=</span> <span class="s">&#34;fig.7&#34;</span> <span class="p">)</span> <span class="o">+</span>
+    facet_grid<span class="p">(</span>screenName<span class="o">~</span><span class="m">.</span><span class="p">,</span> scale <span class="o">=</span> <span class="s">&#34;free_y&#34;</span><span class="p">)</span> <span class="o">+</span>
+    theme<span class="p">(</span>plot.title <span class="o">=</span> element_text<span class="p">(</span>hjust <span class="o">=</span> <span class="m">0.5</span><span class="p">),</span> 
+          legend.position<span class="o">=</span><span class="s">&#34;none&#34;</span><span class="p">,</span>
+
+          axis.text.x <span class="o">=</span> element_text<span class="p">(</span>vjust <span class="o">=</span> <span class="m">0.25</span><span class="p">,</span> angle <span class="o">=</span> <span class="m">45</span><span class="p">))</span> </code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.6_10_fav-1.png" width="960" /></p>
+
+<p>Alcuni dei temi più cari ai m5s e Lega emergono nei  tweets più apprezzati:</p>
+
+<ul>
+<li>Per Di Maio i vitalizi (<sup>3</sup>&frasl;<sub>10</sub>) e  il decreto dignità.</li>
+<li>Per Salvini, le navi di immigrati, i porti e Saviano.</li>
+</ul>
+
+<p>I 10 tweets di Marina con più like sono invece quelli in cui viene presa di mira la politica di m5s e  la Lega. Anche in questo grafico si può notare che i 10 tweets di Salvini hanno ottenuto un numero di like molto maggiore rispetto a quelli di Di Maio e Martina  (i punti sono più spostati verso destra).</p>
+
+<h2 id="i-dispositivi-utilizzati">I dispositivi utilizzati</h2>
+
+<p>Per ultimo andiamo a vedere quali sono i dispositivi utilizzati e preferiti dai 3 politici. Un dettaglio forse triviale ma che come ha mostrato <a href="http://varianceexplained.org/r/trump-tweets/">David Robinson</a> può fornire intuizioni importanti.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="c1"># calculate tweets per device and label the one &lt;5% as Other</span>
+
+count_dev <span class="o">&lt;-</span> twdat <span class="o">%&gt;%</span>
+  count<span class="p">(</span>statusSource<span class="p">,</span> screenName<span class="p">)</span> <span class="o">%&gt;%</span> <span class="c1"># count the number of tweets by screenName</span>
+  rename<span class="p">(</span>tw_n <span class="o">=</span> n<span class="p">)</span> <span class="o">%&gt;%</span>
+  group_by<span class="p">(</span>screenName<span class="p">)</span> <span class="o">%&gt;%</span> 
+  do<span class="p">(</span>mutate<span class="p">(</span><span class="m">.</span><span class="p">,</span>tw_perc <span class="o">=</span> tw_n<span class="o">/</span><span class="kp">sum</span><span class="p">(</span>tw_n<span class="p">)</span><span class="o">*</span><span class="m">100</span><span class="p">))</span> <span class="o">%&gt;%</span> 
+  mutate<span class="p">(</span>perc_lab <span class="o">=</span> <span class="kp">round</span><span class="p">(</span>tw_perc<span class="p">,</span> <span class="m">1</span><span class="p">))</span> <span class="c1"># will be labels</span>
+
+         
+count_dev<span class="o">$</span>perc_lab<span class="p">[</span>count_dev<span class="o">$</span>perc_lab <span class="o">&lt;</span> <span class="m">5</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="s">&#34;&#34;</span> <span class="c1"># remove values &lt; 5 to not have a messy plot </span>
+
+count_dev<span class="o">$</span>statusSource<span class="p">[</span>count_dev<span class="o">$</span>tw_perc <span class="o">&lt;</span> <span class="m">5</span><span class="p">]</span>  <span class="o">&lt;-</span> <span class="s">&#34;Other&#34;</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>Creiamo 3 pie charts con percentuali di tweets dai diversi dispositivi.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="c1"># Plot percentage of tweets wrote from different devices---</span>
+
+count_dev <span class="o">%&gt;%</span>
+  ggplot<span class="p">(</span>aes<span class="p">(</span>x<span class="o">=</span> <span class="kp">factor</span><span class="p">(</span><span class="m">1</span><span class="p">),</span> y <span class="o">=</span> tw_perc<span class="p">,</span> fill <span class="o">=</span> statusSource<span class="p">))</span> <span class="o">+</span>
+      geom_col<span class="p">(</span>width <span class="o">=</span> <span class="m">1</span><span class="p">)</span> <span class="o">+</span>
+      coord_polar<span class="p">(</span>theta <span class="o">=</span> <span class="s">&#34;y&#34;</span><span class="p">)</span> <span class="o">+</span>
+      geom_text<span class="p">(</span>aes<span class="p">(</span>label <span class="o">=</span> perc_lab<span class="p">),</span> position <span class="o">=</span> position_stack<span class="p">(</span>vjust <span class="o">=</span> <span class="m">0.5</span><span class="p">),</span> size <span class="o">=</span> <span class="m">3.5</span><span class="p">)</span> <span class="o">+</span>
+      facet_grid<span class="p">(</span><span class="m">.</span><span class="o">~</span>screenName<span class="p">)</span> <span class="o">+</span>
+      scale_fill_brewer<span class="p">(</span>palette <span class="o">=</span> <span class="s">&#34;Spectral&#34;</span><span class="p">)</span> <span class="o">+</span>
+      scale_x_discrete<span class="p">(</span>breaks <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> labels <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span> <span class="o">+</span>
+      theme<span class="p">(</span>axis.text.x <span class="o">=</span> element_blank<span class="p">(),</span> axis.text.y <span class="o">=</span> element_blank<span class="p">())</span> <span class="o">+</span>
+      labs<span class="p">(</span>y <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> x <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> fill <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> caption <span class="o">=</span> <span class="s">&#34;fig.8&#34;</span> <span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.7_pie-1.png" width="960" />
+Sono piuttosto chiare le differenze tra i 3 politici:</p>
+
+<ul>
+<li>Di Maio principalmente utilizza android e twitta post da facebook</li>
+<li>Salvini usa iPhone e computer</li>
+<li>Martina usa quasi esclusivamente il suo iPhone per twittare.</li>
+</ul>
+
+<p>Non vi fanno pensare questi dati? La cosa che a me è balzata agli occhi è che dei 3 è <strong>Salvini</strong> (o chi per lui) ad utilizzare di  più un Web Client e quindi con molto probabilità  <strong>ad essere seduto alla sua scrivania di fronte al computer per twittare</strong> (a meno che Di Maio non abbiamo sempre utilizzato Facebook da computer e non da cellulare). Non so voi, ma io quando devo scrivere una email importante, devo leggere un articolo con attenzione o scrivere qualcosa per lavoro, difficilmente uso il mio cellulare: mi siedo alla scrivania e uso il mio PC. È molto probabile che queste differenze nell&rsquo;uso dei dispositivi sia correlato con altre variabili, ma è senz&rsquo;altro invitante l&rsquo;ipotesi che il successo di Salvini su Twitter sia dovuto almeno in una piccola parte dal fatto che consideri molto seriamente la sua attività comunicativa, forse tanto da dedicarne appositamente del tempo al computer. Si tratta ovviamente di speculazioni, ed è altrettanto possibile che semplicemente Salvini passi più tempo alla scrivania rispetto agli altri, che abbia notifiche di Twitter attivate sul desktop, o che ami fare breve pause mentre lavora al computer.</p>
+
+<h1 id="conclusione">Conclusione</h1>
+
+<p>I dati non lasciano molti dubbi.</p>
+
+<ul>
+<li>Dei tre politici è <strong>Salvini</strong>, con una media di 12 tweets al giorno, di gran lunga <strong>il più attivo su Twitter</strong> (tab.1, fig.1, fig.3 sinistra).</li>
+<li>Dei tre politici, è lui quello <strong>con più materiale originale</strong> (pochissimi retweets, tab.2) e che <strong>twitta in un intervallo di ore più lungo durante giorno</strong> (fig.1 sinistra).</li>
+<li>Questa maggiore presenza sul social paga (o ne è la sua conseguenza) in termini di apprezzamento da parte dei followers. <strong>Salvini è tra i tre quello con più successo</strong> in Twitter: con 3200 tweets ha totalizzato <strong>4 milioni e mezzo di likes</strong>, una media di quasi 1500 likes a tweet, <strong>5 volte piu di Di Maio e oltre 10 più di Martina</strong> (tab.4, fig.5).</li>
+<li>Per tutti e tre i politici c&rsquo;è stato un <strong>aumento di popolarità negli ultimi mesi di quest&rsquo;anno</strong>, ma per Salvini e Di Maio in misura estremamente maggiore rispetto a Martina (fig.6).</li>
+<li><strong>Negli ultimi mesi sia i tweets di Salvini che Di Maio hanno ricevuto ampio apprezzamento</strong>(2500-4000 likes per tweet).</li>
+<li>I temi più apprezzati? Abbiamo dato una sbirciata ai 10 tweets più popolari e per <strong>Salvini</strong> i temi sono <strong>immigrazione, porti, Saviano</strong>; per <strong>Di Maio sono i vitalizi e il decreto dignità</strong>; <strong>per Martina opposizione alle misure di Lega e Salvini</strong> (fig.7).</li>
+</ul>
+
+<p>Seduto alla sua scrivania e con il suo iphone (fig.8), <strong>Salvini ha fatto di <em>Twitter</em> il suo regno incontrastato</strong>.</p>
+    </div>
+
+    
+    
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/r/">R</a>
+          <a href="/tags/twitter/">twitteR</a>
+          <a href="/tags/twitter/">twitter</a>
+          <a href="/tags/ggplot/">ggplot</a>
+          <a href="/tags/textmining/">textmining</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+          <a class="prev" href="/post/re-di-twitter-ii/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Il Re di Twitter? (PART II)</span>
+            <span class="prev-text nav-mobile">Prev</span>
+          </a>
+        
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+
+  <div class="disqus-comment">
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+    Show Disqus Comments
+  </div>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    function load_disqus() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'muaydata';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+      $('#load_disqus').remove();
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+  </noscript>
+  
+  </div>
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="clau6ioHH@email.com" rel="me noopener" class="iconfont icon-email"
+        title="email" target="_blank">
+      </a>
+      <a href="https://twitter.com/c1au6i0" rel="me noopener" class="iconfont icon-twitter"
+        title="twitter" target="_blank">
+      </a>
+  <a href="/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="iconfont icon-rss"
+    title="rss" target="_blank">
+  </a>
+  </div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span><span class="author">
+        <a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>
+        
+      </span></span>
+
+  
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+<script type="text/javascript" src="/dist/jane.min.js?v=2.7.0"></script>
+
+
+
+
+
+  
+    <script type="text/javascript" src="/js/load-photoswipe.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe.min.js"></script>
+    <script type="text/javascript" src="/lib/photoswipe/photoswipe-ui-default.min.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

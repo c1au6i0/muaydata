@@ -6,27 +6,64 @@
     <description>Recent content in Twitter on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 12 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Wed, 10 Oct 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/twitter/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Il Re di Twitter? (PARTE I)</title>
-      <link>/post/il-re-di-twitter-parte-i/</link>
-      <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
+      <title>Il Re di Twitter? (PART II)</title>
+      <link>/post/re-di-twitter-ii/</link>
+      <pubDate>Wed, 10 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/il-re-di-twitter-parte-i/</guid>
-      <description>Premessa Social media come Twitter sono diventati anche in Italia uno dei mezzi di comunicazione più usati dai politici per rivolgersi direttamente al loro elettorato. Una quantità di informazioni enorme su abitudini, messaggio elettorale e tipo di elettori si nasconde tra quei tweets di poche centinaia di byte. Un famoso post di David Robinson ha dimostrato come queste informazioni possono essere scovate dall&amp;rsquo;occhio attento del Data Scientist attraverso l&amp;rsquo;uso sapiente R e alcuni sui pacchetti (twitteR, tidyverse e tidytext).</description>
+      <guid>/post/re-di-twitter-ii/</guid>
+      <description>&lt;p&gt;In questa seconda parte analizzeremo il contenuto dei tweets di Di Maio, Salvini e Martina e scopriremo quante volte e quando particolari parole sono state utilizzate dai 3 politici. Per finire andremo a vedere se alcune di queste parole sono associate ad un alto numero di like.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Il Re di Twitter? (PART II)</title>
+      <link>/post/re-di-twitter-ii/</link>
+      <pubDate>Wed, 10 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/re-di-twitter-ii/</guid>
+      <description>&lt;p&gt;In questa seconda parte analizzeremo il contenuto dei tweets di Di Maio, Salvini e Martina e scopriremo quante volte e quando particolari parole sono state utilizzate dai 3 politici. Per finire andremo a vedere se alcune di queste parole sono associate ad un alto numero di like.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Il Re di Twitter? (PARTE I)</title>
-      <link>/post/il-re-di-twitter-parte-i/</link>
+      <link>/post/re-di-twitter-i/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/il-re-di-twitter-parte-i/</guid>
-      <description>Premessa Social media come Twitter sono diventati anche in Italia uno dei mezzi di comunicazione più usati dai politici per rivolgersi direttamente al loro elettorato. Una quantità di informazioni enorme su abitudini, messaggio elettorale e tipo di elettori si nasconde tra quei tweets di poche centinaia di byte. Un famoso post di David Robinson ha dimostrato come queste informazioni possono essere scovate dall&amp;rsquo;occhio attento del Data Scientist attraverso l&amp;rsquo;uso sapiente R e alcuni sui pacchetti (twitteR, tidyverse e tidytext).</description>
+      <guid>/post/re-di-twitter-i/</guid>
+      <description>&lt;p&gt;In questa serie di Posts andremo ad analizzare gli ultimi 3200 tweets di Di Maio, Salvini e Martina. Il mio studio sarà diviso in 2 parti:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Nella &lt;strong&gt;parte I&lt;/strong&gt; analizzeremo le abitudini dei 3 leader e  scopriremo chi dei 3 è il più attivo, quando durante la giornata, quanto sono popolari i vari tweets e molte altre informazioni.&lt;/li&gt;
+&lt;li&gt;Nella &lt;strong&gt;parte II&lt;/strong&gt; ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Il Re di Twitter? (PARTE I)</title>
+      <link>/post/re-di-twitter-i/</link>
+      <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/re-di-twitter-i/</guid>
+      <description>&lt;p&gt;In questa serie di Posts andremo ad analizzare gli ultimi 3200 tweets di Di Maio, Salvini e Martina. Il mio studio sarà diviso in 2 parti:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Nella &lt;strong&gt;parte I&lt;/strong&gt; analizzeremo le abitudini dei 3 leader e  scopriremo chi dei 3 è il più attivo, quando durante la giornata, quanto sono popolari i vari tweets e molte altre informazioni.&lt;/li&gt;
+&lt;li&gt;Nella &lt;strong&gt;parte II&lt;/strong&gt; ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

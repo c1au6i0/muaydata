@@ -2,7 +2,8 @@
 title: Il Re di Twitter? (PARTE I)
 author: C1au6i0_HH
 date: '2018-09-12'
-slug: il-re-di-twitter-parte-i
+lastmod: "`r format(Sys.time(), '%d %B %Y')`"
+slug: re-di-twitter-i
 categories:
   - R
 tags:
@@ -23,6 +24,12 @@ contentCopyright: no
 reward: no
 mathjax: no
 ---
+In questa serie di Posts andremo ad analizzare gli ultimi 3200 tweets di Di Maio, Salvini e Martina. Il mio studio sarà diviso in varie parti:
+
+* Nella __parte I__ analizzeremo le abitudini dei 3 leader e  scopriremo chi dei 3 è il più attivo, quando durante la giornata, quanto sono popolari i vari tweets e molte altre informazioni.
+* Nella __parte II__ ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.
+
+<!--more-->
 # Premessa
 
 Social media come Twitter sono diventati anche in Italia uno dei mezzi di comunicazione più usati dai politici per rivolgersi direttamente al loro elettorato. Una quantità di informazioni enorme su abitudini, messaggio elettorale e tipo di elettori si nasconde tra quei tweets di poche centinaia di byte. Un famoso post di [David Robinson](http://varianceexplained.org/r/trump-tweets/) ha dimostrato come queste informazioni possono essere scovate dall'occhio attento del Data Scientist attraverso l'uso sapiente *R* e alcuni sui pacchetti ([*twitteR*](https://cran.r-project.org/web/packages/twitteR/index.html), *tidyverse* e *tidytext*).
@@ -33,13 +40,7 @@ Eccomi qui perciò anche io, munito di *R*, *RStudio* e computer con l'obiettivo
 * Lega: Matteo Salvini (matteosalvinimi).
 * Partito Democratico: Maurizio Martina (maumartina).
 
-Il mio studio sarà diviso in varie parti:
-
-* Nella __parte I__ analizzeremo le abitudini dei 3 leader e  scopriremo chi dei 3 è il più attivo, quando durante la giornata, quanto sono popolari i loro tweets e molte altre informazioni.
-* Nella __parte II__ ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.
-* Nella __parte III__ cercherò di effettuare una analisi dei sentimenti espressi nei tweets (anche se gli strumenti a disposizione per la lingua italiana sono limitati).
-
-I post saranno densi di codice (dopo tutto sto facendo tutto questo anche per rimanere un attivo *R user*) ma inserirò delle conclusioni con i punti chiave dell'analisi.
+I posts saranno densi di codice (dopo tutto sto facendo tutto questo anche per rimanere un attivo *R user*) ma inserirò delle conclusioni con i punti chiave dell'analisi.
 
 # Analisi
 ## Preparazione e download dati
@@ -517,7 +518,6 @@ Seduto alla sua scrivania e con il suo iphone (fig.8), __Salvini ha fatto di *Tw
 
 
 
-*Per commenti o segnalazioni di errori contattatemi alla mia email: clau6ioHH@gmail.com*
 
 
 

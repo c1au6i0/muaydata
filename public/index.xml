@@ -6,6 +6,7 @@
     <description>Recent content on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
+    <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Mon, 10 Sep 2018 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
@@ -27,13 +28,684 @@ Dwight Schultz.&lt;/p&gt;
     </item>
     
     <item>
+      <title>Il Re di Twitter? (PART II)</title>
+      <link>/post/re-di-twitter-ii/</link>
+      <pubDate>Wed, 10 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/re-di-twitter-ii/</guid>
+      
+        <description>&lt;p&gt;In questa seconda parte analizzeremo il contenuto dei tweets di Di Maio, Salvini e Martina e scopriremo quante volte e quando particolari parole sono state utilizzate dai 3 politici. Per finire andremo a vedere se alcune di queste parole sono associate ad un alto numero di like.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;premessa&#34;&gt;Premessa&lt;/h1&gt;
+
+&lt;p&gt;Nella prima parte di prima serie di &lt;a href=&#34;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/&#34;&gt;posts&lt;/a&gt; ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (&lt;em&gt;twitteR&lt;/em&gt;) abbiamo analizzato l&amp;rsquo;uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell&amp;rsquo;apparente casualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e così siamo stati in grado di rilevare trend e differenze nell&amp;rsquo;uso di twitter da parte dei 3 politici italiani. In questa &lt;strong&gt;seconda parte&lt;/strong&gt; andremo ad analizzare il contenuto dei vari tweets utilizzando un pacchetto di &lt;em&gt;textmining&lt;/em&gt; estremamente popolare in &lt;em&gt;R&lt;/em&gt;: &lt;a href=&#34;https://www.tidytextmining.com/&#34;&gt;&lt;em&gt;tidytext&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;analisi&#34;&gt;Analisi&lt;/h1&gt;
+
+&lt;h2 id=&#34;preparazione-dati-e-tokenizzazione&#34;&gt;Preparazione dati e tokenizzazione&lt;/h2&gt;
+
+&lt;p&gt;La procedura per ottenere un /tibble dei tweets dei 3 politici (a cui assegneremo il nome di &lt;strong&gt;twdat&lt;/strong&gt;) è spiegata in dettaglio nel mio primo [post]{&lt;a href=&#34;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/&#34;&gt;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/&lt;/a&gt;} della serie e nella &lt;a href=&#34;https://medium.com/@GalarnykMichael/accessing-data-from-Twitter-api-using-r-part1-b387a1c7d3e&#34;&gt;guida di Michael Galarnyk&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Queste sono le librerie che ci serviranno per le nostre analisi.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;ggridges&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;ggrepel&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lubridate&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;RSQLite&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;scales&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;stringr&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;tidytext&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;tidyverse&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;!-- Database --&gt;
+
+&lt;p&gt;Il primo processo necessario prima di qualunque analisi del testo è la &lt;em&gt;tokenizzazione&lt;/em&gt;, ovvero l&amp;rsquo;estrazione di singole unità di testo con significato, nel nostro caso singole parole.
+Il codice sottostante che è stato adattato da quello di &lt;a href=&#34;http://varianceexplained.org/r/trump-tweets/&#34;&gt;David Robinson&lt;/a&gt; serve a:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;tokenizzare il contenuto della colonna &lt;em&gt;text&lt;/em&gt; del dataframe &lt;em&gt;twdat&lt;/em&gt; attraverso il comando &lt;em&gt;unnest_tokens&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;rimuove &lt;em&gt;stop words&lt;/em&gt;, ossia parole come articoli e proposizioni prive di significato.&lt;/li&gt;
+&lt;li&gt;rimuovere links, simboli e particelle come &lt;em&gt;https&lt;/em&gt; o &lt;em&gt;rt&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;reg &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;([^[:alpha:]\\d#@&amp;#39;]|&amp;#39;(?![[:alpha:]\\d#@]))&amp;#34;&lt;/span&gt;
+ita_stop_words &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; get_stopwords&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;language &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;it&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;source&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;snowball&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+twwords &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;text &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; str_replace_all&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;text&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;(http|https)://t.co/[A-Za-z\\d]+|&amp;amp;amp;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# remove links&lt;/span&gt;
+  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;text &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; str_replace_all&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;text&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;[[:punct:]]&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# removes punctualization&lt;/span&gt;
+  unnest_tokens&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; text&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; token &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;regex&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; pattern &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; reg&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  filter&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;word &lt;span class=&#34;o&#34;&gt;%in%&lt;/span&gt; ita_stop_words&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+         str_detect&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;[[:alpha:]]&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+         &lt;span class=&#34;kp&#34;&gt;nchar&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;word&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+         &lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;word &lt;span class=&#34;o&#34;&gt;%in%&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;rt&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;http&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;https&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;gt&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;#remove other not meanigful words&lt;/span&gt;
+         &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Il risultato viene assegnato ad un dataframe/tibble in cui le informazioni originali di &lt;em&gt;twdat&lt;/em&gt; vengono conservate ma la colonna che contiene tweets (chiamata &lt;em&gt;text&lt;/em&gt;) viene sostituita con una chiamata &lt;em&gt;word&lt;/em&gt; in cui ogni osservazione è una singola parola (*one token per row&amp;rdquo;). Abbiamo a questo punto un dataframe/tibble con cui possiamo lavorare.&lt;/p&gt;
+
+&lt;h2 id=&#34;frequenza-delle-parole&#34;&gt;Frequenza delle parole&lt;/h2&gt;
+
+&lt;p&gt;Come prima cosa andiamo a vedere quali sono le parole più usate dai 3 politici. Per ogni politico calcoliamo la percentuale di tweets che contiene le varie parole, andiamo poi a selezionare le prime 20 parole e le assegnamo ad un nuovo database/tibble (&lt;em&gt;f_twwords&lt;/em&gt;).&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# filtered tweets with percent times a word has been used&lt;/span&gt;
+f_twwords &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twwords &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tot &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;length&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;unique&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;id&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# here calculate the tot number of tweets &lt;/span&gt;
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  summarize&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;n &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;length&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;unique&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;id&lt;span class=&#34;p&#34;&gt;)),&lt;/span&gt; perc &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;length&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;unique&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;id&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;first&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tot&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  do&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;top_n&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;20&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; perc&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# discovered top_n thanks to We are R-Ladies&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Disegneremo il grafico con  &lt;em&gt;ggplot&lt;/em&gt; ma prima sarà necessario ordinare per ognin politico i livelli della colonna &lt;em&gt;word&lt;/em&gt; a seconda di quella delle percentuali &lt;em&gt;perc&lt;/em&gt; (grazie &lt;a href=&#34;https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value&#34;&gt;MrFlick&lt;/a&gt;)&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;new_order &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt;
+  f_twwords &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  do&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;data_frame&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;al&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;levels&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;reorder&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;interaction&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; drop&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;perc&lt;span class=&#34;p&#34;&gt;))))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  pull&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;al&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Creiamo a questo punto il grafico in cui le parole usate da ogni politico saranno nell&amp;rsquo;asse delle Y e la loro frequenza in quello delle X.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;f_twwords &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# frequency tweet words&lt;/span&gt;
+  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;al &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;factor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;interaction&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; word&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; levels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; new_order&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; perc&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; al&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    geom_point&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    facet_grid&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; scales &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#39;free_y&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    scale_y_discrete&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;breaks &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; new_order&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;gsub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;^.*\\.&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; new_order&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# this is to sort the y-axis breaks by the order created in previous chunck&lt;/span&gt;
+    scale_x_continuous&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; percent&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    scale_color_manual&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;values &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;#FFC125&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;#00BA38&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;#F8766D&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Percent tweets&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;fig.1&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+    theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+          legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig1_most_used_words-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Per Salvini e Martina la parola più usata è il proprio nome/screenname&lt;/strong&gt;, mentre per &lt;strong&gt;Di Maio è il partito&lt;/strong&gt; &amp;ldquo;m5s&amp;rdquo;. &lt;strong&gt;Salvini menziona il suo nome in circa 1 tweets ogni 3, Martina e Di Maio menziona  nome e partito in 1 tweet ogni 10 , rispettivamente&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;In termini di frequenza d&amp;rsquo;uso, &lt;strong&gt;il primo riferimento diretto Di Maio a se stesso (&lt;em&gt;luigidimaio&lt;/em&gt;) è all&amp;rsquo;undicesimo posto&lt;/strong&gt;, dopo 6 riferimenti al partito e al suo fondatore (fig.1). &lt;strong&gt;È inoltre più probabile trovare le parole &lt;em&gt;renzi&lt;/em&gt; o &lt;em&gt;pd&lt;/em&gt; in un tweet di Di Maio che la parola &lt;em&gt;luigidimaio&lt;/em&gt;! È più probabile trovare la parola &lt;em&gt;pd&lt;/em&gt; in un tweet di Di Maio che im uno di Martina*&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Sono tuttavia necessarie alcune precisazioni per meglio interpretare questi risultati. Il riferimento a se stessi dei vari politici è di &lt;em&gt;natura&lt;/em&gt; diversa. Per Salvini il riferimento al proprio nome è nell&amp;rsquo;ambito dell&amp;rsquo;hastag &lt;em&gt;#salvini&lt;/em&gt; mentre per Martina e Di Maio in retweet in cui vengono citati (&lt;em&gt;luididimaio&lt;/em&gt;, &lt;em&gt;maumartina&lt;/em&gt;).&lt;/p&gt;
+
+&lt;p&gt;I temi/slogan (&lt;em&gt;agricoltura, primagliitaliani&lt;/em&gt;) e espressioni (&lt;em&gt;amici&lt;/em&gt;) cari ai 3 politici emergono tra le 20 parole più usate, con alcuni elementi chiaramente in comune. Quali sono questi temi condivisi? Andiamo a vedere con alcuni semplici comandi per intersecare le tre liste di parole.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Split dataframe, select words  column and create a list. Intersect list&lt;/span&gt;
+words_m &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; map&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;split.data.frame&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;f_twwords &lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; f_twwords&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+              &lt;span class=&#34;kr&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;ungroup&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; select&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;word&lt;span class=&#34;p&#34;&gt;)})&lt;/span&gt;
+knitr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;kable&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;Reduce&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;intersect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; words_m&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;tab.1&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;word&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;italia&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;oggi&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;pd&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;I temi in comune tra i 3 politici sono la patria (&lt;em&gt;italia&lt;/em&gt;), il presente (&lt;em&gt;ora&lt;/em&gt;) e il&amp;hellip;__partito democratico __(&lt;em&gt;pd&lt;/em&gt;). I sostenitori del m5s sono stati spesso bersaglio di satira per l&amp;rsquo;uso considerato eccessivo di riferimenti e comparazioni con il PD &lt;a href=&#34;https://www.lercio.it/maturita-al-posto-della-soluzione-scrive-e-allora-il-pd-e-passa-la-prova-di-matematica/&#34;&gt;link&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;In fine ricorriamo ad una diverso strumento, il &lt;em&gt;wordcloud&lt;/em&gt; per rappresentare in maniera più accattivante i dati della figura precedente. Ho usato la libreria &lt;em&gt;ggrepel&lt;/em&gt; per evitare che le parole si sovrapponessero.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;f_twwords &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+    ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; perc&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; label &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      geom_text_repel&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;segment.size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NA&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; force &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      scale_size&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;range &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; guide &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;FALSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      scale_y_continuous&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;breaks &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      scale_x_continuous&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;breaks &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      scale_color_manual&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;values &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;#FFC125&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;#00BA38&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;#F8766D&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;fig.2&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; panel.background &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_rect&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NA&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+      facet_grid&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; scales &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#39;free_y&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; labeller &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; labeller&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.2_worcloud-1.png&#34; width=&#34;576&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Nella fig.2, le parole più usate hanno una dimensione maggiore.&lt;/p&gt;
+
+&lt;h2 id=&#34;andamento&#34;&gt;Andamento&lt;/h2&gt;
+
+&lt;p&gt;Le analisi svolte finora hanno evidenziato una serie di parole che con più probabilità di altre si trovano nei tweets dei tre politici. La parola &lt;em&gt;pd&lt;/em&gt; è una di queste, non soltanto per Martina ma anche per Salvini e Di Maio. Una così alta attenzione per il PD da parte di forze politiche ormai al governo mi ha sorpreso. Tuttavia un importante fattore era stato finora ignorato: &lt;strong&gt;il tempo!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Nelle analisi precedenti abbiamo infatti accorpando insieme gli ultimi ≈3200 tweets di ogni politico, andando perciò a &lt;em&gt;riassumere&lt;/em&gt;  periodi di attività anche molti lunghi, e nel caso Di Maio, un periodo di circa 4 anni.&lt;/p&gt;
+
+&lt;p&gt;Andiamo perciò a vedere come l&amp;rsquo;uso di alcune delle parole più frequenti è cambiato nel tempo. Iniziamo con creare la lista delle 7 parole (&lt;em&gt;top_w&lt;/em&gt;) più usate da ogni politico come mostrato in fig.1. Per motivi pratici salveremo queste informazioni in un unica lista (invece che un dataframe) in cui ogni elemento sara nel formato nomepolitico_parola.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;top_w &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; f_twwords &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;   
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  do&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;top_n&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;7&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; perc&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  unite&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName_word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; remove &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;FALSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  ungroup&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  select&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName_word&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  &lt;span class=&#34;kp&#34;&gt;unlist&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;A questo punto calcoliamo per ogni mese il totale dei tweets, il numero di tweets che contengono ogni diversa parola, e relativa percentuale. Uniamo anche per questo dataframe/tibble la colonna con il nome del politico e quella delle parole.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;fm_twwords &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twwords &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# frequencymonth_tweetswords&lt;/span&gt;
+  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;month_r &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; floor_date&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;created&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;month&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; month_r&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tot &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;length&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;unique&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;id&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# here calculate the tot number of tweets &lt;/span&gt;
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; month_r&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  summarize&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;n &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;length&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;unique&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;id&lt;span class=&#34;p&#34;&gt;)),&lt;/span&gt; perc &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;length&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;unique&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;id&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;first&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tot&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; tot &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; first&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tot&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  unite&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName_word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; remove &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;FALSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;#&lt;/span&gt;
+  arrange&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; desc&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;perc&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Mi concentrerò sui dati di Di Maio che sono quelli in cui un analisi temporale rivela informazioni più interessanti. Il codice sottostante serve a filtrare il dataframe/tibble con le 7 parole più usate (&lt;em&gt;top_w&lt;/em&gt;), a riordinarle per il grafico, e a codificarle in modo da creare delle appropriate &lt;em&gt;facet&lt;/em&gt; nel grafico successivo.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;fm_twwords_lm &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; fm_twwords &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  filter&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;luigidimaio&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; screenName_word &lt;span class=&#34;o&#34;&gt;%in%&lt;/span&gt; top_w&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+wd_lm &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;beppe&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+           &lt;span class=&#34;s&#34;&gt;&amp;#34;stelle&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+           &lt;span class=&#34;s&#34;&gt;&amp;#34;m5s&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+           &lt;span class=&#34;s&#34;&gt;&amp;#34;governo&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+           &lt;span class=&#34;s&#34;&gt;&amp;#34;oggi&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+           &lt;span class=&#34;s&#34;&gt;&amp;#34;pd&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+           &lt;span class=&#34;s&#34;&gt;&amp;#34;renzi&amp;#34;&lt;/span&gt;
+           &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; 
+fm_twwords_lm&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;word &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;factor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fm_twwords_lm&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; levels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; wd_lm&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+letters_lm &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;LETTERS&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)]&lt;/span&gt;
+
+newnames &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; setNames&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;letters_lm&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; wd_lm&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+fm_twwords_lm&lt;span class=&#34;p&#34;&gt;[,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;facet_w&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; newnames&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;fm_twwords_lm&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;word&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Andiamo finalmente a rappresentare graficamente le 7 parole più usate da Di Maio in funzione del tempo, per gli ultimi 3 anni.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;  fm_twwords_lm  &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  filter&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;month_r &lt;span class=&#34;o&#34;&gt;&amp;gt;=&lt;/span&gt; ymd&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;2014-07-01&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; month_r &lt;span class=&#34;o&#34;&gt;&amp;lt;=&lt;/span&gt;  ymd&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;2018-07-01&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; month_r&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; perc&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;  col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; word&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_vline&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;xintercept &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; ymd&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;2018-06-01&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; tz &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;UTC&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; lty &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_point&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_line&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  scale_x_datetime&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; date_format&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;%Y %b&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; date_breaks&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;4 months&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; ymd&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;2018-01-01&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; tz &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;UTC&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; label &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;before&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;black&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; ymd&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;2018-07-01&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; tz &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;UTC&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; label &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;after&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;black&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; angle &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  scale_y_continuous&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; percent&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  scale_color_brewer&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;type &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;qual&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; palette &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  facet_grid&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;facet_w &lt;span class=&#34;o&#34;&gt;~&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.subtitle &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+    plot.caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+    axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.25&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; angle &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+    &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; group &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Di Maio - Percent tweets&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;fig.3&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.3_timeline_dimaioa-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Le 3 parole relative al movimento e al suo fondatore (fig.3 panello A) sono state usate da Di Maio costantemente ma con frequenza variabile negli ultimi anni. È tuttavia negli ultimi mesi (da Marzo a Luglio 2018) che il loro uso è andato quasi scomparendo. Questa diminuzione si è verifica nel concitato periodo di consultazioni con il quirinale e formazione del governo (Febbraio-Giugno), mesi in cui la parola &lt;em&gt;governo&lt;/em&gt; è usata ogni 2-5 tweets (fig.3 panello B).
+E le parole relative al PD? &lt;strong&gt;I riferimenti da parte di Di Maio al attuale partito di opposizione (parola &lt;em&gt;pd&lt;/em&gt;) e al suo precedente segretario (parola &lt;em&gt;renzi&lt;/em&gt;)&lt;/strong&gt; se pure a tratti molto frequenti tra il 2014-2017, &lt;strong&gt;scompaiono completamente nel periodo in cui il movimento a 5 stelle diventa partito di maggioranza&lt;/strong&gt; (fig.3 pannello C, linea tratteggiata indica l&amp;rsquo;insediamento del governo).
+Anche riferimenti al &lt;em&gt;governo&lt;/em&gt; e le la parola &lt;em&gt;stelle&lt;/em&gt; diminuiscono di frequenza o scompaiono dai tweets di Di Maio in Giugno e Luglio.
+Di che cosa parla allora negli Di Maio in questi ultimi mesi presi in esame?
+Andiamo a vedere le 2 parole utilizzate in diversi tweets per i mesi di Giugolo e Luglio.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;fm_twwords  &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  filter&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;luigidimaio&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  filter&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;month_r &lt;span class=&#34;o&#34;&gt;&amp;gt;=&lt;/span&gt; ymd&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;2018-06-01&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; month_r &lt;span class=&#34;o&#34;&gt;&amp;lt;=&lt;/span&gt; ymd&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;2018-07-01&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;perc &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; perc &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;month_r&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  do&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;top_n&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; perc&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  arrange&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;desc&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;month_r&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  select&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; month_r&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; n&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; tot&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; perc&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  knitr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;kable&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;tab.2&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&#34;left&#34;&gt;word&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;month_r&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;n&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;tot&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;perc&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;byebyevitalizi&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2018-07-01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;22&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;44&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;50.00000&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;mov5stelle&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2018-07-01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;11&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;44&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;25.00000&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;oggi&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2018-07-01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;44&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;15.90909&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;giuseppeconteit&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2018-06-01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;31.25000&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;presidente&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2018-06-01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;18.75000&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;domani&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2018-06-01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12.50000&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;ex&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2018-06-01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12.50000&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;finalmente&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2018-06-01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12.50000&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;italy&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2018-06-01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12.50000&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;lavoro&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2018-06-01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12.50000&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;oggi&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2018-06-01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12.50000&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;parlamentari&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2018-06-01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12.50000&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td align=&#34;left&#34;&gt;realdonaldtrump&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;2018-06-01&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12.50000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;I riferimenti di Di Maio al movimento restano alti anche se attraverso parole (&lt;em&gt;mov5stelle&lt;/em&gt;) differenti da quelle indicate in fig.3 (ma già individuate tra le 20 parole più utilizzate da Di Maio). Inoltre, __(ri/)affiorano con alta frequenza menzioni al presidente del consiglio (&lt;em&gt;giuseppeconte.it&lt;/em&gt;, &lt;em&gt;presidente&lt;/em&gt;) e all&amp;rsquo;opera del governo (&lt;em&gt;byebyevitalizi&lt;/em&gt;).
+  Per tanto, &lt;strong&gt;nei mesi di Giugno e Luglio, Di Maio continua a parlare del movimento  e dell&amp;rsquo;opera del governo ma usando con più frequenza parole differenti da quelle usate precedentemente&lt;/strong&gt;. Inoltre in Giugno, &lt;strong&gt;i riferimente al fondatore (&lt;em&gt;beppe&lt;/em&gt;), sembrano essere stati rimpiazzati con quelli diretti al presidente del consiglio&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&#34;popolarità-e-parole&#34;&gt;Popolarità e parole&lt;/h2&gt;
+
+&lt;p&gt;Il processo di &lt;em&gt;tokenizzazione&lt;/em&gt;  iniziale  ci ha permesso di associare ad ogni parola un numero di likes (quello del tweet in cui è stata usata) che rappresenta un ottimo indice di popolarità/approvazione da parte della base dei followers. &lt;strong&gt;Andiamo quindi a vedere quali sono le parole che sono più apprezzate dai relativi followers dei 3 politici&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Iniziamo calcolando per ogni politico,la media dei likes per parola/tweet e selezionando le 10 parole con maggiori likes.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;fav_twwords_all &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twwords &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# favmonth_tweetswords&lt;/span&gt;
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tot &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;length&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;unique&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;id&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# here calculate the tot number of &lt;/span&gt;
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  summarize&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;n &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;length&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;unique&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;id&lt;span class=&#34;p&#34;&gt;)),&lt;/span&gt; fav &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;favoriteCount&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;n&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  group_by&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+fav_twwords &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; fav_twwords_all &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  do&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;top_n&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; fav&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Ordiniamo i livelli del fattore &lt;em&gt;word&lt;/em&gt; per poter conseguentemente riorganizzare i livelli nell&amp;rsquo;asse delle x del prossimo grafico in ordine di media di likes.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;new_order &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt;
+  fav_twwords &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  do&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;data_frame&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;al&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;levels&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;reorder&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;interaction&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; drop&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;fav&lt;span class=&#34;p&#34;&gt;))))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  pull&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;al&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Per ultimo creiamo il grafico a barre del numero di like per tweet delle 10 parole che sono state più apprezzate. Attraverso &lt;em&gt;geom_text&lt;/em&gt; possiamo indichiamo all&amp;rsquo;interno di ogni barra il numero di tweets che contiene la parola sotto esame.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;fav_twwords &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;al &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;factor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;interaction&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; word&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; levels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; new_order&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; al&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; fav&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_col&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  scale_fill_manual&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;values &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;#FFC125&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;#00BA38&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;#F8766D&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; label &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; n&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;-0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  facet_grid&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; scales &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#39;free_x&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; 
+  scale_x_discrete&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;breaks &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; new_order&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;gsub&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;^.*\\.&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; new_order&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Number of likes / tweet&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;fig.4&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.subtitle &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; 
+    plot.caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; 
+    axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+                               hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+                               angle &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+    legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.4_like_word-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Il primo dato che balza agli occhi dalla fig.4 è che &lt;strong&gt;le prime 10 parole più usate da Salvini hanno totalizzato un numero molto più alto di likes rispetto quelle di Di Maio e Martina&lt;/strong&gt;.
+Inoltre, le parole che hanno ricevuto più likes sono state utilizzate &lt;strong&gt;soltanto 1 o 2 volte dai vari politici&lt;/strong&gt;.  Perché?
+Andiamo a rileggere i [10 tweets più popolari dei tre politici] {&lt;a href=&#34;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/#&amp;amp;gid=1&amp;amp;pid=7&#34;&gt;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/#&amp;amp;gid=1&amp;amp;pid=7&lt;/a&gt;}. La quasi totalità delle parole con più like si annidata tra quei tweet. Si tratta di parole &amp;ldquo;discriminanti&amp;rdquo; che identificano in maniera univoca il tweet perché non comunemente usate in altri tweets (con bassi likes). Esemplificativo è il caso delle parole &lt;em&gt;gove&lt;/em&gt;, &lt;em&gt;que&lt;/em&gt; e &lt;em&gt;trat&lt;/em&gt; che sono parole tagliate (governo, queste, tratta) da &lt;em&gt;twitteR&lt;/em&gt; per raggiunto limite di caratteri e perciò si trovano unicamente in questi tweets.&lt;/p&gt;
+
+&lt;p&gt;Per la stessa ragione, alcune parole se pure presenti nei tweets più popolari non sono tra quelle con maggiori like per tweets. Per di Maio una di queste è &lt;strong&gt;la parola &lt;em&gt;vitalizi&lt;/em&gt; che viene menzionata 2 volte tra i [dieci tweets con più likes]{&lt;a href=&#34;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/#&amp;amp;gid=1&amp;amp;pid=7&#34;&gt;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/#&amp;amp;gid=1&amp;amp;pid=7&lt;/a&gt;}&lt;/strong&gt;. Si tratta di una parola che è stata usata da Di Maio per un totale di 28 volte negli ultimi anni.&lt;/p&gt;
+
+&lt;p&gt;Nella figura sottostante ogni punto rappresenta un tweet che contiene la parola &lt;em&gt;vitalizi&lt;/em&gt;, collocato più in alto a seconda del numero di likes ricevuti.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;vital &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; fav_twwords_all &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  filter&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;luigidimaio&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; word &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;vitalizi&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; 
+
+twwords &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
+  filter&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;luigidimaio&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; word &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;vitalizi&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+  ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; favoriteCount&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; screenName&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_jitter&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; colour &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;#FFC125&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; width &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;.4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_hline&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;yintercept &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; vital&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;fav&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; show.legend &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;FALSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; 
+  scale_x_discrete&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;word: vitalizi&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  geom_label&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; vital&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;fav&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; label &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;mean&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; colour &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;black&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Number of likes&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;fig.5&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+  theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+        axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.5_vitalizi-1.png&#34; width=&#34;384&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Anche se in quelle 2 occasioni il numero di like ricevuti è stato estremamente alto, la presenza di numerosi tweets con pochi like ha spostato la media di like per tweet verso il basso (fig.5).&lt;/p&gt;
+
+&lt;p&gt;È pertanto evidente che &lt;strong&gt;nessuna singola parola può essere usata ripetutamente per garantire (o essere un buon predittore del) sucesso dei tweets dei 3 politici&lt;/strong&gt;. Il significato dei tweet si annida tra le combinazioni di parole e in temi che possono essere espressi in maniera differente. In questa circostanza e in queste condizioni risulta perciò più informativo l&amp;rsquo;analisi dell&amp;rsquo;[intero tweet]{&lt;a href=&#34;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/#&amp;amp;gid=1&amp;amp;pid=7&#34;&gt;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/#&amp;amp;gid=1&amp;amp;pid=7&lt;/a&gt;} piuttosto che delle singole parole.&lt;/p&gt;
+
+&lt;p&gt;Analisi più approfondite come quelle relative alla combinazioni di parole e &lt;em&gt;sentiment analysis&lt;/em&gt; possono essere utilizzate per visionare e catturare temi o &amp;ldquo;significati&amp;rdquo; generali.
+Ma vista mancanza di strumenti adeguati per la lingua italiana, ho deciso di completare qui la mia analisi di questo dataset!&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusioni&#34;&gt;Conclusioni&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;La parola che con più frequenza compare nei tweet di Salvini e Martina è il loro stesso nome, mentre in quelli di Di Maio è il partito (&lt;em&gt;m5s&lt;/em&gt;) (fig.1, fig.2).&lt;/li&gt;
+&lt;li&gt;Alcune parole sono usate con alta frequenza da tutti e tre i politici (tab.1). Tra le top 3, compare la parola &lt;em&gt;Italia&lt;/em&gt; e quella &lt;strong&gt;&lt;em&gt;pd&lt;/em&gt;&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;È più facile trovare un riferimento al PD e a Renzi in un tweet di Di Maio che in uno di Martina. Le parole &lt;em&gt;pd&lt;/em&gt; e &lt;em&gt;renzi&lt;/em&gt; compaiono con maggiore frequenza di quella &lt;em&gt;luigidimaio&lt;/em&gt; nei tweet di Di Maio (fig.1).&lt;/li&gt;
+&lt;li&gt;I riferimenti di Di Maio a PD e Renzi scompaiono completamente a partire dal periodo delle consultazioni e formazione del governo (fig.3, tab.2).&lt;/li&gt;
+&lt;li&gt;Nessuna singola parola è sufficiente a predire la possibile popolarità (likes) dei tweet dei 3 politici tra i rispettivi followers.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Analisi più approfondite come quelle relative alla combinazioni di parole e &lt;em&gt;sentiment analysis&lt;/em&gt; possono essere utilizzate per visionare e catturare temi o &amp;ldquo;significati&amp;rdquo; generali e potrebbero permettere predizioni della popolarità dei vari tweets. Tuttavia, vista la mancanza di strumenti adeguati per la lingua italiana, ho deciso di completare qui la mia analisi di questo dataset! I prossimi post saranno in Inglese e decisamente più brevi!&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
       <title>Il Re di Twitter? (PARTE I)</title>
-      <link>/post/il-re-di-twitter-parte-i/</link>
+      <link>/post/re-di-twitter-i/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/il-re-di-twitter-parte-i/</guid>
+      <guid>/post/re-di-twitter-i/</guid>
       
-        <description>
+        <description>&lt;p&gt;In questa serie di Posts andremo ad analizzare gli ultimi 3200 tweets di Di Maio, Salvini e Martina. Il mio studio sarà diviso in 2 parti:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Nella &lt;strong&gt;parte I&lt;/strong&gt; analizzeremo le abitudini dei 3 leader e  scopriremo chi dei 3 è il più attivo, quando durante la giornata, quanto sono popolari i vari tweets e molte altre informazioni.&lt;/li&gt;
+&lt;li&gt;Nella &lt;strong&gt;parte II&lt;/strong&gt; ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;premessa&#34;&gt;Premessa&lt;/h1&gt;
 
@@ -47,15 +719,7 @@ Dwight Schultz.&lt;/p&gt;
 &lt;li&gt;Partito Democratico: Maurizio Martina (maumartina).&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Il mio studio sarà diviso in varie parti:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Nella &lt;strong&gt;parte I&lt;/strong&gt; analizzeremo le abitudini dei 3 leader e  scopriremo chi dei 3 è il più attivo, quando durante la giornata, quanto sono popolari i loro tweets e molte altre informazioni.&lt;/li&gt;
-&lt;li&gt;Nella &lt;strong&gt;parte II&lt;/strong&gt; ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.&lt;/li&gt;
-&lt;li&gt;Nella &lt;strong&gt;parte III&lt;/strong&gt; cercherò di effettuare una analisi dei sentimenti espressi nei tweets (anche se gli strumenti a disposizione per la lingua italiana sono limitati).&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I post saranno densi di codice (dopo tutto sto facendo tutto questo anche per rimanere un attivo &lt;em&gt;R user&lt;/em&gt;) ma inserirò delle conclusioni con i punti chiave dell&amp;rsquo;analisi.&lt;/p&gt;
+&lt;p&gt;I posts saranno densi di codice (dopo tutto sto facendo tutto questo anche per rimanere un attivo &lt;em&gt;R user&lt;/em&gt;) ma inserirò delle conclusioni con i punti chiave dell&amp;rsquo;analisi.&lt;/p&gt;
 
 &lt;h1 id=&#34;analisi&#34;&gt;Analisi&lt;/h1&gt;
 
@@ -74,13 +738,9 @@ Una volta creata la app, il pacchetto &lt;em&gt;twitteR&lt;/em&gt; ci permetter�
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;twitteR&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-
-
 &lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;ggridges&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;gridExtra&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;lubridate&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
@@ -387,7 +1047,7 @@ tw_d &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&
   grid.arrange&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tw_h&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; tw_d&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; ncol &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; top &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Percentage of tweets          &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.1_plot_tw_wdays-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.1_plot_tw_wdays-1.png&#34; width=&#34;960&#34; /&gt;
 &lt;strong&gt;Salvini&lt;/strong&gt; tende ad iniziare a twittare al mattino come Di Maio e Martina, ma  rispetto a loro, tende a continuare ad essere &lt;strong&gt;attivo anche la sera (7-23)&lt;/strong&gt;. Per &lt;strong&gt;Martina&lt;/strong&gt; il picco di attività è &lt;strong&gt;la mattina (9-11)&lt;/strong&gt; mentre per &lt;strong&gt;Di Maio è dalle 9 alle 16&lt;/strong&gt; (fig.2, sinistra). &lt;strong&gt;Tutti e tre i politici hanno un giorno durante il week-end in cui sono molto meno attivi&lt;/strong&gt;: sia per Di Maio che Salvini è il Sabato, mentre per Martina la Domenica (fig.2, destra).&lt;/p&gt;
 
 &lt;p&gt;Ho usato &lt;em&gt;ggridges&lt;/em&gt;, una extention di &lt;em&gt;ggplot2&lt;/em&gt;, per creare dei &lt;em&gt;density plots&lt;/em&gt; e visualizzare in dettaglio l&amp;rsquo;interazione tra giorno della settimana ed ora del giorno dei tweets (fig.3 sottostante). L&amp;rsquo;analisi tende comunque a supportare la generabilità delle osservazioni precedenti ma con alcune precisazioni: la Domenica è Di Maio a distribuire i sui tweets  più tardi la sera. Inoltre, il Lunedì Salvini è, diversamente dagli altri giorni della settimana, molto più attivo nel primo pomeriggio tra le 14 e le 16 (fig.3).&lt;/p&gt;
@@ -437,7 +1097,7 @@ tw_d &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&
     guides&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;FALSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.2_ridges-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.2_ridges-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;ultimi-mesi&#34;&gt;Ultimi mesi&lt;/h3&gt;
 
@@ -587,7 +1247,7 @@ knitr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;kable&lt;span class=&#34;p&#34
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;grid.arrange&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;timeline_abs&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; timeline_perc&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; ncol &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.4_timeline-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.4_timeline-1.png&#34; width=&#34;960&#34; /&gt;
 Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale. Questa normalizzazione ci permette di comparare meglio gli andamenti e i cambiamenti di attività tra i politici.&lt;/p&gt;
 
 &lt;p&gt;Salvini twitta molto più di Di Maio e Martina ma &lt;strong&gt;l&amp;rsquo;attività di tutti e 3 i politici aumenta drasticamente in Febbraio&lt;/strong&gt; di quest&amp;rsquo;anno, mese di &lt;a href=&#34;https://it.wikipedia.org/wiki/XVIII_legislatura_della_Repubblica_Italiana&#34;&gt;campagna elettorale&lt;/a&gt;) (con un inizio precoce per Salvini già in Gennaio). Questo picco di attività &lt;strong&gt;crolla velocemente&lt;/strong&gt; e in &lt;strong&gt;Marzo&lt;/strong&gt; già si ritorna a quei livelli di attività pre-elettorali (o anche inferiori nel caso di Di Maio). Un altro &lt;strong&gt;aumento dell&amp;rsquo;attività&lt;/strong&gt; di &lt;strong&gt;Salvini e Martina&lt;/strong&gt; si osserva &lt;strong&gt;negli ultimi mesi&lt;/strong&gt;, sospetto sia in qualche modo collegato alle vicenda dell&amp;rsquo;Acquarius e della &amp;ldquo;chiusura dei porti&amp;rdquo; (fig.3).&lt;/p&gt;
@@ -631,7 +1291,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
   guides&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;FALSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.4_distribution_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.4_distribution_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Tutte e tre le distribuzioni sono estremamente skewed verso destra ma anche da questo grafico è possibile cogliere che i tweets di Salvini con alti numeri di likes sono più numerosi rispetto a quelli degli altri 2 politici (barre verdi sono più alte rispetto alle gialle e rosse quando ci spostiamo verso destra,fig.4)&lt;/p&gt;
 
@@ -654,7 +1314,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
   theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig5_jitter_likes-1.png&#34; width=&#34;480&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig5_jitter_likes-1.png&#34; width=&#34;480&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Nella figura ogni tweet è rappresentato da un punto che è in alto se il tweet ha ricevuto molti likes. Anche da questa rappresentazione si evince che &lt;strong&gt;Salvini è estremamente più popolare tra i suoi followers di Di Maio e Martina&lt;/strong&gt; (fig.5).&lt;/p&gt;
 
@@ -662,7 +1322,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
 
 &lt;p&gt;Come è cambiata la popolarità dei vari politici negli ultimi mesi? Andiamo ad analizzarlo attraverso la visualizzazione di numero di like per tweet (fig.6, sinistra) e totale di like (fig.5) nei mesi di Dicembre 2017 fino a Luglio 2018. Utilizzeremo lo stesso codice impiegato per le fig.1.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.6_plot_timeline_likes-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.6_plot_timeline_likes-1.png&#34; width=&#34;960&#34; /&gt;
 Sia per &lt;strong&gt;Di Maio&lt;/strong&gt; che per &lt;strong&gt;Salvini&lt;/strong&gt; in numero di &lt;strong&gt;like per tweet è aumentato drasticamente&lt;/strong&gt; a partire &lt;strong&gt;da Marzo del 2018&lt;/strong&gt; con un &lt;strong&gt;picco quest&amp;rsquo;estaste&lt;/strong&gt; (fig.6 sinistra). Anche &lt;strong&gt;i like  per tweet di Martina sono aumentati&lt;/strong&gt;, ma &lt;strong&gt;in misura molto minore&lt;/strong&gt; rispetto a quelli degli altri 2 politici (fig.6 sinistra). Un altra considerazione interessante è che &lt;strong&gt;negli ultimi mesi la popolarità dei tweets di Di Maio e Salvini&lt;/strong&gt; in termini di likes per tweets &lt;strong&gt;non è&lt;/strong&gt; stata tutto sommato &lt;strong&gt;molto differente&lt;/strong&gt; (&lt;strong&gt;2500-4000 likes per tweet&lt;/strong&gt;, fig.6 sinistra) e il maggiore numero totale di likes da parte di Salvini è imputabile al sua maggiore presenza sul social media (fig.6 destra).&lt;/p&gt;
 
 &lt;h3 id=&#34;i-tweets-più-famosi&#34;&gt;I tweets più famosi&lt;/h3&gt;
@@ -702,7 +1362,7 @@ twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
           axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.25&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; angle &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.6_10_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.6_10_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Alcuni dei temi più cari ai m5s e Lega emergono nei  tweets più apprezzati:&lt;/p&gt;
 
@@ -779,7 +1439,7 @@ count_dev &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
       labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;fig.8&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-il-re-di-twitter-parte-i_files/figure-html/fig.7_pie-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.7_pie-1.png&#34; width=&#34;960&#34; /&gt;
 Sono piuttosto chiare le differenze tra i 3 politici:&lt;/p&gt;
 
 &lt;ul&gt;
@@ -803,10 +1463,7 @@ Sono piuttosto chiare le differenze tra i 3 politici:&lt;/p&gt;
 &lt;li&gt;I temi più apprezzati? Abbiamo dato una sbirciata ai 10 tweets più popolari e per &lt;strong&gt;Salvini&lt;/strong&gt; i temi sono &lt;strong&gt;immigrazione, porti, Saviano&lt;/strong&gt;; per &lt;strong&gt;Di Maio sono i vitalizi e il decreto dignità&lt;/strong&gt;; &lt;strong&gt;per Martina opposizione alle misure di Lega e Salvini&lt;/strong&gt; (fig.7).&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Seduto alla sua scrivania e con il suo iphone (fig.8), &lt;strong&gt;Salvini ha fatto di &lt;em&gt;Twitter&lt;/em&gt; il suo regno incontrastato&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Per commenti o segnalazioni di errori contattatemi alla mia email: clau6ioHH@gmail.com&lt;/em&gt;&lt;/p&gt;
-</description>
+&lt;p&gt;Seduto alla sua scrivania e con il suo iphone (fig.8), &lt;strong&gt;Salvini ha fatto di &lt;em&gt;Twitter&lt;/em&gt; il suo regno incontrastato&lt;/strong&gt;.&lt;/p&gt;</description>
       
     </item>
     
