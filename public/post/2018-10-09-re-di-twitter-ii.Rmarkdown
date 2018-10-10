@@ -96,7 +96,7 @@ f_twwords <- twwords %>%
   do(top_n(., 20, perc)) # discovered top_n thanks to We are R-Ladies
 ```
 
-Disegneremo il grafico con  *ggplot* ma prima sarà necessario ordinare per ognin politico i livelli della colonna *word* a seconda di quella delle percentuali *perc* (grazie [MrFlick](https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value))
+Disegneremo il grafico con  *ggplot* ma prima sarà necessario ordinare per ogni politico i livelli della colonna *word* a seconda di quella delle percentuali *perc* (grazie [MrFlick](https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value))
 
 ```{r order_factors}
 new_order <-
@@ -121,7 +121,7 @@ f_twwords %>% # frequency tweet words
           legend.position = "none")
 ```
 
-__Per Salvini e Martina la parola più usata è il proprio nome/screenname__, mentre per __Di Maio è il partito__ "m5s". __Salvini menziona il suo nome in circa 1 tweets ogni 3, Martina e Di Maio menziona  nome e partito in 1 tweet ogni 10 , rispettivamente__.
+__Per Salvini e Martina la parola più usata è il proprio nome/screenname__, mentre per __Di Maio è il partito__ "m5s". __Salvini menziona il suo nome in circa 1 tweets ogni 3, Martina e Di Maio menzionano nome e partito in 1 tweet ogni 10 , rispettivamente__.
 
 In termini di frequenza d'uso, __il primo riferimento diretto Di Maio a se stesso (*luigidimaio*) è all'undicesimo posto__, dopo 6 riferimenti al partito e al suo fondatore (fig.1). __È inoltre più probabile trovare le parole _renzi_ o _pd_ in un tweet di Di Maio che la parola *luigidimaio*! È più probabile trovare la parola *pd* in un tweet di Di Maio che im uno di Martina*__
 
@@ -136,7 +136,7 @@ words_m <- map(split.data.frame(f_twwords , f_twwords$screenName),
 knitr::kable(Reduce(intersect, words_m), caption = "tab.1")
 ```
 
-I temi in comune tra i 3 politici sono la patria (*italia*), il presente (*ora*) e il...__partito democratico __(*pd*). I sostenitori del m5s sono stati spesso bersaglio di satira per l'uso considerato eccessivo di riferimenti e comparazioni con il PD [link](https://www.lercio.it/maturita-al-posto-della-soluzione-scrive-e-allora-il-pd-e-passa-la-prova-di-matematica/)
+I temi in comune tra i 3 politici sono la patria (*italia*), il presente (*oggi*) e il...__partito democratico __(*pd*). I sostenitori del m5s sono stati spesso bersaglio di satira per l'uso considerato eccessivo di riferimenti e comparazioni con il PD [link](https://www.lercio.it/maturita-al-posto-della-soluzione-scrive-e-allora-il-pd-e-passa-la-prova-di-matematica/)
 
 In fine ricorriamo ad una diverso strumento, il *wordcloud* per rappresentare in maniera più accattivante i dati della figura precedente. Ho usato la libreria *ggrepel* per evitare che le parole si sovrapponessero.
 ```{r fig.2_worcloud, fig.height=6, fig.width=6, fig.align="center"}
@@ -230,7 +230,7 @@ Andiamo finalmente a rappresentare graficamente le 7 parole più usate da Di Mai
   theme(plot.title = element_text(hjust = 0.5)) 
 ```
 
-Le 3 parole relative al movimento e al suo fondatore (fig.3 panello A) sono state usate da Di Maio costantemente ma con frequenza variabile negli ultimi anni. È tuttavia negli ultimi mesi (da Marzo a Luglio 2018) che il loro uso è andato quasi scomparendo. Questa diminuzione si è verifica nel concitato periodo di consultazioni con il quirinale e formazione del governo (Febbraio-Giugno), mesi in cui la parola *governo* è usata ogni 2-5 tweets (fig.3 panello B). 
+Le 3 parole relative al movimento e al suo fondatore (fig.3 panello A) sono state usate da Di Maio costantemente ma con frequenza variabile negli ultimi anni. È tuttavia negli ultimi mesi (da Marzo a Luglio 2018) che il loro uso è andato quasi scomparendo. Questa diminuzione si è verificata nel concitato periodo di consultazioni con il quirinale e formazione del governo (Febbraio-Giugno), mesi in cui la parola *governo* è usata ogni 2-5 tweets (fig.3 panello B). 
 E le parole relative al PD? __I riferimenti da parte di Di Maio al attuale partito di opposizione (parola *pd*) e al suo precedente segretario (parola *renzi*)__ se pure a tratti molto frequenti tra il 2014-2017, __scompaiono completamente nel periodo in cui il movimento a 5 stelle diventa partito di maggioranza__ (fig.3 pannello C, linea tratteggiata indica l'insediamento del governo). 
 Anche riferimenti al *governo* e le la parola *stelle* diminuiscono di frequenza o scompaiono dai tweets di Di Maio in Giugno e Luglio.
 Di che cosa parla allora negli Di Maio in questi ultimi mesi presi in esame?
@@ -249,7 +249,7 @@ fm_twwords  %>%
 ```
 
 I riferimenti di Di Maio al movimento restano alti anche se attraverso parole (*mov5stelle*) differenti da quelle indicate in fig.3 (ma già individuate tra le 20 parole più utilizzate da Di Maio). Inoltre, __(ri/)affiorano con alta frequenza menzioni al presidente del consiglio (*giuseppeconte.it*, *presidente*) e all'opera del governo (*byebyevitalizi*). 
-  Per tanto, __nei mesi di Giugno e Luglio, Di Maio continua a parlare del movimento  e dell'opera del governo ma usando con più frequenza parole differenti da quelle usate precedentemente__. Inoltre in Giugno, __i riferimente al fondatore (*beppe*), sembrano essere stati rimpiazzati con quelli diretti al presidente del consiglio__.
+  Pertanto, __nei mesi di Giugno e Luglio, Di Maio continua a parlare del movimento  e dell'opera del governo ma usando con più frequenza parole differenti da quelle usate precedentemente__. Inoltre in Giugno, __i riferimente al fondatore (*beppe*), sembrano essere stati rimpiazzati con quelli diretti al presidente del consiglio__.
 
 ## Popolarità e parole
 
@@ -299,9 +299,9 @@ fav_twwords %>%
 
 Il primo dato che balza agli occhi dalla fig.4 è che __le prime 10 parole più usate da Salvini hanno totalizzato un numero molto più alto di likes rispetto quelle di Di Maio e Martina__.
 Inoltre, le parole che hanno ricevuto più likes sono state utilizzate __soltanto 1 o 2 volte dai vari politici__.  Perché? 
-Andiamo a rileggere i [10 tweets più popolari dei tre politici] {https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/#&gid=1&pid=7}. La quasi totalità delle parole con più like si annidata tra quei tweet. Si tratta di parole "discriminanti" che identificano in maniera univoca il tweet perché non comunemente usate in altri tweets (con bassi likes). Esemplificativo è il caso delle parole *gove*, *que* e *trat* che sono parole tagliate (governo, queste, tratta) da *twitteR* per raggiunto limite di caratteri e perciò si trovano unicamente in questi tweets.
+Andiamo a rileggere i [10 tweets più popolari dei tre politici] (https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/#&gid=1&pid=7). La quasi totalità delle parole con più like si annidata tra quei tweet. Si tratta di parole "discriminanti" che identificano in maniera univoca il tweet perché non comunemente usate in altri tweets (con bassi likes). Esemplificativo è il caso delle parole *gove*, *que* e *trat* che sono parole tagliate (governo, queste, tratta) da *twitteR* per raggiunto limite di caratteri e perciò si trovano unicamente in questi tweets.
 
-Per la stessa ragione, alcune parole se pure presenti nei tweets più popolari non sono tra quelle con maggiori like per tweets. Per di Maio una di queste è __la parola *vitalizi* che viene menzionata 2 volte tra i [dieci tweets con più likes]{https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/#&gid=1&pid=7}__. Si tratta di una parola che è stata usata da Di Maio per un totale di 28 volte negli ultimi anni.
+Per la stessa ragione, alcune parole se pure presenti nei tweets più popolari non sono tra quelle con maggiori like per tweets. Per di Maio una di queste è __la parola *vitalizi* che viene menzionata 2 volte tra i [dieci tweets con più likes](https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/#&gid=1&pid=7)__. Si tratta di una parola che è stata usata da Di Maio per un totale di 28 volte negli ultimi anni.
 
 Nella figura sottostante ogni punto rappresenta un tweet che contiene la parola *vitalizi*, collocato più in alto a seconda del numero di likes ricevuti.
 
@@ -323,7 +323,7 @@ twwords %>%
 
 Anche se in quelle 2 occasioni il numero di like ricevuti è stato estremamente alto, la presenza di numerosi tweets con pochi like ha spostato la media di like per tweet verso il basso (fig.5).
 
-È pertanto evidente che __nessuna singola parola può essere usata ripetutamente per garantire (o essere un buon predittore del) sucesso dei tweets dei 3 politici__. Il significato dei tweet si annida tra le combinazioni di parole e in temi che possono essere espressi in maniera differente. In questa circostanza e in queste condizioni risulta perciò più informativo l'analisi dell'[intero tweet]{https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/#&gid=1&pid=7} piuttosto che delle singole parole.
+È pertanto evidente che __nessuna singola parola può essere usata ripetutamente per garantire (o essere un buon predittore del) sucesso dei tweets dei 3 politici__. Il significato dei tweet si annida tra le combinazioni di parole e in temi che possono essere espressi in maniera differente. In questa circostanza e in queste condizioni risulta perciò più informativo l'analisi dell'[intero tweet](https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/#&gid=1&pid=7) piuttosto che delle singole parole.
 
 Analisi più approfondite come quelle relative alla combinazioni di parole e *sentiment analysis* possono essere utilizzate per visionare e catturare temi o "significati" generali.
 Ma vista mancanza di strumenti adeguati per la lingua italiana, ho deciso di completare qui la mia analisi di questo dataset!
