@@ -1,0 +1,55 @@
+File Manifest for ICPSR 36657
+
+United States Department of Justice. Office of Justice Programs. Bureau of
+Justice Statistics. National Prisoner Statistics, 1978-2015. ICPSR36657-v1.
+Ann Arbor, MI: Inter-university Consortium for Political and Social
+Research [distributor], 2017-01-05. http://doi.org/10.3886/ICPSR36657.v1
+
+
+Study-level Documentation
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    36657-descriptioncitation.pdf       -       -         -       2017-01-05  -
+
+    36657-related_literature.txt        -       -         -       daily       -
+
+    36657-manifest.txt                  -       -         -       daily       -
+
+
+DS0001 National Prisoner Statistics, 1978-2015
+
+    Filename                            Record  Record    Var.    Date        MD5
+                                        Length  Count     Count   Updated     Checksum
+
+    36657-0001-Codebook.pdf             -       -         -       2017-01-05  8dbc190350b8a5a61087ddc40cefcaa9
+
+    36657-0001-Data.dta                 -       2,052     201     2017-01-05  afec65a13617237afc257a9aa02d8ff3
+
+    36657-0001-Data.rda                 -       2,052     201     2017-01-05  14c5513887f01b5327693917c233f821
+
+    36657-0001-Data.sav                 -       2,052     201     2017-01-05  f7612928c8db64ad3e664e6ce811952f
+
+    36657-0001-Data.stc                 -       2,052     201     2017-01-05  9ceddfb3bff77721972895031a5b83ea
+
+    36657-0001-Data.tsv                 -       2,052     201     2017-01-05  781fdddabced2752e5aa4156a21af554
+
+    36657-0001-Data.txt                 826     2,052     201     2017-01-05  899036613061edda8ec490ed9e2e871a
+
+    36657-0001-Documentation-crosswalk_1978-2015.xlsx -       -         -       2017-01-05  72ad6f55c0096ed8911760b57d6aeb30
+
+    36657-0001-Documentation-notes.zip  -       -         -       2017-01-05  a88585a9d2090a9839d0319bb5cbfb77
+
+    36657-0001-Setup.dct                -       -         -       2017-01-05  2220a04d3c3de6fefd5880160f9b9676
+
+    36657-0001-Setup.do                 -       -         -       2017-01-05  ff2d6b6449a46cb19b9fb45d38d9fb88
+
+    36657-0001-Setup.sas                -       -         -       2017-01-05  faf590d2bc23d4a4ecc92661bcf020b8
+
+    36657-0001-Setup.sps                -       -         -       2017-01-05  28bd5bd552e2a6be3884f6fed9195a91
+
+    36657-0001-Supplemental_syntax.do   -       -         -       2017-01-05  2c6ceb5b30172e7e4115f12b9d6c1883
+
+    36657-0001-Supplemental_syntax.sas  -       -         -       2017-01-05  ad1d7614269a6fbe596b253864700e0e
+

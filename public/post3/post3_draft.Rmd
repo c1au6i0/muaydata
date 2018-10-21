@@ -1,0 +1,140 @@
+---
+title: "Prison"
+output: html_document
+---
+
+
+
+
+# DATA IMPORT AND TIDY
+```{r libraries, echo=FALSE}
+library(maps)
+library(readr)
+library(stringr)
+library(tidyverse)
+```
+
+
+The dataset can be downloaded [here](https://www.icpsr.umich.edu/icpsrweb/ICPSR/studies/36657)
+
+Let's create a tibble and filter it for year > 1999. From 1999 the count includes also private facilities
+
+```{r prison_tibble}
+load("/Users/heverz/Documents/R_projects/muaydata/public/post3/National_Prisoner_Statistics_1978-2015/DS0001/36657-0001-Data.rda")
+prison_pop <- as_tibble(da36657.0001)
+
+prison_1999 <-
+  prison_pop %>% 
+  filter(YEAR >= 1999, !str_detect(STATEID, 'total|BOP')) %>% 
+  select(YEAR, STATE, STATEID, matches('PRIV.$'))
+
+prison_1999$STATEID <- tolower(str_sub(prison_1999$STATEID, 10, -1))
+```
+```{r prison_tot}
+# calculate the total prison population  by state
+prison_1999_tot <- 
+  prison_1999 %>% 
+  rowwise() %>% 
+  mutate(TOT = CWPRIVM + CWPRIVF, 
+         TOT_PUB = CNOPRIVM + CNOPRIVF, 
+         TOT_PRIV =  TOT - TOT_PUB) %>% 
+  ungroup() %>% 
+  group_by(YEAR, STATEID, STATE) %>% 
+  summarize(PRIS = sum(TOT, na.rm = TRUE), 
+            PRIS_PUB = sum(TOT_PUB, na.rm = TRUE),
+            PRIS_PRIV = sum(TOT_PRIV, na.rm = TRUE)) 
+```
+
+```{r state_import}
+
+sp_wide <- read_csv("/Users/heverz/Documents/R_projects/muaydata/public/post3/sp_1999-2015.csv")
+
+sp_long <- sp_wide %>% 
+  mutate(STATEID = tolower(STATEID)) %>% 
+  gather(YEAR, POP, -STATEID, convert = TRUE, na.rm = TRUE) %>% 
+  na.omit()
+
+sp_long %>% 
+  filter(STATEID == "virginia")
+
+```
+
+
+
+```{r join}
+prison_normalized <- 
+  full_join(prison_1999_tot, sp_long, by = c("STATEID", "YEAR")) %>% 
+  rowwise() %>% 
+  mutate(PERC_PRIS = PRIS/POP *100) 
+```
+
+```{r}
+names(prison_normalized)
+```
+
+
+
+```{r}
+prison_normalized %>% 
+  filter(STATEID != "district of columbia") %>% 
+  ggplot(aes(YEAR, PERC_PRIS)) +
+  geom_line() +
+  facet_grid(~STATEID)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[solution](https://stackoverflow.com/questions/24441775/how-do-you-create-a-us-states-heatmap-based-on-some-values#24442716)
+
+```{r}
+all_states <- map_data("state")
+
+unique(all_states$region)
+# 
+# all_states <- map_data("state")
+# all_states
+# head(all_states)
+# Prison$region <- Prison$stateName
+# Total <- merge(all_states, Prison, by="region")
+# head(Total)
+# Total <- Total[Total$region!="district of columbia",]
+
+
+
+# p <- ggplot()
+# p <- p + geom_polygon(data=Total, aes(x=long, y=lat, group = group, fill=Total$bwRatio),colour="white"
+#       ) + scale_fill_continuous(low = "thistle2", high = "darkred", guide="colorbar")
+# P1 <- p + theme_bw()  + labs(fill = "Black to White Incarceration Rates \n Weighted by Relative Population" 
+#                             ,title = "State Incarceration Rates by Race, 2010", x="", y="")
+# P1 + scale_y_continuous(breaks=c()) + scale_x_continuous(breaks=c()) + theme(panel.border =  element_blank())
+```
+
