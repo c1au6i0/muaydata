@@ -7,11 +7,24 @@ output: html_document
 
 
 # DATA IMPORT AND TIDY
-```{r libraries, echo=FALSE}
+
+
+
+```{r dev_tool_instal, eval=FALSE}
+# devtools::install_github("thomasp85/transformr")
+# devtools::install_github("thomasp85/gganimate")
+
+```
+
+```{r libraries, echo=FALSE, warning=FALSE, message=FALSE}
+library(av)
+library(lubridate)
 library(maps)
 library(readr)
+library(readxl)
 library(stringr)
 library(tidyverse)
+library(transformr)
 ```
 
 
@@ -25,10 +38,10 @@ prison_pop <- as_tibble(da36657.0001)
 
 prison_1999 <-
   prison_pop %>% 
-  filter(YEAR >= 1999, !str_detect(STATEID, 'total|BOP')) %>% 
-  select(YEAR, STATE, STATEID, matches('PRIV.$'))
+  filter(YEAR >= 1999, !str_detect(STATEID, 'total|BOP')) %>% # remove totals
+  select(YEAR, STATE, STATEID, matches('PRIV.$'))  # lets take the variables regarding the prison population
 
-prison_1999$STATEID <- tolower(str_sub(prison_1999$STATEID, 10, -1))
+prison_1999$STATEID <- tolower(str_sub(prison_1999$STATEID, 10, -1)) # clean up the STATEID column
 ```
 ```{r prison_tot}
 # calculate the total prison population  by state
@@ -59,82 +72,143 @@ sp_long %>%
 
 ```
 
-
-
 ```{r join}
-prison_normalized <- 
-  full_join(prison_1999_tot, sp_long, by = c("STATEID", "YEAR")) %>% 
+prison_norm <- 
+  left_join(prison_1999_tot, sp_long, by = c("STATEID", "YEAR")) %>% 
   rowwise() %>% 
-  mutate(PERC_PRIS = PRIS/POP *100) 
+  mutate(PERC_PRIS = PRIS/POP *100) %>% 
+  ungroup()
 ```
-
-```{r}
-names(prison_normalized)
-```
-
-
-
-```{r}
-prison_normalized %>% 
-  filter(STATEID != "district of columbia") %>% 
-  ggplot(aes(YEAR, PERC_PRIS)) +
-  geom_line() +
-  facet_grid(~STATEID)
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 [solution](https://stackoverflow.com/questions/24441775/how-do-you-create-a-us-states-heatmap-based-on-some-values#24442716)
 
-```{r}
-all_states <- map_data("state")
-
-unique(all_states$region)
-# 
-# all_states <- map_data("state")
-# all_states
-# head(all_states)
-# Prison$region <- Prison$stateName
-# Total <- merge(all_states, Prison, by="region")
-# head(Total)
-# Total <- Total[Total$region!="district of columbia",]
+```{r prison_normalized_xy}
+states <- map_data("state") %>% 
+  rename(STATEID = region)
 
 
+prison_norm_xy <- 
+  left_join(prison_norm, states, by = "STATEID") %>% 
+  select(YEAR:lat) %>% 
+  setNames(toupper(names(.)))
 
-# p <- ggplot()
-# p <- p + geom_polygon(data=Total, aes(x=long, y=lat, group = group, fill=Total$bwRatio),colour="white"
-#       ) + scale_fill_continuous(low = "thistle2", high = "darkred", guide="colorbar")
-# P1 <- p + theme_bw()  + labs(fill = "Black to White Incarceration Rates \n Weighted by Relative Population" 
-#                             ,title = "State Incarceration Rates by Race, 2010", x="", y="")
-# P1 + scale_y_continuous(breaks=c()) + scale_x_continuous(breaks=c()) + theme(panel.border =  element_blank())
+glimpse(prison_norm_xy)
 ```
+```{r labels}
+xy_lab <- 
+  prison_norm_xy %>% 
+  filter(STATEID != "district of columbia") %>% 
+  ungroup() %>% 
+  group_by(STATEID, STATE) %>% 
+  summarize(LAB_LONG = mean(LONG), LAB_LAT = mean(LAT)) %>% 
+  mutate(LAB_LONG = replace(LAB_LONG, STATE == "FL", LAB_LONG + 1.7)) 
+```
+
+
+```{r plot, warning=FALSE, include=FALSE}
+xy_lab <- 
+  prison_norm_xy %>% 
+  ungroup() %>% 
+  group_by(STATEID, STATE) %>% 
+  summarize(LAB_LONG = mean(LONG), LAB_LAT = mean(LAT))
+
+
+prison_norm_xy_NDC <- 
+  prison_norm_xy %>%
+  filter(STATEID != "district of columbia", YEAR == 2015)
+  
+ggplot(prison_norm_xy_NDC) +
+  geom_polygon(aes(LONG, LAT, fill = PERC_PRIS, group = STATEID), colour = "white") +
+  scale_fill_gradient(low = "green", high = "red", limit = c(0,1)) +
+  geom_text(aes(LAB_LONG, LAB_LAT, label = STATE), color = "black", size=2, data = xy_lab) +
+  theme_void() +
+   labs(title = "Prison Population",
+        fill = "% State\nPopulation",
+       caption = "  ") +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.title.align = 0.5,
+        legend.box = "vertical",
+        legend.box.background = element_rect(colour = "black"),
+        legend.margin = margin(t = 0.2, r = 0.2, b = 0.2, l = 0.2, unit = "cm")
+        ) 
+```
+
+
+
+```{r video, message = FALSE}
+data <- 
+  prison_norm_xy%>% 
+  filter(STATEID != "district of columbia") 
+
+
+makeplot <- function(){
+  datalist <- split(data, data$YEAR)
+  map(datalist, function(x){
+    p <- 
+      ggplot(x) +
+      geom_polygon(aes(LONG, LAT, fill = PERC_PRIS, group = STATEID), colour = "white") +
+      scale_fill_gradient(low = "white", high = "black", limit = c(0, 0.8)) +
+      theme_void() +
+      geom_text(aes(LAB_LONG, LAB_LAT, label = STATE), color = "red", size=2, data = xy_lab) +
+      labs(title = "Prison Population",
+           subtitle = paste0("YEAR: ", x$YEAR[1]),
+           fill = "% State\nPopulation") +
+      theme(plot.title = element_text(hjust = 0.5),
+            legend.title.align = 0.5,
+            legend.box = "vertical",
+            legend.box.background = element_rect(colour = "black"),
+            legend.margin = margin(t = 0.2, r = 0.2, b = 0.2, l = 0.2, unit = "cm")
+            )
+    print(p)
+  })
+}
+
+
+video_file <- file.path("~/Documents", 'output.mp4')
+av::av_capture_graphics(makeplot(), video_file, 1600, 900, res = 144, framerate = 2)
+av::av_video_info(video_file)
+utils::browseURL(video_file)
+```
+
+```{r presidents}
+pres_sub <- 
+  presidential %>% 
+  mutate(start = year(start), end = year(end)) %>% 
+  top_n(3, end)
+
+pres_sub$start[1] <- 1999
+```
+
+
+```{r fig.2_prison_time}
+prison_norm_tot <-
+  prison_norm %>% 
+  group_by(YEAR) %>% 
+  summarize(PRIS = sum(PRIS), 
+            PRIS_PUB = sum(PRIS_PUB),
+            PRIS_PRIV = sum(PRIS_PRIV), 
+            POP = sum(POP),
+            PERC_PRIS = PRIS/POP,
+            PERC_PRIS_PUB = PRIS_PUB/POP,
+            PERC_PRIS_PRIV = PRIS_PRIV/POP)
+
+ggplot(prison_norm_tot) +
+  labs(title = "Number of people in prison (every 10 thousand)",
+  y = "",
+  x = "Year",
+  caption = "fig.2") +
+  geom_rect(aes(xmin = start, xmax = end, fill = party), ymin = -Inf, ymax = Inf, alpha = 0.2,
+  data = pres_sub) +
+  geom_line(aes(YEAR, PERC_PRIS * 10000)) +
+  scale_x_continuous(expand = c(0, 0)) +
+  theme(plot.title = element_text(hjust = 0.5))
+  
+```
+
+https://stackoverflow.com/questions/50691237/embed-flourish-visualization-in-blogdown#50692784
+
+https://www.r-bloggers.com/use-shortcodes-to-embed-tweets-videos-etc-in-your-blogdown-blog-posts/
+
+
 
