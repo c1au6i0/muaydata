@@ -76,7 +76,7 @@ sp_long %>%
 prison_norm <- 
   left_join(prison_1999_tot, sp_long, by = c("STATEID", "YEAR")) %>% 
   rowwise() %>% 
-  mutate(PERC_PRIS = PRIS/POP *100) %>% 
+  mutate(PERC_PRIS = PRIS/POP *10000) %>% 
   ungroup()
 ```
 
@@ -106,60 +106,30 @@ xy_lab <-
 ```
 
 
-```{r plot, warning=FALSE, include=FALSE}
-xy_lab <- 
-  prison_norm_xy %>% 
-  ungroup() %>% 
-  group_by(STATEID, STATE) %>% 
-  summarize(LAB_LONG = mean(LONG), LAB_LAT = mean(LAT))
-
-
-prison_norm_xy_NDC <- 
-  prison_norm_xy %>%
-  filter(STATEID != "district of columbia", YEAR == 2015)
-  
-ggplot(prison_norm_xy_NDC) +
-  geom_polygon(aes(LONG, LAT, fill = PERC_PRIS, group = STATEID), colour = "white") +
-  scale_fill_gradient(low = "green", high = "red", limit = c(0,1)) +
-  geom_text(aes(LAB_LONG, LAB_LAT, label = STATE), color = "black", size=2, data = xy_lab) +
-  theme_void() +
-   labs(title = "Prison Population",
-        fill = "% State\nPopulation",
-       caption = "  ") +
-  theme(plot.title = element_text(hjust = 0.5),
-        legend.title.align = 0.5,
-        legend.box = "vertical",
-        legend.box.background = element_rect(colour = "black"),
-        legend.margin = margin(t = 0.2, r = 0.2, b = 0.2, l = 0.2, unit = "cm")
-        ) 
-```
 
 
 
 ```{r video, message = FALSE}
-data <- 
-  prison_norm_xy%>% 
+data_p <- 
+  prison_norm_xy %>% 
   filter(STATEID != "district of columbia") 
 
 
 makeplot <- function(){
-  datalist <- split(data, data$YEAR)
+  datalist <- split(data_p, data_p$YEAR)
   map(datalist, function(x){
     p <- 
       ggplot(x) +
       geom_polygon(aes(LONG, LAT, fill = PERC_PRIS, group = STATEID), colour = "white") +
-      scale_fill_gradient(low = "white", high = "black", limit = c(0, 0.8)) +
-      theme_void() +
-      geom_text(aes(LAB_LONG, LAB_LAT, label = STATE), color = "red", size=2, data = xy_lab) +
-      labs(title = "Prison Population",
+      scale_fill_gradient(low = "white", high = "black", limit = c(0, 100)) + # high = "#104E8B"
+      geom_text(aes(LAB_LONG, LAB_LAT, label = STATE), color = "white", size=3, data = xy_lab) +
+      labs(title = "Prison Population (every 10 thousand)",
            subtitle = paste0("YEAR: ", x$YEAR[1]),
-           fill = "% State\nPopulation") +
+           fill = " ") +
+      theme_void() +
       theme(plot.title = element_text(hjust = 0.5),
-            legend.title.align = 0.5,
-            legend.box = "vertical",
-            legend.box.background = element_rect(colour = "black"),
-            legend.margin = margin(t = 0.2, r = 0.2, b = 0.2, l = 0.2, unit = "cm")
-            )
+            legend.title.align = 0.5) 
+
     print(p)
   })
 }
@@ -184,6 +154,7 @@ pres_sub$start[1] <- 1999
 ```{r fig.2_prison_time}
 prison_norm_tot <-
   prison_norm %>% 
+  filter(STATEID != "district of columbia") %>% 
   group_by(YEAR) %>% 
   summarize(PRIS = sum(PRIS), 
             PRIS_PUB = sum(PRIS_PUB),
@@ -200,6 +171,7 @@ ggplot(prison_norm_tot) +
   caption = "fig.2") +
   geom_rect(aes(xmin = start, xmax = end, fill = party), ymin = -Inf, ymax = Inf, alpha = 0.2,
   data = pres_sub) +
+  scale_fill_manual(values = c("blue","red")) +
   geom_line(aes(YEAR, PERC_PRIS * 10000)) +
   scale_x_continuous(expand = c(0, 0)) +
   theme(plot.title = element_text(hjust = 0.5))
@@ -210,5 +182,34 @@ https://stackoverflow.com/questions/50691237/embed-flourish-visualization-in-blo
 
 https://www.r-bloggers.com/use-shortcodes-to-embed-tweets-videos-etc-in-your-blogdown-blog-posts/
 
+```{r}
+prison_1999 %>% 
+  filter(STATEID == "delaware") 
+
+
+
+
+
+
+```
+
+
+
+
+```{r}
+
+p <- 
+  data_p %>% 
+  ggplot() +
+        geom_polygon(aes(LONG, LAT, fill = PERC_PRIS, group = STATEID, frame = YEAR), colour = "white") +
+        scale_fill_gradient(low = "white", high = "#104E8B", limit = c(0, 100)) +
+        geom_text(aes(LAB_LONG, LAB_LAT, label = STATE), color = "black", size=3, data = xy_lab) +
+        labs(title = "Prison Population (every 10 thousand)",
+             subtitle = paste0("YEAR: ", data_p$YEAR[1]),
+             fill = " ") +
+        theme_void() +
+        theme(plot.title = element_text(hjust = 0.5),
+              legend.title.align = 0.5) 
+```
 
 
