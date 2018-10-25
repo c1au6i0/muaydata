@@ -1,0 +1,465 @@
+Bibliography
+National Prisoner Statistics, 1978-2015
+
+This bibliography includes published and unpublished works that are related 
+to ICPSR study 36657. It includes works that are based on primary
+or secondary analysis of the data, or which describe or critique those
+data or the collection methodology. 
+
+If you publish a work or know of other works that are based on these data,
+please send the complete citation and name of the ICPSR study used to:
+icpsr-biblio-notify@umich.edu 
+
+
+1. Austin, James; Coventry, Garry, "A critical analysis of justice
+reinvestment in the United States and Australia." Victims and Offenders.
+2014, 9, (1), 126 - 148. DOI: 10.1080/15564886.2014.861687
+
+2. Aylward, Alexandra, "Spillover Effects of Mass Incarceration in the US:
+A Mechanism for Educational Inequality." Dissertation, New York University,
+2018.
+
+3. Bachman, Ronet; Paternoster, Raymond, "A contemporary look at the
+effects of rape law reform: How far have we really come?." Journal of
+Criminal Law and Criminology. Aut 1993, 84, (3), 554 - 574. DOI:
+10.2307/1143963 NCJ 150006
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=150006
+
+4. Binswanger, Ingrid A.; Carson, Elizabeth A.; Krueger, Patrick; Mueller,
+Shane; Sabol, William J., "Smoking-attributable mortality among state
+prisoners in the United States: 2001-2009." Presented at the 36th Annual
+Meeting of the Society of General Internal Medicine, Society of General
+Internal Medicine, Denver, CO, 2013. DOI: 10.1007/s11606-013-2436-y
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=150006
+
+5. Bose, Srimoyee, "Demographic and spatial disparity in HIV prevalence
+among incarcerated population in the US: A state-level analysis."
+International Journal of STD and AIDS. Mar 2018, 29, (3), 278 - 286. DOI:
+10.1177/0956462417724586
+Abstract: https://www.ncbi.nlm.nih.gov/pubmed/28776462
+
+6. Bronson, Jennifer; Stroop, Jessica; Zimmer, Stephanie; Berzofsky,
+Marcus, "Drug Use, Dependence, and Abuse Among State Prisoners and Jail
+Inmates, 2007-2009." Special Report. NCJ 250546, Washington, DC: Bureau of
+Justice Statistics, Jun 2017.
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=272712
+Full text: https://www.bjs.gov/content/pub/ascii/dudaspji0709.txt
+Full text PDF: https://www.bjs.gov/content/pub/pdf/dudaspji0709.pdf
+Fifty-eight percent of State prisoners and 63 percent of sentenced jail
+inmates met the criteria for drug dependence or abuse during 2007-09, as
+defined by the Diagnostic and Statistical Manual of Mental Disorders,
+Fourth Edition (DSM-IV). In comparison, approximately 5 percent of the
+total general population age 18 or older met the DSM-IV criteria for drug
+dependence or abuse during this period. Overall, both State inmates (63
+percent) and jail inmates (64 percent) regularly used marijuana/hashish
+more than any other drugs prior to incarceration. This was followed by
+cocaine/crack (24 percent of State inmates and 38 percent of jail inmates).
+Fewer State inmates (42 percent) and Jail inmates (37 percent) reported
+using drugs at the time of their offense. Sixty-nine percent of female
+State inmates and 72 percent of jail inmates met the DSM-IV criteria for
+drug dependence or abuse, compared to 57 percent of males in State prison
+and 62 percent of jail inmates. Drug dependence for State inmates and jail
+inmates is also reported by inmate age and race/ethnicity (Hispanics and
+non-Hispanic White or Black inmates). Twenty-eight percent of State inmates
+and 22 percent of sentenced jail inmates who met the criteria for drug
+dependence or abuse participated in a drug treatment program since
+admission to their current facility. 1 table
+
+7. Bureau of Justice Statistics, "Prisoners in State and Federal
+Institutions on December 31, 1981." National Prisoner Statistics Bulletin.
+NCJ 086485, Washington, DC: Bureau of Justice Statistics, Mar 1983.
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=86485
+Full text PDF: http://www.ncjrs.gov/pdffiles1/Digitization/86485NCJRS.pdf
+It assesses the sharp growth in prison population during 1981, when the
+number of prisoners increased by some 38,000, resulting in a record yearend
+total of almost 369,000 inmates, 12 percent higher than at yearend 1980.
+For the first time, each of the jurisdictions covered in the report (the 50
+States, the District of Columbia, and the Federal Bureau of Prisons)
+reported increases over the previous year. The report surveys developments
+in the correctional and legislative areas that could lead to even greater
+growth. As in past reports, it also examines changes in the geographic
+distribution of prisoners; composition of the inmate population by race,
+sex, and Hispanic origin; incarceration rates for minorities; and the rates
+of various types of admissions and releases. Data for the report were
+collected and analyzed by the U.S. Bureau of the Census for the Bureau of
+Justice Statistics.
+
+8. Bureau of Justice Statistics, "Prisoners in State and Federal
+Institutions on December 31, 1982." National Prisoner Statistics Bulletin.
+NCJ 093311, Washington, DC: Bureau of Justice Statistics, Aug 1984.
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=93311
+Full text PDF: https://www.ncjrs.gov/pdffiles1/Digitization/93311NCJRS.pdf
+It also examines changes in the geographic distribution of prisoners;
+composition of the inmate population by race, sex, and Hispanic origin;
+incarceration rates for minorities; and the rates of various types of
+admissions and releases. The data include all prisoners subject to
+confinement whether or not they were in physical custody. Highlights
+include data on increases in short-sentence inmates due to changing laws,
+geographic variations in the use of conditional release, the shift toward
+supervised mandatory release, and the large increase in the number of
+mandatory releases. Maps, tables, and figures are included. Appendixes
+present extensive data tables, a description of the data collection method,
+State-by-State explanations, and historical data.
+
+9. Cantwell, M., "Prisoners in State and Federal Institutions on December
+31, 1978." A National Prisoner Statistics Report. NCJ 064671, Washington,
+DC: Bureau of Justice Statistics, May 1980.
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=64671
+Full text PDF: http://www.ncjrs.gov/pdffiles1/Digitization/64671NCJRS.pdf
+For the second consecutive year, the growth of overall prison population
+was half that of the preceding year and sharply lower than the record
+increases of 1975 and 1976. Or the states as a whole, the number of
+prisoners increased by 3 percent in 1978, compared with 5 percent in 1977,
+while the federal system experienced a 7-percent decline. The slowdown in
+inmate population growth after the mid-1970's is attributable to a variety
+of factors, notably the early release of prisoners from overcrowded
+facilities and diversion of less serious offenders into programs not
+involving incarceration. The aging of that segment of the population making
+up the post-World War II baby-boom generation also made an impact. In the
+coming decade, these constraints on growth could be offset to a greater of
+lesser extent by prison construction programs underway in many
+jurisdictions and by the potential inherent in determinate sentencing laws
+for lengthening the average time served. The diversity of factors at work
+both within and outside the criminal justice arena precludes, however, an
+accurate prediction of future trends in the size of the nation's prison
+population. This report, one in the series published under the National
+Prisoner Statistics program, was prepared for the Bureau of Justice
+Statistics by the U.S. Bureau of the Census. Figures and tables illustrate
+the text. The appendixes contain data tables, a description of the data
+collection method and a copy of the questionnaire, a technical note on
+custody versus jurisdiction, and explanatory notes. (Author abstract
+modified--MRS)
+
+10. Carroll, Leo; Cornell, Claire P., "Racial composition, sentencing
+reforms, and rates of incarceration, 1970-1980." Justice Quarterly. 1985,
+2, (4), 473 - 490. DOI: 10.1080/07418828500088691
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=64671
+Full text PDF: http://www.ncjrs.gov/pdffiles1/Digitization/64671NCJRS.pdf
+For the second consecutive year, the growth of overall prison population
+was half that of the preceding year and sharply lower than the record
+increases of 1975 and 1976. Or the states as a whole, the number of
+prisoners increased by 3 percent in 1978, compared with 5 percent in 1977,
+while the federal system experienced a 7-percent decline. The slowdown in
+inmate population growth after the mid-1970's is attributable to a variety
+of factors, notably the early release of prisoners from overcrowded
+facilities and diversion of less serious offenders into programs not
+involving incarceration. The aging of that segment of the population making
+up the post-World War II baby-boom generation also made an impact. In the
+coming decade, these constraints on growth could be offset to a greater of
+lesser extent by prison construction programs underway in many
+jurisdictions and by the potential inherent in determinate sentencing laws
+for lengthening the average time served. The diversity of factors at work
+both within and outside the criminal justice arena precludes, however, an
+accurate prediction of future trends in the size of the nation's prison
+population. This report, one in the series published under the National
+Prisoner Statistics program, was prepared for the Bureau of Justice
+Statistics by the U.S. Bureau of the Census. Figures and tables illustrate
+the text. The appendixes contain data tables, a description of the data
+collection method and a copy of the questionnaire, a technical note on
+custody versus jurisdiction, and explanatory notes. (Author abstract
+modified--MRS)
+
+11. Carson, E. Ann; Anderson, Elizabeth, "Prisoners in 2015." Bulletin. NCJ
+250229, Washington, DC: United States Department of Justice, Office of
+Justice Programs, Bureau of Justice Statistics, Dec 2016.
+Full text PDF: https://www.bjs.gov/content/pub/pdf/p15.pdf?utm_source=juststats-122916&utm_campaign=juststats&utm_medium=email&utm_content=P15_ButtonB&ed2f26df2d9c416fbddddd2330a778c6=avjkrrovjy-avrjorlkt
+This report presents final counts of prisoners under the jurisdiction of
+state and federal correctional authorities at yearend 2015, including
+admissions, releases, noncitizen inmates, and inmates age 17 or younger.
+
+12. Carson, E.A., "Prisoners in 2016." NCJ 251149, Washington, DC: Bureau
+of Justice Statistics, Jan 2018.
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=273329
+Full text PDF: https://www.bjs.gov/content/pub/pdf/p16.pdf
+Presents final counts of prisoners under the jurisdiction of state and
+federal correctional authorities at year-end 2016, including admissions,
+releases, noncitizen inmates, and inmates age 17 or younger. The report
+describes prisoner populations by jurisdiction, most serious offense, and
+demographic characteristics. Selected findings on prison capacity and
+prisoners held in private prisons, local jails, the U.S. military, and U.S.
+territories are also included. Findings are based on data from BJS's
+National Prisoner Statistics program, which collects data from state
+departments of correction and the Federal Bureau of Prisons. Highlights
+include: the number of prisoners under state and federal jurisdiction at
+year-end 2016 (1,505,400) decreased by 21,200 (down more than 1%) from
+year-end 2015; the federal prison population decreased by 7,300 prisoners
+from 2015 to 2016 (down almost 4%), accounting for 34% of the total change
+in the U.S. prison population; State and Federal prisons had jurisdiction
+over 1,458,200 persons sentenced to more than 1 year at year-end 2016; the
+number of females sentenced to more than 1 year in state or federal prison
+increased by 500 from 2015 to 2016; and the imprisonment rate in the United
+States decreased 2%, from 459 prisoners per 100,000 U.S. residents of all
+ages in 2015 to 450 per 100,000 in 2016.
+
+13. Clear, Todd R.; Reisig, Michael D.; Cole, George F., "The corrections
+system." In Clear, Todd R.; Reisig, Michael D.; Petrosino, Carolyn; Cole,
+George F., American Corrections. 4 - 29, Boston, MA: Cengage,2018.
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=273329
+Full text PDF: https://www.bjs.gov/content/pub/pdf/p16.pdf
+Presents final counts of prisoners under the jurisdiction of state and
+federal correctional authorities at year-end 2016, including admissions,
+releases, noncitizen inmates, and inmates age 17 or younger. The report
+describes prisoner populations by jurisdiction, most serious offense, and
+demographic characteristics. Selected findings on prison capacity and
+prisoners held in private prisons, local jails, the U.S. military, and U.S.
+territories are also included. Findings are based on data from BJS's
+National Prisoner Statistics program, which collects data from state
+departments of correction and the Federal Bureau of Prisons. Highlights
+include: the number of prisoners under state and federal jurisdiction at
+year-end 2016 (1,505,400) decreased by 21,200 (down more than 1%) from
+year-end 2015; the federal prison population decreased by 7,300 prisoners
+from 2015 to 2016 (down almost 4%), accounting for 34% of the total change
+in the U.S. prison population; State and Federal prisons had jurisdiction
+over 1,458,200 persons sentenced to more than 1 year at year-end 2016; the
+number of females sentenced to more than 1 year in state or federal prison
+increased by 500 from 2015 to 2016; and the imprisonment rate in the United
+States decreased 2%, from 459 prisoners per 100,000 U.S. residents of all
+ages in 2015 to 450 per 100,000 in 2016.
+
+14. Davis, Elizabeth; Snell, Tracy L., "Capital Punishment, 2016."
+Statistical Brief. NCJ 251430, Washington, DC: Bureau of Justice
+Statistics, Apr 2018.
+Abstract: https://www.bjs.gov/index.cfm?ty=pbdetail&iid=6246
+Full text PDF: https://www.bjs.gov/content/pub/pdf/cp16sb.pdf
+
+15. Frazier, Beverly D.; Sung, Hung-En; Gideon, Lior; Alfaro, Karla S.,
+"The impact of prison deinstitutionalization on community treatment
+services." Health and Justice. Dec 2015, 3,. DOI: 10.1186/s40352-015-0021-7
+Full text: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5151559/
+
+16. Glaze, Lauren E., "Correctional Populations in the United States,
+2009." Bulletin. NCJ 231681, Washington, DC: United States Department of
+Justice, Bureau of Justice Statistics, Dec 2010.
+Full text: http://bjs.ojp.usdoj.gov/content/pub/ascii/cpus09.txt
+Full text PDF: http://bjs.ojp.usdoj.gov/content/pub/pdf/cpus09.pdf
+Presents summary data on the number of adults under some form of
+correctional supervision in the United States at yearend 2009. Correctional
+supervision includes adults supervised in the community on probation or
+parole and those incarcerated in prison or local jails. The report provides
+a comparison between the change in the correctional population observed
+since 2000 and the changes observed during the 1980s and 1990s, which
+illustrates the slowing of growth in the population during each decade. It
+also includes the number of men and women under each correctional status
+and trend analysis of men and women under correctional supervision since
+1990.
+
+17. Johnson, James L., "The Construction of Mass Incarceration as a Means
+of Marginalizing Black Americans." Dissertation, American University, 2008.
+Full text: http://bjs.ojp.usdoj.gov/content/pub/ascii/cpus09.txt
+Full text PDF: http://bjs.ojp.usdoj.gov/content/pub/pdf/cpus09.pdf
+Presents summary data on the number of adults under some form of
+correctional supervision in the United States at yearend 2009. Correctional
+supervision includes adults supervised in the community on probation or
+parole and those incarcerated in prison or local jails. The report provides
+a comparison between the change in the correctional population observed
+since 2000 and the changes observed during the 1980s and 1990s, which
+illustrates the slowing of growth in the population during each decade. It
+also includes the number of men and women under each correctional status
+and trend analysis of men and women under correctional supervision since
+1990.
+
+18. Kaeble, Danielle; Cowhig, Mary, "Correctional Populations in the United
+States, 2016." NCJ 251211, Washington, DC: Bureau of Justice Statistics,
+Apr 2018.
+Abstract: https://www.bjs.gov/index.cfm?ty=pbdetail&iid=6226
+Full text PDF: https://www.bjs.gov/content/pub/pdf/cpus16.pdf
+
+19. Karstedt, Susanne; Bergin, Tiffany; Koch, Michael, "Critical junctures
+and conditions of change: Exploring the fall of prison populations in US
+states." Social and Legal Studies. in press 2018, 1 - 23. DOI:
+10.1177/0964663917747342
+Abstract: http://journals.sagepub.com/doi/abs/10.1177/0964663917747342
+
+20. Kranz, Charity F., "Hepatitis C Screening and Treatment of Prisoners:
+Analysis of Policy and Practice in Kentucky." Thesis, University of
+Kentucky, 2017.
+Abstract: https://uknowledge.uky.edu/cph_etds/173/
+Full text PDF: https://uknowledge.uky.edu/cgi/viewcontent.cgi?article=1172&context=cph_etds
+
+21. Light, Michael T.; Marshall, Joey, "On the weak mortality returns of
+the prison boom: Comparing infant mortality and homicide in the
+incarceration ledger." Journal of Health and Social Behavior. Mar 2018, 59,
+(1), 3 - 19. DOI: 10.1177/0022146517748412
+Abstract: https://www.ncbi.nlm.nih.gov/pubmed/29283677
+
+22. Lynch, James P., "Corrections in the United States: Trends in
+Correctional Populations, Common Perceptions of Incarceration, and the Role
+of Corrections in Society." Washington, DC: Bureau of Justice Statistics,
+May 4, 2012..
+Full text PDF: https://bjs.gov/content/pub/pdf/cus2012.pdf
+
+23. Maruschak, Laura M.; Bronson, Jennifer, "HIV in Prisons, 2015 -
+Statistical Tables." NCJ 250641, Washington, DC: Bureau of Justice
+Statistics, Aug 2017.
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=272809
+Full text: https://www.bjs.gov/content/pub/ascii/hivp15st.txt
+Full text PDF: https://www.bjs.gov/content/pub/pdf/hivp15st.pdf
+Approximately 17,150 State and Federal prisoners were living with HIV
+infection at the end of 2015. The rate of HIV among State and Federal
+prisoners in 2015 was 1,297 per 100,000 State and Federal prisoners. This
+was the lowest rate reported during the 25 years in which such data have
+been reported. In the most recent 5-year period, the number of male
+prisoners with HIV declined from an estimated 18,510 in 2010 to 15,920 in
+2015. During the same period, the number of female prisoners with HIV
+declined from 1,780 to 1,220. Female prisoners experienced a larger
+percentage decline. The number of AIDS-related deaths among State prisoners
+fluctuated from 2010 to 2015 from a low of 45 (preliminary count) in 2015
+to a high of 74 in 2012. Over the same period, the annual number of AIDS-
+related deaths among Federal prisoners has been less than 10, with one
+death reported in 2015. Between 2010 and 2015, in both number and rate,
+more male State prisoners than female prisoners and more non-Hispanic Black
+State prisoners than non-Hispanic White and Hispanic State prisoners died
+from AIDS-related causes. In 2015, 15 jurisdictions reported mandatory
+testing of all prisoners for HIV. The website for the full report is
+included. Whereas this summary contains 1 figure, the full report contains
+1 figure and 17 tables.
+
+24. Maruschak, Laura M.; Glaze, Lauren E.; Mumola, Christopher J.,
+"Incarcerated parents and their children: Findings from the Bureau of
+Justice Statistics." In Eddy, J.M.; Poehlmann, Julie, Children of
+Incarcerated Parents: A Handbook for Researchers and Practitioners. 33 -
+51, Washington, DC: Urban Institute Press,2010.
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=272809
+Full text: https://www.bjs.gov/content/pub/ascii/hivp15st.txt
+Full text PDF: https://www.bjs.gov/content/pub/pdf/hivp15st.pdf
+Approximately 17,150 State and Federal prisoners were living with HIV
+infection at the end of 2015. The rate of HIV among State and Federal
+prisoners in 2015 was 1,297 per 100,000 State and Federal prisoners. This
+was the lowest rate reported during the 25 years in which such data have
+been reported. In the most recent 5-year period, the number of male
+prisoners with HIV declined from an estimated 18,510 in 2010 to 15,920 in
+2015. During the same period, the number of female prisoners with HIV
+declined from 1,780 to 1,220. Female prisoners experienced a larger
+percentage decline. The number of AIDS-related deaths among State prisoners
+fluctuated from 2010 to 2015 from a low of 45 (preliminary count) in 2015
+to a high of 74 in 2012. Over the same period, the annual number of AIDS-
+related deaths among Federal prisoners has been less than 10, with one
+death reported in 2015. Between 2010 and 2015, in both number and rate,
+more male State prisoners than female prisoners and more non-Hispanic Black
+State prisoners than non-Hispanic White and Hispanic State prisoners died
+from AIDS-related causes. In 2015, 15 jurisdictions reported mandatory
+testing of all prisoners for HIV. The website for the full report is
+included. Whereas this summary contains 1 figure, the full report contains
+1 figure and 17 tables.
+
+25. Moore, Nina M., "The politics principle and the party playbook." In The
+Political Roots of Racial Tracking in American Criminal Justice. 166 - 218,
+New York, NY: Cambridge University Press,2015.
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=272809
+Full text: https://www.bjs.gov/content/pub/ascii/hivp15st.txt
+Full text PDF: https://www.bjs.gov/content/pub/pdf/hivp15st.pdf
+Approximately 17,150 State and Federal prisoners were living with HIV
+infection at the end of 2015. The rate of HIV among State and Federal
+prisoners in 2015 was 1,297 per 100,000 State and Federal prisoners. This
+was the lowest rate reported during the 25 years in which such data have
+been reported. In the most recent 5-year period, the number of male
+prisoners with HIV declined from an estimated 18,510 in 2010 to 15,920 in
+2015. During the same period, the number of female prisoners with HIV
+declined from 1,780 to 1,220. Female prisoners experienced a larger
+percentage decline. The number of AIDS-related deaths among State prisoners
+fluctuated from 2010 to 2015 from a low of 45 (preliminary count) in 2015
+to a high of 74 in 2012. Over the same period, the annual number of AIDS-
+related deaths among Federal prisoners has been less than 10, with one
+death reported in 2015. Between 2010 and 2015, in both number and rate,
+more male State prisoners than female prisoners and more non-Hispanic Black
+State prisoners than non-Hispanic White and Hispanic State prisoners died
+from AIDS-related causes. In 2015, 15 jurisdictions reported mandatory
+testing of all prisoners for HIV. The website for the full report is
+included. Whereas this summary contains 1 figure, the full report contains
+1 figure and 17 tables.
+
+26. Neill, Katherine A., "The War on Drugs in the American States:
+Variations in Sentencing Policies Over Time." Dissertation, Old Dominion
+University, 2014.
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=272809
+Full text: https://www.bjs.gov/content/pub/ascii/hivp15st.txt
+Full text PDF: https://www.bjs.gov/content/pub/pdf/hivp15st.pdf
+Approximately 17,150 State and Federal prisoners were living with HIV
+infection at the end of 2015. The rate of HIV among State and Federal
+prisoners in 2015 was 1,297 per 100,000 State and Federal prisoners. This
+was the lowest rate reported during the 25 years in which such data have
+been reported. In the most recent 5-year period, the number of male
+prisoners with HIV declined from an estimated 18,510 in 2010 to 15,920 in
+2015. During the same period, the number of female prisoners with HIV
+declined from 1,780 to 1,220. Female prisoners experienced a larger
+percentage decline. The number of AIDS-related deaths among State prisoners
+fluctuated from 2010 to 2015 from a low of 45 (preliminary count) in 2015
+to a high of 74 in 2012. Over the same period, the annual number of AIDS-
+related deaths among Federal prisoners has been less than 10, with one
+death reported in 2015. Between 2010 and 2015, in both number and rate,
+more male State prisoners than female prisoners and more non-Hispanic Black
+State prisoners than non-Hispanic White and Hispanic State prisoners died
+from AIDS-related causes. In 2015, 15 jurisdictions reported mandatory
+testing of all prisoners for HIV. The website for the full report is
+included. Whereas this summary contains 1 figure, the full report contains
+1 figure and 17 tables.
+
+27. Nowotny, Kathryn M., "Understanding Health Disparities: The Health and
+Healthcare of Incarcerated Adults." Dissertation, University of Colorado,
+2016.
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=272809
+Full text: https://www.bjs.gov/content/pub/ascii/hivp15st.txt
+Full text PDF: https://www.bjs.gov/content/pub/pdf/hivp15st.pdf
+Approximately 17,150 State and Federal prisoners were living with HIV
+infection at the end of 2015. The rate of HIV among State and Federal
+prisoners in 2015 was 1,297 per 100,000 State and Federal prisoners. This
+was the lowest rate reported during the 25 years in which such data have
+been reported. In the most recent 5-year period, the number of male
+prisoners with HIV declined from an estimated 18,510 in 2010 to 15,920 in
+2015. During the same period, the number of female prisoners with HIV
+declined from 1,780 to 1,220. Female prisoners experienced a larger
+percentage decline. The number of AIDS-related deaths among State prisoners
+fluctuated from 2010 to 2015 from a low of 45 (preliminary count) in 2015
+to a high of 74 in 2012. Over the same period, the annual number of AIDS-
+related deaths among Federal prisoners has been less than 10, with one
+death reported in 2015. Between 2010 and 2015, in both number and rate,
+more male State prisoners than female prisoners and more non-Hispanic Black
+State prisoners than non-Hispanic White and Hispanic State prisoners died
+from AIDS-related causes. In 2015, 15 jurisdictions reported mandatory
+testing of all prisoners for HIV. The website for the full report is
+included. Whereas this summary contains 1 figure, the full report contains
+1 figure and 17 tables.
+
+28. Raphael, Steven; Stoll, Michael A., "A New Approach to Reducing
+Incarceration While Maintaining Low Rates of Crime." Hamilton Project
+Discussion Paper Series. Brookings, May 2014.
+Full text PDF: http://www.hamiltonproject.org/assets/legacy/files/downloads_and_links/v5_THP_RaphaelStoll_DiscPaper.pdf
+
+29. Rocque, Michael; Saunoris, James W.; Marshall, Emily C., "Revisiting
+the relationship between the economy and crime: The role of the shadow
+economy." Justice Quarterly. in press 2018, 1 - 36. DOI:
+10.1080/07418825.2018.1424230
+Abstract: http://www.tandfonline.com/doi/abs/10.1080/07418825.2018.1424230
+
+30. Selby, Rebekah J., "Essays on health and development economics."
+Dissertation, University of Oregon, 2017.
+Abstract: http://hdl.handle.net/1794/22678
+Full text PDF: https://scholarsbank.uoregon.edu/xmlui/bitstream/handle/1794/22678/Selby_oregon_0171A_11875.pdf?sequence=1&isAllowed=y
+
+31. Shoyode, Adesina, "An Examination of the Situational Effects of Types
+of Prisons on In-Prison Death 2000-2012." Dissertation, Capella University,
+2016.
+Abstract: http://hdl.handle.net/1794/22678
+Full text PDF: https://scholarsbank.uoregon.edu/xmlui/bitstream/handle/1794/22678/Selby_oregon_0171A_11875.pdf?sequence=1&isAllowed=y
+
+32. Snell, Tracy I., "Capital Punishment, 2014-2015." Statistical Tables.
+NCJ 250638, Washington, DC: United States Department of Justice, Office of
+Justice Programs, Bureau of Justice Statistics, May 2017.
+Full text PDF: https://www.bjs.gov/content/pub/pdf/cp1415sb.pdf?utm_source=juststats&utm_medium=email&utm_content=cp1415_report_pdf&utm_campaign=cp1415&ed2f26df2d9c416fbddddd2330a778c6=ovomnuxtmt-ovnomnptu
+
+33. Sohoni, Tracy W.P., "The Effect of Collateral Consequence Laws on State
+Rates of Returns to Prison." dissertation, University of Maryland, 2013.
+2012-IJ-CX-0006
+Abstract: https://www.ncjrs.gov/app/publications/abstract.aspx?id=269669
+Full text PDF: https://www.ncjrs.gov/pdffiles1/nij/grants/247569.pdf
+
+34. Uggen, Christopher; Larson, Ryan; Shannon, Sarah, "6 Million Lost
+Voters: State-Level Estimates of Felony Disenfranchisement, 2016." The
+Sentencing Project, Oct 6, 2016.
+Full text: http://www.sentencingproject.org/publications/6-million-lost-voters-state-level-estimates-felony-disenfranchisement-2016/
+Full text PDF: http://www.sentencingproject.org/wp-content/uploads/2016/10/6-Million-Lost-Voters.pdf
+
+35. Uggen, Christopher; Shannon, Sarah; Manza, Jeff, "State-Level Estimates
+of Felon Disenfranchisement in the United States, 2010." The Sentencing
+Project, Jul 2012.
+Full text PDF: http://www.sentencingproject.org/wp-content/uploads/2016/01/State-Level-Estimates-of-Felon-Disenfranchisement-in-the-United-States-2010.pdf

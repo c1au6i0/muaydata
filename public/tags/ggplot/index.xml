@@ -7,10 +7,25 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Wed, 12 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Oct 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/ggplot/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Animated Prison</title>
+      <link>/post/animated-prison/</link>
+      <pubDate>Tue, 23 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/animated-prison/</guid>
+      <description>&lt;p&gt;In this post we will get the datasets and write the code to create the following visualization of the rate of incarceration over time in U.S (custody and jurisdiction counts of all prisoners).&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;[Double click for full screen]&lt;/em&gt;&lt;/p&gt;
+
+&lt;iframe title=&#34;Prison_video&#34; height=&#34;400&#34; src=&#34;/data_post3/output.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>Il Re di Twitter? (PARTE I)</title>

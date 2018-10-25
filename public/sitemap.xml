@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>/post/animated-prison/</loc>
+    <lastmod>2018-10-23T18:19:53-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>/post/re-di-twitter-ii/</loc>
     <lastmod>2018-10-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -24,6 +31,13 @@
   </url>
   
   <url>
+    <loc>/tags/av/</loc>
+    <lastmod>2018-10-23T18:19:53-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/categories/</loc>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
@@ -31,7 +45,7 @@
   
   <url>
     <loc>/tags/ggplot/</loc>
-    <lastmod>2018-09-12T00:00:00+00:00</lastmod>
+    <lastmod>2018-10-23T18:19:53-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -45,7 +59,14 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2018-10-10T00:00:00+00:00</lastmod>
+    <lastmod>2018-10-23T18:19:53-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/categories/r/</loc>
+    <lastmod>2018-10-23T18:19:53-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -58,15 +79,8 @@
   </url>
   
   <url>
-    <loc>/categories/r/</loc>
-    <lastmod>2018-10-10T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/tags/</loc>
-    <lastmod>2018-09-12T00:00:00+00:00</lastmod>
+    <lastmod>2018-10-23T18:19:53-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -81,6 +95,13 @@
   <url>
     <loc>/tags/twitter/</loc>
     <lastmod>2018-10-10T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/visualization/</loc>
+    <lastmod>2018-10-23T18:19:53-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

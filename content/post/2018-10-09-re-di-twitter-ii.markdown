@@ -3,7 +3,7 @@ title: Il Re di Twitter? (PART II)
 subtitle: Analisi dei tweets
 author: C1au6i0_HH
 date:  '2018-10-10'
-# lastmod: "2018 October 10 10 45"
+# lastmod: "2018 October 25 16 58"
 slug: re-di-twitter-ii
 categories:
   - R
@@ -20,9 +20,11 @@ contentCopyright: no
 reward: no
 mathjax: no
 ---
+
 In questa seconda parte analizzeremo il contenuto dei tweets di Di Maio, Salvini e Martina e scopriremo quante volte e quando particolari parole sono state utilizzate dai 3 politici. Per finire andremo a vedere se alcune di queste parole sono associate ad un alto numero di like.
 
 <!--more-->
+
 # Premessa
 
 Nella prima parte di prima serie di [posts] (https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/) ci siamo calati nel ruolo di brillanti investigatori privati e muniti della nostra lente di ingrandimento informatica (*twitteR*) abbiamo analizzato l'uso da parte di Di Maio, Salvini e Martina del social media twitter. Nell'apparente casualità del comportamento umano, patterns e ordine emergono quando i dati vengono osservati e registrati sistematicamente e così siamo stati in grado di rilevare trend e differenze nell'uso di twitter da parte dei 3 politici italiani. In questa __seconda parte__ andremo ad analizzare il contenuto dei vari tweets utilizzando un pacchetto di *textmining* estremamente popolare in *R*: [*tidytext*](https://www.tidytextmining.com/). 
