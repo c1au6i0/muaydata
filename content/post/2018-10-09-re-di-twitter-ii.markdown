@@ -3,7 +3,7 @@ title: Il Re di Twitter? (PART II)
 subtitle: Analisi dei tweets
 author: C1au6i0_HH
 date:  '2018-10-10'
-# lastmod: "2018 October 25 18 09"
+# lastmod: "2018 October 25 18 18"
 slug: re-di-twitter-ii
 categories:
   - R

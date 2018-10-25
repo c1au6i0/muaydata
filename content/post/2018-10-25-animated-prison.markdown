@@ -326,7 +326,7 @@ ggplot(prison_norm_tot) +
 
 <img src="/post/2018-10-25-animated-prison_files/figure-html/fig.2_prison_time-1.png" width="672" />
 
-From 2008 to 2015 the prison population went from about 44 inmates for 10 thousand people to about 39. It is ≈ 10% decrease!
+From 2008 to 2015, the prison population went from about 44 inmates for 10 thousand people to about 39. It is ≈ 10% decrease!
 That is going to be the last graph of the post!
 
 Next time, I will try to focus on machine learning analysis.
