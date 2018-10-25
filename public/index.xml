@@ -57,7 +57,7 @@
 &lt;img src=&#34;https://muaydata.netlify.com/data_post3/giphy.gif&#34; alt=&#34;prova&#34; /&gt;
 &lt;/center&gt;&lt;/p&gt;
 
-&lt;p&gt;Few weeks ago I stumble upon a newly released package, &lt;a href=&#34;https://github.com/ropensci/av&#34;&gt;&lt;em&gt;av&lt;/em&gt;&lt;/a&gt; that uses &lt;a href=&#34;https://ffmpeg.org/&#34;&gt;&lt;em&gt;ffmpeg&lt;/em&gt;&lt;/a&gt; to capture &lt;em&gt;R&lt;/em&gt; plots and create videos.
+&lt;p&gt;Few weeks agon, I stumble upon a newly released package, &lt;a href=&#34;https://github.com/ropensci/av&#34;&gt;&lt;em&gt;av&lt;/em&gt;&lt;/a&gt;, that uses &lt;a href=&#34;https://ffmpeg.org/&#34;&gt;&lt;em&gt;ffmpeg&lt;/em&gt;&lt;/a&gt; to capture &lt;em&gt;R&lt;/em&gt; plots and create videos.
 I decided to give it a try and use it with heat-maps to visualize the change of prison population in U.S.
 Admittedly the video does not knock you out (changes are relatively small), but I think that it does still summarize the data at glance quite well.&lt;/p&gt;
 

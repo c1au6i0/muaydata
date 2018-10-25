@@ -44,7 +44,7 @@ Animated plot are like spinning-back kicks in muay Thai: they are extremely risk
 ![prova](/data_post3/giphy.gif)
 </center>
 
-Few weeks ago I stumble upon a newly released package, [*av*](https://github.com/ropensci/av) that uses [*ffmpeg*](https://ffmpeg.org/) to capture *R* plots and create videos. 
+Few weeks agon, I stumble upon a newly released package, [*av*](https://github.com/ropensci/av), that uses [*ffmpeg*](https://ffmpeg.org/) to capture *R* plots and create videos. 
 I decided to give it a try and use it with heat-maps to visualize the change of prison population in U.S. 
 Admittedly the video does not knock you out (changes are relatively small), but I think that it does still summarize the data at glance quite well.
 
