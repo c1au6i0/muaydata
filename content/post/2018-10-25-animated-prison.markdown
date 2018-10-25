@@ -1,7 +1,7 @@
 ---
 title: Animated Prison
 author: ~
-date: '2018-10-23'
+date: '2018-10-25'
 slug: animated-prison
 categories: 
   - R
@@ -324,7 +324,7 @@ ggplot(prison_norm_tot) +
         axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-<img src="/post/2018-10-23-animated-prison_files/figure-html/fig.2_prison_time-1.png" width="672" />
+<img src="/post/2018-10-25-animated-prison_files/figure-html/fig.2_prison_time-1.png" width="672" />
 
 From 2008 to 2015 the prison population went from about 44 inmates for 10 thousand people to about 39. It is ≈ 10% decrease!
 That is going to be the last graph of the post!
