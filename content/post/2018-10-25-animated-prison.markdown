@@ -28,7 +28,7 @@ In this post we will get the datasets and write the code to create the following
 
 <!--more-->
 
-What are we looking at? The video-graph represents the number of people in private and public prisons (sentenced and unsentenced) normalized by the corresponding state population. The darker is a state, the higher is the prison population relative to the total population. The year is indicate on the top left and the video shows the data __from 1999 to 2015__. 
+What are we looking at? The video-graph represents the number of people in private and public prisons (sentenced and unsentenced) normalized by the corresponding state population. The darker is a state, the higher is the prison population relative to the total population. The year is indicated on the top left and the video shows the data __from 1999 to 2015__. 
 
 Some changes are quite evident. For example, Texas is the darkest among Southern states at the start of the video, but by the year 2015 it is Oklahoma to lead the South in terms of prison population.
 
