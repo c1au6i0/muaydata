@@ -52,8 +52,7 @@ Admittedly the video does not knock you out (changes are relatively small), but 
 # Get the data and make it tidy
 
 We load the libraries.
-
-```r
+```{r libraries, include=TRUE, warning=FALSE, message=FALSE}
 library(av)
 library(lubridate)
 library(maps)
@@ -68,28 +67,14 @@ The primary dataset that we are going to use is the [National Prisoner Statistic
 
 The dataset (*rda file*) comes with many documents including the Codebook and details of the methodology used to collect the data. We double click on the *rda* file to import it, we assign it to *prison_pop* and we take a look at some rows and columns.
 
+```{r load_pris, include=FALSE}
+load("/Users/heverz/Documents/R_projects/muaydata/static/data_post3/36657-0001-Data.rda")
+```
 
 
-
-
-```r
+```{r import_prison}
 prison_pop <- as_tibble(da36657.0001)
 prison_pop[2044:2052, 1:6]
-```
-
-```
-## # A tibble: 9 x 6
-##    YEAR STATEID                  STATE REGION              CUSGT1M CUSGT1F
-##   <dbl> <fct>                    <fct> <fct>                 <dbl>   <dbl>
-## 1  2015 (50) 50. Vermont         VT    (1) Northeast           966      83
-## 2  2015 (51) 51. Virginia        VA    (3) South             28105    2325
-## 3  2015 (53) 53. Washington      WA    (4) West              15848    1297
-## 4  2015 (54) 54. West Virginia   WV    (3) South              5319     606
-## 5  2015 (55) 55. Wisconsin       WI    (2) Midwest           20346    1329
-## 6  2015 (56) 56. Wyoming         WY    (4) West               1888     245
-## 7  2015 (60) State prison total  ST    (7) State total     1054949   78954
-## 8  2015 (70) US prison total (s… US    (5) U.S. total      1192289   89180
-## 9  2015 (99) Federal BOP         FE    (6) Federal Bureau…  137340   10226
 ```
 
 The data is in the right format (long) but it is not tidy. For example, the last 3 observations are totals that we don't need and the name of the states (*STATEID*) is recorder with other superfluous information. We need to cleaning it up and also restrict our focus of analysis.
@@ -100,8 +85,7 @@ __*"Variables CNOPRIVM, CNOPRIVF, CWPRIVM, and CWPRIVF were created by BJS start
 
 So we are going to get those variables, filter the dataframe/tibble to have years from 1999 to 2015 and clean up the STATEID column.
 
-
-```r
+```{r prison_tibble}
 prison_1999 <-
   prison_pop %>% 
   filter(YEAR >= 1999, !str_detect(STATEID, 'total|BOP')) %>% # remove totals
@@ -111,8 +95,7 @@ prison_1999$STATEID <- tolower(str_sub(prison_1999$STATEID, 10, -1)) # clean up 
 ```
 
 We calculate the totals (male + females, private only,  public facilities..).
-
-```r
+```{r prison_tot}
 # calculate the total prison population  by state
 prison_1999_tot <- 
   prison_1999 %>% 
@@ -128,20 +111,8 @@ prison_1999_tot <-
 ```
 
 ..and this is what we obtain:
-
-```r
+```{r}
 glimpse(prison_1999_tot)
-```
-
-```
-## Observations: 867
-## Variables: 6
-## $ YEAR      <dbl> 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999...
-## $ STATEID   <chr> "alabama", "alaska", "arizona", "arkansas", "califor...
-## $ STATE     <fct> AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, ...
-## $ PRIS      <dbl> 21227, 3916, 25986, 10388, 160687, 12995, 16987, 658...
-## $ PRIS_PUB  <dbl> 21227, 2529, 24594, 9174, 156066, 12995, 16987, 6585...
-## $ PRIS_PRIV <dbl> 0, 1387, 1392, 1214, 4621, 0, 0, 0, 4024, 3773, 3001...
 ```
 
 But now we have our first problem: a possible increase in the prison population might be the result of corresponding variation of U.S population. To circumvent that problem we need to express the prison population relative to the corresponding state population for the time interval of interest. Where do we get the data? 
@@ -157,8 +128,7 @@ In particular this is what we need:
 
 I have already merged all the census data together in *csv* file that is on the cloud and we will assign to *sp_wide* (it is in wide format).
 
-
-```r
+```{r import, message=FALSE, warning=FALSE}
 # Thanks LukeA: https://stackoverflow.com/questions/33135060/read-csv-file-hosted-on-google-drive#33142446) 
 
 ids <-  "1bCGjAtCjoRuRf8RFw78Rzjtq_r5uxXBP" # IDS file 
@@ -167,8 +137,7 @@ sp_wide <- read_csv(sprintf("https://drive.google.com/uc?id=%s&export=download",
 ```
 
 We need to make the STATEID column consistent with the dataframe/tibble of the prison population and to rearrange it in a long format.
-
-```r
+```{r state_import}
 sp_long <- sp_wide %>% 
   mutate(STATEID = tolower(STATEID)) %>% 
   gather(YEAR, POP, -STATEID, convert = TRUE, na.rm = TRUE) %>% 
@@ -176,8 +145,7 @@ sp_long <- sp_wide %>%
 ```
 
 Finaly we can join the 2 dataframe/tibble by STATEID and YEAR and normalize the prison data by state population.
-
-```r
+```{r join}
 prison_norm <- 
   left_join(prison_1999_tot, sp_long, by = c("STATEID", "YEAR")) %>% 
   rowwise() %>% 
@@ -192,8 +160,7 @@ What is a map? It is a series of polygons that have been drawn on a paper sheet 
 In our case the sheet of paper is the area within our Cartesian axes, and latitude and longitude are X and Y coordinates. We need those coordinates to draw our map. Easy done!
 We use the package [*maps*](https://cran.r-project.org/web/packages/maps/index.html) to get the coordinates of each U.S. state and then we merge the obtain dataframe/tibble with the one of the prison population.
 
-
-```r
+```{r prison_normalized_xy}
 states <- map_data("state") %>% 
   rename(STATEID = region)
 
@@ -205,24 +172,8 @@ prison_norm_xy <-
 glimpse(prison_norm_xy)
 ```
 
-```
-## Observations: 264,163
-## Variables: 10
-## $ YEAR      <dbl> 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999...
-## $ STATEID   <chr> "alabama", "alabama", "alabama", "alabama", "alabama...
-## $ STATE     <fct> AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, ...
-## $ PRIS      <dbl> 21227, 21227, 21227, 21227, 21227, 21227, 21227, 212...
-## $ PRIS_PUB  <dbl> 21227, 21227, 21227, 21227, 21227, 21227, 21227, 212...
-## $ PRIS_PRIV <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ POP       <dbl> 4430141, 4430141, 4430141, 4430141, 4430141, 4430141...
-## $ PERC_PRIS <dbl> 47.91495, 47.91495, 47.91495, 47.91495, 47.91495, 47...
-## $ LONG      <dbl> -87.46201, -87.48493, -87.52503, -87.53076, -87.5708...
-## $ LAT       <dbl> 30.38968, 30.37249, 30.37249, 30.33239, 30.32665, 30...
-```
-
 In our video/graph we want also to indicate the state code (2 letters). To do that we need to create a dataframe/tibble that has the coordinates of the positions of those labels. Ideally, they would be in the center of the state, so we can just average the longitude and latitude of each state. Of course don't expect that to be perfect, the shape of states is not a perfect square or circle!
-
-```r
+```{r labels}
 xy_lab <- 
   prison_norm_xy %>% 
   filter(STATEID != "district of columbia") %>% 
@@ -233,8 +184,7 @@ xy_lab <-
 ```
 
 District of Columbia is too small to be seen in the map. Let's remove it.
-
-```r
+```{r no_districtCB, message = FALSE}
 data_p <- 
   prison_norm_xy %>% 
   filter(STATEID != "district of columbia") 
@@ -242,8 +192,7 @@ data_p <-
 
 Finally, we get to the code to make the video. The idea behind it is pretty simple. We write a function that split our dataframe by year and plots sequentially each of the yearly data. Than we call the function and we capture the output with *av*. A video is just a sequence of single images!
 
-
-```r
+```{r video, message = FALSE, eval=FALSE}
 makeplot <- function(){
   datalist <- split(data_p, data_p$YEAR)
   map(datalist, function(x){
@@ -285,8 +234,7 @@ With that we have covered all the code related to the video/graph, but I could n
 I wanted also to create a classic line plot with the U.S total prison population (1999-2015) and also indicate the party of the president in office (as Harvey Wickam as done in his ggplot2 book).
 
 Let's get the presidents...
-
-```r
+```{r presidents}
 pres_sub <- 
   presidential %>% 
   mutate(start = year(start), end = year(end)) %>% 
@@ -296,8 +244,7 @@ pres_sub$start[1] <- 1999
 ```
 
 and the plot!
-
-```r
+```{r fig.2_prison_time}
 prison_norm_tot <-
   prison_norm %>% 
   filter(STATEID != "district of columbia") %>% 
@@ -322,9 +269,8 @@ ggplot(prison_norm_tot) +
   scale_x_continuous(expand = c(0, 0), labels = 1999:2015, breaks = 1999:2015) +
   theme(plot.title = element_text(hjust = 0.5),
         axis.text.x = element_text(angle = 45, hjust = 1))
+  
 ```
-
-<img src="/post/2018-10-25-animated-prison_files/figure-html/fig.2_prison_time-1.png" width="672" />
 
 From 2008 to 2015, the prison population went from about 44 inmates for 10 thousand people to about 39. It is ≈ 10% decrease!
 That is going to be the last graph of the post!

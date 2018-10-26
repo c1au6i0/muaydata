@@ -88,7 +88,7 @@ Admittedly the video does not knock you out (changes are relatively small), but 
 &lt;/div&gt;
 &lt;p&gt;The primary dataset that we are going to use is the &lt;a href=&#34;https://www.icpsr.umich.edu/icpsrweb/ICPSR/studies/36657&#34;&gt;National Prisoner Statistics, 1978-2015&lt;/a&gt; curated by the United States Department of Justice, the Office of Justice Program and the Bureau of Justice Statistics.&lt;/p&gt;
 
-&lt;p&gt;The dataset (&lt;em&gt;rda file&lt;/em&gt;) comes with many documents including the Codebook and details of the methodology used to collect the data. We double click on the &lt;em&gt;rda&lt;/em&gt; file to import it, we assign it to &lt;em&gt;prison_pop&lt;/em&gt; and we take a look at the some rows and columns.&lt;/p&gt;
+&lt;p&gt;The dataset (&lt;em&gt;rda file&lt;/em&gt;) comes with many documents including the Codebook and details of the methodology used to collect the data. We double click on the &lt;em&gt;rda&lt;/em&gt; file to import it, we assign it to &lt;em&gt;prison_pop&lt;/em&gt; and we take a look at some rows and columns.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
