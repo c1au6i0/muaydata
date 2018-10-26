@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Textmining on MuayData blog</title>
-    <link>https://muaydata.netlify.com/tags/textmining/</link>
+    <link>/tags/textmining/</link>
     <description>Recent content in Textmining on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Wed, 10 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://muaydata.netlify.com/tags/textmining/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/textmining/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Il Re di Twitter? (PART II)</title>
-      <link>https://muaydata.netlify.com/post/re-di-twitter-ii/</link>
+      <link>/post/re-di-twitter-ii/</link>
       <pubDate>Wed, 10 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/post/re-di-twitter-ii/</guid>
+      <guid>/post/re-di-twitter-ii/</guid>
       <description>&lt;p&gt;In questa seconda parte analizzeremo il contenuto dei tweets di Di Maio, Salvini e Martina e scopriremo quante volte e quando particolari parole sono state utilizzate dai 3 politici. Per finire andremo a vedere se alcune di queste parole sono associate ad un alto numero di like.&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
@@ -25,10 +25,10 @@
     
     <item>
       <title>Il Re di Twitter? (PARTE I)</title>
-      <link>https://muaydata.netlify.com/post/re-di-twitter-i/</link>
+      <link>/post/re-di-twitter-i/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/post/re-di-twitter-i/</guid>
+      <guid>/post/re-di-twitter-i/</guid>
       <description>&lt;p&gt;In questa serie di Posts andremo ad analizzare gli ultimi 3200 tweets di Di Maio, Salvini e Martina. Il mio studio sarà diviso in 2 parti:&lt;/p&gt;
 
 &lt;ul&gt;

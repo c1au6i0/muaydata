@@ -2,67 +2,67 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on MuayData blog</title>
-    <link>https://muaydata.netlify.com/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Thu, 25 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://muaydata.netlify.com/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Av</title>
-      <link>https://muaydata.netlify.com/tags/av/</link>
+      <link>/tags/av/</link>
       <pubDate>Thu, 25 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/tags/av/</guid>
+      <guid>/tags/av/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ggplot</title>
-      <link>https://muaydata.netlify.com/tags/ggplot/</link>
+      <link>/tags/ggplot/</link>
       <pubDate>Thu, 25 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/tags/ggplot/</guid>
+      <guid>/tags/ggplot/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>https://muaydata.netlify.com/tags/r/</link>
+      <link>/tags/r/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/tags/r/</guid>
+      <guid>/tags/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Textmining</title>
-      <link>https://muaydata.netlify.com/tags/textmining/</link>
+      <link>/tags/textmining/</link>
       <pubDate>Wed, 10 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/tags/textmining/</guid>
+      <guid>/tags/textmining/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Twitter</title>
-      <link>https://muaydata.netlify.com/tags/twitter/</link>
+      <link>/tags/twitter/</link>
       <pubDate>Wed, 10 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/tags/twitter/</guid>
+      <guid>/tags/twitter/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Visualization</title>
-      <link>https://muaydata.netlify.com/tags/visualization/</link>
+      <link>/tags/visualization/</link>
       <pubDate>Thu, 25 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/tags/visualization/</guid>
+      <guid>/tags/visualization/</guid>
       <description></description>
     </item>
     
