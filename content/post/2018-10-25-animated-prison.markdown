@@ -38,7 +38,7 @@ If not, __bye bye!__
 
 # Introduction
 
-Animated plot are like spinning-back kicks in muay Thai: they are extremely risky, seldom used, but they can be highly effective and hit you right between the eyes!
+Animated plots are like spinning-back kicks in muay Thai: they are extremely risky, seldom used, but they can be highly effective and hit you right between the eyes!
 
 <center>
 ![prova](/data_post3/giphy.gif)
