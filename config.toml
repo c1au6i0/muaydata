@@ -8,7 +8,7 @@ hasCJKLanguage = false
 paginate = 3                                              
 rssLimit = 20             # Limit Entry Count to Rss file 
 disqusShortname = "muaydata"      # disqus_shortname
-googleAnalytics = ""      # UA-XXXXXXXX-X
+googleAnalytics = "UA-128292506-1"      # UA-XXXXXXXX-X
 copyright = '<a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>'     
 # uglyURLs = true         # more info: https://gohugo.io/content-management/urls/#ugly-urls
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]

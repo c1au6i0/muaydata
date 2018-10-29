@@ -1,0 +1,15 @@
+---
+title: "post4"
+output: html_notebook
+---
+
+
+```{r libraries}
+library(pubmed.mineR)
+```
+
+```{r}
+
+```
+
+
