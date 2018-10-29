@@ -31,12 +31,6 @@
   </url>
   
   <url>
-    <loc>https://muaydata.netlify.com/about/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
     <loc>https://muaydata.netlify.com/tags/av/</loc>
     <lastmod>2018-10-23T18:19:53-04:00</lastmod>
     <changefreq>weekly</changefreq>
