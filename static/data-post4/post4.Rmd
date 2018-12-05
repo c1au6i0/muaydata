@@ -1,0 +1,167 @@
+---
+title: "Post 4"
+output: html_notebook
+---
+```{r libraries, message=FALSE}
+library(svDialogs)
+library(tidyverse)
+library(purrr)
+library(foreign)
+```
+
+ADD Health
+https://www.icpsr.umich.edu/icpsrweb/content/DSDR/add-health-data-guide.html
+https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/topics
+
+
+
+
+```{r}
+
+files <- list.files(path = "/Users/heverz/Documents/R_projects/DATASETS/W1-4",
+                    include.dirs=FALSE,
+                    full.names = TRUE)
+
+w1_4 <- map(files, read.dta)
+
+var_select <- scan("/Users/heverz/Documents/R_projects/muaydata/static/data-post4/variables.csv", what  = "list", sep = ",")
+
+#add id
+w1_4_reduced <- map(w1_4, function (x) x[, colnames(x) %in% var_select])
+
+toselect <- which(map(prova, function(x) ncol(x) > 0) == TRUE)
+heal_data <- plyr::join_all(prova[toselect] , by = "AID", type = "inner")
+
+```
+#-------------------
+<!-- Classifiers:----------------------------------------------- -->
+<!-- https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/variablecollection?VariableCollectionId=2164 -->
+<!-- https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/variablecollection?VariableCollectionId=2182 -->
+<!-- https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/variablecollection?VariableCollectionId=2185 -->
+<!-- https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/variablecollection?VariableCollectionId=2206 -->
+<!-- https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/variablecollection?VariableCollectionId=2474 -->
+<!-- https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/variablecollection?VariableCollectionId=2161 -->
+<!-- https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/variablecollection?VariableCollectionId=2190 -->
+
+<!-- H4TO94 You said you have used these types of drugs {fill from list of drugs according to instructions below this question}. Which one type have you used most frequently in your lifetime? -->
+
+<!-- Response Value 	Response Label 	Frequency 	Percent  -->
+<!-- 1	sedatives	933	5.94 -->
+<!-- 2	tranquilizers	1015	6.46 -->
+<!-- 3	stimulants	530	3.38 -->
+<!-- 4	pain killers	326	2.08 -->
+<!-- 5	steroids	196	1.25 -->
+<!-- 6	cocaine	121	0.77 -->
+<!-- 7	crystal meth (ice)	52	0.33 -->
+<!-- 8	other illegal drugs	1	0.01 -->
+<!-- 96	refused	18	0.11 -->
+<!-- 97	legitimate skip	12479	79.48 -->
+<!-- 98	don't know	30	0.19 -->
+
+
+<!-- H4TO64D	Which of the following types of prescription drugs have you taken that were not prescribed for you, taken in larger amounts than prescribed, more often than prescribed, for longer periods than prescribed, or that you took only for the feeling or experience they caused (check all that apply): pain killers -->
+
+
+<!-- Response Value 	Response Label 	Frequency 	Percent  -->
+<!-- 0	no	494	3.15 -->
+<!-- 1	yes	2052	13.07 -->
+<!-- 6	refused	2	0.01 -->
+<!-- 7	legitimate skip	13131	83.63 -->
+<!-- 8	don't know	22	0.14 -->
+
+<!-- H4TO63	Have you ever taken any prescription drugs that were not prescribed for you, taken prescription drugs in larger amounts than prescribed, more often than prescribed, for longer periods than prescribed, or taken prescription drugs that you took only for the feeling or experience they caused? -->
+
+<!-- Response Value 	Response Label 	Frequency 	Percent  -->
+<!-- 0	no	13063	83.20 -->
+<!-- 1	yes	2541	16.18 -->
+<!-- 6	refused	68	0.43 -->
+<!-- 8	don't know	29	0.18 -->
+
+<!-- H4TO117	Have you ever continued to use {favorite drug} after you realized using {favorite drug} was causing you any emotional problems (such as feeling depressed or empty, feeling irritable or aggressive, feeling paranoid or confused, feeling anxious or tense, being jumpy or easily startled) or causing you any health problems (such as heart pounding, headaches or dizziness, or sexual difficulties)? -->
+
+
+H4BMICLS	BMI Classification	
+Response Value 	Response Label 	Frequency 	Percent 
+1	underweight: <18.5	214	1.36
+2	normal 18.5-<25	4869	31.01
+3	overweight: 25-<30	4654	29.64
+4	obese I: 30-<35	2854	18.18
+5	obese II: 35-<40	1457	9.28
+6	obese III: 40+	1403	8.94
+88	over limit	20	0.13
+89	weight inconsistent with height, waist and sex	31	0.20
+96	refused	139	0.89
+97	legitimate skip	8	0.05
+99	invalid data
+
+#-------------------
+Variables
+PA10	What is your current marital status?
+PA12	How far did you go in school?
+PA17 Are you employed full time?
+PA20	In general, are you happy?
+PA56	Do you have enough money to pay your bills?
+PA61	How often do you drink alcohol?
+PA62	How often in the last month have you had five or more drinks on one occasion?
+PA63	Are there any cigarette smokers in your household?
+PA64	Do you smoke?
+PC38	Does (he/she) have a specific learning disability, such as difficulties with attention, dyslexia, or some other reading, spelling, writing, or math disability?
+PC49A_2	Does {NAME]'s biological mother currently have the following health problem (check all that apply): Obesity
+PC49A_3	Does {NAME]'s biological father currently have the following health problem (check all that apply): Obesity
+PC49E_2	Does {NAME]'s biological mother currently have the following health problem (check all that apply): Alcoholism
+PC49E_3	Does {NAME]'s biological father currently have the following health problem (check all that apply): Alcoholism
+
+H1DA2	During the past week, how many times did you do hobbies, such as collecting baseball cards, playing a musical instrument, reading, or doing arts and crafts?
+H1DA3	During the past week, how many times did you watch television or videos, or play video games?
+H1DA4	During the past week, how many times did you go roller-blading, roller-skating, skate-boarding, or bicycling?
+H1DA5	During the past week, how many times did you play an active sport, such as baseball, softball, basketball, soccer, swimming, or football?
+H1DA6	During the past week, how many times did you exercise, such as jogging, walking, karate, jumping rope, gymnastics or dancing?
+H1DA7	During the past week, how many times did you just hang out with friends?
+H1DA8	How many hours a week do you watch television?
+H1DA9	How many hours a week do you watch videos?
+H1DA10	How many hours a week do you play video or computer games?
+H1DA11	How many hours a week do you listen to the radio?
+H1TS5	Have you learned about the following in a class at school (check all that apply): drinking
+H1TS6	Have you learned about the following in a class at school (check all that apply): drug abuse
+H1ED20	How much do you agree or disagree with the following statements: You feel like you are a part of your school. Last year, you felt like you were a part of your school.
+H1ED21	How much do you agree or disagree with the following statements: Students at your school are prejudiced. Last year, students at your school were prejudiced.
+H1ED22	How much do you agree or disagree with the following statements: You are happy to be at your school. Last year, you were happy to be at your school.
+
+H1FS11	How often was the following true during the past week? You were happy.
+H1NF12J	Which of the following things have you done with your biological father in the past four weeks (check all that apply): Have you talked about other things you're doing in school?
+H1NF14	How close do you feel to your biological father?
+
+H1WP1	Do your parents let you make your own decisions about the time you must be home on weekend nights?
+H1WP2	Do your parents let you make your own decisions about the people you hang around with?
+H1WP3	Do your parents let you make your own decisions about what you wear?
+H1WP4	Do your parents let you make your own decisions about how much television you watch?
+H1WP5	Do your parents let you make your own decisions about which television programs you watch?
+H1WP6	Do your parents let you make your own decisions about what time you go to bed on week nights?
+H1WP7	Do your parents let you make your own decisions about what you eat?
+Which of the things listed on this card have you done with your {MOTHER/ADOPTIVE MOTHER/STEPMOTHER/FOSTER MOTHER/etc.} in the past 4 weeks (check all that apply): Have you talked about other things you're doing in school?
+H1PF1	Do you agree or disagree with the following statement? Most of the time, your mother is warm and loving toward you.
+H1PF10	Do you agree or disagree with the following statement? You never get sad.
+O50	Are cigarettes easily available to you in your home?
+H1TO51	Is alcohol easily available to you in your home?
+H1PR1	How much do you feel that adults care about you?
+H1PR2	How much do you feel that your teachers care about you?
+H1PR3	How much do you feel that your parents care about you?
+H1PR4	How much do you feel that your friends care about you?
+
+DRUGS-household
+H11TO52	Are illegal drugs easily available to you in your home?
+H1IR24	Did you see any evidence of drinking in the household--for example, beer cans, liquor bottles, people drinking
+PA34	In this neighborhood, how big a problem are drug dealers and drug users?
+
+
+S10 grades
+
+
+How far did you go in school?	Parent	Parental Background Information; Parental Education
+How far did your current (spouse/partner) go in school?	Parent	Education Status; Parental Background Information; Parental Education
+
+
+
+	H1DA7	During the past week, how many times did you just hang out with friends?
+
+https://campus.datacamp.com/courses/supervised-learning-in-r-regression/tree-based-methods?ex=8
