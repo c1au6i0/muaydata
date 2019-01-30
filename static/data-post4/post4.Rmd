@@ -2,21 +2,25 @@
 title: "Post 4"
 output: html_notebook
 ---
+We start loading the libraries.
 ```{r libraries, message=FALSE}
 library(svDialogs)
 library(tidyverse)
 library(purrr)
-library(foreign)
+library(foreign) 
+library(RSQLite)
+library(caret)
 ```
 
 ADD Health
-https://www.icpsr.umich.edu/icpsrweb/content/DSDR/add-health-data-guide.html
-https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/topics
+Where are the data:
+[link1](https://www.icpsr.umich.edu/icpsrweb/content/DSDR/add-health-data-guide.html)
+[link2](https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/topics)
 
 
 
 
-```{r}
+```{r getdata, eval=FALSE}
 
 files <- list.files(path = "/Users/heverz/Documents/R_projects/DATASETS/W1-4",
                     include.dirs=FALSE,
@@ -26,22 +30,84 @@ w1_4 <- map(files, read.dta)
 
 var_select <- scan("/Users/heverz/Documents/R_projects/muaydata/static/data-post4/variables.csv", what  = "list", sep = ",")
 
-#add id
+# get the varibles in var_select
 w1_4_reduced <- map(w1_4, function (x) x[, colnames(x) %in% var_select])
 
-toselect <- which(map(prova, function(x) ncol(x) > 0) == TRUE)
-heal_data <- plyr::join_all(prova[toselect] , by = "AID", type = "inner")
-
+#join not empty dataframes
+toselect <- which(map(w1_4_reduced, function(x) ncol(x) > 0) == TRUE)
+heal_data <- plyr::join_all(w1_4_reduced[toselect] , by = "AID", type = "inner")
+heal_data$AID <- as.character(heal_data$AID)
 ```
-#-------------------
-<!-- Classifiers:----------------------------------------------- -->
-<!-- https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/variablecollection?VariableCollectionId=2164 -->
-<!-- https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/variablecollection?VariableCollectionId=2182 -->
-<!-- https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/variablecollection?VariableCollectionId=2185 -->
-<!-- https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/variablecollection?VariableCollectionId=2206 -->
-<!-- https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/variablecollection?VariableCollectionId=2474 -->
-<!-- https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/variablecollection?VariableCollectionId=2161 -->
-<!-- https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/variablecollection?VariableCollectionId=2190 -->
+
+```{r database, include=FALSE, eval=TRUE}
+mydb <- dbConnect(RSQLite::SQLite(), "/Users/heverz/Documents/R_projects/muaydata/static/data-post4/heal_data.sqlite")
+
+
+# dbWriteTable(mydb, "heal_data", heal_data)
+# dbListTables(mydb)
+heal_data <- as_tibble(tbl(mydb, "heal_data"))
+```
+
+
+
+
+```{r factor}
+heal_sub <- heal_data[,2:length(heal_data)]
+heal_sub <- mutate_if(heal_sub, is.character, as.factor)
+sum(is.na(heal_sub))
+```
+
+There are a lot of NA because the questionare was not submitted to a some parents
+```{r NAs}
+glimpse(heal_sub) 
+
+heal_sub[is.na(heal_sub$PA10),]
+```
+
+Parent questionare is an important part of our analysis we will remove those NAs
+
+```{r removeNAs}
+heal_sub_cl <- 
+  heal_sub %>% 
+  select(-c("S10")) %>% 
+  select(1:49) %>% 
+  na.omit()
+```
+
+```{r classifier}
+glimpse(heal_sub_cl)
+summary(heal_sub_cl$H4TO63)
+```
+Maybe preprocess with KNN?
+train(x = X, y = Y,
+method = "glm",
+preProcess = "knnImpute"
+)
+https://www.analyticsvidhya.com/blog/2016/12/practical-guide-to-implement-machine-learning-with-caret-package-in-r-with-practice-problem/
+
+```{r preproc_dummy}
+glimpse(heal_sub_cl)
+dummies <- dummyVars(H4TO63 ~ ., data = heal_sub_cl)
+prova <- as_tibble(predict(dummies, newdata = heal_sub_cl))
+glimpse(prova)
+```
+```{r nz}
+nearZeroVar(heal_sub_cl, saveMetrics= TRUE) %>% 
+  filter(nzv == TRUE)
+```
+
+
+
+# ```{r}
+# library(C50)
+# data(churn)
+# table(churnTrain$churn) / nrow(churnTrain)
+# ```
+
+
+
+
+
 
 <!-- H4TO94 You said you have used these types of drugs {fill from list of drugs according to instructions below this question}. Which one type have you used most frequently in your lifetime? -->
 
@@ -77,22 +143,30 @@ heal_data <- plyr::join_all(prova[toselect] , by = "AID", type = "inner")
 <!-- 6	refused	68	0.43 -->
 <!-- 8	don't know	29	0.18 -->
 
-<!-- H4TO117	Have you ever continued to use {favorite drug} after you realized using {favorite drug} was causing you any emotional problems (such as feeling depressed or empty, feeling irritable or aggressive, feeling paranoid or confused, feeling anxious or tense, being jumpy or easily startled) or causing you any health problems (such as heart pounding, headaches or dizziness, or sexual difficulties)? -->
-
-
-H4BMICLS	BMI Classification	
+W4	H4TO117	Have you ever continued to use {favorite drug} after you realized using {favorite drug} was causing you any emotional problems (such as feeling depressed or empty, feeling irritable or aggressive, feeling paranoid or confused, feeling anxious or tense, being jumpy or easily startled) or causing you any health problems (such as heart pounding, headaches or dizziness, or sexual difficulties)?	
 Response Value 	Response Label 	Frequency 	Percent 
-1	underweight: <18.5	214	1.36
-2	normal 18.5-<25	4869	31.01
-3	overweight: 25-<30	4654	29.64
-4	obese I: 30-<35	2854	18.18
-5	obese II: 35-<40	1457	9.28
-6	obese III: 40+	1403	8.94
-88	over limit	20	0.13
-89	weight inconsistent with height, waist and sex	31	0.20
-96	refused	139	0.89
-97	legitimate skip	8	0.05
-99	invalid data
+0	no	925	5.89
+1	yes	713	4.54
+5	not asked on pretest	1	0.01
+6	refused	2	0.01
+7	legitimate skip	14059	89.54
+8	don't know	1	0.01
+
+
+
+<!-- H4BMICLS	BMI Classification	 -->
+<!-- Response Value 	Response Label 	Frequency 	Percent  -->
+<!-- 1	underweight: <18.5	214	1.36 -->
+<!-- 2	normal 18.5-<25	4869	31.01 -->
+<!-- 3	overweight: 25-<30	4654	29.64 -->
+<!-- 4	obese I: 30-<35	2854	18.18 -->
+<!-- 5	obese II: 35-<40	1457	9.28 -->
+<!-- 6	obese III: 40+	1403	8.94 -->
+<!-- 88	over limit	20	0.13 -->
+<!-- 89	weight inconsistent with height, waist and sex	31	0.20 -->
+<!-- 96	refused	139	0.89 -->
+<!-- 97	legitimate skip	8	0.05 -->
+<!-- 99	invalid data -->
 
 #-------------------
 Variables
