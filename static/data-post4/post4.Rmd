@@ -10,6 +10,8 @@ library(purrr)
 library(foreign) 
 library(RSQLite)
 library(caret)
+library(glmnet)
+# MLmetrics
 ```
 
 ADD Health
@@ -55,6 +57,7 @@ heal_data <- as_tibble(tbl(mydb, "heal_data"))
 heal_sub <- heal_data[,2:length(heal_data)]
 heal_sub <- mutate_if(heal_sub, is.character, as.factor)
 sum(is.na(heal_sub))
+str(heal_sub)
 ```
 
 There are a lot of NA because the questionare was not submitted to a some parents
@@ -70,172 +73,233 @@ Parent questionare is an important part of our analysis we will remove those NAs
 heal_sub_cl <- 
   heal_sub %>% 
   select(-c("S10")) %>% 
-  select(1:49) %>% 
+  select(1:48,51) %>% 
   na.omit()
+
+names(heal_sub_cl)
+#classifier_NA_insert
+heal_sub_cl <- 
+  heal_sub_cl %>% 
+  mutate(H4TO117 = as.factor(str_extract(heal_sub_cl$H4TO117 , "[:alpha:]+")))
+summary(heal_sub_cl$H4TO117)
 ```
 
-```{r classifier}
-glimpse(heal_sub_cl)
-summary(heal_sub_cl$H4TO63)
-```
-Maybe preprocess with KNN?
-train(x = X, y = Y,
-method = "glm",
-preProcess = "knnImpute"
-)
 https://www.analyticsvidhya.com/blog/2016/12/practical-guide-to-implement-machine-learning-with-caret-package-in-r-with-practice-problem/
 
-```{r preproc_dummy}
-glimpse(heal_sub_cl)
-dummies <- dummyVars(H4TO63 ~ ., data = heal_sub_cl)
-prova <- as_tibble(predict(dummies, newdata = heal_sub_cl))
-glimpse(prova)
-```
-```{r nz}
-nearZeroVar(heal_sub_cl, saveMetrics= TRUE) %>% 
-  filter(nzv == TRUE)
+
+```{r nzv}
+var_nz <- names(heal_sub_cl)[nearZeroVar(heal_sub_cl[,-49], saveMetrics= FALSE)]
+
+nearZeroVar(heal_sub_cl[,-49], saveMetrics = TRUE,) %>% 
+  filter(nzv == TRUE) %>% 
+  mutate( name_v = var_nz)
 ```
 
 
 
-# ```{r}
-# library(C50)
-# data(churn)
-# table(churnTrain$churn) / nrow(churnTrain)
-# ```
+https://topepo.github.io/caret/available-models.html
+
+The problem is that we have a very unballanced designed and therefore all the models tend to maximaze accuracy but not specificity (they say all not addicted). So we need to consider specificity as a metric too
+
+# A DIFFERENT CUT OFF and randomforest
+```{r create_my_model}
+## Get the model code for the original random forest method:
+
+thresh_code <- getModelInfo("rf", regex = FALSE)[[1]]
+thresh_code$type <- c("Classification")
+## Add the threshold as another tuning parameter
+thresh_code$parameters <- data.frame(parameter = c("mtry", "threshold"),
+                                     class = c("numeric", "numeric"),
+                                     label = c("#Randomly Selected Predictors",
+                                               "Probability Cutoff"))
+## The default tuning grid code:
+thresh_code$grid <- function(x, y, len = NULL, search = "grid") {
+  p <- ncol(x)
+  if(search == "grid") {
+    grid <- expand.grid(mtry = floor(sqrt(p)), 
+                        threshold = seq(.01, .99, length = len))
+    } else {
+      grid <- expand.grid(mtry = sample(1:p, size = len),
+                          threshold = runif(1, 0, size = len))
+      }
+  grid
+  }
+
+## Here we fit a single random forest model (with a fixed mtry)
+## and loop over the threshold values to get predictions from the same
+## randomForest model.
+thresh_code$loop = function(grid) {   
+  library(plyr)
+  loop <- ddply(grid, c("mtry"),
+                function(x) c(threshold = max(x$threshold)))
+  submodels <- vector(mode = "list", length = nrow(loop))
+  for(i in seq(along = loop$threshold)) {
+    index <- which(grid$mtry == loop$mtry[i])
+    cuts <- grid[index, "threshold"] 
+    submodels[[i]] <- data.frame(threshold = cuts[cuts != loop$threshold[i]])
+    }    
+  list(loop = loop, submodels = submodels)
+  }
+
+## Fit the model independent of the threshold parameter
+thresh_code$fit = function(x, y, wts, param, lev, last, classProbs, ...) { 
+  if(length(levels(y)) != 2)
+    stop("This works only for 2-class problems")
+  randomForest(x, y, mtry = param$mtry, ...)
+  }
+
+## Now get a probability prediction and use different thresholds to
+## get the predicted class
+thresh_code$predict = function(modelFit, newdata, submodels = NULL) {
+  class1Prob <- predict(modelFit, 
+                        newdata, 
+                        type = "prob")[, modelFit$obsLevels[1]]
+  ## Raise the threshold for class #1 and a higher level of
+  ## evidence is needed to call it class 1 so it should 
+  ## decrease sensitivity and increase specificity
+  out <- ifelse(class1Prob >= modelFit$tuneValue$threshold,
+                modelFit$obsLevels[1], 
+                modelFit$obsLevels[2])
+  if(!is.null(submodels)) {
+    tmp2 <- out
+    out <- vector(mode = "list", length = length(submodels$threshold))
+    out[[1]] <- tmp2
+    for(i in seq(along = submodels$threshold)) {
+      out[[i+1]] <- ifelse(class1Prob >= submodels$threshold[[i]],
+                           modelFit$obsLevels[1], 
+                           modelFit$obsLevels[2])
+      }
+    } 
+  out  
+  }
+
+## The probabilities are always the same but we have to create
+## mulitple versions of the probs to evaluate the data across
+## thresholds
+thresh_code$prob = function(modelFit, newdata, submodels = NULL) {
+  out <- as.data.frame(predict(modelFit, newdata, type = "prob"))
+  if(!is.null(submodels)) {
+    probs <- out
+    out <- vector(mode = "list", length = length(submodels$threshold)+1)
+    out <- lapply(out, function(x) probs)
+    } 
+  out 
+  }
+```
+
+
+
+```{r tuning}
+
+fourStats <- function (data, lev = levels(data$obs), model = NULL) {
+  ## This code will get use the area under the ROC curve and the
+  ## sensitivity and specificity values using the current candidate
+  ## value of the probability threshold.
+  out <- c(twoClassSummary(data, lev = levels(data$obs), model = NULL))
+  
+  ## The best possible model has sensitivity of 1 and specificity of 1. 
+  ## How far are we from that value?
+  coords <- matrix(c(1, 1, out["Spec"], out["Sens"]), 
+                   ncol = 2, 
+                   byrow = TRUE)
+  colnames(coords) <- c("Spec", "Sens")
+  rownames(coords) <- c("Best", "Current")
+  c(out, Dist = dist(coords)[1])
+}
+
+
+
+glmnetControl <- trainControl(method = "repeatedcv", 
+                              number = 10,
+                              repeats = 10,
+                              savePredictions = TRUE,
+                              summaryFunction = multiClassSummary,
+                              classProbs = TRUE,
+                              search = "grid"
+                              )
+```
+
+
+
+```{r model}
+
+# 
+ 
+heal_sub_cl$H4TO117[heal_sub_cl$H4TO117 == "Legitimate"] <- "No"
+# 
+# 
+heal_sub_cl$H4TO117 <- droplevels(heal_sub_cl$H4TO117)
+
+summary(heal_sub_cl$H4TO117)
+
+
+mod1 <- train(H4TO117  ~ ., 
+              heal_sub_cl,
+              method = thresh_code,
+              ## Minimize the distance to the perfect model
+              metric = "Dist",
+              maximize = FALSE,
+              tuneLength = 20,
+              trControl = trainControl(method = "repeatedcv",
+                                       repeats = 5,
+                                       classProbs = TRUE,
+                                       savePredictions = TRUE,
+                                       summaryFunction = fourStats
+                                       ),
+              na.action = na.omit,
+              preProcess = c("nzv","pca")
+              )
+
+plot(mod1)
+
+saveRDS(mod1, "mod1.RDS")
+
+
+```
+
+
+
+https://stackoverflow.com/questions/53654193/how-to-generate-confusion-matrix-on-hold-out-sample-in-caret-xgbdart
+
+https://www.svm-tutorial.com/2014/11/svm-classify-text-r/
+
+https://stackoverflow.com/questions/35482094/glmnet-caret-roc-sensitivity-specificity-of-training-model
+
+
+http://appliedpredictivemodeling.com/blog/2014/2/1/lw6har9oewknvus176q4o41alqw2ow
+
+```{r}
+library(reshape2)
+metrics <- mod1$results[, c(2, 4:6)]
+metrics <- melt(metrics, id.vars = "threshold", 
+                variable.name = "Resampled",
+                value.name = "Data")
+
+ggplot(metrics, aes(x = threshold, y = Data, color = Resampled)) + 
+  geom_line() + 
+  ylab("") + xlab("Probability Cutoff") +
+  theme(legend.position = "top")
+
+confusionMatrix(mod1)
+
+attr(mod1)
+
+```
+
+```{r adaptative}
+# fitControl <- trainControl(method = "adaptive_cv",
+#                            number = 10, repeats = 10,
+#                            summaryFunction = twoClassSummary,
+#                            classProbs = TRUE,
+#                            adaptive = list(min = 2,
+#                                            alpha = 0.05,
+#                                            method = "gls",
+#                                            complete = TRUE),
+#                            search = "random")
+```
 
 
 
 
+# RESAMPLING
 
-
-<!-- H4TO94 You said you have used these types of drugs {fill from list of drugs according to instructions below this question}. Which one type have you used most frequently in your lifetime? -->
-
-<!-- Response Value 	Response Label 	Frequency 	Percent  -->
-<!-- 1	sedatives	933	5.94 -->
-<!-- 2	tranquilizers	1015	6.46 -->
-<!-- 3	stimulants	530	3.38 -->
-<!-- 4	pain killers	326	2.08 -->
-<!-- 5	steroids	196	1.25 -->
-<!-- 6	cocaine	121	0.77 -->
-<!-- 7	crystal meth (ice)	52	0.33 -->
-<!-- 8	other illegal drugs	1	0.01 -->
-<!-- 96	refused	18	0.11 -->
-<!-- 97	legitimate skip	12479	79.48 -->
-<!-- 98	don't know	30	0.19 -->
-
-
-<!-- H4TO64D	Which of the following types of prescription drugs have you taken that were not prescribed for you, taken in larger amounts than prescribed, more often than prescribed, for longer periods than prescribed, or that you took only for the feeling or experience they caused (check all that apply): pain killers -->
-
-
-<!-- Response Value 	Response Label 	Frequency 	Percent  -->
-<!-- 0	no	494	3.15 -->
-<!-- 1	yes	2052	13.07 -->
-<!-- 6	refused	2	0.01 -->
-<!-- 7	legitimate skip	13131	83.63 -->
-<!-- 8	don't know	22	0.14 -->
-
-<!-- H4TO63	Have you ever taken any prescription drugs that were not prescribed for you, taken prescription drugs in larger amounts than prescribed, more often than prescribed, for longer periods than prescribed, or taken prescription drugs that you took only for the feeling or experience they caused? -->
-
-<!-- Response Value 	Response Label 	Frequency 	Percent  -->
-<!-- 0	no	13063	83.20 -->
-<!-- 1	yes	2541	16.18 -->
-<!-- 6	refused	68	0.43 -->
-<!-- 8	don't know	29	0.18 -->
-
-W4	H4TO117	Have you ever continued to use {favorite drug} after you realized using {favorite drug} was causing you any emotional problems (such as feeling depressed or empty, feeling irritable or aggressive, feeling paranoid or confused, feeling anxious or tense, being jumpy or easily startled) or causing you any health problems (such as heart pounding, headaches or dizziness, or sexual difficulties)?	
-Response Value 	Response Label 	Frequency 	Percent 
-0	no	925	5.89
-1	yes	713	4.54
-5	not asked on pretest	1	0.01
-6	refused	2	0.01
-7	legitimate skip	14059	89.54
-8	don't know	1	0.01
-
-
-
-<!-- H4BMICLS	BMI Classification	 -->
-<!-- Response Value 	Response Label 	Frequency 	Percent  -->
-<!-- 1	underweight: <18.5	214	1.36 -->
-<!-- 2	normal 18.5-<25	4869	31.01 -->
-<!-- 3	overweight: 25-<30	4654	29.64 -->
-<!-- 4	obese I: 30-<35	2854	18.18 -->
-<!-- 5	obese II: 35-<40	1457	9.28 -->
-<!-- 6	obese III: 40+	1403	8.94 -->
-<!-- 88	over limit	20	0.13 -->
-<!-- 89	weight inconsistent with height, waist and sex	31	0.20 -->
-<!-- 96	refused	139	0.89 -->
-<!-- 97	legitimate skip	8	0.05 -->
-<!-- 99	invalid data -->
-
-#-------------------
-Variables
-PA10	What is your current marital status?
-PA12	How far did you go in school?
-PA17 Are you employed full time?
-PA20	In general, are you happy?
-PA56	Do you have enough money to pay your bills?
-PA61	How often do you drink alcohol?
-PA62	How often in the last month have you had five or more drinks on one occasion?
-PA63	Are there any cigarette smokers in your household?
-PA64	Do you smoke?
-PC38	Does (he/she) have a specific learning disability, such as difficulties with attention, dyslexia, or some other reading, spelling, writing, or math disability?
-PC49A_2	Does {NAME]'s biological mother currently have the following health problem (check all that apply): Obesity
-PC49A_3	Does {NAME]'s biological father currently have the following health problem (check all that apply): Obesity
-PC49E_2	Does {NAME]'s biological mother currently have the following health problem (check all that apply): Alcoholism
-PC49E_3	Does {NAME]'s biological father currently have the following health problem (check all that apply): Alcoholism
-
-H1DA2	During the past week, how many times did you do hobbies, such as collecting baseball cards, playing a musical instrument, reading, or doing arts and crafts?
-H1DA3	During the past week, how many times did you watch television or videos, or play video games?
-H1DA4	During the past week, how many times did you go roller-blading, roller-skating, skate-boarding, or bicycling?
-H1DA5	During the past week, how many times did you play an active sport, such as baseball, softball, basketball, soccer, swimming, or football?
-H1DA6	During the past week, how many times did you exercise, such as jogging, walking, karate, jumping rope, gymnastics or dancing?
-H1DA7	During the past week, how many times did you just hang out with friends?
-H1DA8	How many hours a week do you watch television?
-H1DA9	How many hours a week do you watch videos?
-H1DA10	How many hours a week do you play video or computer games?
-H1DA11	How many hours a week do you listen to the radio?
-H1TS5	Have you learned about the following in a class at school (check all that apply): drinking
-H1TS6	Have you learned about the following in a class at school (check all that apply): drug abuse
-H1ED20	How much do you agree or disagree with the following statements: You feel like you are a part of your school. Last year, you felt like you were a part of your school.
-H1ED21	How much do you agree or disagree with the following statements: Students at your school are prejudiced. Last year, students at your school were prejudiced.
-H1ED22	How much do you agree or disagree with the following statements: You are happy to be at your school. Last year, you were happy to be at your school.
-
-H1FS11	How often was the following true during the past week? You were happy.
-H1NF12J	Which of the following things have you done with your biological father in the past four weeks (check all that apply): Have you talked about other things you're doing in school?
-H1NF14	How close do you feel to your biological father?
-
-H1WP1	Do your parents let you make your own decisions about the time you must be home on weekend nights?
-H1WP2	Do your parents let you make your own decisions about the people you hang around with?
-H1WP3	Do your parents let you make your own decisions about what you wear?
-H1WP4	Do your parents let you make your own decisions about how much television you watch?
-H1WP5	Do your parents let you make your own decisions about which television programs you watch?
-H1WP6	Do your parents let you make your own decisions about what time you go to bed on week nights?
-H1WP7	Do your parents let you make your own decisions about what you eat?
-Which of the things listed on this card have you done with your {MOTHER/ADOPTIVE MOTHER/STEPMOTHER/FOSTER MOTHER/etc.} in the past 4 weeks (check all that apply): Have you talked about other things you're doing in school?
-H1PF1	Do you agree or disagree with the following statement? Most of the time, your mother is warm and loving toward you.
-H1PF10	Do you agree or disagree with the following statement? You never get sad.
-O50	Are cigarettes easily available to you in your home?
-H1TO51	Is alcohol easily available to you in your home?
-H1PR1	How much do you feel that adults care about you?
-H1PR2	How much do you feel that your teachers care about you?
-H1PR3	How much do you feel that your parents care about you?
-H1PR4	How much do you feel that your friends care about you?
-
-DRUGS-household
-H11TO52	Are illegal drugs easily available to you in your home?
-H1IR24	Did you see any evidence of drinking in the household--for example, beer cans, liquor bottles, people drinking
-PA34	In this neighborhood, how big a problem are drug dealers and drug users?
-
-
-S10 grades
-
-
-How far did you go in school?	Parent	Parental Background Information; Parental Education
-How far did your current (spouse/partner) go in school?	Parent	Education Status; Parental Background Information; Parental Education
-
-
-
-	H1DA7	During the past week, how many times did you just hang out with friends?
-
-https://campus.datacamp.com/courses/supervised-learning-in-r-regression/tree-based-methods?ex=8
