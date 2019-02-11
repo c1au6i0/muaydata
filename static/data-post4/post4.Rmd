@@ -11,6 +11,10 @@ library(foreign)
 library(RSQLite)
 library(caret)
 library(glmnet)
+library(randomForest)
+# library(GGally)
+library(DMwR)
+library(ROSE)
 # MLmetrics
 ```
 
@@ -81,13 +85,18 @@ names(heal_sub_cl)
 heal_sub_cl <- 
   heal_sub_cl %>% 
   mutate(H4TO117 = as.factor(str_extract(heal_sub_cl$H4TO117 , "[:alpha:]+")))
-summary(heal_sub_cl$H4TO117)
+
+
+heal_sub_cl$H4TO117[heal_sub_cl$H4TO117 == "Legitimate"] <- "No"
+
+heal_sub_cl$H4TO117 <- droplevels(heal_sub_cl$H4TO117)
 ```
 
 https://www.analyticsvidhya.com/blog/2016/12/practical-guide-to-implement-machine-learning-with-caret-package-in-r-with-practice-problem/
 
 
-```{r nzv}
+
+```{r nzv, include=FALSE}
 var_nz <- names(heal_sub_cl)[nearZeroVar(heal_sub_cl[,-49], saveMetrics= FALSE)]
 
 nearZeroVar(heal_sub_cl[,-49], saveMetrics = TRUE,) %>% 
@@ -208,27 +217,11 @@ fourStats <- function (data, lev = levels(data$obs), model = NULL) {
 }
 
 
-
-glmnetControl <- trainControl(method = "repeatedcv", 
-                              number = 10,
-                              repeats = 10,
-                              savePredictions = TRUE,
-                              summaryFunction = multiClassSummary,
-                              classProbs = TRUE,
-                              search = "grid"
-                              )
 ```
 
 
 
-```{r model}
-
-# 
- 
-heal_sub_cl$H4TO117[heal_sub_cl$H4TO117 == "Legitimate"] <- "No"
-# 
-# 
-heal_sub_cl$H4TO117 <- droplevels(heal_sub_cl$H4TO117)
+```{r mod1, eval=FALSE, include=TRUE}
 
 summary(heal_sub_cl$H4TO117)
 
@@ -250,13 +243,22 @@ mod1 <- train(H4TO117  ~ .,
               preProcess = c("nzv","pca")
               )
 
-plot(mod1)
-
-saveRDS(mod1, "mod1.RDS")
-
-
 ```
 
+
+```{r save_mod1, eval = FALSE, include=FALSE}
+saveRDS(mod1, "mod1.RDS")
+
+mod1 <- readRDS("mod1.RDS")
+```
+
+```{r mod1_eval}
+
+plot(mod1)
+
+
+confusionMatrix(mod1)
+```
 
 
 https://stackoverflow.com/questions/53654193/how-to-generate-confusion-matrix-on-hold-out-sample-in-caret-xgbdart
@@ -268,7 +270,7 @@ https://stackoverflow.com/questions/35482094/glmnet-caret-roc-sensitivity-specif
 
 http://appliedpredictivemodeling.com/blog/2014/2/1/lw6har9oewknvus176q4o41alqw2ow
 
-```{r}
+```{r graphs}
 library(reshape2)
 metrics <- mod1$results[, c(2, 4:6)]
 metrics <- melt(metrics, id.vars = "threshold", 
@@ -282,9 +284,12 @@ ggplot(metrics, aes(x = threshold, y = Data, color = Resampled)) +
 
 confusionMatrix(mod1)
 
-attr(mod1)
 
 ```
+
+
+# RESAMPLING
+
 
 ```{r adaptative}
 # fitControl <- trainControl(method = "adaptive_cv",
@@ -296,10 +301,131 @@ attr(mod1)
 #                                            method = "gls",
 #                                            complete = TRUE),
 #                            search = "random")
+
+
+# glmnetControl <- trainControl(method = "repeatedcv", 
+#                               number = 10,
+#                               repeats = 10,
+#                               savePredictions = TRUE,
+#                               summaryFunction = multiClassSummary,
+#                               classProbs = TRUE,
+#                               search = "grid"
+#                               )
+```
+
+```{r mod2_smote}
+set.seed(1512)
+smote_heal <- SMOTE(H4TO117 ~., data = as.data.frame(heal_sub_cl))
+
+table(smote_heal$H4TO117)
+
+mod2_smote <- train(H4TO117  ~ ., 
+              smote_heal,
+              method = thresh_code,
+              ## Minimize the distance to the perfect model
+              metric = "Dist",
+              maximize = FALSE,
+              tuneLength = 20,
+              trControl = trainControl(method = "repeatedcv",
+                                       repeats = 5,
+                                       classProbs = TRUE,
+                                       savePredictions = TRUE,
+                                       summaryFunction = fourStats
+                                       ),
+              na.action = na.omit,
+              preProcess = c("nzv","pca")
+              )
+
+
+```
+
+```{r eval_mod2}
+mod2_smote
+
+plot(mod2_smote)
+
+
+library(reshape2)
+metrics <- mod2_smote$results[, c(2, 4:6)]
+metrics <- melt(metrics, id.vars = "threshold", 
+                variable.name = "Resampled",
+                value.name = "Data")
+
+ggplot(metrics, aes(x = threshold, y = Data, color = Resampled)) + 
+  geom_line() + 
+  ylab("") + xlab("Probability Cutoff") +
+  theme(legend.position = "top")
+
+confusionMatrix(mod1)
+confusionMatrix(mod2_smote)
+
+```
+```{r model3_up}
+set.seed(1512)
+up_heal <- upSample(x = heal_sub_cl[, -ncol(heal_sub_cl)],
+                     y = heal_sub_cl$H4TO117)                         
+table(up_heal$Class) 
+
+
+mod3_up <- train(Class ~ ., 
+              up_heal,
+              method = thresh_code,
+              ## Minimize the distance to the perfect model
+              metric = "Dist",
+              maximize = FALSE,
+              tuneLength = 20,
+              trControl = trainControl(method = "repeatedcv",
+                                       repeats = 5,
+                                       classProbs = TRUE,
+                                       savePredictions = TRUE,
+                                       summaryFunction = fourStats
+                                       ),
+              na.action = na.omit,
+              preProcess = c("nzv","pca")
+              )
+
+```
+
+
+```{r eval_mod3}
+mod3_up
+
+plot(mod3_up)
+
+
+library(reshape2)
+metrics <- mod3_up$results[, c(2, 4:6)]
+metrics <- melt(metrics, id.vars = "threshold", 
+                variable.name = "Resampled",
+                value.name = "Data")
+
+ggplot(metrics, aes(x = threshold, y = Data, color = Resampled)) +
+  geom_line() + 
+  ylab("") + xlab("Probability Cutoff") +
+  theme(legend.position = "top")
+
+confusionMatrix(mod1)
+confusionMatrix(mod2_smote)
+confusionMatrix(mod3_up)
+
+mod3_up
+
+mod3_up$results
+
+```
+```{r}
+testIndex <- createDataPartition(heal_sub_cl$H4TO117, p = .2, 
+                                  list = FALSE, 
+                                  times = 1)
+
+test_heal <-heal_sub_cl[testIndex,]
+
+
+prova <- predict(mod3_up, newdata = test_heal)
+
+confusionMatrix(prova, test_heal$H4TO117)
 ```
 
 
 
-
-# RESAMPLING
-
+http://dpmartin42.github.io/posts/r/imbalanced-classes-part-1
