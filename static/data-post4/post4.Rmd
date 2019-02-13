@@ -12,7 +12,7 @@ library(RSQLite)
 library(caret)
 library(glmnet)
 library(randomForest)
-# library(GGally)
+library(GGally)
 library(DMwR)
 library(ROSE)
 # MLmetrics
@@ -61,12 +61,11 @@ heal_data <- as_tibble(tbl(mydb, "heal_data"))
 heal_sub <- heal_data[,2:length(heal_data)]
 heal_sub <- mutate_if(heal_sub, is.character, as.factor)
 sum(is.na(heal_sub))
-str(heal_sub)
 ```
 
 There are a lot of NA because the questionare was not submitted to a some parents
-```{r NAs}
-glimpse(heal_sub) 
+```{r count_NAs}
+
 
 heal_sub[is.na(heal_sub$PA10),]
 ```
@@ -85,11 +84,16 @@ names(heal_sub_cl)
 heal_sub_cl <- 
   heal_sub_cl %>% 
   mutate(H4TO117 = as.factor(str_extract(heal_sub_cl$H4TO117 , "[:alpha:]+")))
+```
 
+# 2 Classes
 
+```{r 2Classes}
 heal_sub_cl$H4TO117[heal_sub_cl$H4TO117 == "Legitimate"] <- "No"
 
 heal_sub_cl$H4TO117 <- droplevels(heal_sub_cl$H4TO117)
+
+summary(heal_sub_cl$H4TO117)
 ```
 
 https://www.analyticsvidhya.com/blog/2016/12/practical-guide-to-implement-machine-learning-with-caret-package-in-r-with-practice-problem/
@@ -110,8 +114,21 @@ https://topepo.github.io/caret/available-models.html
 
 The problem is that we have a very unballanced designed and therefore all the models tend to maximaze accuracy but not specificity (they say all not addicted). So we need to consider specificity as a metric too
 
-# A DIFFERENT CUT OFF and randomforest
+
+## EXPLORATIVE GRAPHS:
+
+```{r g1, message=FALSE}
+ggpairs(heal_sub_cl[1:4]) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+## A DIFFERENT CUT OFF and randomforest
 ```{r create_my_model}
+
+# 
+# you can use 
+# thresholder insteead
 ## Get the model code for the original random forest method:
 
 thresh_code <- getModelInfo("rf", regex = FALSE)[[1]]
@@ -288,7 +305,8 @@ confusionMatrix(mod1)
 ```
 
 
-# RESAMPLING
+## RESAMPLING
+
 
 
 ```{r adaptative}
@@ -337,6 +355,15 @@ mod2_smote <- train(H4TO117  ~ .,
               )
 
 
+
+
+
+```
+
+```{r save_mod2, eval = FALSE, include=FALSE}
+saveRDS(mod2_smote, "mod2.RDS")
+
+mod2_smote <- readRDS("mod2.RDS")
 ```
 
 ```{r eval_mod2}
@@ -387,6 +414,12 @@ mod3_up <- train(Class ~ .,
 ```
 
 
+```{r save_mod3, eval = FALSE, include=FALSE}
+saveRDS(mod3_up, "mod3.RDS")
+
+mod3_up <- readRDS("mod3.RDS")
+```
+
 ```{r eval_mod3}
 mod3_up
 
@@ -413,7 +446,7 @@ mod3_up
 mod3_up$results
 
 ```
-```{r}
+```{r test_m3}
 testIndex <- createDataPartition(heal_sub_cl$H4TO117, p = .2, 
                                   list = FALSE, 
                                   times = 1)
@@ -426,6 +459,52 @@ prova <- predict(mod3_up, newdata = test_heal)
 confusionMatrix(prova, test_heal$H4TO117)
 ```
 
+```{r}
+model_list <- list( no_resample = mod1,
+                    smote = mod3_up)
+
+resamps <- resamples(model_list)
 
 
+dotplot(resamps, metric = c("Dist", "ROC"), xlim = c(-0.2, 1.2))
+ 
+
+plot(mod3_up, metric = "ROC")
+
+str(resamps)
+
+```
+
+Some graoh
+https://machinelearningmastery.com/data-visualization-with-the-caret-r-package/
 http://dpmartin42.github.io/posts/r/imbalanced-classes-part-1
+
+# 3 Classes
+
+
+```{r model4_up}
+set.seed(1512)
+up_heal <- upSample(x = heal_sub_cl[, -ncol(heal_sub_cl)],
+                     y = heal_sub_cl$H4TO117)                         
+table(up_heal$Class) 
+
+
+mod4_up <- train(Class ~ ., 
+              up_heal,
+              method = "rf",
+              maximize = FALSE,
+              tuneLength = 20,
+              trControl = trainControl(method = "repeatedcv",
+                                       repeats = 5,
+                                       classProbs = TRUE,
+                                       savePredictions = TRUE,
+                                       summaryFunction = multiClassSummary
+                                       ),
+              na.action = na.omit,
+              preProcess = c("nzv","corr")
+              )
+
+
+
+```
+https://rdrr.io/cran/caret/man/prcomp.resamples.html

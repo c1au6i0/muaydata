@@ -1,0 +1,215 @@
+---
+title: "Post 4"
+output: html_notebook
+---
+We start loading the libraries.
+```{r libraries, message=FALSE}
+library(svDialogs)
+library(tidyverse)
+library(purrr)
+library(foreign) 
+library(RSQLite)
+library(caret)
+library(glmnet)
+library(randomForest)
+library(GGally)
+library(DMwR)
+library(ROSE)
+```
+
+ADD Health
+Where are the data:
+[link1](https://www.icpsr.umich.edu/icpsrweb/content/DSDR/add-health-data-guide.html)
+[link2](https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/topics)
+
+method = "rborist"
+
+
+```{r getdata, eval=FALSE}
+
+files <- list.files(path = "/Users/heverz/Documents/R_projects/DATASETS/W1-4",
+                    include.dirs=FALSE,
+                    full.names = TRUE)
+
+w1_4 <- map(files, read.dta)
+
+var_select <- scan("/Users/heverz/Documents/R_projects/muaydata/static/data-post4/variables.csv", what  = "list", sep = ",")
+
+# get the varibles in var_select
+w1_4_reduced <- map(w1_4, function (x) x[, colnames(x) %in% var_select])
+
+#join not empty dataframes
+toselect <- which(map(w1_4_reduced, function(x) ncol(x) > 0) == TRUE)
+heal_data <- plyr::join_all(w1_4_reduced[toselect] , by = "AID", type = "inner")
+heal_data$AID <- as.character(heal_data$AID)
+```
+
+```{r database, include=FALSE, eval=TRUE}
+mydb <- dbConnect(RSQLite::SQLite(), "/Users/heverz/Documents/R_projects/muaydata/static/data-post4/heal_data.sqlite")
+
+
+# dbWriteTable(mydb, "heal_data", heal_data)
+# dbListTables(mydb)
+heal_data <- as_tibble(tbl(mydb, "heal_data"))
+```
+
+
+```{r factor}
+heal_sub <- heal_data[,2:length(heal_data)]
+heal_sub <- mutate_if(heal_sub, is.character, as.factor)
+sum(is.na(heal_sub))
+```
+
+There are a lot of NA because the questionare was not submitted to a some parents
+```{r count_NAs}
+
+heal_sub[is.na(heal_sub$PA10),]
+```
+
+Parent questionare is an important part of our analysis we will remove those NAs
+
+```{r removeNAs}
+heal_sub_cl <- 
+  heal_sub %>% 
+  select(-c("S10")) %>% 
+  select(1:48,51) %>% 
+  na.omit()
+
+names(heal_sub_cl)
+#classifier_NA_insert
+heal_sub_cl <- 
+  heal_sub_cl %>% 
+  mutate(H4TO117 = as.factor(str_extract(heal_sub_cl$H4TO117 , "[:alpha:]+")))
+```
+
+# 2 Classes
+
+```{r 2Classes}
+heal_sub_cl$H4TO117[heal_sub_cl$H4TO117 == "Legitimate"] <- "No"
+
+heal_sub_cl$H4TO117 <- droplevels(heal_sub_cl$H4TO117)
+
+summary(heal_sub_cl$H4TO117)
+```
+
+https://www.analyticsvidhya.com/blog/2016/12/practical-guide-to-implement-machine-learning-with-caret-package-in-r-with-practice-problem/
+
+
+
+```{r nzv, include=FALSE}
+var_nz <- names(heal_sub_cl)[nearZeroVar(heal_sub_cl[,-49], saveMetrics= FALSE)]
+
+nearZeroVar(heal_sub_cl[,-49], saveMetrics = TRUE,) %>% 
+  filter(nzv == TRUE) %>% 
+  mutate( name_v = var_nz)
+```
+
+
+
+https://topepo.github.io/caret/available-models.html
+
+The problem is that we have a very unballanced designed and therefore all the models tend to maximaze accuracy but not specificity (they say all not addicted). So we need to consider specificity as a metric too
+
+
+## EXPLORATIVE GRAPHS:
+
+```{r g1, message=FALSE}
+
+heal_sub_cl %>% 
+  select(H1DA8:H1DA11) %>% 
+  ggpairs() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+# Models
+```{r resample}
+
+set.seed(1512)
+up_heal <- upSample(x = heal_sub_cl[, -ncol(heal_sub_cl)],
+                     y = heal_sub_cl$H4TO117)                         
+table(up_heal$Class) 
+
+
+```
+
+
+```{r adaptative}
+fitControl <- trainControl(method = "adaptive_cv",
+                           number = 10, repeats = 10,
+                           summaryFunction = twoClassSummary,
+                           classProbs = TRUE,
+                           adaptive = list(min = 2,
+                                           alpha = 0.05,
+                                           method = "gls",
+                                           complete = TRUE),
+                           search = "random")
+
+randControl <- trainControl(method = "repeatedcv",
+                           number = 10, repeats = 10,
+                           summaryFunction = twoClassSummary,
+                           savePredictions = TRUE,
+                           classProbs = TRUE)
+
+```
+
+
+
+
+
+
+```{r mod1, eval=FALSE, include=TRUE}
+
+mod1 <- train(Class ~ ., 
+              up_heal,
+              method = "glmnet",
+              ## Minimize the distance to the perfect model
+              tuneLength = 20,
+              trControl = fitControl,
+              na.action = na.omit,
+              preProcess = c("nzv","corr")
+              )
+
+saveRDS(mod1, "mod1b.RDS")
+summary(mod1)
+
+coef(mod1$finalModel)
+plot(mod1)
+confusionMatrix(mod1)
+resample_stats <- thresholder(mod1, 
+                              threshold = seq(.5, 1, by = 0.05), 
+                              final = TRUE)
+```
+
+
+```{r mod2, eval=FALSE, include=TRUE}
+str(resample_stats)
+
+ggplot(resample_stats, aes(x = prob_threshold, y = Dist)) + 
+  geom_point() + 
+  geom_point(aes(y = Specificity), col = "red")
+
+set.seed(1512)
+
+mod3 <- train(H4TO117  ~ ., 
+              heal_sub_cl,
+              method = "rf",
+              ## Minimize the distance to the perfect model
+              tuneLength = 20,
+              trControl = randControl,
+              preProcess = c("nzv","pca"),
+              na.action = na.omit
+              )
+
+mod2
+saveRDS(mod2, "mod2b.RDS")
+mod2 <- readRDS("mod2b.RDS")
+
+    
+print(mod2)
+resample_stats2 <- thresholder(mod2, 
+                              threshold = seq(.5, 1, by = 0.05), 
+                              final = TRUE)
+resample_stats2
+```
+
