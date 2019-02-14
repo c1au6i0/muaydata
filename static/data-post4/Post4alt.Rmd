@@ -13,6 +13,7 @@ library(caret)
 library(glmnet)
 library(randomForest)
 library(GGally)
+library(tictoc)
 library(DMwR)
 library(ROSE)
 ```
@@ -80,6 +81,8 @@ names(heal_sub_cl)
 heal_sub_cl <- 
   heal_sub_cl %>% 
   mutate(H4TO117 = as.factor(str_extract(heal_sub_cl$H4TO117 , "[:alpha:]+")))
+
+heal_sub_cl3 <- heal_sub_cl
 ```
 
 # 2 Classes
@@ -96,59 +99,32 @@ https://www.analyticsvidhya.com/blog/2016/12/practical-guide-to-implement-machin
 
 
 
-```{r nzv, include=FALSE}
-var_nz <- names(heal_sub_cl)[nearZeroVar(heal_sub_cl[,-49], saveMetrics= FALSE)]
-
-nearZeroVar(heal_sub_cl[,-49], saveMetrics = TRUE,) %>% 
-  filter(nzv == TRUE) %>% 
-  mutate( name_v = var_nz)
-```
-
-
-
 https://topepo.github.io/caret/available-models.html
 
 The problem is that we have a very unballanced designed and therefore all the models tend to maximaze accuracy but not specificity (they say all not addicted). So we need to consider specificity as a metric too
 
 
-## EXPLORATIVE GRAPHS:
 
-```{r g1, message=FALSE}
-
-heal_sub_cl %>% 
-  select(H1DA8:H1DA11) %>% 
-  ggpairs() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-```
-
-
-# Models
+# Models: 2 classes
 ```{r resample}
 
 set.seed(1512)
 up_heal <- upSample(x = heal_sub_cl[, -ncol(heal_sub_cl)],
                      y = heal_sub_cl$H4TO117)                         
 table(up_heal$Class) 
-
-
 ```
 
 
-```{r adaptative}
+```{r trainControl}
 fitControl <- trainControl(method = "adaptive_cv",
-                           number = 10, repeats = 10,
+                           number = 5, repeats = 5,
                            summaryFunction = twoClassSummary,
-                           classProbs = TRUE,
-                           adaptive = list(min = 2,
-                                           alpha = 0.05,
-                                           method = "gls",
-                                           complete = TRUE),
-                           search = "random")
-
-randControl <- trainControl(method = "repeatedcv",
-                           number = 10, repeats = 10,
-                           summaryFunction = twoClassSummary,
-                           savePredictions = TRUE,
+                           savePredictions = "final",
+                            adaptive = list(min = 2,
+                                            alpha = 0.05,
+                                            method = "gls",
+                                            complete = TRUE),
+                           verboseIter = TRUE,
                            classProbs = TRUE)
 
 ```
@@ -160,56 +136,138 @@ randControl <- trainControl(method = "repeatedcv",
 
 ```{r mod1, eval=FALSE, include=TRUE}
 
-mod1 <- train(Class ~ ., 
+mod_glmnet <- train(Class ~ ., 
               up_heal,
               method = "glmnet",
-              ## Minimize the distance to the perfect model
-              tuneLength = 20,
+              tuneLength = 5,
               trControl = fitControl,
               na.action = na.omit,
-              preProcess = c("nzv","corr")
+              preProcess = c("nzv","corr", "pca")
               )
 
-saveRDS(mod1, "mod1b.RDS")
-summary(mod1)
+saveRDS(mod_glmnet, "mod_glmnet.RDS")
+mod_glmnet <- readRDS("mod_glmnet.RDS")
+print(mod_glmnet)
+```
 
-coef(mod1$finalModel)
-plot(mod1)
-confusionMatrix(mod1)
-resample_stats <- thresholder(mod1, 
+```{r eval_mod_glmnet}
+
+class(coef(mod_glmnet$finalModel))
+
+plot(mod_glmnet)
+confusionMatrix(mod_glmnet)
+resample_stats <- thresholder(mod_glmnet, 
                               threshold = seq(.5, 1, by = 0.05), 
                               final = TRUE)
+
+
+ggplot(resample_stats, aes(x = prob_threshold, y = Sensitivity)) + 
+ geom_point() + 
+ geom_point(aes(y = Specificity), col = "red")
+
 ```
 
 
 ```{r mod2, eval=FALSE, include=TRUE}
-str(resample_stats)
 
-ggplot(resample_stats, aes(x = prob_threshold, y = Dist)) + 
-  geom_point() + 
-  geom_point(aes(y = Specificity), col = "red")
-
-set.seed(1512)
-
-mod3 <- train(H4TO117  ~ ., 
-              heal_sub_cl,
-              method = "rf",
-              ## Minimize the distance to the perfect model
-              tuneLength = 20,
-              trControl = randControl,
-              preProcess = c("nzv","pca"),
-              na.action = na.omit
+mod_ranger <- train(Class ~ ., 
+              up_heal,
+              method = "ranger",
+              metric = "ROC",
+              tuneLength = 5,
+              trControl = fitControl,
+              preProcess = c("nzv","corr", "pca"),
+              na.action = na.omit,
+              verbose = TRUE
               )
 
-mod2
-saveRDS(mod2, "mod2b.RDS")
-mod2 <- readRDS("mod2b.RDS")
+# 1145.438 sec elapsed
 
-    
-print(mod2)
-resample_stats2 <- thresholder(mod2, 
-                              threshold = seq(.5, 1, by = 0.05), 
-                              final = TRUE)
-resample_stats2
+saveRDS(mod_ranger, "mod_ranger.RDS")
+mod_ranger <- readRDS("mod_ranger.RDS")
+
+```
+
+
+
+```{r compare}
+
+model_list <- list( glmnet = mod_glmnet,
+                    rf = mod_ranger)
+
+resamps <- resamples(model_list)
+
+saveRDS(resamps, "resamps.RDS")
+
+ggplot(resamps, metric = "ROC") 
+ 
+
+ggplot(mod_ranger, metric = "Sens")
+
+mean(resamps$values$`rf~Sens`)
+```
+
+
+```{r}
+resamps$values
+
+```
+# Model: 3 classes
+
+```{r 3_resample}
+get.seed(1512)
+up_heal3 <- upSample(x = heal_sub_cl3[, -ncol(heal_sub_cl3)],
+                     y = heal_sub_cl3$H4TO117)                         
+table(up_heal$Class) 
+```
+```{r trainControl3}
+
+fitControl3 <- trainControl(method = "adaptive_cv",
+                           number = 5, repeats = 5,
+                           summaryFunction = multiClassSummary,
+                           savePredictions = "final",
+                            adaptive = list(min = 2,
+                                            alpha = 0.05,
+                                            method = "gls",
+                                            complete = TRUE),
+                           verboseIter = TRUE,
+                           classProbs = TRUE)
+
+mod_ranger3 <- train(Class ~ ., 
+              up_heal3,
+              method = "ranger",
+              metric = "ROC",
+              tuneLength = 5,
+              trControl = fitControl3,
+              preProcess = c("nzv","corr", "pca"),
+              na.action = na.omit,
+              verbose = TRUE
+              )
+
+print(mod_ranger3)
+
+confusionMatrix(mod_ranger3)
+```
+
+```{r devbug_ggplot}
+
+
+getAnywhere("ggplot")
+
+getAnywhere("ggplot.resamples")
+
+
+plotData <- tibble("value" = rep(1,10), "Model" = rep("rf~ROC", 10))  
+t.test(plotData$`rf~ROC`$value, conf.level = 0.95)
+
+ttest <- try(t.test(x$value, conf.level = cl), silent = TRUE)
+# Error in t.test.default(plotData$`rf~ROC`$value, conf.level = 0.95) : 
+#   data are essentially constant  
+rep(NA, 3)
+  
+
+
+
+
 ```
 
