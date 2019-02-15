@@ -16,6 +16,7 @@ library(GGally)
 library(tictoc)
 library(DMwR)
 library(ROSE)
+library(broom)
 ```
 
 ADD Health
@@ -23,18 +24,21 @@ Where are the data:
 [link1](https://www.icpsr.umich.edu/icpsrweb/content/DSDR/add-health-data-guide.html)
 [link2](https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/topics)
 
-method = "rborist"
+
+```{r selected_var, eval=TRUE, include=FALSE, message=FALSE}
+var_select <- scan("/Users/heverz/Documents/R_projects/muaydata/static/data-post4/variables.csv", what  = "list", sep = ",")
+```
+```{r show_selected, eval=TRUE, include=TRUE}
+var_select
+```
 
 
 ```{r getdata, eval=FALSE}
-
 files <- list.files(path = "/Users/heverz/Documents/R_projects/DATASETS/W1-4",
                     include.dirs=FALSE,
                     full.names = TRUE)
 
 w1_4 <- map(files, read.dta)
-
-var_select <- scan("/Users/heverz/Documents/R_projects/muaydata/static/data-post4/variables.csv", what  = "list", sep = ",")
 
 # get the varibles in var_select
 w1_4_reduced <- map(w1_4, function (x) x[, colnames(x) %in% var_select])
@@ -48,10 +52,10 @@ heal_data$AID <- as.character(heal_data$AID)
 ```{r database, include=FALSE, eval=TRUE}
 mydb <- dbConnect(RSQLite::SQLite(), "/Users/heverz/Documents/R_projects/muaydata/static/data-post4/heal_data.sqlite")
 
-
 # dbWriteTable(mydb, "heal_data", heal_data)
 # dbListTables(mydb)
 heal_data <- as_tibble(tbl(mydb, "heal_data"))
+glimpse(heal_data)
 ```
 
 
@@ -64,10 +68,12 @@ sum(is.na(heal_sub))
 There are a lot of NA because the questionare was not submitted to a some parents
 ```{r count_NAs}
 
-heal_sub[is.na(heal_sub$PA10),]
+heal_sub[is.na(heal_sub$PA10),] %>% 
+  select(PA34:PC49E_3) %>% 
+  glimpse()
 ```
 
-Parent questionare is an important part of our analysis we will remove those NAs
+WE will remove those data
 
 ```{r removeNAs}
 heal_sub_cl <- 
@@ -87,6 +93,8 @@ heal_sub_cl3 <- heal_sub_cl
 
 # 2 Classes
 
+Classifier of interest is H4T0117
+
 ```{r 2Classes}
 heal_sub_cl$H4TO117[heal_sub_cl$H4TO117 == "Legitimate"] <- "No"
 
@@ -95,17 +103,14 @@ heal_sub_cl$H4TO117 <- droplevels(heal_sub_cl$H4TO117)
 summary(heal_sub_cl$H4TO117)
 ```
 
-https://www.analyticsvidhya.com/blog/2016/12/practical-guide-to-implement-machine-learning-with-caret-package-in-r-with-practice-problem/
-
-
-
-https://topepo.github.io/caret/available-models.html
 
 The problem is that we have a very unballanced designed and therefore all the models tend to maximaze accuracy but not specificity (they say all not addicted). So we need to consider specificity as a metric too
 
 
 
 # Models: 2 classes
+
+## Resample
 ```{r resample}
 
 set.seed(1512)
@@ -115,6 +120,7 @@ table(up_heal$Class)
 ```
 
 
+## TrainControl
 ```{r trainControl}
 fitControl <- trainControl(method = "adaptive_cv",
                            number = 5, repeats = 5,
@@ -130,10 +136,7 @@ fitControl <- trainControl(method = "adaptive_cv",
 ```
 
 
-
-
-
-
+## GLMNER MODEL
 ```{r mod1, eval=FALSE, include=TRUE}
 
 mod_glmnet <- train(Class ~ ., 
@@ -150,24 +153,54 @@ mod_glmnet <- readRDS("mod_glmnet.RDS")
 print(mod_glmnet)
 ```
 
-```{r eval_mod_glmnet}
-
-class(coef(mod_glmnet$finalModel))
-
-plot(mod_glmnet)
-confusionMatrix(mod_glmnet)
-resample_stats <- thresholder(mod_glmnet, 
-                              threshold = seq(.5, 1, by = 0.05), 
-                              final = TRUE)
+```{r preprocessing}
+str(mod_glmnet)
+mod_glmnet$preProcess
 
 
-ggplot(resample_stats, aes(x = prob_threshold, y = Sensitivity)) + 
- geom_point() + 
- geom_point(aes(y = Specificity), col = "red")
+mod_glmnet$preProcess$method$remove
+```
+
+
+```{r eval_glmnet_print}
+print(mod_glmnet)
+```
+```{r eval_glmnet_matrix}
+confM<- confusionMatrix(mod_glmnet)
+confM
+```
+
+
+```{r eval_glmnet_graphs}
+
+mod_glmnet$resample %>% 
+  as.data.frame() %>% 
+  gather("metric", "value", 1:3) %>% 
+  group_by(metric) %>% 
+  summarise(mean = mean(value), stdev = sd(value)) %>% 
+  ggplot(aes(y = mean, x = metric, col = metric, fill = metric)) +
+    geom_col() +
+    geom_errorbar(aes(ymin = mean - stdev, ymax =  mean + stdev), width = 0.2) +
+    scale_y_continuous(limits = c(0,1)) +
+    geom_label(aes(y = 0.8, label = round(mean,2)), fill = "white") +
+  theme()
+
+
+# resample_stats <- thresholder(mod_glmnet, 
+#                               threshold = seq(.5, 1, by = 0.05), 
+#                               final = TRUE)
+# 
+# 
+# plot(mod_glmnet, metric = "accuracy")
+# ggplot(resample_stats, aes(x = prob_threshold, y = Sensitivity)) + 
+#  geom_point() + 
+#  geom_point(aes(y = Specificity), col = "red")
 
 ```
 
 
+
+## RANDOM FOREST
 ```{r mod2, eval=FALSE, include=TRUE}
 
 mod_ranger <- train(Class ~ ., 
@@ -198,6 +231,7 @@ model_list <- list( glmnet = mod_glmnet,
 resamps <- resamples(model_list)
 
 saveRDS(resamps, "resamps.RDS")
+resamps <- readRDS("resamps.RDS")
 
 ggplot(resamps, metric = "ROC") 
  
@@ -208,10 +242,6 @@ mean(resamps$values$`rf~Sens`)
 ```
 
 
-```{r}
-resamps$values
-
-```
 # Model: 3 classes
 
 ```{r 3_resample}
@@ -257,8 +287,9 @@ getAnywhere("ggplot")
 getAnywhere("ggplot.resamples")
 
 
-plotData <- tibble("value" = rep(1,10), "Model" = rep("rf~ROC", 10))  
-t.test(plotData$`rf~ROC`$value, conf.level = 0.95)
+ggplot(resamps)
+
+
 
 ttest <- try(t.test(x$value, conf.level = cl), silent = TRUE)
 # Error in t.test.default(plotData$`rf~ROC`$value, conf.level = 0.95) : 
@@ -266,8 +297,16 @@ ttest <- try(t.test(x$value, conf.level = cl), silent = TRUE)
 rep(NA, 3)
   
 
+plotData <- list("Model" = "rf~ROC")
 
+x <- list(value = list(rep(1,10)))
+cl = "0.095"
+t.test(rep(1,10), conf.level = 0.95)
+     
+plotData$`rf~ROC`$value
 
+x <- rep(1, 10)
 
+typeof(x)
 ```
 
