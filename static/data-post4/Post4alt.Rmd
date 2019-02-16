@@ -2,6 +2,8 @@
 title: "Post 4"
 output: html_notebook
 ---
+
+
 We start loading the libraries.
 ```{r libraries, message=FALSE}
 library(svDialogs)
@@ -13,10 +15,11 @@ library(caret)
 library(glmnet)
 library(randomForest)
 library(GGally)
-library(tictoc)
-library(DMwR)
-library(ROSE)
 library(broom)
+library(rpart)
+
+
+
 ```
 
 ADD Health
@@ -121,35 +124,43 @@ table(up_heal$Class)
 
 
 ## TrainControl
+
+Explain adaptative cross validation and the other info
 ```{r trainControl}
 fitControl <- trainControl(method = "adaptive_cv",
                            number = 5, repeats = 5,
+                           classProbs = TRUE,
                            summaryFunction = twoClassSummary,
                            savePredictions = "final",
                             adaptive = list(min = 2,
                                             alpha = 0.05,
                                             method = "gls",
                                             complete = TRUE),
-                           verboseIter = TRUE,
-                           classProbs = TRUE)
+                           verboseIter = TRUE)
+                           
 
 ```
 
+## GLMNET MODEL
 
-## GLMNER MODEL
-```{r mod1, eval=FALSE, include=TRUE}
+
+```{r load_glmnet, eval= TRUE, include=FALSE}
+
+# saveRDS(mod_glmnet,"mod_glmnet.RDS")
+mod_glmnet <- readRDS("mod_glmnet.RDS")
+```
+
+```{r mod_glmnet, eval=FALSE, include=TRUE}
 
 mod_glmnet <- train(Class ~ ., 
               up_heal,
               method = "glmnet",
-              tuneLength = 5,
+              tuneLength = 20,
               trControl = fitControl,
               na.action = na.omit,
               preProcess = c("nzv","corr", "pca")
               )
 
-saveRDS(mod_glmnet, "mod_glmnet.RDS")
-mod_glmnet <- readRDS("mod_glmnet.RDS")
 print(mod_glmnet)
 ```
 
@@ -171,7 +182,7 @@ confM
 ```
 
 
-```{r eval_glmnet_graphs}
+```{r eval_glmnet_graphs, fig.height=1.1, fig.width=1}
 
 mod_glmnet$resample %>% 
   as.data.frame() %>% 
@@ -182,26 +193,89 @@ mod_glmnet$resample %>%
     geom_col() +
     geom_errorbar(aes(ymin = mean - stdev, ymax =  mean + stdev), width = 0.2) +
     scale_y_continuous(limits = c(0,1)) +
+    scale_x_discrete(labels = c("ROC", "Sensitivity", "Specificity")) +
     geom_label(aes(y = 0.8, label = round(mean,2)), fill = "white") +
-  theme()
+    labs(color = "",
+         title = "glmnet",
+         x = "",
+         caption = "fig.1" ) +
+    theme(legend.position = "none",
+          plot.title = element_text( hjust = 0.5)
+          )
+```
+
+## RPART
 
 
-# resample_stats <- thresholder(mod_glmnet, 
-#                               threshold = seq(.5, 1, by = 0.05), 
-#                               final = TRUE)
-# 
-# 
-# plot(mod_glmnet, metric = "accuracy")
-# ggplot(resample_stats, aes(x = prob_threshold, y = Sensitivity)) + 
-#  geom_point() + 
-#  geom_point(aes(y = Specificity), col = "red")
+```{r trees, include=FALSE, eval=TRUE}
+# saveRDS(mod_rpart, "mod_rpart")
+# saveRDS(mod_ctree, "mod_ctree")
+
+mod_rpart <- readRDS("mod_rpart")
+mod_rtree <- readRDS("mod_rtree")
 
 ```
 
 
+```{r mod_rpart, eval=FALSE, include=TRUE}
+
+mod_rpart <- train(Class ~ ., 
+              up_heal,
+              method = "rpart",
+              metric = "ROC",
+              tuneLength = 20,
+              trControl = fitControl,
+              preProcess = c("nzv","corr", "pca"),
+              na.action = na.omit
+              # verbose = TRUE
+              )
+```
+
+
+```{r mod_ctree, eval=FALSE, include=TRUE}
+mod_ctree <- train(Class ~ ., 
+                   up_heal,
+                   method = "ctree",
+                   metric = "ROC",
+                   tuneLength = 20,
+                   trControl = fitControl,
+                   preProcess = c("nzv","corr", "pca"),
+                   na.action = na.omit
+              # verbose = TRUE
+              )
+```
+
+
+```{r eval_trees_matrix}
+
+confusionTable <- function (mod) {
+  tidy(confusionMatrix(mod)$table) %>% 
+  mutate( model = mod$method ) %>% 
+  spread(model, n)
+}
+
+trees <- bind_cols(confusionTable(mod_rpart), confusionTable(mod_ctree)[,3])
+
+
+
+
+kableExtra::kable( trees, "html", longtable = T, booktabs = T, caption = "Longtable")
+
+# %>%
+# add_header_above(c(" ", "Group 1" = 5, "Group 2" = 6)) %>%
+# kable_styling(latex_options = c("repeat_header"))
+
+```
+
 
 ## RANDOM FOREST
-```{r mod2, eval=FALSE, include=TRUE}
+
+```{r load_rf, eval=TRUE, include=FALSE}
+mod_ranger <- readRDS("mod_ranger.RDS")
+```
+
+
+```{r mod_rf, eval=FALSE, include=TRUE}
 
 mod_ranger <- train(Class ~ ., 
               up_heal,
@@ -210,36 +284,59 @@ mod_ranger <- train(Class ~ .,
               tuneLength = 5,
               trControl = fitControl,
               preProcess = c("nzv","corr", "pca"),
-              na.action = na.omit,
-              verbose = TRUE
+              na.action = na.omit
               )
-
-# 1145.438 sec elapsed
-
-saveRDS(mod_ranger, "mod_ranger.RDS")
-mod_ranger <- readRDS("mod_ranger.RDS")
-
 ```
 
 
 
+```{r eval_rf_graph, eval=TRUE, include=TRUE}
+
+mod_ranger$resample %>% 
+  as.data.frame() %>% 
+  gather("metric", "value", 1:3) %>% 
+  group_by(metric) %>% 
+  summarise(mean = mean(value), stdev = sd(value)) %>% 
+  ggplot(aes(y = mean, x = metric, col = metric, fill = metric)) +
+    geom_col() +
+    geom_errorbar(aes(ymin = mean - stdev, ymax =  mean + stdev), width = 0.2) +
+    scale_y_continuous(limits = c(0,1)) +
+    scale_x_discrete(labels = c("ROC", "Sensitivity", "Specificity")) +
+    geom_label(aes(y = 0.8, label = round(mean,2)), fill = "white") +
+    labs(color = "",
+         title = "randomForest",
+         x = "",
+         caption = "fig.2" ) +
+    theme(legend.position = "none",
+          plot.title = element_text( hjust = 0.5)
+          )
+```
+
+
 ```{r compare}
 
+confusionMatrix(mod_ranger)
+
 model_list <- list( glmnet = mod_glmnet,
-                    rf = mod_ranger)
+                    rpart= mod_rpart)
 
 resamps <- resamples(model_list)
 
-saveRDS(resamps, "resamps.RDS")
-resamps <- readRDS("resamps.RDS")
+# saveRDS(resamps, "resamps.RDS")
+# resamps <- readRDS("resamps.RDS")
 
-ggplot(resamps, metric = "ROC") 
+resamps$values
+
+ggplot(resamps, metric = c("ROC", "Sens", "Spec")) +
+  
  
 
 ggplot(mod_ranger, metric = "Sens")
 
 mean(resamps$values$`rf~Sens`)
 ```
+
+
 
 
 # Model: 3 classes
