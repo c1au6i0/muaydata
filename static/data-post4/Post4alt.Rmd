@@ -1,12 +1,11 @@
 ---
-title: "Post 4"
+title: "Post 4- Cassandra, the forest and Morpheus"
 output: html_notebook
 ---
 
 
 We start loading the libraries.
 ```{r libraries, message=FALSE}
-library(svDialogs)
 library(tidyverse)
 library(purrr)
 library(foreign) 
@@ -14,12 +13,8 @@ library(RSQLite)
 library(caret)
 library(glmnet)
 library(randomForest)
-library(GGally)
 library(broom)
 library(rpart)
-
-
-
 ```
 
 ADD Health
@@ -177,34 +172,26 @@ mod_glmnet$preProcess$method$remove
 print(mod_glmnet)
 ```
 ```{r eval_glmnet_matrix}
-confM<- confusionMatrix(mod_glmnet)
-confM
+confusionTable <- function (mod) {
+  tidy(confusionMatrix(mod)$table) %>% 
+  mutate( model = mod$method) %>% 
+  spread(model, n) %>% 
+  mutate(Case = c("True Negative", 
+                   "False Negative",
+                   "False Postive", 
+                   "True Positive")) %>% 
+  arrange(Case) %>% 
+  select(Case, everything()) %>% 
+  mutate_if(is.numeric, round, 2)
+}
+
+table_glmnet <- confusionTable(mod_glmnet)
+
+table_glmnet
 ```
 
 
-```{r eval_glmnet_graphs, fig.height=1.1, fig.width=1}
-
-mod_glmnet$resample %>% 
-  as.data.frame() %>% 
-  gather("metric", "value", 1:3) %>% 
-  group_by(metric) %>% 
-  summarise(mean = mean(value), stdev = sd(value)) %>% 
-  ggplot(aes(y = mean, x = metric, col = metric, fill = metric)) +
-    geom_col() +
-    geom_errorbar(aes(ymin = mean - stdev, ymax =  mean + stdev), width = 0.2) +
-    scale_y_continuous(limits = c(0,1)) +
-    scale_x_discrete(labels = c("ROC", "Sensitivity", "Specificity")) +
-    geom_label(aes(y = 0.8, label = round(mean,2)), fill = "white") +
-    labs(color = "",
-         title = "glmnet",
-         x = "",
-         caption = "fig.1" ) +
-    theme(legend.position = "none",
-          plot.title = element_text( hjust = 0.5)
-          )
-```
-
-## RPART
+## TREES
 
 
 ```{r trees, include=FALSE, eval=TRUE}
@@ -248,22 +235,14 @@ mod_ctree <- train(Class ~ .,
 
 ```{r eval_trees_matrix}
 
-confusionTable <- function (mod) {
-  tidy(confusionMatrix(mod)$table) %>% 
-  mutate( model = mod$method ) %>% 
-  spread(model, n)
-}
+mod <- mod_rpart
 
-trees <- bind_cols(confusionTable(mod_rpart), confusionTable(mod_ctree)[,3])
+table_m3 <- bind_cols(table_glmnet,
+            confusionTable(mod_rpart)[,4], 
+            confusionTable(mod_ctree)[,4])
 
 
-
-
-kableExtra::kable( trees, "html", longtable = T, booktabs = T, caption = "Longtable")
-
-# %>%
-# add_header_above(c(" ", "Group 1" = 5, "Group 2" = 6)) %>%
-# kable_styling(latex_options = c("repeat_header"))
+table_m3
 
 ```
 
@@ -288,52 +267,42 @@ mod_ranger <- train(Class ~ .,
               )
 ```
 
-
-
-```{r eval_rf_graph, eval=TRUE, include=TRUE}
-
-mod_ranger$resample %>% 
-  as.data.frame() %>% 
-  gather("metric", "value", 1:3) %>% 
-  group_by(metric) %>% 
-  summarise(mean = mean(value), stdev = sd(value)) %>% 
-  ggplot(aes(y = mean, x = metric, col = metric, fill = metric)) +
-    geom_col() +
-    geom_errorbar(aes(ymin = mean - stdev, ymax =  mean + stdev), width = 0.2) +
-    scale_y_continuous(limits = c(0,1)) +
-    scale_x_discrete(labels = c("ROC", "Sensitivity", "Specificity")) +
-    geom_label(aes(y = 0.8, label = round(mean,2)), fill = "white") +
-    labs(color = "",
-         title = "randomForest",
-         x = "",
-         caption = "fig.2" ) +
-    theme(legend.position = "none",
-          plot.title = element_text( hjust = 0.5)
-          )
+```{r eval_matrix, eval=TRUE, include=FALSE}
+table_m4  <- bind_cols(table_m3,
+            confusionTable(mod_ranger)[,4])
+names(table_m4[4:7])
 ```
 
 
-```{r compare}
+## Compareall
+```{r eval_all_graph, eval=TRUE, include=TRUE, warning=FALSE}
 
-confusionMatrix(mod_ranger)
 
 model_list <- list( glmnet = mod_glmnet,
-                    rpart= mod_rpart)
+                    rpart = mod_rpart,
+                    ctree = mod_ctree,
+                    ranger = mod_ranger)
+
 
 resamps <- resamples(model_list)
 
-# saveRDS(resamps, "resamps.RDS")
-# resamps <- readRDS("resamps.RDS")
+# getAnywhere("ggplot.resamples")
 
-resamps$values
 
-ggplot(resamps, metric = c("ROC", "Sens", "Spec")) +
+resamps$values %>% 
+  gather("model~metric", "value", 2:13) %>% 
+  separate ("model~metric", c("model", "metric")) %>% 
+  mutate(model = factor(model, levels = names(table_m4[4:7]))) %>% 
+  group_by(model, metric) %>% 
+  summarize(mean = mean(value), sd = sd(value)) %>% 
   
- 
-
-ggplot(mod_ranger, metric = "Sens")
-
-mean(resamps$values$`rf~Sens`)
+  ggplot(aes(y= mean, x = model, col = model)) +
+    geom_point(size = 2.5) +
+    geom_errorbar(aes(ymin = mean - sd, ymax =  mean + sd), width = 0.1) +
+    scale_y_continuous(limits = c(0.5, 1)) + 
+    coord_flip() +
+    facet_wrap(metric ~ .) +
+    theme(legend.position = "none")
 ```
 
 
@@ -379,31 +348,9 @@ confusionMatrix(mod_ranger3)
 ```{r devbug_ggplot}
 
 
-getAnywhere("ggplot")
 
-getAnywhere("ggplot.resamples")
-
-
-ggplot(resamps)
-
-
-
-ttest <- try(t.test(x$value, conf.level = cl), silent = TRUE)
-# Error in t.test.default(plotData$`rf~ROC`$value, conf.level = 0.95) : 
-#   data are essentially constant  
-rep(NA, 3)
-  
-
-plotData <- list("Model" = "rf~ROC")
-
-x <- list(value = list(rep(1,10)))
-cl = "0.095"
-t.test(rep(1,10), conf.level = 0.95)
-     
-plotData$`rf~ROC`$value
-
-x <- rep(1, 10)
-
-typeof(x)
 ```
+    
+    
+
 
