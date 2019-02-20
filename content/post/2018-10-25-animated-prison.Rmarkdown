@@ -60,7 +60,6 @@ library(readr)
 library(readxl)
 library(stringr)
 library(tidyverse)
-library(transformr)
 ```
 
 The primary dataset that we are going to use is the [National Prisoner Statistics, 1978-2015](https://www.icpsr.umich.edu/icpsrweb/ICPSR/studies/36657) curated by the United States Department of Justice, the Office of Justice Program and the Bureau of Justice Statistics. 

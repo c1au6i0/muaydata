@@ -33,7 +33,7 @@ Nella prima parte di prima serie di [posts] (https://muaydata.netlify.com/post/i
 
 ## Preparazione dati e tokenizzazione
 
-La procedura per ottenere un /tibble dei tweets dei 3 politici (a cui assegneremo il nome di __twdat__) è spiegata in dettaglio nel mio primo [post]{https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/} della serie e nella [guida di Michael Galarnyk](https://medium.com/@GalarnykMichael/accessing-data-from-Twitter-api-using-r-part1-b387a1c7d3e). 
+La procedura per ottenere un dataframe/tibble dei tweets dei 3 politici (a cui assegneremo il nome di __twdat__) è spiegata in dettaglio nel mio primo [post](https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/) della serie e nella [guida di Michael Galarnyk](https://medium.com/@GalarnykMichael/accessing-data-from-Twitter-api-using-r-part1-b387a1c7d3e). 
 
 Queste sono le librerie che ci serviranno per le nostre analisi.
 ```{r libraries, include=TRUE, message=FALSE, results='hide', collapse=TRUE}
