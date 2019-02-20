@@ -1,10 +1,23 @@
 ---
-title: "Post 4- Cassandra, the forest and Morpheus"
+title: "Cassandra, Aceso and the forest"
 output: html_notebook
 ---
 
+In this post we will apply predicting modelling to data from [__ADD HEALTH__](https://www .cpc.unc.edu/projects/addhealth/about) a national longitudinal study that enrolled  ~90000 adolescents and followed them up for 20 years. Using the *R* package [caret](https://github.com/topepo/caret), we will train and evaluate different models for predicting  drug use behavior in adulthood from information (friends, social activities, parents) collected during adolescence.
 
-We start loading the libraries.
+# Introduction
+
+The ADD HEALTH is a
+The [public-use data](https://www.cpc.unc.edu/projects/addhealth/about)
+
+
+[study design](https://www.cpc.unc.edu/projects/addhealth/design/designpage001.jpg/@@images/b842a2e4-e345-4384-bfc5-c724a3b55b5c.jpeg)
+
+
+
+# Get the data and make them tidy.
+
+We start loading some libraries.
 ```{r libraries, message=FALSE}
 library(tidyverse)
 library(purrr)
@@ -15,83 +28,72 @@ library(glmnet)
 library(randomForest)
 library(broom)
 library(rpart)
+library(party)
 ```
 
-ADD Health
-Where are the data:
-[link1](https://www.icpsr.umich.edu/icpsrweb/content/DSDR/add-health-data-guide.html)
-[link2](https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/topics)
-
+The number of variables collected for the ADD HEALTH is of several thousands. We will focus our analysis on a small subset of these variables that are related to the topics of "friends, social activities and parents" and few others. Our variables have been saved in the vector ```var_select```:
 
 ```{r selected_var, eval=TRUE, include=FALSE, message=FALSE}
 var_select <- scan("/Users/heverz/Documents/R_projects/muaydata/static/data-post4/variables.csv", what  = "list", sep = ",")
 ```
+
 ```{r show_selected, eval=TRUE, include=TRUE}
 var_select
 ```
+A description of these as well as all the other variables can be found using the [codebook web Explorer](https://www.icpsr.umich.edu/icpsrweb/content/DSDR/add-health-data-guide.html)
 
+I download the public-use data from the [ICPSR](https://www.icpsr.umich.edu/icpsrweb/DSDR/studies/21600#) and saved all the files with dta (Stata) extension in a folder.
 
+We import all the files, select the columns that are in var_select and we join the dataframes together by the subject identification variable (```AID```) that then we remove. Finaly, all the the columns that contain character data are transformed to factors.
 ```{r getdata, eval=FALSE}
 files <- list.files(path = "/Users/heverz/Documents/R_projects/DATASETS/W1-4",
                     include.dirs=FALSE,
                     full.names = TRUE)
 
+#import all the dataframes.
 w1_4 <- map(files, read.dta)
 
-# get the varibles in var_select
+# Select the varibles in var_select
 w1_4_reduced <- map(w1_4, function (x) x[, colnames(x) %in% var_select])
 
 #join not empty dataframes
 toselect <- which(map(w1_4_reduced, function(x) ncol(x) > 0) == TRUE)
+
+
 heal_data <- plyr::join_all(w1_4_reduced[toselect] , by = "AID", type = "inner")
-heal_data$AID <- as.character(heal_data$AID)
+
+heal_sub <- heal_data[,2:length(heal_data)] # remove AID column
+heal_sub <- mutate_if(heal_sub, is.character, as.factor)
+glimpse(heal_sub)
 ```
 
 ```{r database, include=FALSE, eval=TRUE}
 mydb <- dbConnect(RSQLite::SQLite(), "/Users/heverz/Documents/R_projects/muaydata/static/data-post4/heal_data.sqlite")
 
 # dbWriteTable(mydb, "heal_data", heal_data)
+# dbRemoveTable(mydb, "heal_data")
 # dbListTables(mydb)
 heal_data <- as_tibble(tbl(mydb, "heal_data"))
-glimpse(heal_data)
 ```
 
+The *H4TO117* is our classifier, the response to the following question:
 
-```{r factor}
-heal_sub <- heal_data[,2:length(heal_data)]
-heal_sub <- mutate_if(heal_sub, is.character, as.factor)
-sum(is.na(heal_sub))
-```
+*"Have you ever continued to use {favorite drug} after you realized using {favorite drug} was causing you any emotional problems (such as feeling depressed or empty, feeling irritable or aggressive, feeling paranoid or confused, feeling anxious or tense, being jumpy or easily startled) or causing you any health problems (such as heart pounding, headaches or dizziness, or sexual difficulties)?"*
+Let's clean up and see the responses.
 
-There are a lot of NA because the questionare was not submitted to a some parents
-```{r count_NAs}
-
-heal_sub[is.na(heal_sub$PA10),] %>% 
-  select(PA34:PC49E_3) %>% 
-  glimpse()
-```
-
-WE will remove those data
-
-```{r removeNAs}
+```{r select_classifier}
+#classifier
 heal_sub_cl <- 
-  heal_sub %>% 
-  select(-c("S10")) %>% 
-  select(1:48,51) %>% 
-  na.omit()
+  heal_sub %>%
+  select(-c("GSWGT4_2")) %>% 
+  mutate(H4TO117 = as.factor(str_extract(H4TO117 , "[:alpha:]+")))
 
-names(heal_sub_cl)
-#classifier_NA_insert
-heal_sub_cl <- 
-  heal_sub_cl %>% 
-  mutate(H4TO117 = as.factor(str_extract(heal_sub_cl$H4TO117 , "[:alpha:]+")))
-
-heal_sub_cl3 <- heal_sub_cl
+summary(heal_sub_cl$H4TO117)
 ```
+Legitimate standes for Legitimate skips, that indicates those people that do not have a favorite drug.
 
-# 2 Classes
+The answers to this question not only allow to distinguish people that use (or had used drugs) from people that did not (legitimate skip), but also to identify those individuals that continue to assume drugs despite negative consequences (yes). The class "yes" will be our class of interest becouse it indicates those people that are presumably more likely to develop health problems as a consequene of drug use patterns. 
 
-Classifier of interest is H4T0117
 
 ```{r 2Classes}
 heal_sub_cl$H4TO117[heal_sub_cl$H4TO117 == "Legitimate"] <- "No"
@@ -100,6 +102,41 @@ heal_sub_cl$H4TO117 <- droplevels(heal_sub_cl$H4TO117)
 
 summary(heal_sub_cl$H4TO117)
 ```
+
+..and here we have the first problem: a  data is missing.
+
+
+In particular a big chunck of data of columns named "PA" followed by a number is missing. 
+
+```{r count_NAs}
+heal_sub[is.na(heal_sub$PA10),] %>% 
+  select(PA34:PC49E_3) %>% 
+  glimpse()
+```
+These are variables of Parent Questionaire and part of the parents (12%) did not send it back.
+
+
+https://www.cpc.unc.edu/projects/addhealth/faqs/aboutdata/index.html#how-do-i-correct-1
+https://www.cpc.unc.edu/projects/addhealth/documentation/guides/wt_guidelines_20161213.pdf
+Another scenario is when the outcome variable is from one wave of data, i.e., Wave I, II, III or IV,
+but the predictors (or covariates) are from either previous wave(s) or a combination of waves.
+Under these circumstances, the correct weight would be the cross-sectional weight for the wave
+from where the outcome variable comes, rather than the longitudinal weight (see Table 2.4). If you
+are using data from multiple waves for covariates (predictor variables), you might also need to use
+the subpopulation option (see example 3 in Chapter 4).
+
+df.expanded <- df[rep(row.names(df), df$freq), 1:2]
+
+# 2 Classes
+
+Classifier of interest is H4T0117
+
+
+W4	H4TO117	Have you ever continued to use {favorite drug} after you realized using {favorite drug} was causing you any emotional problems (such as feeling depressed or empty, feeling irritable or aggressive, feeling paranoid or confused, feeling anxious or tense, being jumpy or easily startled) or causing you any health problems (such as heart pounding, headaches or dizziness, or sexual difficulties)?
+
+
+  
+
 
 
 The problem is that we have a very unballanced designed and therefore all the models tend to maximaze accuracy but not specificity (they say all not addicted). So we need to consider specificity as a metric too
@@ -115,6 +152,7 @@ set.seed(1512)
 up_heal <- upSample(x = heal_sub_cl[, -ncol(heal_sub_cl)],
                      y = heal_sub_cl$H4TO117)                         
 table(up_heal$Class) 
+
 ```
 
 
@@ -122,6 +160,7 @@ table(up_heal$Class)
 
 Explain adaptative cross validation and the other info
 ```{r trainControl}
+seeds = 1502
 fitControl <- trainControl(method = "adaptive_cv",
                            number = 5, repeats = 5,
                            classProbs = TRUE,
@@ -131,6 +170,7 @@ fitControl <- trainControl(method = "adaptive_cv",
                                             alpha = 0.05,
                                             method = "gls",
                                             complete = TRUE),
+                           sampling = "up",
                            verboseIter = TRUE)
                            
 
@@ -147,13 +187,14 @@ mod_glmnet <- readRDS("mod_glmnet.RDS")
 
 ```{r mod_glmnet, eval=FALSE, include=TRUE}
 
-mod_glmnet <- train(Class ~ ., 
-              up_heal,
+mod_glmnet <- train(H4TO117 ~ ., 
+              heal_sub_cl,
               method = "glmnet",
               tuneLength = 20,
               trControl = fitControl,
               na.action = na.omit,
-              preProcess = c("nzv","corr", "pca")
+              preProcess = c("nzv","corr", "knnImpute","pca")
+              na.actin=na.pass
               )
 
 print(mod_glmnet)
@@ -189,17 +230,20 @@ table_glmnet <- confusionTable(mod_glmnet)
 
 table_glmnet
 ```
+```{r}
+table_glmnet <- confusionTable(mod_glmnet_w)
+```
 
 
 ## TREES
 
 
-```{r trees, include=FALSE, eval=TRUE}
+```{r load_trees, include=FALSE, eval=TRUE}
 # saveRDS(mod_rpart, "mod_rpart")
 # saveRDS(mod_ctree, "mod_ctree")
 
 mod_rpart <- readRDS("mod_rpart")
-mod_rtree <- readRDS("mod_rtree")
+mod_ctree <- readRDS("mod_ctree")
 
 ```
 
@@ -218,7 +262,7 @@ mod_rpart <- train(Class ~ .,
               )
 ```
 
-
+https://cran.r-project.org/web/packages/partykit/vignettes/ctree.pdf
 ```{r mod_ctree, eval=FALSE, include=TRUE}
 mod_ctree <- train(Class ~ ., 
                    up_heal,
@@ -235,7 +279,6 @@ mod_ctree <- train(Class ~ .,
 
 ```{r eval_trees_matrix}
 
-mod <- mod_rpart
 
 table_m3 <- bind_cols(table_glmnet,
             confusionTable(mod_rpart)[,4], 
@@ -270,8 +313,10 @@ mod_ranger <- train(Class ~ .,
 ```{r eval_matrix, eval=TRUE, include=FALSE}
 table_m4  <- bind_cols(table_m3,
             confusionTable(mod_ranger)[,4])
-names(table_m4[4:7])
+table_m4 
 ```
+
+
 
 
 ## Compareall
@@ -345,11 +390,6 @@ print(mod_ranger3)
 confusionMatrix(mod_ranger3)
 ```
 
-```{r devbug_ggplot}
-
-
-
-```
     
     
 
