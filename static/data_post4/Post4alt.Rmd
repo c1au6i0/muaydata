@@ -23,6 +23,7 @@ library(tidyverse)
 library(purrr)
 library(foreign) 
 library(RSQLite)
+library(svDialogs)
 library(caret)
 library(glmnet)
 library(randomForest)
@@ -45,8 +46,8 @@ files <- list.files(path = "/Users/heverz/Documents/R_projects/DATASETS/W1-4",
 # import all the dataframes.
 w1_4 <- map(files, read.dta)
 
-# identify varibles of interest
-h1_pa <- names(w1_4[[1]])[str_detect(names(w1_4[[1]]), '^H1|PA')] # H1 is the first wave
+# identify the name of varibles of interest
+h1_pa <- names(w1_4[[1]])[str_detect(names(w1_4[[1]]), '^H1|PA')] # H1 is the first wave 
 ids <- c("AID", "GSWGT4_2", "CLUSTER2", "H4TO117") # H4 is the classifier and GSW are the weights
 var_select <- append(h1_pa, ids)
 
@@ -54,7 +55,7 @@ var_select <- append(h1_pa, ids)
 w1_4_reduced <- map(w1_4, function (x) x[, colnames(x) %in% var_select])
 
 # join not empty dataframes
-toselect <- which(map(w1_4_reduced, function(x) ncol(x) > 0) == TRUE)
+toselect <- which(map(w1_4_reduced, function(x) ncol(x) > 0) == TRUE) # list of not empty dataframes
 heal_data <- plyr::join_all(w1_4_reduced[toselect] , by = "AID", type = "inner")
 
 # two colums same name /remove one
@@ -158,12 +159,6 @@ Let's clarify what are this *tuning parameters*. The tuning paramters (hyperpara
 
 Before training our first model we need to spend also some few words on preprocessing. This is getting long but no one will really read this post so who cares. We have a lot of variables, more than 2000 and that put quite some computational burden on my personal laptop. We might no need all those variables, becouse some of them might have near zero variance (immagine a column made of only one identical value) or might be very correlated to each other. Moreover, we can using principal component analysis ([PCA](https://en.wikipedia.org/wiki/Principal_component_analysis)) to use linear combination of variables that explain most of the variability of the data. Finaly, we can impute missing data using k-nearest neighbors algorithms, that use the distance to the closest sample to calculate the values that are substitute to the missing data. All this computations can be very conveniently done before training our models using the argument ```preProcess = c("nzv", "corr","knnImpute","pca")```, when calling the function ```caret::train```.
 
-```{r load_glmnet, eval= TRUE, include=FALSE}
-saveRDS(mod_glmnet,"mod_glmnet_all.RDS")
-mod_glmnet <- readRDS("mod_glmnet_all.RDS")
-# saveRDS(file = "mod_glmnet_all.RDS", mod_glmnet)
-```
-
 We are ready! Let's train our first model, ["a generalized linear model via penalized maximum likelihood"](https://web.stanford.edu/~hastie/glmnet/glmnet_alpha.html), using the package above mentioned ```glmnet```. Becouse of the limited compuational capability of my laptop we are going to try only 5 different combinations of hyperparameters for each resample (````tuneLength = 5```). _*This is definetly an inadeguate number of combinations*_ (I would have tried at least 100 if I could) _*but will still give as the opportunity to see how to train a model an evaluate it.*_ 
 
 ```{r mod_glmnet, eval=FALSE, include=TRUE}
@@ -176,6 +171,12 @@ mod_glmnet <- train(H4TO117 ~ .,
               na.action = na.pass,
               preProcess = c("nzv", "corr","knnImpute","pca")
               )
+```
+
+```{r load_glmnet, eval= TRUE, include=FALSE}
+# saveRDS(mod_glmnet,"mod_glmnet_all.RDS")
+mod_glmnet <- readRDS("mod_glmnet_all.RDS")
+# saveRDS(file = "mod_glmnet_all.RDS", mod_glmnet)
 ```
 
 All the info regarding our model, including the coefficients of the different predictors, are contained in   ```mod_glmnet$finalModel```. A summary of the details regarding the *pre-processing*, *resampling*, *hyperparmeter tuning* can be easily retrived ```print``ing  the model.
@@ -212,15 +213,6 @@ You can see that while the model doesn't do that bad in predicting *No*, the per
 
 Another type of very popular preditive model is decision trees. Decision trees are very easy to implement and intrerpret
 
-```{r load_trees, include=FALSE, eval=TRUE}
-saveRDS(mod_rpart, "mod_rpart_all")
-# saveRDS(mod_ctree, "mod_ctree")
-mod_rpart <- readRDS("mod_rpart_all.RDS")
-mod_ctree <- readRDS("mod_ctree_all.RDS")
-print(mod_rpart)
-```
-
-
 ```{r mod_rpart, eval=FALSE, include=TRUE}
 mod_rpart <- train(H4TO117 ~ ., 
               heal_sub_cl,
@@ -234,8 +226,6 @@ mod_rpart <- train(H4TO117 ~ .,
 ```
 
 
-
-https://cran.r-project.org/web/packages/partykit/vignettes/ctree.pdf
 ```{r mod_ctree, eval=FALSE, include=TRUE}
 mod_ctree <- train(H4TO117 ~ ., 
                    heal_sub_cl,
@@ -246,8 +236,20 @@ mod_ctree <- train(H4TO117 ~ .,
                    na.action = na.pass,
                    preProcess = c("nzv","corr", "knnImpute","pca")
               )
-saveRDS(mod_ctree, "mod_ctree.RDS")
 ```
+
+
+```{r load_trees, include=FALSE, eval=TRUE}
+# saveRDS(mod_rpart, "mod_rpart_all")
+# saveRDS(mod_ctree, "mod_ctree")
+mod_rpart <- readRDS("mod_rpart_all.RDS")
+mod_ctree <- readRDS("mod_ctree_all.RDS")
+# print(mod_rpart)
+```
+
+
+
+
 
 ```{r eval_trees_matrix}
 table_m3 <- bind_cols(table_glmnet,
@@ -261,11 +263,6 @@ svmLinearWeights
 
 ## RANDOM FOREST
 
-```{r load_rf, eval=TRUE, include=FALSE}
-mod_ranger <- readRDS("mod_ranger_all.RDS")
-```
-
-
 ```{r mod_rf, eval=FALSE, include=TRUE}
 mod_ranger <- train(H4TO117 ~ ., 
               heal_sub_cl,
@@ -278,6 +275,12 @@ mod_ranger <- train(H4TO117 ~ .,
               )
 ```
 
+```{r load_rf, eval=TRUE, include=FALSE}
+mod_ranger <- readRDS("mod_ranger_all.RDS")
+```
+
+
+
 ```{r eval_matrix, eval=TRUE, include=FALSE}
 table_m4  <- bind_cols(table_m3,
             confusionTable(mod_ranger)[,4])
@@ -285,17 +288,59 @@ table_m4
 ```
 
 ## Compare all
-```{r eval_all_graph, eval=TRUE, include=TRUE, warning=FALSE}
+
+
+```{r ROC_function}
 model_list <- list( glmnet = mod_glmnet,
                     rpart = mod_rpart,
                     ctree = mod_ctree,
-                    ranger = mod_ranger)
+                    rf = mod_ranger)
+
+
+
+get_roc <- function(mod, cl) {
+   # function to extract ROC data from the different models
+   # Returns a dataframe 
+   # mod = model
+   # cl = character, name of class of interest 
+  
+   if (missing(cl)) stop("You have not inserted the class of interest!")
+   if (!cl %in% names(mod[["pred"]])) stop("Class of interest not present!")
+  
+   for_lift <-  tibble(Class = mod[["pred"]][["obs"]],  model = mod[["pred"]][[cl]])
+   lift_obj  <-  lift(Class ~ model, data = for_lift, class = cl)
+   lift_obj$data$liftModelVar <- mod[["method"]]
+   lift_obj$data
+}
+```
+
+```{r ROC_plot}
+roc_data <- map_dfr(model_list, get_roc, "Yes")
+
+roc_data %>% 
+  # clean up and get important variables
+  rename(model = liftModelVar) %>% 
+  mutate(TPR = Sn, FPR = 1 - Sp) %>% 
+  mutate(model = factor(model, levels = names(table_m4[4:7]))) %>%  # let's be consistent with the order 
+  select(TPR, FPR, model ) %>% 
+  # plot
+  ggplot(aes(y = TPR, x = FPR, col = model)) +
+  geom_line() +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  facet_wrap(~model, ncol = 2)
+
+```
+
+```{r all_graph, eval=TRUE, include=TRUE, warning=FALSE}
+model_list <- list( glmnet = mod_glmnet,
+                    rpart = mod_rpart,
+                    ctree = mod_ctree,
+                    rf = mod_ranger)
 
 
 resamps <- resamples(model_list)
 
 # getAnywhere("ggplot.resamples")
-
 
 resamps$values %>% 
   gather("model~metric", "value", 2:13) %>% 
@@ -314,19 +359,15 @@ resamps$values %>%
 ```
 
 
-```{r}
-for_lift = data.frame(Class = model$pred$obs,  xgbTree = model$pred$R)
-plot ROC:
 
-pROC::plot.roc(pROC::roc(response = for_lift$Class,
-                         predictor = for_lift$xgbTree,
-                         levels = c("M", "R")),
-           lwd=1.5) 
+```{r db}
+library(dbplyr)
+library(DBI)
+mydb <-  dbConnect(RSQLite::SQLite(), dbname = dlgOpen()$res)
+dbDisconnect(mydb)
 ```
 
 
-```{r}
-mydb <-  dbConnect(RSQLite::SQLite(), dbname = "heal_data.sqlite")
-```
+
 
 
