@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>MuayData blog</title>
-    <link>https://muaydata.netlify.com/</link>
+    <link>/</link>
     <description>Recent content on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Thu, 25 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://muaydata.netlify.com/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About</title>
-      <link>https://muaydata.netlify.com/about/</link>
+      <link>/about/</link>
       <pubDate>Thu, 25 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/about/</guid>
+      <guid>/about/</guid>
       
         <description>&lt;p&gt;I am a behavioral pharmacologist, &lt;em&gt;R&lt;/em&gt; and data enthusiast and reader of &lt;a href=&#34;https://www.r-bloggers.com/&#34;&gt;R-bloggers&lt;/a&gt;. I live in the city of the late Edgar and of Dwight Schultz.&lt;/p&gt;
 
@@ -28,18 +28,16 @@
     
     <item>
       <title>Animated Prison</title>
-      <link>https://muaydata.netlify.com/post/animated-prison/</link>
+      <link>/post/animated-prison/</link>
       <pubDate>Thu, 25 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/post/animated-prison/</guid>
+      <guid>/post/animated-prison/</guid>
       
         <description>&lt;p&gt;In this post we will get the datasets and write the code to create the following visualization of the rate of incarceration over time in U.S (custody and jurisdiction counts of all prisoners).&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;[Double click for full screen]&lt;/em&gt;&lt;/p&gt;
 
-&lt;iframe title=&#34;Prison_video&#34; height=&#34;400&#34; src=&#34;https://muaydata.netlify.com/data_post3/output.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
-
-&lt;p&gt;&lt;/p&gt;
+&lt;iframe title=&#34;Prison_video&#34; height=&#34;400&#34; src=&#34;/data_post3/output.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
 
 &lt;p&gt;What are we looking at? The video-graph represents the number of people in private and public prisons (sentenced and unsentenced) normalized by the corresponding state population. The darker is a state, the higher is the prison population relative to the total population. The year is indicated on the top left and the video shows the data &lt;strong&gt;from 1999 to 2015&lt;/strong&gt;.&lt;/p&gt;
 
@@ -54,7 +52,7 @@
 &lt;p&gt;Animated plots are like spinning-back kicks in muay Thai: they are extremely risky, seldom used, but they can be highly effective and hit you right between the eyes!&lt;/p&gt;
 
 &lt;p&gt;&lt;center&gt;
-&lt;img src=&#34;https://muaydata.netlify.com/data_post3/giphy.gif&#34; alt=&#34;prova&#34; /&gt;
+&lt;img src=&#34;/data_post3/giphy.gif&#34; alt=&#34;prova&#34; /&gt;
 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;Few weeks agon, I stumble upon a newly released package, &lt;a href=&#34;https://github.com/ropensci/av&#34;&gt;&lt;em&gt;av&lt;/em&gt;&lt;/a&gt;, that uses &lt;a href=&#34;https://ffmpeg.org/&#34;&gt;&lt;em&gt;ffmpeg&lt;/em&gt;&lt;/a&gt; to capture &lt;em&gt;R&lt;/em&gt; plots and create videos.
@@ -73,7 +71,6 @@ Admittedly the video does not knock you out (changes are relatively small), but 
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;av&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
@@ -82,8 +79,7 @@ Admittedly the video does not knock you out (changes are relatively small), but 
 &lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;readr&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;readxl&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 &lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;stringr&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tidyverse&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;transformr&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tidyverse&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;The primary dataset that we are going to use is the &lt;a href=&#34;https://www.icpsr.umich.edu/icpsrweb/ICPSR/studies/36657&#34;&gt;National Prisoner Statistics, 1978-2015&lt;/a&gt; curated by the United States Department of Justice, the Office of Justice Program and the Bureau of Justice Statistics.&lt;/p&gt;
@@ -115,17 +111,17 @@ prison_pop&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;m&#34;
 &lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;## # A tibble: 9 x 6
-##    YEAR STATEID                  STATE REGION              CUSGT1M CUSGT1F
-##   &amp;lt;dbl&amp;gt; &amp;lt;fct&amp;gt;                    &amp;lt;fct&amp;gt; &amp;lt;fct&amp;gt;                 &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;
-## 1  2015 (50) 50. Vermont         VT    (1) Northeast           966      83
-## 2  2015 (51) 51. Virginia        VA    (3) South             28105    2325
-## 3  2015 (53) 53. Washington      WA    (4) West              15848    1297
-## 4  2015 (54) 54. West Virginia   WV    (3) South              5319     606
-## 5  2015 (55) 55. Wisconsin       WI    (2) Midwest           20346    1329
-## 6  2015 (56) 56. Wyoming         WY    (4) West               1888     245
-## 7  2015 (60) State prison total  ST    (7) State total     1054949   78954
-## 8  2015 (70) US prison total (s… US    (5) U.S. total      1192289   89180
-## 9  2015 (99) Federal BOP         FE    (6) Federal Bureau…  137340   10226&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+##    YEAR STATEID                   STATE REGION              CUSGT1M CUSGT1F
+##   &amp;lt;dbl&amp;gt; &amp;lt;fct&amp;gt;                     &amp;lt;fct&amp;gt; &amp;lt;fct&amp;gt;                 &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;
+## 1  2015 (50) 50. Vermont          VT    (1) Northeast           966      83
+## 2  2015 (51) 51. Virginia         VA    (3) South             28105    2325
+## 3  2015 (53) 53. Washington       WA    (4) West              15848    1297
+## 4  2015 (54) 54. West Virginia    WV    (3) South              5319     606
+## 5  2015 (55) 55. Wisconsin        WI    (2) Midwest           20346    1329
+## 6  2015 (56) 56. Wyoming          WY    (4) West               1888     245
+## 7  2015 (60) State prison total   ST    (7) State total     1054949   78954
+## 8  2015 (70) US prison total (st… US    (5) U.S. total      1192289   89180
+## 9  2015 (99) Federal BOP          FE    (6) Federal Bureau…  137340   10226&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;The data is in the right format (long) but it is not tidy. For example, the last 3 observations are totals that we don&amp;rsquo;t need and the name of the states (&lt;em&gt;STATEID&lt;/em&gt;) is recorder with other superfluous information. We need to cleaning it up and also restrict our focus of analysis.&lt;/p&gt;
@@ -202,16 +198,18 @@ prison_1999_tot &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt;
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
 &lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;## Observations: 867
 ## Variables: 6
-## $ YEAR      &amp;lt;dbl&amp;gt; 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999...
-## $ STATEID   &amp;lt;chr&amp;gt; &amp;#34;alabama&amp;#34;, &amp;#34;alaska&amp;#34;, &amp;#34;arizona&amp;#34;, &amp;#34;arkansas&amp;#34;, &amp;#34;califor...
-## $ STATE     &amp;lt;fct&amp;gt; AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, ...
-## $ PRIS      &amp;lt;dbl&amp;gt; 21227, 3916, 25986, 10388, 160687, 12995, 16987, 658...
-## $ PRIS_PUB  &amp;lt;dbl&amp;gt; 21227, 2529, 24594, 9174, 156066, 12995, 16987, 6585...
-## $ PRIS_PRIV &amp;lt;dbl&amp;gt; 0, 1387, 1392, 1214, 4621, 0, 0, 0, 4024, 3773, 3001...&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+## Groups: YEAR, STATEID [?]
+## $ YEAR      &amp;lt;dbl&amp;gt; 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, …
+## $ STATEID   &amp;lt;chr&amp;gt; &amp;#34;alabama&amp;#34;, &amp;#34;alaska&amp;#34;, &amp;#34;arizona&amp;#34;, &amp;#34;arkansas&amp;#34;, &amp;#34;californi…
+## $ STATE     &amp;lt;fct&amp;gt; AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, IL…
+## $ PRIS      &amp;lt;dbl&amp;gt; 21227, 3916, 25986, 10388, 160687, 12995, 16987, 6585,…
+## $ PRIS_PUB  &amp;lt;dbl&amp;gt; 21227, 2529, 24594, 9174, 156066, 12995, 16987, 6585, …
+## $ PRIS_PRIV &amp;lt;dbl&amp;gt; 0, 1387, 1392, 1214, 4621, 0, 0, 0, 4024, 3773, 3001, …&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;But now we have our first problem: a possible increase in the prison population might be the result of corresponding variation of U.S population. To circumvent that problem we need to express the prison population relative to the corresponding state population for the time interval of interest. Where do we get the data?
@@ -239,7 +237,7 @@ In the website of the U.S Census Bureau, of course!&lt;/p&gt;
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Thanks LukeA: https://stackoverflow.com/questions/33135060/read-csv-file-hosted-on-google-drive#33142446) &lt;/span&gt;
 
-ids &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt;  &lt;span class=&#34;s&#34;&gt;&amp;#34;1bCGjAtCjoRuRf8RFw78Rzjtq_r5uxXBP&amp;#34;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# IDS file &lt;/span&gt;
+ids &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt;  &lt;span class=&#34;s&#34;&gt;&amp;#34;1nTEpk2hW56Czx8-aGysQgKKaebhIFg1B&amp;#34;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# IDS file &lt;/span&gt;
 
 sp_wide &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; read_csv&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;sprintf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;https://drive.google.com/uc?id=%s&amp;amp;export=download&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; ids&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -323,16 +321,16 @@ glimpse&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;prison_norm_xy&lt;span class=
 &lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;## Observations: 264,163
 ## Variables: 10
-## $ YEAR      &amp;lt;dbl&amp;gt; 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999...
-## $ STATEID   &amp;lt;chr&amp;gt; &amp;#34;alabama&amp;#34;, &amp;#34;alabama&amp;#34;, &amp;#34;alabama&amp;#34;, &amp;#34;alabama&amp;#34;, &amp;#34;alabama...
-## $ STATE     &amp;lt;fct&amp;gt; AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, ...
-## $ PRIS      &amp;lt;dbl&amp;gt; 21227, 21227, 21227, 21227, 21227, 21227, 21227, 212...
-## $ PRIS_PUB  &amp;lt;dbl&amp;gt; 21227, 21227, 21227, 21227, 21227, 21227, 21227, 212...
-## $ PRIS_PRIV &amp;lt;dbl&amp;gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ POP       &amp;lt;dbl&amp;gt; 4430141, 4430141, 4430141, 4430141, 4430141, 4430141...
-## $ PERC_PRIS &amp;lt;dbl&amp;gt; 47.91495, 47.91495, 47.91495, 47.91495, 47.91495, 47...
-## $ LONG      &amp;lt;dbl&amp;gt; -87.46201, -87.48493, -87.52503, -87.53076, -87.5708...
-## $ LAT       &amp;lt;dbl&amp;gt; 30.38968, 30.37249, 30.37249, 30.33239, 30.32665, 30...&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+## $ YEAR      &amp;lt;dbl&amp;gt; 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, …
+## $ STATEID   &amp;lt;chr&amp;gt; &amp;#34;alabama&amp;#34;, &amp;#34;alabama&amp;#34;, &amp;#34;alabama&amp;#34;, &amp;#34;alabama&amp;#34;, &amp;#34;alabama&amp;#34;,…
+## $ STATE     &amp;lt;fct&amp;gt; AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL…
+## $ PRIS      &amp;lt;dbl&amp;gt; 21227, 21227, 21227, 21227, 21227, 21227, 21227, 21227…
+## $ PRIS_PUB  &amp;lt;dbl&amp;gt; 21227, 21227, 21227, 21227, 21227, 21227, 21227, 21227…
+## $ PRIS_PRIV &amp;lt;dbl&amp;gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ POP       &amp;lt;dbl&amp;gt; 4430141, 4430141, 4430141, 4430141, 4430141, 4430141, …
+## $ PERC_PRIS &amp;lt;dbl&amp;gt; 47.91495, 47.91495, 47.91495, 47.91495, 47.91495, 47.9…
+## $ LONG      &amp;lt;dbl&amp;gt; -87.46201, -87.48493, -87.52503, -87.53076, -87.57087,…
+## $ LAT       &amp;lt;dbl&amp;gt; 30.38968, 30.37249, 30.37249, 30.33239, 30.32665, 30.3…&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;In our video/graph we want also to indicate the state code (2 letters). To do that we need to create a dataframe/tibble that has the coordinates of the positions of those labels. Ideally, they would be in the center of the state, so we can just average the longitude and latitude of each state. Of course don&amp;rsquo;t expect that to be perfect, the shape of states is not a perfect square or circle!&lt;/p&gt;
@@ -429,7 +427,7 @@ utils&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;browseURL&lt;span class=&#34;p
 &lt;p&gt;With that we have covered all the code related to the video/graph, but I could not resist&amp;hellip;&lt;/p&gt;
 
 &lt;p&gt;&lt;center&gt;
-&lt;img src=&#34;https://muaydata.netlify.com/data_post3/columbo.jpeg&#34; alt=&#34;prova&#34; /&gt;
+&lt;img src=&#34;/data_post3/columbo.jpeg&#34; alt=&#34;prova&#34; /&gt;
 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;&amp;hellip;making at least another plot.&lt;/p&gt;
@@ -512,7 +510,7 @@ ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;prison_norm_tot&lt;span class=
         axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;angle &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-10-25-animated-prison_files/figure-html/fig.2_prison_time-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-25-animated-prison_files/figure-html/fig.2_prison_time-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;From 2008 to 2015, the prison population went from about 44 inmates for 10 thousand people to about 39. It is ≈ 10% decrease!
 That is going to be the last graph of the post!&lt;/p&gt;
@@ -523,14 +521,12 @@ That is going to be the last graph of the post!&lt;/p&gt;
     
     <item>
       <title>Il Re di Twitter? (PART II)</title>
-      <link>https://muaydata.netlify.com/post/re-di-twitter-ii/</link>
+      <link>/post/re-di-twitter-ii/</link>
       <pubDate>Wed, 10 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/post/re-di-twitter-ii/</guid>
+      <guid>/post/re-di-twitter-ii/</guid>
       
         <description>&lt;p&gt;In questa seconda parte analizzeremo il contenuto dei tweets di Di Maio, Salvini e Martina e scopriremo quante volte e quando particolari parole sono state utilizzate dai 3 politici. Per finire andremo a vedere se alcune di queste parole sono associate ad un alto numero di like.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;premessa&#34;&gt;Premessa&lt;/h1&gt;
 
@@ -540,7 +536,7 @@ That is going to be the last graph of the post!&lt;/p&gt;
 
 &lt;h2 id=&#34;preparazione-dati-e-tokenizzazione&#34;&gt;Preparazione dati e tokenizzazione&lt;/h2&gt;
 
-&lt;p&gt;La procedura per ottenere un /tibble dei tweets dei 3 politici (a cui assegneremo il nome di &lt;strong&gt;twdat&lt;/strong&gt;) è spiegata in dettaglio nel mio primo [post]{&lt;a href=&#34;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/&#34;&gt;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/&lt;/a&gt;} della serie e nella &lt;a href=&#34;https://medium.com/@GalarnykMichael/accessing-data-from-Twitter-api-using-r-part1-b387a1c7d3e&#34;&gt;guida di Michael Galarnyk&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;La procedura per ottenere un dataframe/tibble dei tweets dei 3 politici (a cui assegneremo il nome di &lt;strong&gt;twdat&lt;/strong&gt;) è spiegata in dettaglio nel mio primo &lt;a href=&#34;https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/&#34;&gt;post&lt;/a&gt; della serie e nella &lt;a href=&#34;https://medium.com/@GalarnykMichael/accessing-data-from-Twitter-api-using-r-part1-b387a1c7d3e&#34;&gt;guida di Michael Galarnyk&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Queste sono le librerie che ci serviranno per le nostre analisi.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -646,6 +642,15 @@ f_twwords &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twwords &lt;span 
   do&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;data_frame&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;al&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;levels&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;reorder&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;interaction&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;screenName&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;word&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; drop&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;perc&lt;span class=&#34;p&#34;&gt;))))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
   pull&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;al&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;## Warning: `data_frame()` is deprecated, use `tibble()`.
+## This warning is displayed once per session.&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;Creiamo a questo punto il grafico in cui le parole usate da ogni politico saranno nell&amp;rsquo;asse delle Y e la loro frequenza in quello delle X.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -676,7 +681,7 @@ f_twwords &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twwords &lt;span 
           legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig1_most_used_words-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig1_most_used_words-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Per Salvini e Martina la parola più usata è il proprio nome/screenname&lt;/strong&gt;, mentre per &lt;strong&gt;Di Maio è il partito&lt;/strong&gt; &amp;ldquo;m5s&amp;rdquo;. &lt;strong&gt;Salvini menziona il suo nome in circa 1 tweets ogni 3, Martina e Di Maio menzionano nome e partito in 1 tweet ogni 10 , rispettivamente&lt;/strong&gt;.&lt;/p&gt;
 
@@ -750,7 +755,7 @@ knitr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;kable&lt;span class=&#34;p&#34
       facet_grid&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; scales &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#39;free_y&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; labeller &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; labeller&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.2_worcloud-1.png&#34; width=&#34;576&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.2_worcloud-1.png&#34; width=&#34;576&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Nella fig.2, le parole più usate hanno una dimensione maggiore.&lt;/p&gt;
 
@@ -888,7 +893,7 @@ fm_twwords_lm&lt;span class=&#34;p&#34;&gt;[,&lt;/span&gt; &lt;span class=&#34;s
   theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.3_timeline_dimaioa-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.3_timeline_dimaioa-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Le 3 parole relative al movimento e al suo fondatore (fig.3 panello A) sono state usate da Di Maio costantemente ma con frequenza variabile negli ultimi anni. È tuttavia negli ultimi mesi (da Marzo a Luglio 2018) che il loro uso è andato quasi scomparendo. Questa diminuzione si è verificata nel concitato periodo di consultazioni con il quirinale e formazione del governo (Febbraio-Giugno), mesi in cui la parola &lt;em&gt;governo&lt;/em&gt; è usata ogni 2-5 tweets (fig.3 panello B).
 E le parole relative al PD? &lt;strong&gt;I riferimenti da parte di Di Maio al attuale partito di opposizione (parola &lt;em&gt;pd&lt;/em&gt;) e al suo precedente segretario (parola &lt;em&gt;renzi&lt;/em&gt;)&lt;/strong&gt; se pure a tratti molto frequenti tra il 2014-2017, &lt;strong&gt;scompaiono completamente nel periodo in cui il movimento a 5 stelle diventa partito di maggioranza&lt;/strong&gt; (fig.3 pannello C, linea tratteggiata indica l&amp;rsquo;insediamento del governo).
@@ -1121,7 +1126,7 @@ fav_twwords &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; fav_twwords_all
     legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.4_like_word-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.4_like_word-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Il primo dato che balza agli occhi dalla fig.4 è che &lt;strong&gt;le prime 10 parole più usate da Salvini hanno totalizzato un numero molto più alto di likes rispetto quelle di Di Maio e Martina&lt;/strong&gt;.
 Inoltre, le parole che hanno ricevuto più likes sono state utilizzate &lt;strong&gt;soltanto 1 o 2 volte dai vari politici&lt;/strong&gt;.  Perché?
@@ -1162,7 +1167,7 @@ twwords &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
         axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.5_vitalizi-1.png&#34; width=&#34;384&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.5_vitalizi-1.png&#34; width=&#34;384&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Anche se in quelle 2 occasioni il numero di like ricevuti è stato estremamente alto, la presenza di numerosi tweets con pochi like ha spostato la media di like per tweet verso il basso (fig.5).&lt;/p&gt;
 
@@ -1187,10 +1192,10 @@ Ma vista mancanza di strumenti adeguati per la lingua italiana, ho deciso di com
     
     <item>
       <title>Il Re di Twitter? (PARTE I)</title>
-      <link>https://muaydata.netlify.com/post/re-di-twitter-i/</link>
+      <link>/post/re-di-twitter-i/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/post/re-di-twitter-i/</guid>
+      <guid>/post/re-di-twitter-i/</guid>
       
         <description>&lt;p&gt;In questa serie di Posts andremo ad analizzare gli ultimi 3200 tweets di Di Maio, Salvini e Martina. Il mio studio sarà diviso in 2 parti:&lt;/p&gt;
 
@@ -1198,8 +1203,6 @@ Ma vista mancanza di strumenti adeguati per la lingua italiana, ho deciso di com
 &lt;li&gt;Nella &lt;strong&gt;parte I&lt;/strong&gt; analizzeremo le abitudini dei 3 leader e  scopriremo chi dei 3 è il più attivo, quando durante la giornata, quanto sono popolari i vari tweets e molte altre informazioni.&lt;/li&gt;
 &lt;li&gt;Nella &lt;strong&gt;parte II&lt;/strong&gt; ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.&lt;/li&gt;
 &lt;/ul&gt;
-
-&lt;p&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;premessa&#34;&gt;Premessa&lt;/h1&gt;
 
@@ -1541,7 +1544,7 @@ tw_d &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&
   grid.arrange&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tw_h&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; tw_d&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; ncol &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; top &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Percentage of tweets          &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.1_plot_tw_wdays-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.1_plot_tw_wdays-1.png&#34; width=&#34;960&#34; /&gt;
 &lt;strong&gt;Salvini&lt;/strong&gt; tende ad iniziare a twittare al mattino come Di Maio e Martina, ma  rispetto a loro, tende a continuare ad essere &lt;strong&gt;attivo anche la sera (7-23)&lt;/strong&gt;. Per &lt;strong&gt;Martina&lt;/strong&gt; il picco di attività è &lt;strong&gt;la mattina (9-11)&lt;/strong&gt; mentre per &lt;strong&gt;Di Maio è dalle 9 alle 16&lt;/strong&gt; (fig.2, sinistra). &lt;strong&gt;Tutti e tre i politici hanno un giorno durante il week-end in cui sono molto meno attivi&lt;/strong&gt;: sia per Di Maio che Salvini è il Sabato, mentre per Martina la Domenica (fig.2, destra).&lt;/p&gt;
 
 &lt;p&gt;Ho usato &lt;em&gt;ggridges&lt;/em&gt;, una extention di &lt;em&gt;ggplot2&lt;/em&gt;, per creare dei &lt;em&gt;density plots&lt;/em&gt; e visualizzare in dettaglio l&amp;rsquo;interazione tra giorno della settimana ed ora del giorno dei tweets (fig.3 sottostante). L&amp;rsquo;analisi tende comunque a supportare la generabilità delle osservazioni precedenti ma con alcune precisazioni: la Domenica è Di Maio a distribuire i sui tweets  più tardi la sera. Inoltre, il Lunedì Salvini è, diversamente dagli altri giorni della settimana, molto più attivo nel primo pomeriggio tra le 14 e le 16 (fig.3).&lt;/p&gt;
@@ -1591,7 +1594,7 @@ tw_d &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&
     guides&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;FALSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.2_ridges-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.2_ridges-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;ultimi-mesi&#34;&gt;Ultimi mesi&lt;/h3&gt;
 
@@ -1741,7 +1744,7 @@ knitr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;kable&lt;span class=&#34;p&#34
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;grid.arrange&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;timeline_abs&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; timeline_perc&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; ncol &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.4_timeline-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.4_timeline-1.png&#34; width=&#34;960&#34; /&gt;
 Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale. Questa normalizzazione ci permette di comparare meglio gli andamenti e i cambiamenti di attività tra i politici.&lt;/p&gt;
 
 &lt;p&gt;Salvini twitta molto più di Di Maio e Martina ma &lt;strong&gt;l&amp;rsquo;attività di tutti e 3 i politici aumenta drasticamente in Febbraio&lt;/strong&gt; di quest&amp;rsquo;anno, mese di &lt;a href=&#34;https://it.wikipedia.org/wiki/XVIII_legislatura_della_Repubblica_Italiana&#34;&gt;campagna elettorale&lt;/a&gt;) (con un inizio precoce per Salvini già in Gennaio). Questo picco di attività &lt;strong&gt;crolla velocemente&lt;/strong&gt; e in &lt;strong&gt;Marzo&lt;/strong&gt; già si ritorna a quei livelli di attività pre-elettorali (o anche inferiori nel caso di Di Maio). Un altro &lt;strong&gt;aumento dell&amp;rsquo;attività&lt;/strong&gt; di &lt;strong&gt;Salvini e Martina&lt;/strong&gt; si osserva &lt;strong&gt;negli ultimi mesi&lt;/strong&gt;, sospetto sia in qualche modo collegato alle vicenda dell&amp;rsquo;Acquarius e della &amp;ldquo;chiusura dei porti&amp;rdquo; (fig.3).&lt;/p&gt;
@@ -1785,7 +1788,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
   guides&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;FALSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.4_distribution_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.4_distribution_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Tutte e tre le distribuzioni sono estremamente skewed verso destra ma anche da questo grafico è possibile cogliere che i tweets di Salvini con alti numeri di likes sono più numerosi rispetto a quelli degli altri 2 politici (barre verdi sono più alte rispetto alle gialle e rosse quando ci spostiamo verso destra,fig.4)&lt;/p&gt;
 
@@ -1808,7 +1811,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
   theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig5_jitter_likes-1.png&#34; width=&#34;480&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig5_jitter_likes-1.png&#34; width=&#34;480&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Nella figura ogni tweet è rappresentato da un punto che è in alto se il tweet ha ricevuto molti likes. Anche da questa rappresentazione si evince che &lt;strong&gt;Salvini è estremamente più popolare tra i suoi followers di Di Maio e Martina&lt;/strong&gt; (fig.5).&lt;/p&gt;
 
@@ -1816,7 +1819,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
 
 &lt;p&gt;Come è cambiata la popolarità dei vari politici negli ultimi mesi? Andiamo ad analizzarlo attraverso la visualizzazione di numero di like per tweet (fig.6, sinistra) e totale di like (fig.5) nei mesi di Dicembre 2017 fino a Luglio 2018. Utilizzeremo lo stesso codice impiegato per le fig.1.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.6_plot_timeline_likes-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.6_plot_timeline_likes-1.png&#34; width=&#34;960&#34; /&gt;
 Sia per &lt;strong&gt;Di Maio&lt;/strong&gt; che per &lt;strong&gt;Salvini&lt;/strong&gt; in numero di &lt;strong&gt;like per tweet è aumentato drasticamente&lt;/strong&gt; a partire &lt;strong&gt;da Marzo del 2018&lt;/strong&gt; con un &lt;strong&gt;picco quest&amp;rsquo;estaste&lt;/strong&gt; (fig.6 sinistra). Anche &lt;strong&gt;i like  per tweet di Martina sono aumentati&lt;/strong&gt;, ma &lt;strong&gt;in misura molto minore&lt;/strong&gt; rispetto a quelli degli altri 2 politici (fig.6 sinistra). Un altra considerazione interessante è che &lt;strong&gt;negli ultimi mesi la popolarità dei tweets di Di Maio e Salvini&lt;/strong&gt; in termini di likes per tweets &lt;strong&gt;non è&lt;/strong&gt; stata tutto sommato &lt;strong&gt;molto differente&lt;/strong&gt; (&lt;strong&gt;2500-4000 likes per tweet&lt;/strong&gt;, fig.6 sinistra) e il maggiore numero totale di likes da parte di Salvini è imputabile al sua maggiore presenza sul social media (fig.6 destra).&lt;/p&gt;
 
 &lt;h3 id=&#34;i-tweets-più-famosi&#34;&gt;I tweets più famosi&lt;/h3&gt;
@@ -1856,7 +1859,7 @@ twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
           axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.25&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; angle &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.6_10_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.6_10_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Alcuni dei temi più cari ai m5s e Lega emergono nei  tweets più apprezzati:&lt;/p&gt;
 
@@ -1933,7 +1936,7 @@ count_dev &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
       labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;fig.8&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.7_pie-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.7_pie-1.png&#34; width=&#34;960&#34; /&gt;
 Sono piuttosto chiare le differenze tra i 3 politici:&lt;/p&gt;
 
 &lt;ul&gt;

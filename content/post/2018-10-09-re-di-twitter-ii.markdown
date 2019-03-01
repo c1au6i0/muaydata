@@ -3,7 +3,7 @@ title: Il Re di Twitter? (PART II)
 subtitle: Analisi dei tweets
 author: C1au6i0_HH
 date:  '2018-10-10'
-# lastmod: "2018 October 29 18 48"
+# lastmod: "2019 February 23 20 42"
 slug: re-di-twitter-ii
 categories:
   - R
@@ -33,7 +33,7 @@ Nella prima parte di prima serie di [posts] (https://muaydata.netlify.com/post/i
 
 ## Preparazione dati e tokenizzazione
 
-La procedura per ottenere un /tibble dei tweets dei 3 politici (a cui assegneremo il nome di __twdat__) è spiegata in dettaglio nel mio primo [post]{https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/} della serie e nella [guida di Michael Galarnyk](https://medium.com/@GalarnykMichael/accessing-data-from-Twitter-api-using-r-part1-b387a1c7d3e). 
+La procedura per ottenere un dataframe/tibble dei tweets dei 3 politici (a cui assegneremo il nome di __twdat__) è spiegata in dettaglio nel mio primo [post](https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/) della serie e nella [guida di Michael Galarnyk](https://medium.com/@GalarnykMichael/accessing-data-from-Twitter-api-using-r-part1-b387a1c7d3e). 
 
 Queste sono le librerie che ci serviranno per le nostre analisi.
 
@@ -100,6 +100,11 @@ new_order <-
   f_twwords %>%
   do(data_frame(al=levels(reorder(interaction(.$screenName, .$word, drop=TRUE), .$perc)))) %>%
   pull(al)
+```
+
+```
+## Warning: `data_frame()` is deprecated, use `tibble()`.
+## This warning is displayed once per session.
 ```
 
 Creiamo a questo punto il grafico in cui le parole usate da ogni politico saranno nell'asse delle Y e la loro frequenza in quello delle X.

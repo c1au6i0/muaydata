@@ -1,0 +1,370 @@
+---
+title: "Cassandra, Aceso and the trees"
+output: html_notebook
+---
+
+In this post we will apply predicting modelling to data of [__ADD HEALTH__](https://www .cpc.unc.edu/projects/addhealth/about), a national longitudinal study that enrolled  ~90000 adolescents and followed them up for 20 years. Using the *R* package [caret](https://github.com/topepo/caret), we will train and evaluate different models (linear, decison tree, random forrest) in order to predict drug use behavior in adulthood from information (friends, social activities, parents and others) collected during adolescence. 
+
+# The data
+
+__ADD HEALTH__ is a unique study both in terms of the extent of information collected ("the largest, most comprehensive longitudinal survey of adolescents ever undertaken") and duration (started in 1994 and is still on going [study design](https://www.cpc.unc.edu/projects/addhealth/design/designpage001.jpg/@@images/b842a2e4-e345-4384-bfc5-c724a3b55b5c.jpeg)).
+
+We will analyze the  [publicly available data](https://www.cpc.unc.edu/projects/addhealth/documentation/publicdata), a small fraction of the total subjects surveyed ~5%, but still a quite decent dataset of ~ 6000 observations X several thousand variables.
+
+It is important to keep in mind that the __current analysis will be performed on unweighted data__ (ADD  sampling designe is quite complex) and models will be evaluated in samples not necessaries rappresentative of the population. __This can affect the final estimates of the model effectivness__. 
+
+Users interested in the specific statistical procedures suggested for ADD Health weight adjustment can find info in this [guide](https://www.cpc.unc.edu/projects/addhealth/documentation/guides/wt_guidelines_20161213.pdf) and this [article](https://www.jstor.org/stable/2985969?seq=1#page_scan_tab_contents).
+
+# Obtain the datasets and make them tidy.
+
+We start loading some libraries.
+```{r libraries, message=FALSE}
+library(tidyverse)
+library(purrr)
+library(foreign) 
+library(RSQLite)
+library(caret)
+library(glmnet)
+library(randomForest)
+library(broom)
+library(rpart)
+library(party)
+```
+
+The number of variables collected for the ADD HEALTH is of several thousands. We will focus our analysis on most of the variables collected in the first wave (first survey in 1994) that include demografic information, friend and social netwoork details, parental information and many others) and we will selct one classifier from the fourth wave (2006). 
+
+A description of all the variables of the study can be found using the [codebook web Explorer](https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/topics). 
+
+I donwloaded the public-use data from [ICPSR](https://www.icpsr.umich.edu/icpsrweb/DSDR/studies/21600#) and then saved all the files with *dta* (Stata) extension in a folder. At this point, we can import all the files, select the columns that are in var_select and join the dataframes together by the subject identification variable (```AID``` that then we remove). Finaly, all the the columns that contain character data are transformed to factors.
+
+```{r getdata, eval=FALSE}
+files <- list.files(path = "/Users/heverz/Documents/R_projects/DATASETS/W1-4",
+                    include.dirs=FALSE,
+                    full.names = TRUE)
+
+# import all the dataframes.
+w1_4 <- map(files, read.dta)
+
+# identify varibles of interest
+h1_pa <- names(w1_4[[1]])[str_detect(names(w1_4[[1]]), '^H1|PA')] # H1 is the first wave
+ids <- c("AID", "GSWGT4_2", "CLUSTER2", "H4TO117") # H4 is the classifier and GSW are the weights
+var_select <- append(h1_pa, ids)
+
+
+# select the variables
+w1_4_reduced <- map(w1_4, function (x) x[, colnames(x) %in% var_select])
+
+# join not empty dataframes
+toselect <- which(map(w1_4_reduced, function(x) ncol(x) > 0) == TRUE)
+heal_data <- plyr::join_all(w1_4_reduced[toselect] , by = "AID", type = "inner")
+
+# two colums same name /remove one
+heal_data <- heal_data[, -2337] 
+names(heal_data)[2335] <- "CLUSTER2"
+
+# character columns are factors
+heal_sub <- mutate_if(heal_data, is.character, as.factor)
+```
+
+```{r remove_1factor}
+# some columns have only one level
+nlevel_count <- map_int(heal_sub_cl, nlevels)
+lev_1 <- unlist(attributes(nlevel_count[nlevel_count == 1]))
+
+heal_sub_cl <- heal_sub_cl[,  !names(heal_sub_cl) %in% lev_1]
+```
+
+```{r NAs}
+na_byc <-  unlist(map(heal_sub_cl, function(x) sum(is.na(x))))
+
+# more than 15% NA in column then not take the column
+to_remove <- na_byc[na_byc >= nrow(heal_sub_cl)*0.15]  
+
+heal_sub_cl <- heal_sub_cl[,!names(heal_sub_cl) %in% unlist(attributes(to_remove))]
+
+# testit <- preProcess(heal_sub_cl, method = c("nzv", "corr", "knnImpute", "pca"))
+```
+
+The *H4TO117* is our classifier, the response to the following question:
+
+*"Have you ever continued to use {favorite drug} after you realized using {favorite drug} was causing you any emotional problems (such as feeling depressed or empty, feeling irritable or aggressive, feeling paranoid or confused, feeling anxious or tense, being jumpy or easily startled) or causing you any health problems (such as heart pounding, headaches or dizziness, or sexual difficulties)?"*
+
+Let's clean it up and see the responses.
+```{r select_classifier}
+#classifier
+heal_sub_cl <- 
+  heal_sub %>%
+  select(-c("AID","GSWGT4_2", "CLUSTER2")) %>%  # remove column of weight and clusters 
+  mutate(H4TO117 = as.factor(str_extract(H4TO117 , "[:alpha:]+")))
+```
+
+*Legitimate* stands for Legitimate skips, that indicates those people that do not have a favorite drug.
+
+The answers to this question not only allow to distinguish people that use (or had used drugs) from people that did not (legitimate skip), but also to identify those individuals that continue to take drugs despite negative consequences (yes). The class "yes" will be our class of interest becouse it indicates those people that are presumably more likely to develop health problems as a consequene of drug use patterns. 
+
+Therefore, we will first try to  fit 2 class models, before trying something more complex. We replace "Legitimate" with "No" to obtain 2 classes: those that continued to take drugs despite negative consequences (*yes*) and those that did not (*no*).
+
+```{r 2Classes}
+heal_sub_cl$H4TO117[heal_sub_cl$H4TO117 == "Legitimate"] <- "No"
+
+heal_sub_cl$H4TO117 <- droplevels(heal_sub_cl$H4TO117)
+
+summary(heal_sub_cl$H4TO117)
+```
+## Cross Validation, Class Unballance, PreProcessing 
+
+
+
+subsampling During Resampling
+
+
+## TrainControl
+
+Explain adaptative cross validation and the other info
+```{r trainControl}
+seeds = 1502
+
+heal_folds <- groupKFold(heal_sub$CLUSTER2, k = 5)
+
+fitControl <- trainControl(method = "adaptive_cv",
+                           # number = 5, 
+                           repeats = 5,
+                           index = heal_folds,
+                           classProbs = TRUE,
+                           summaryFunction = twoClassSummary,
+                           savePredictions = "final",
+                           adaptive = list(min = 2,
+                                           alpha = 0.05,
+                                           method = "gls",
+                                           complete = TRUE),
+                           sampling = "up",
+                           verboseIter = TRUE)
+```
+
+## GLMNET MODEL
+
+
+
+```{r load_glmnet, eval= TRUE, include=FALSE}
+# saveRDS(mod_glmnet,"mod_glmnet.RDS")
+mod_glmnet_lm <- readRDS("mod_glmnet_all.RDS")
+# saveRDS(file = "mod_glmnet_all.RDS", mod_glmnet)
+```
+
+```{r mod_glmnet, eval=FALSE, include=TRUE}
+mod_glmnet <- train(H4TO117 ~ ., 
+              heal_sub_cl,
+              method = "glmnet",
+              tuneLength = 5,
+              # weights = heal_weights,
+              trControl = fitControl,
+              na.action = na.pass,
+              preProcess = c("nzv", "corr","knnImpute","pca")
+              )
+
+```
+
+```{r preprocessing}
+str(mod_glmnet)
+mod_glmnet$preProcess
+
+mod_glmnet$preProcess
+```
+
+
+```{r eval_glmnet_print}
+mod_glmnet$times
+
+1242.346/360
+
+```
+
+```{r eval_glmnet_matrix}
+confusionTable <- function (mod) {
+  tidy(confusionMatrix(mod)$table) %>% 
+  mutate( model = mod$method) %>% 
+  spread(model, n) %>% 
+  mutate(Case = c("True Negative", 
+                   "False Negative",
+                   "False Postive", 
+                   "True Positive")) %>% 
+  arrange(Case) %>% 
+  select(Case, everything()) %>% 
+  mutate_if(is.numeric, round, 2)
+}
+
+table_glmnet <- confusionTable(mod_glmnet)
+confusionTable(mod_glmnet)
+
+```
+
+```{r}
+table_glmnet <- confusionTable(mod_glmnet_w)
+```
+
+
+## TREES
+
+
+```{r load_trees, include=FALSE, eval=TRUE}
+# saveRDS(mod_rpart, "mod_rpart")
+# saveRDS(mod_ctree, "mod_ctree")
+# mod_rpart <- readRDS("mod_rpart")
+# mod_ctree <- readRDS("mod_ctree")
+```
+
+
+```{r mod_rpart, eval=FALSE, include=TRUE}
+mod_rpart <- train(H4TO117 ~ ., 
+              heal_sub_cl,
+              method = "rpart",
+              tuneLength = 5,
+              # weights = heal_weights,
+              trControl = fitControl,
+              na.action = na.pass,
+              preProcess = c("nzv","corr", "knnImpute","pca")
+              )
+
+saveRDS(mod_rpart, "mod_rpart_all.RDS")
+```
+
+https://cran.r-project.org/web/packages/partykit/vignettes/ctree.pdf
+```{r mod_ctree, eval=FALSE, include=TRUE}
+mod_ctree <- train(H4TO117 ~ ., 
+                   heal_sub_cl,
+                   method = "ctree",
+                   metric = "ROC",
+                   tuneLength = 5,
+                   trControl = fitControl,
+                   na.action = na.pass,
+                   preProcess = c("nzv","corr", "knnImpute","pca")
+              )
+saveRDS(mod_ctree, "mod_ctree.RDS")
+```
+
+
+```{r eval_trees_matrix}
+table_m3 <- bind_cols(table_glmnet,
+            confusionTable(mod_rpart)[,4], 
+            confusionTable(mod_ctree)[,4])
+
+
+table_m3
+```
+svmLinearWeights
+
+
+
+## SVM
+```{r mod_svm, eval=FALSE, include=TRUE}
+mod_svm <- train(H4TO117 ~ .,
+                   heal_sub_cl,
+                   method = "svmLinearWeights",
+                   metric = "ROC",
+                   tuneLength = 5,
+                   trControl = fitControl,
+                   na.action = na.pass,
+                   preProcess = c("nzv","corr", "knnImpute","pca")
+              )
+saveRDS(mod_svm, "mod_svm.RDS")
+```
+
+## RANDOM FOREST
+
+```{r load_rf, eval=TRUE, include=FALSE}
+mod_ranger <- readRDS("mod_ranger.RDS")
+```
+
+
+```{r mod_rf, eval=FALSE, include=TRUE}
+mod_ranger <- train(H4TO117 ~ ., 
+              heal_sub_cl,
+              method = "ranger",
+              metric = "ROC",
+              tuneLength = 5,
+              trControl = fitControl,
+              na.action = na.pass,
+              preProcess = c("nzv","corr", "knnImpute", "pca")
+              )
+
+saveRDS(mod_ranger, "mod_ranger.RDS")
+```
+
+```{r eval_matrix, eval=TRUE, include=FALSE}
+table_m4  <- bind_cols(table_m3,
+            confusionTable(mod_ranger)[,4])
+table_m4 
+```
+
+
+
+## Compareall
+```{r eval_all_graph, eval=TRUE, include=TRUE, warning=FALSE}
+model_list <- list( glmnet = mod_glmnet,
+                    rpart = mod_rpart,
+                    ctree = mod_ctree,
+                    ranger = mod_ranger)
+
+
+resamps <- resamples(model_list)
+
+# getAnywhere("ggplot.resamples")
+
+
+resamps$values %>% 
+  gather("model~metric", "value", 2:13) %>% 
+  separate ("model~metric", c("model", "metric")) %>% 
+  mutate(model = factor(model, levels = names(table_m4[4:7]))) %>% 
+  group_by(model, metric) %>% 
+  summarize(mean = mean(value), sd = sd(value)) %>% 
+  
+  ggplot(aes(y= mean, x = model, col = model)) +
+    geom_point(size = 2.5) +
+    geom_errorbar(aes(ymin = mean - sd, ymax =  mean + sd), width = 0.1) +
+    scale_y_continuous(limits = c(0, 1)) + 
+    coord_flip() +
+    facet_wrap(metric ~ .) +
+    theme(legend.position = "none")
+```
+
+
+
+
+# Model: 3 classes
+
+```{r 3_resample}
+get.seed(1512)
+up_heal3 <- upSample(x = heal_sub_cl3[, -ncol(heal_sub_cl3)],
+                     y = heal_sub_cl3$H4TO117)                         
+table(up_heal$Class) 
+```
+
+```{r trainControl3}
+
+# #this need to  be changed
+# fitControl3 <- trainControl(method = "adaptive_cv",
+#                            number = 5, repeats = 5,
+#                            summaryFunction = multiClassSummary,
+#                            savePredictions = "final",
+#                             adaptive = list(min = 2,
+#                                             alpha = 0.05,
+#                                             method = "gls",
+#                                             complete = TRUE),
+#                            verboseIter = TRUE,
+                           # classProbs = TRUE)
+
+mod_ranger3 <- train(Class ~ ., 
+              up_heal3,
+              method = "ranger",
+              metric = "ROC",
+              tuneLength = 5,
+              trControl = fitControl3,
+              preProcess = c("nzv","corr", "pca"),
+              na.action = na.omit,
+              verbose = TRUE
+              )
+
+print(mod_ranger3)
+
+confusionMatrix(mod_ranger3)
+```

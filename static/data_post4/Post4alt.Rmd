@@ -3,7 +3,7 @@ title: "Cassandra, Aceso and the trees"
 output: html_notebook
 ---
 
-In this post we will apply predicting modelling to data of [__ADD HEALTH__](https://www .cpc.unc.edu/projects/addhealth/about), a national longitudinal study that enrolled  ~90000 adolescents and followed them up for 20 years. Using the *R* package [caret](https://github.com/topepo/caret), we will train and evaluate different models (linear, decison tree, random forrest) in order to predict drug use behavior in adulthood from information (friends, social activities, parents and others) collected during adolescence. 
+In this post we will apply predicting modelling to data of [__ADD HEALTH__](https://www .cpc.unc.edu/projects/addhealth/about), a national longitudinal study that enrolled  ~90000 adolescents and followed them up for 20 years. Using the *R* package [```caret```](https://github.com/topepo/caret), we will train and evaluate different models (linear, decison tree, random forrest) in order to predict drug use behavior in adulthood from information (friends, social activities, parents and others) collected during adolescence. Doing that we will give us the opportunity to play and get familiarized with the most important ```caret``` functions as well as introduce important concepts of machine learning.
 
 # The data
 
@@ -11,11 +11,11 @@ __ADD HEALTH__ is a unique study both in terms of the extent of information coll
 
 We will analyze the  [publicly available data](https://www.cpc.unc.edu/projects/addhealth/documentation/publicdata), a small fraction of the total subjects surveyed ~5%, but still a quite decent dataset of ~ 6000 observations X several thousand variables.
 
-It is important to keep in mind that the __current analysis will be performed on unweighted data__ (ADD  sampling designe is quite complex) and models will be evaluated in samples not necessaries rappresentative of the population. __This can affect the final estimates of the model effectivness__. 
+It is important to keep in mind that the __current analysis will be performed on unweighted data__ (ADD  sampling design is quite complex) and models will be evaluated in samples not necessaries rappresentative of the population. __This can affect the final estimates of the model effectivness__. 
 
 Users interested in the specific statistical procedures suggested for ADD Health weight adjustment can find info in this [guide](https://www.cpc.unc.edu/projects/addhealth/documentation/guides/wt_guidelines_20161213.pdf) and this [article](https://www.jstor.org/stable/2985969?seq=1#page_scan_tab_contents).
 
-# Obtain the datasets and make them tidy.
+# Obtain the dataset and make it tidy
 
 We start loading some libraries.
 ```{r libraries, message=FALSE}
@@ -37,7 +37,7 @@ A description of all the variables of the study can be found using the [codebook
 
 I donwloaded the public-use data from [ICPSR](https://www.icpsr.umich.edu/icpsrweb/DSDR/studies/21600#) and then saved all the files with *dta* (Stata) extension in a folder. At this point, we can import all the files, select the columns that are in var_select and join the dataframes together by the subject identification variable (```AID``` that then we remove). Finaly, all the the columns that contain character data are transformed to factors.
 
-```{r getdata, eval=FALSE}
+```{r getdata}
 files <- list.files(path = "/Users/heverz/Documents/R_projects/DATASETS/W1-4",
                     include.dirs=FALSE,
                     full.names = TRUE)
@@ -49,7 +49,6 @@ w1_4 <- map(files, read.dta)
 h1_pa <- names(w1_4[[1]])[str_detect(names(w1_4[[1]]), '^H1|PA')] # H1 is the first wave
 ids <- c("AID", "GSWGT4_2", "CLUSTER2", "H4TO117") # H4 is the classifier and GSW are the weights
 var_select <- append(h1_pa, ids)
-
 
 # select the variables
 w1_4_reduced <- map(w1_4, function (x) x[, colnames(x) %in% var_select])
@@ -66,43 +65,47 @@ names(heal_data)[2335] <- "CLUSTER2"
 heal_sub <- mutate_if(heal_data, is.character, as.factor)
 ```
 
+Some columns are factors factors with only one level. We are going to remove them.
+
 ```{r remove_1factor}
 # some columns have only one level
-nlevel_count <- map_int(heal_sub_cl, nlevels)
+nlevel_count <- map_int(heal_sub, nlevels)
 lev_1 <- unlist(attributes(nlevel_count[nlevel_count == 1]))
 
-heal_sub_cl <- heal_sub_cl[,  !names(heal_sub_cl) %in% lev_1]
+heal_sub <- heal_sub[,  !names(heal_sub) %in% lev_1]
 ```
+
+Same columns miss quite a lot of data. We can  *impute* missing onservation only if there are not too many in each column. We are going to drop all the columns that have more than 15% of missing data.
 
 ```{r NAs}
-na_byc <-  unlist(map(heal_sub_cl, function(x) sum(is.na(x))))
+na_byc <-  unlist(map(heal_sub, function(x) sum(is.na(x))))
 
-# more than 15% NA in column then not take the column
-to_remove <- na_byc[na_byc >= nrow(heal_sub_cl)*0.15]  
+# if more than 15% NA in column then not take the column
+to_remove <- na_byc[na_byc >= nrow(heal_sub)*0.15]  
 
-heal_sub_cl <- heal_sub_cl[,!names(heal_sub_cl) %in% unlist(attributes(to_remove))]
-
-# testit <- preProcess(heal_sub_cl, method = c("nzv", "corr", "knnImpute", "pca"))
+# subset
+heal_sub <- heal_sub[,!names(heal_sub) %in% unlist(attributes(to_remove))]
 ```
 
-The *H4TO117* is our classifier, the response to the following question:
+The _*H4TO117*_ column is our classifier, the response to the following question:
 
 *"Have you ever continued to use {favorite drug} after you realized using {favorite drug} was causing you any emotional problems (such as feeling depressed or empty, feeling irritable or aggressive, feeling paranoid or confused, feeling anxious or tense, being jumpy or easily startled) or causing you any health problems (such as heart pounding, headaches or dizziness, or sexual difficulties)?"*
 
 Let's clean it up and see the responses.
+
 ```{r select_classifier}
 #classifier
 heal_sub_cl <- 
-  heal_sub %>%
-  select(-c("AID","GSWGT4_2", "CLUSTER2")) %>%  # remove column of weight and clusters 
-  mutate(H4TO117 = as.factor(str_extract(H4TO117 , "[:alpha:]+")))
+  heal_sub%>%
+  select(-c("AID","GSWGT4_2", "CLUSTER2", "H1GI1M")) %>%  # remove column of weight, month of birth, and clusters 
+  mutate(H4TO117 = as.factor(str_extract(H4TO117 , "[:alpha:]+"))) # keep only letters
 ```
 
 *Legitimate* stands for Legitimate skips, that indicates those people that do not have a favorite drug.
 
 The answers to this question not only allow to distinguish people that use (or had used drugs) from people that did not (legitimate skip), but also to identify those individuals that continue to take drugs despite negative consequences (yes). The class "yes" will be our class of interest becouse it indicates those people that are presumably more likely to develop health problems as a consequene of drug use patterns. 
 
-Therefore, we will first try to  fit 2 class models, before trying something more complex. We replace "Legitimate" with "No" to obtain 2 classes: those that continued to take drugs despite negative consequences (*yes*) and those that did not (*no*).
+Therefore, we will try first to  fit 2 class models, before trying something more complex. We replace "Legitimate" with "No" to obtain 2 classes: those that continued to take drugs despite negative consequences (*yes*) and those that did not (*no*).
 
 ```{r 2Classes}
 heal_sub_cl$H4TO117[heal_sub_cl$H4TO117 == "Legitimate"] <- "No"
@@ -111,45 +114,57 @@ heal_sub_cl$H4TO117 <- droplevels(heal_sub_cl$H4TO117)
 
 summary(heal_sub_cl$H4TO117)
 ```
-## Cross Validation, Class Unballance, PreProcessing 
 
+## Cross Validation, Class Unballance.
 
+After some data exploration, we can finaly develop (train) and evaluate (test) predictive models. In other words, we are going to find the best parameters for the different models and test them. Can we train and test models using exatly the same data? That would not be a good idea at all, as it would results in an overestimation of the accuracy of our models (we would end it up fitting also noise). Why? 
 
-subsampling During Resampling
+Imagine to be muay thai fighter that is getting ready for his first fight. If you train and spar always with the same person, you might end it up knowing his/her strategies pretty well, and developing way to respond and exploit his/her way of attacking and defending. For an external observer you might look even very good when you spar with him/her. Does it mean that you are going to do well also in your fight? Not really. Your opponent might have a difference stance of your training partner or a completly different style. You might have not encountered those moves in training and thus perform not well at all under those different conditions (and get your ass kicked). So what can you do to get ready for your fight and have a more accurate understanding of your potential? Don't train and test your skill always with the same person. What you want to do is to train with as many different people, and then occasionally test your skills with someone that you have never trained before. This will maximaze your chance of having trained for someone similar to your actual fight opponent but also give you a better idea if you are ready or not.
 
+That is the same thing that we are going to do with our data. We will divide our dataset in 10 samples, train our model with 9 of them and evaluate it with the 10th. Then select a different sample for testing and apply the same procedure until each one is used once for testing. In this way, we well never train and test our model with the same data and we can also get an estimate of variability in the accuracy of the model. The entire procedure will than be repeated 5 times with reshaffled data (new partitions). This procedure is called ```repeated cross-validation```.
 
-## TrainControl
+Unfortunatelly we have another problem. The people that keep taking drugs despite negative consequences are about 5% of the total number of people in our dataset. We have a severe **class umballance**. Becouse of such a difference in the size of our 2 classes, it is more likely that the small class we will have much less weight in the parameter optimitation of our model. There are several things that we can do to mitigate that problem. One is to randomly up-sample the smaller class to make the class distribution equal. We could run the caret function ```upSample``` that does exactly that and than train and test our model on the resampled data.  What is the problem in doing that? It's that it is very likely that the same observations will be part of the data that used to train the model but also test its accuracy, that is becouse  we are going to douplicate a lot of observations for the class "yes". Here we are again, training and *sparring* with the same partners as before! We need to train our model on the upSample data, but then test it on part of the not resample data! [_*Max Kuhn*_](https://topepo.github.io/caret/index.html), the creator of ```caret```, made it easy for us, and not we can do that using an option when we invoke the function ```trainControl``` for cross-validating the data. Perfect!
 
-Explain adaptative cross validation and the other info
+## TrainControl and Hyperparameters
+
+There is another important detail to take in consideration when we partition data.  We want to make sure to mantain as equal as possible the distribution of our class of interest in the train and test samples. In other words, we want to avoid that for example the "*yes*" responses to question *H4TO117* will end up all in one of the training partitions but not the other. This is done automatically by ```caret::trainControl```.
+
+However, our dataset has another relevant variable that we need to take in consideration: *CLUSTER2*. In the ADD HEALTH study, subjets were chosen in clusters (i.e. schools). It is likely that observations of same clusters will be more similar to each other than to those coming from a different cluster. Again, if the data that we use for training and testing the model are very similar, we might end up obtain overoptimistc estimates [overoptimistc estimates](https://topepo.github.io/caret/data-splitting.html#simple-splitting-with-important-groups) of accuracy. This would be equavalent to test your fighting skills sparring with someone that you have never trained with before but that comes to your same gym. He/she has trained under the same coach and thus it is very likely that is going to employ moves that you have seen before. Would you still perform well against someone with a completly different style and background? Difficul to say. It would be better to test your skills sparring with someone from a different gym. Similarly, we can limit this problem taking in account the varianle ```CLUSTER2``` when we partition our data  and try to avoid as much as possible to train and test the model with data from exatly the same cluster. The function ```caret::groupKFold``` will do it for us.
+
 ```{r trainControl}
 seeds = 1502
 
-heal_folds <- groupKFold(heal_sub$CLUSTER2, k = 5)
+heal_folds <- groupKFold(heal_sub$CLUSTER2, k = 10)
 
 fitControl <- trainControl(method = "adaptive_cv",
-                           # number = 5, 
+                           adaptive = list(min = 2,  # the minimum number of resamples used before models are removed
+                                           alpha = 0.05, # confidence intervals for futility
+                                           method = "gls", #  generalized least squares
+                                           complete = TRUE), # calcolate all resamples even if value is found
                            repeats = 5,
+                           number = 10,
                            index = heal_folds,
                            classProbs = TRUE,
                            summaryFunction = twoClassSummary,
                            savePredictions = "final",
-                           adaptive = list(min = 2,
-                                           alpha = 0.05,
-                                           method = "gls",
-                                           complete = TRUE),
-                           sampling = "up",
+                           sampling = "up",   # upsampling
                            verboseIter = TRUE)
 ```
 
-## GLMNET MODEL
+All the operations that we discussed in the last two paragraph are taken care of by ```caret::trainControl```. You might have notice that in the code above we are not using a *repeated cross-validation`* but we have indicated instead ```method = "adaptive_cv```.  What is that? It is an [algorithm](https://topepo.github.io/caret/adaptive-resampling.html) to  adaptivly look for the best *tuning parameters* for our model and, as Max Kuhn put it "concentrates on values that are the in the neighborhood of the optimal settings".
+Let's clarify what are this *tuning parameters*. The tuning paramters (hyperparamters) are those paramaters that are not derived by the data (like the coefficients of a regression) but are decided beforend. For example, in order to increase the interpretability of regression and reduce colinearity, we might decide to limit the number of coefficients and/or their total magnitude and, thus develop a more parsimonius model. In the package ```glmnet``` we can do that setting the hyperparameters ```alpha``` and ```lambda```.  Similarly, in decision tree we need to decide how many variables to consider at each split (```mtry```) or other parameters that control the tree size (```cp```). Using ```method = "adaptive_cv```, combinations of hyperparmetes will be automatically searched and evaluated in each sample to obtain the best parameters _*and hyperparameters*_ for the model (i.e. that maximaze accuracy).
 
+## Preprocessing 
 
+Before training our first model we need to spend also some few words on preprocessing. This is getting long but no one will really read this post so who cares. We have a lot of variables, more than 2000 and that put quite some computational burden on my personal laptop. We might no need all those variables, becouse some of them might have near zero variance (immagine a column made of only one identical value) or might be very correlated to each other. Moreover, we can using principal component analysis ([PCA](https://en.wikipedia.org/wiki/Principal_component_analysis)) to use linear combination of variables that explain most of the variability of the data. Finaly, we can impute missing data using k-nearest neighbors algorithms, that use the distance to the closest sample to calculate the values that are substitute to the missing data. All this computations can be very conveniently done before training our models using the argument ```preProcess = c("nzv", "corr","knnImpute","pca")```, when calling the function ```caret::train```.
 
 ```{r load_glmnet, eval= TRUE, include=FALSE}
-# saveRDS(mod_glmnet,"mod_glmnet.RDS")
-mod_glmnet_lm <- readRDS("mod_glmnet_all.RDS")
+saveRDS(mod_glmnet,"mod_glmnet_all.RDS")
+mod_glmnet <- readRDS("mod_glmnet_all.RDS")
 # saveRDS(file = "mod_glmnet_all.RDS", mod_glmnet)
 ```
+
+We are ready! Let's train our first model, ["a generalized linear model via penalized maximum likelihood"](https://web.stanford.edu/~hastie/glmnet/glmnet_alpha.html), using the package above mentioned ```glmnet```. Becouse of the limited compuational capability of my laptop we are going to try only 5 different combinations of hyperparameters for each resample (````tuneLength = 5```). _*This is definetly an inadeguate number of combinations*_ (I would have tried at least 100 if I could) _*but will still give as the opportunity to see how to train a model an evaluate it.*_ 
 
 ```{r mod_glmnet, eval=FALSE, include=TRUE}
 mod_glmnet <- train(H4TO117 ~ ., 
@@ -161,23 +176,18 @@ mod_glmnet <- train(H4TO117 ~ .,
               na.action = na.pass,
               preProcess = c("nzv", "corr","knnImpute","pca")
               )
-
 ```
 
-```{r preprocessing}
-str(mod_glmnet)
-mod_glmnet$preProcess
+All the info regarding our model, including the coefficients of the different predictors, are contained in   ```mod_glmnet$finalModel```. A summary of the details regarding the *pre-processing*, *resampling*, *hyperparmeter tuning* can be easily retrived ```print``ing  the model.
 
-mod_glmnet$preProcess
+```{r mod_print, include=FALSE}
+mod_glmnet$finalModel
 ```
+Notice that many variables, more than the number of columns,  have been removed during the ```pre-Processing```. This is becouse ```caret``` authomatically convert factors in [*dummy variables*](https://topepo.github.io/caret/pre-processing.html#creating-dummy-variables).
 
+_*Was the model was the model any good? Was it able to predict if a person was going to take the favorite drug despite negative consequences?*_.
 
-```{r eval_glmnet_print}
-mod_glmnet$times
-
-1242.346/360
-
-```
+Some estimates of the model efficacy are reported above (ROC, Sens, Spec) and we will discuss them in depth during the next paragraphs. Right now we can get a feel of how the model is performing by looking at the [confusionMatrix](https://en.wikipedia.org/wiki/Confusion_matrix) which indicates the percentage of predictions that were correct in each of the classes. Instead of using ``confusionMatrix```, I am going to create my own function for extracting that info from ```model$table``` and arrange it in table with a different layout.
 
 ```{r eval_glmnet_matrix}
 confusionTable <- function (mod) {
@@ -194,23 +204,20 @@ confusionTable <- function (mod) {
 }
 
 table_glmnet <- confusionTable(mod_glmnet)
-confusionTable(mod_glmnet)
-
+table_glmnet
 ```
-
-```{r}
-table_glmnet <- confusionTable(mod_glmnet_w)
-```
-
+You can see that while the model doesn't do that bad in predicting *No*, the performance deteriorate in identifing *Yes*. About 5% of the subjects in our dataset respond *Yes* with our model detecting less than half of them (true positive).  Let's try with different models.
 
 ## TREES
 
+Another type of very popular preditive model is decision trees. Decision trees are very easy to implement and intrerpret
 
 ```{r load_trees, include=FALSE, eval=TRUE}
-# saveRDS(mod_rpart, "mod_rpart")
+saveRDS(mod_rpart, "mod_rpart_all")
 # saveRDS(mod_ctree, "mod_ctree")
-# mod_rpart <- readRDS("mod_rpart")
-# mod_ctree <- readRDS("mod_ctree")
+mod_rpart <- readRDS("mod_rpart_all.RDS")
+mod_ctree <- readRDS("mod_ctree_all.RDS")
+print(mod_rpart)
 ```
 
 
@@ -224,9 +231,9 @@ mod_rpart <- train(H4TO117 ~ .,
               na.action = na.pass,
               preProcess = c("nzv","corr", "knnImpute","pca")
               )
-
-saveRDS(mod_rpart, "mod_rpart_all.RDS")
 ```
+
+
 
 https://cran.r-project.org/web/packages/partykit/vignettes/ctree.pdf
 ```{r mod_ctree, eval=FALSE, include=TRUE}
@@ -242,7 +249,6 @@ mod_ctree <- train(H4TO117 ~ .,
 saveRDS(mod_ctree, "mod_ctree.RDS")
 ```
 
-
 ```{r eval_trees_matrix}
 table_m3 <- bind_cols(table_glmnet,
             confusionTable(mod_rpart)[,4], 
@@ -253,41 +259,23 @@ table_m3
 ```
 svmLinearWeights
 
-
-
-<!-- ## SVM -->
-<!-- ```{r mod_svm, eval=FALSE, include=TRUE} -->
-<!-- mod_svm <- train(H4TO117 ~ .,  -->
-<!--                    heal_sub_cl, -->
-<!--                    method = "svmLinearWeights", -->
-<!--                    metric = "ROC", -->
-<!--                    tuneLength = 5, -->
-<!--                    trControl = fitControl, -->
-<!--                    na.action = na.pass, -->
-<!--                    preProcess = c("nzv","corr", "knnImpute","pca") -->
-<!--               ) -->
-<!-- saveRDS(mod_svm, "mod_svm.RDS") -->
-<!-- ``` -->
-
 ## RANDOM FOREST
 
 ```{r load_rf, eval=TRUE, include=FALSE}
-mod_ranger <- readRDS("mod_ranger.RDS")
+mod_ranger <- readRDS("mod_ranger_all.RDS")
 ```
 
 
 ```{r mod_rf, eval=FALSE, include=TRUE}
 mod_ranger <- train(H4TO117 ~ ., 
               heal_sub_cl,
-              method = "ranger",
+              met2hod = "ranger",
               metric = "ROC",
               tuneLength = 5,
               trControl = fitControl,
               na.action = na.pass,
               preProcess = c("nzv","corr", "knnImpute", "pca")
               )
-
-saveRDS(mod_ranger, "mod_ranger.RDS")
 ```
 
 ```{r eval_matrix, eval=TRUE, include=FALSE}
@@ -296,9 +284,7 @@ table_m4  <- bind_cols(table_m3,
 table_m4 
 ```
 
-
-
-## Compareall
+## Compare all
 ```{r eval_all_graph, eval=TRUE, include=TRUE, warning=FALSE}
 model_list <- list( glmnet = mod_glmnet,
                     rpart = mod_rpart,
@@ -328,43 +314,19 @@ resamps$values %>%
 ```
 
 
+```{r}
+for_lift = data.frame(Class = model$pred$obs,  xgbTree = model$pred$R)
+plot ROC:
 
-
-# Model: 3 classes
-
-```{r 3_resample}
-get.seed(1512)
-up_heal3 <- upSample(x = heal_sub_cl3[, -ncol(heal_sub_cl3)],
-                     y = heal_sub_cl3$H4TO117)                         
-table(up_heal$Class) 
+pROC::plot.roc(pROC::roc(response = for_lift$Class,
+                         predictor = for_lift$xgbTree,
+                         levels = c("M", "R")),
+           lwd=1.5) 
 ```
 
-```{r trainControl3}
 
-# #this need to  be changed
-# fitControl3 <- trainControl(method = "adaptive_cv",
-#                            number = 5, repeats = 5,
-#                            summaryFunction = multiClassSummary,
-#                            savePredictions = "final",
-#                             adaptive = list(min = 2,
-#                                             alpha = 0.05,
-#                                             method = "gls",
-#                                             complete = TRUE),
-#                            verboseIter = TRUE,
-                           # classProbs = TRUE)
-
-mod_ranger3 <- train(Class ~ ., 
-              up_heal3,
-              method = "ranger",
-              metric = "ROC",
-              tuneLength = 5,
-              trControl = fitControl3,
-              preProcess = c("nzv","corr", "pca"),
-              na.action = na.omit,
-              verbose = TRUE
-              )
-
-print(mod_ranger3)
-
-confusionMatrix(mod_ranger3)
+```{r}
+mydb <-  dbConnect(RSQLite::SQLite(), dbname = "heal_data.sqlite")
 ```
+
+

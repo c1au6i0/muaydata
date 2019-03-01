@@ -33,10 +33,10 @@
 
 
 
-<meta name="generator" content="Hugo 0.48" />
+<meta name="generator" content="Hugo 0.53" />
 
 
-<link rel="canonical" href="https://muaydata.netlify.com/post/animated-prison/" />
+<link rel="canonical" href="/post/animated-prison/" />
 
 
 
@@ -59,15 +59,16 @@
 <meta property="og:title" content="Animated Prison" />
 <meta property="og:description" content="Visualization changes in prison population (post3)" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://muaydata.netlify.com/post/animated-prison/" /><meta property="article:published_time" content="2018-10-25T00:00:00&#43;00:00"/>
+<meta property="og:url" content="/post/animated-prison/" /><meta property="article:published_time" content="2018-10-25T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2018-10-23T18:19:53-04:00"/>
+
 <meta itemprop="name" content="Animated Prison">
 <meta itemprop="description" content="Visualization changes in prison population (post3)">
 
 
 <meta itemprop="datePublished" content="2018-10-25T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2018-10-25T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="1944">
+<meta itemprop="dateModified" content="2018-10-23T18:19:53-04:00" />
+<meta itemprop="wordCount" content="1954">
 
 
 
@@ -117,28 +118,28 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="https://muaydata.netlify.com/">Home</a>
+            <a class="menu-item-link" href="/">Home</a>
           
         
       </li><li class="mobile-menu-item">
         
           
           
-            <a class="menu-item-link" href="https://muaydata.netlify.com/tags/">Tags</a>
+            <a class="menu-item-link" href="/tags/">Tags</a>
           
         
       </li><li class="mobile-menu-item">
         
           
           
-            <a class="menu-item-link" href="https://muaydata.netlify.com/categories/">Categories</a>
+            <a class="menu-item-link" href="/categories/">Categories</a>
           
         
       </li><li class="mobile-menu-item">
         
           
           
-            <a class="menu-item-link" href="https://muaydata.netlify.com/about/">About</a>
+            <a class="menu-item-link" href="/about/">About</a>
           
         
       </li>
@@ -225,7 +226,7 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="https://muaydata.netlify.com/">Home</a>
+            <a class="menu-item-link" href="/">Home</a>
           
 
         
@@ -236,7 +237,7 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="https://muaydata.netlify.com/tags/">Tags</a>
+            <a class="menu-item-link" href="/tags/">Tags</a>
           
 
         
@@ -247,7 +248,7 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="https://muaydata.netlify.com/categories/">Categories</a>
+            <a class="menu-item-link" href="/categories/">Categories</a>
           
 
         
@@ -258,7 +259,7 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="https://muaydata.netlify.com/about/">About</a>
+            <a class="menu-item-link" href="/about/">About</a>
           
 
         
@@ -283,10 +284,10 @@ if (!doNotTrack) {
       <div class="post-meta">
         <span class="post-time"> 2018-10-25 </span>
         <div class="post-category">
-            <a href="https://muaydata.netlify.com/categories/r/"> R </a>
+            <a href="/categories/r/"> R </a>
             
           </div>
-        <span class="more-meta"> 1944 words </span>
+        <span class="more-meta"> 1954 words </span>
           <span class="more-meta"> 10 min read </span>
 
         
@@ -321,8 +322,6 @@ if (!doNotTrack) {
 
 <iframe title="Prison_video" height="400" src="/data_post3/output.mp4" frameBorder="0" allowfullscreen></iframe>
 
-<p></p>
-
 <p>What are we looking at? The video-graph represents the number of people in private and public prisons (sentenced and unsentenced) normalized by the corresponding state population. The darker is a state, the higher is the prison population relative to the total population. The year is indicated on the top left and the video shows the data <strong>from 1999 to 2015</strong>.</p>
 
 <p>Some changes are quite evident. For example, Texas is the darkest among Southern states at the start of the video, but by the year 2015 it is Oklahoma to lead the South in terms of prison population.</p>
@@ -355,7 +354,6 @@ Admittedly the video does not knock you out (changes are relatively small), but 
 </span><span class="lnt">5
 </span><span class="lnt">6
 </span><span class="lnt">7
-</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>av<span class="p">)</span>
@@ -364,8 +362,7 @@ Admittedly the video does not knock you out (changes are relatively small), but 
 <span class="kn">library</span><span class="p">(</span>readr<span class="p">)</span>
 <span class="kn">library</span><span class="p">(</span>readxl<span class="p">)</span>
 <span class="kn">library</span><span class="p">(</span>stringr<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>transformr<span class="p">)</span></code></pre></td></tr></table>
+<span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>The primary dataset that we are going to use is the <a href="https://www.icpsr.umich.edu/icpsrweb/ICPSR/studies/36657">National Prisoner Statistics, 1978-2015</a> curated by the United States Department of Justice, the Office of Justice Program and the Bureau of Justice Statistics.</p>
@@ -397,17 +394,17 @@ prison_pop<span class="p">[</span><span class="m">2044</span><span class="o">:</
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">## # A tibble: 9 x 6
-##    YEAR STATEID                  STATE REGION              CUSGT1M CUSGT1F
-##   &lt;dbl&gt; &lt;fct&gt;                    &lt;fct&gt; &lt;fct&gt;                 &lt;dbl&gt;   &lt;dbl&gt;
-## 1  2015 (50) 50. Vermont         VT    (1) Northeast           966      83
-## 2  2015 (51) 51. Virginia        VA    (3) South             28105    2325
-## 3  2015 (53) 53. Washington      WA    (4) West              15848    1297
-## 4  2015 (54) 54. West Virginia   WV    (3) South              5319     606
-## 5  2015 (55) 55. Wisconsin       WI    (2) Midwest           20346    1329
-## 6  2015 (56) 56. Wyoming         WY    (4) West               1888     245
-## 7  2015 (60) State prison total  ST    (7) State total     1054949   78954
-## 8  2015 (70) US prison total (s… US    (5) U.S. total      1192289   89180
-## 9  2015 (99) Federal BOP         FE    (6) Federal Bureau…  137340   10226</pre></td></tr></table>
+##    YEAR STATEID                   STATE REGION              CUSGT1M CUSGT1F
+##   &lt;dbl&gt; &lt;fct&gt;                     &lt;fct&gt; &lt;fct&gt;                 &lt;dbl&gt;   &lt;dbl&gt;
+## 1  2015 (50) 50. Vermont          VT    (1) Northeast           966      83
+## 2  2015 (51) 51. Virginia         VA    (3) South             28105    2325
+## 3  2015 (53) 53. Washington       WA    (4) West              15848    1297
+## 4  2015 (54) 54. West Virginia    WV    (3) South              5319     606
+## 5  2015 (55) 55. Wisconsin        WI    (2) Midwest           20346    1329
+## 6  2015 (56) 56. Wyoming          WY    (4) West               1888     245
+## 7  2015 (60) State prison total   ST    (7) State total     1054949   78954
+## 8  2015 (70) US prison total (st… US    (5) U.S. total      1192289   89180
+## 9  2015 (99) Federal BOP          FE    (6) Federal Bureau…  137340   10226</pre></td></tr></table>
 </div>
 </div>
 <p>The data is in the right format (long) but it is not tidy. For example, the last 3 observations are totals that we don&rsquo;t need and the name of the states (<em>STATEID</em>) is recorder with other superfluous information. We need to cleaning it up and also restrict our focus of analysis.</p>
@@ -484,16 +481,18 @@ prison_1999_tot <span class="o">&lt;-</span>
 </span><span class="lnt">6
 </span><span class="lnt">7
 </span><span class="lnt">8
+</span><span class="lnt">9
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">## Observations: 867
 ## Variables: 6
-## $ YEAR      &lt;dbl&gt; 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999...
-## $ STATEID   &lt;chr&gt; &#34;alabama&#34;, &#34;alaska&#34;, &#34;arizona&#34;, &#34;arkansas&#34;, &#34;califor...
-## $ STATE     &lt;fct&gt; AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, ...
-## $ PRIS      &lt;dbl&gt; 21227, 3916, 25986, 10388, 160687, 12995, 16987, 658...
-## $ PRIS_PUB  &lt;dbl&gt; 21227, 2529, 24594, 9174, 156066, 12995, 16987, 6585...
-## $ PRIS_PRIV &lt;dbl&gt; 0, 1387, 1392, 1214, 4621, 0, 0, 0, 4024, 3773, 3001...</pre></td></tr></table>
+## Groups: YEAR, STATEID [?]
+## $ YEAR      &lt;dbl&gt; 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, …
+## $ STATEID   &lt;chr&gt; &#34;alabama&#34;, &#34;alaska&#34;, &#34;arizona&#34;, &#34;arkansas&#34;, &#34;californi…
+## $ STATE     &lt;fct&gt; AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, IL…
+## $ PRIS      &lt;dbl&gt; 21227, 3916, 25986, 10388, 160687, 12995, 16987, 6585,…
+## $ PRIS_PUB  &lt;dbl&gt; 21227, 2529, 24594, 9174, 156066, 12995, 16987, 6585, …
+## $ PRIS_PRIV &lt;dbl&gt; 0, 1387, 1392, 1214, 4621, 0, 0, 0, 4024, 3773, 3001, …</pre></td></tr></table>
 </div>
 </div>
 <p>But now we have our first problem: a possible increase in the prison population might be the result of corresponding variation of U.S population. To circumvent that problem we need to express the prison population relative to the corresponding state population for the time interval of interest. Where do we get the data?
@@ -521,7 +520,7 @@ In the website of the U.S Census Bureau, of course!</p>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="c1"># Thanks LukeA: https://stackoverflow.com/questions/33135060/read-csv-file-hosted-on-google-drive#33142446) </span>
 
-ids <span class="o">&lt;-</span>  <span class="s">&#34;1bCGjAtCjoRuRf8RFw78Rzjtq_r5uxXBP&#34;</span> <span class="c1"># IDS file </span>
+ids <span class="o">&lt;-</span>  <span class="s">&#34;1nTEpk2hW56Czx8-aGysQgKKaebhIFg1B&#34;</span> <span class="c1"># IDS file </span>
 
 sp_wide <span class="o">&lt;-</span> read_csv<span class="p">(</span><span class="kp">sprintf</span><span class="p">(</span><span class="s">&#34;https://drive.google.com/uc?id=%s&amp;export=download&#34;</span><span class="p">,</span> ids<span class="p">))</span></code></pre></td></tr></table>
 </div>
@@ -605,16 +604,16 @@ glimpse<span class="p">(</span>prison_norm_xy<span class="p">)</span></code></pr
 <td class="lntd">
 <pre class="chroma">## Observations: 264,163
 ## Variables: 10
-## $ YEAR      &lt;dbl&gt; 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999...
-## $ STATEID   &lt;chr&gt; &#34;alabama&#34;, &#34;alabama&#34;, &#34;alabama&#34;, &#34;alabama&#34;, &#34;alabama...
-## $ STATE     &lt;fct&gt; AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, ...
-## $ PRIS      &lt;dbl&gt; 21227, 21227, 21227, 21227, 21227, 21227, 21227, 212...
-## $ PRIS_PUB  &lt;dbl&gt; 21227, 21227, 21227, 21227, 21227, 21227, 21227, 212...
-## $ PRIS_PRIV &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ POP       &lt;dbl&gt; 4430141, 4430141, 4430141, 4430141, 4430141, 4430141...
-## $ PERC_PRIS &lt;dbl&gt; 47.91495, 47.91495, 47.91495, 47.91495, 47.91495, 47...
-## $ LONG      &lt;dbl&gt; -87.46201, -87.48493, -87.52503, -87.53076, -87.5708...
-## $ LAT       &lt;dbl&gt; 30.38968, 30.37249, 30.37249, 30.33239, 30.32665, 30...</pre></td></tr></table>
+## $ YEAR      &lt;dbl&gt; 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, 1999, …
+## $ STATEID   &lt;chr&gt; &#34;alabama&#34;, &#34;alabama&#34;, &#34;alabama&#34;, &#34;alabama&#34;, &#34;alabama&#34;,…
+## $ STATE     &lt;fct&gt; AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL, AL…
+## $ PRIS      &lt;dbl&gt; 21227, 21227, 21227, 21227, 21227, 21227, 21227, 21227…
+## $ PRIS_PUB  &lt;dbl&gt; 21227, 21227, 21227, 21227, 21227, 21227, 21227, 21227…
+## $ PRIS_PRIV &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+## $ POP       &lt;dbl&gt; 4430141, 4430141, 4430141, 4430141, 4430141, 4430141, …
+## $ PERC_PRIS &lt;dbl&gt; 47.91495, 47.91495, 47.91495, 47.91495, 47.91495, 47.9…
+## $ LONG      &lt;dbl&gt; -87.46201, -87.48493, -87.52503, -87.53076, -87.57087,…
+## $ LAT       &lt;dbl&gt; 30.38968, 30.37249, 30.37249, 30.33239, 30.32665, 30.3…</pre></td></tr></table>
 </div>
 </div>
 <p>In our video/graph we want also to indicate the state code (2 letters). To do that we need to create a dataframe/tibble that has the coordinates of the positions of those labels. Ideally, they would be in the center of the state, so we can just average the longitude and latitude of each state. Of course don&rsquo;t expect that to be perfect, the shape of states is not a perfect square or circle!</p>
@@ -810,9 +809,9 @@ That is going to be the last graph of the post!</p>
 
     <footer class="post-footer">
       <div class="post-tags">
-          <a href="https://muaydata.netlify.com/tags/av/">av</a>
-          <a href="https://muaydata.netlify.com/tags/ggplot/">ggplot</a>
-          <a href="https://muaydata.netlify.com/tags/visualization/">visualization</a>
+          <a href="/tags/av/">av</a>
+          <a href="/tags/ggplot/">ggplot</a>
+          <a href="/tags/visualization/">visualization</a>
           
         </div>
 
@@ -876,7 +875,7 @@ That is going to be the last graph of the post!</p>
       <a href="https://twitter.com/c1au6i0" rel="me noopener" class="iconfont icon-twitter"
         title="twitter" target="_blank">
       </a>
-  <a href="https://muaydata.netlify.com/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="iconfont icon-rss"
+  <a href="/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="iconfont icon-rss"
     title="rss" target="_blank">
   </a>
   </div>
@@ -892,7 +891,9 @@ That is going to be the last graph of the post!</p>
 
   <span class="copyright-year">
     &copy;
-    2018
+    
+      2018 -
+    2019
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span><span class="author">

@@ -2,45 +2,41 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Ggplot on MuayData blog</title>
-    <link>https://muaydata.netlify.com/tags/ggplot/</link>
+    <link>/tags/ggplot/</link>
     <description>Recent content in Ggplot on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Thu, 25 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://muaydata.netlify.com/tags/ggplot/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/ggplot/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Animated Prison</title>
-      <link>https://muaydata.netlify.com/post/animated-prison/</link>
+      <link>/post/animated-prison/</link>
       <pubDate>Thu, 25 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/post/animated-prison/</guid>
+      <guid>/post/animated-prison/</guid>
       <description>&lt;p&gt;In this post we will get the datasets and write the code to create the following visualization of the rate of incarceration over time in U.S (custody and jurisdiction counts of all prisoners).&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;[Double click for full screen]&lt;/em&gt;&lt;/p&gt;
 
-&lt;iframe title=&#34;Prison_video&#34; height=&#34;400&#34; src=&#34;https://muaydata.netlify.com/data_post3/output.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;iframe title=&#34;Prison_video&#34; height=&#34;400&#34; src=&#34;/data_post3/output.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;</description>
     </item>
     
     <item>
       <title>Il Re di Twitter? (PARTE I)</title>
-      <link>https://muaydata.netlify.com/post/re-di-twitter-i/</link>
+      <link>/post/re-di-twitter-i/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/post/re-di-twitter-i/</guid>
+      <guid>/post/re-di-twitter-i/</guid>
       <description>&lt;p&gt;In questa serie di Posts andremo ad analizzare gli ultimi 3200 tweets di Di Maio, Salvini e Martina. Il mio studio sarà diviso in 2 parti:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Nella &lt;strong&gt;parte I&lt;/strong&gt; analizzeremo le abitudini dei 3 leader e  scopriremo chi dei 3 è il più attivo, quando durante la giornata, quanto sono popolari i vari tweets e molte altre informazioni.&lt;/li&gt;
 &lt;li&gt;Nella &lt;strong&gt;parte II&lt;/strong&gt; ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+&lt;/ul&gt;</description>
     </item>
     
   </channel>
