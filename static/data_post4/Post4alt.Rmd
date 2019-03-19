@@ -22,7 +22,6 @@ We start loading some libraries.
 library(tidyverse)
 library(purrr)
 library(foreign) 
-library(RSQLite)
 library(svDialogs)
 library(caret)
 library(glmnet)
@@ -32,34 +31,53 @@ library(rpart)
 library(party)
 library(MLmetrics)
 library(PRROC)
+library(precrec)
 ```
 
 
 ```{r load_all, eval= TRUE, include=FALSE}
-mod_glmnet <- readRDS("mod_glmnet_f.RDS")
-mod_rpart <- readRDS("mod_rpart_f.RDS")
-mod_ctree <- readRDS("mod_ctree_f.RDS")
-mod_ranger <- readRDS("mod_ranger_all.RDS")
+path_m <- "/Users/heverz/Documents/R_projects/muaydata/static/data_post4/"
+mod_glmnet <- readRDS(paste0(path_m,"mod_glmnet_ROC.RDS"))
+mod_rpart <- readRDS(paste0(path_m,"mod_rpart_ROC.RDS"))
+mod_ctree <- readRDS(paste0(path_m,"mod_ctree_ROC.RDS"))
+mod_ranger <- readRDS(paste0(path_m,"mod_ranger_ROC.RDS"))
 
-confusionTable <- function (mod) {
-  tidy(confusionMatrix(mod)$table) %>% 
-  mutate( model = mod$method) %>% 
-  spread(model, n) %>% 
-  mutate(Case = c("True Negative", 
-                   "False Negative",
-                   "False Postive", 
-                   "True Positive")) %>% 
-  arrange(Case) %>% 
-  select(Case, everything()) %>% 
-  mutate_if(is.numeric, round, 2)
+mod_glmnet_F <- readRDS(paste0(path_m,"mod_glmnet_F.RDS")) 
+mod_glmnet_AUC  <- readRDS(paste0(path_m,"mod_glmnet_AUC.RDS")) 
+
+model_list <- list( glmnet = mod_glmnet,
+                    rpart = mod_rpart,
+                    ctree = mod_ctree,
+                    ranger = mod_ranger)
+
+
+confusionTable <- function(mod) {
+          UseMethod("confusionTable", mod)
 }
 
 
-table_m4  <-  bind_cols(confusionTable(mod_glmnet),
-                confusionTable(mod_rpart)[,4],
-                confusionTable(mod_ctree)[,4],
-                confusionTable(mod_ranger)[,4])
-table_m4 
+confusionTable.default <- function (mod) {
+    if (!is(mod, "train")) stop("The object selected is not a model")
+  
+    tidy(confusionMatrix(mod)$table) %>% 
+    mutate(modname = paste0(mod[["method"]],"-",mod[["metric"]]) ) %>% 
+    spread(model, n) %>% 
+    mutate(Case = c("True Negative", 
+                   "False Negative",
+                   "False Postive", 
+                   "True Positive")) %>% 
+    arrange(Case) %>% 
+    select(Case, everything()) %>% 
+    mutate_if(is.numeric, round, 2)
+}
+
+confusionTable.list <- function(mod) {
+    map_dfc(mod, confusionTable) %>% 
+    select(1:4, seq(8, length(model_list)*4, 4))
+}
+
+confusionTable(model_list)
+
 ```
 
 The number of variables collected for the ADD HEALTH is of several thousands. We will focus our analysis on most of the variables collected in the first wave (first survey in 1994) that include demographic information, friend and social network details, parental information and many others) and we will select one classifier from the fourth wave (2006). 
@@ -149,7 +167,7 @@ heal_sub_cl$H4TO117 <- factor(heal_sub_cl$H4TO117, levels = c("Yes", "No")) # cl
 summary(heal_sub_cl$H4TO117)
 ```
 
-#   The Development of the Models
+#   Train the Models
 
 ## Cross Validation, Class Inbalance.
 
@@ -187,7 +205,6 @@ fitControl <- trainControl(method = "adaptive_cv",
                            verboseIter = TRUE)
 ```
 
-
 ```{r trainControl2, eval=FALSE, include=FALSE}
 seeds = 1502
 
@@ -206,6 +223,31 @@ fitControl2 <- trainControl(method = "adaptive_cv",
                            savePredictions = "final",
                            sampling = "up",   # upsampling
                            verboseIter = TRUE)
+
+mod_glmnet_pr <- train(H4TO117 ~ ., 
+              heal_sub_cl,
+              method = "glmnet",
+              tuneLength = 5,
+              metric = "F",
+              # weights = heal_weights,
+              trControl = fitControl2,
+              na.action = na.pass,
+              preProcess = c("nzv", "corr","knnImpute","pca")
+              )
+
+saveRDS(mod_glmnet_pr, "mod_glmnet_pr.RDS")
+
+
+mod_ctree_pr <- train(H4TO117 ~ ., 
+              heal_sub_cl,
+              method = "ctree",
+              tuneLength = 5,
+              metric = "F",
+              # weights = heal_weights,
+              trControl = fitControl2,
+              na.action = na.pass,
+              preProcess = c("nzv", "corr","knnImpute","pca")
+              )
 
 
 
@@ -231,6 +273,8 @@ mod_ctree_pr <- train(H4TO117 ~ .,
               na.action = na.pass,
               preProcess = c("nzv", "corr","knnImpute","pca")
               )
+
+
 ```
 
 All the operations that we discussed in the last two paragraph are taken care of by ```caret::trainControl```. You might have notice that in the code above we are not using a *repeated cross-validation`* but we have indicated instead ```method = "adaptive_cv```.  What is that? It is an [algorithm](https://topepo.github.io/caret/adaptive-resampling.html) to  adaptability look for the best *tuning parameters* for our model and, as Max Kuhn put it "concentrates on values that are the in the neighborhood of the optimal settings".
@@ -238,7 +282,7 @@ Let's clarify what are this *tuning parameters*. The tuning parameters (hyperpar
 
 ## Preprocessing 
 
-Before training our first model we need to spend also some few words on preprocessing. This is getting long but no one will really read this post so who cares. We have a lot of variables, more than 2000 and that put quite some computational burden on my personal laptop. We might no need all those variables, because some of them might have near zero variance (imagine a column made of only one identical value) or might be very correlated to each other. Moreover, we can using principal component analysis ([PCA](https://en.wikipedia.org/wiki/Principal_component_analysis)) to use linear combination of variables that explain most of the variability of the data. Finaly, we can impute missing data using k-nearest neighbors algorithms, that use the distance to the closest sample to calculate the values that are substitute to the missing data. All this computations can be very conveniently done before training our models using the argument ```preProcess = c("nzv", "corr","knnImpute","pca")```, when calling the function ```caret::train```.
+Before training our first model we need to spend also some few words on preprocessing. This is getting long but who cares? no one will really read this post (maybe Alessandro will check it out). We have a lot of variables, more than 2000 and that put quite some computational burden on my personal laptop. We might no need all those variables, because some of them might have near zero variance (imagine a column made of only one identical value) or might be very correlated to each other. Moreover, we can using principal component analysis ([PCA](https://en.wikipedia.org/wiki/Principal_component_analysis)) to use linear combination of variables that explain most of the variability of the data. Finaly, we can impute missing data using k-nearest neighbors algorithms, that use the distance to the closest sample to calculate the values that are substitute to the missing data. All this computations can be very conveniently done before training our models using the argument ```preProcess = c("nzv", "corr","knnImpute","pca")```, when calling the function ```caret::train```.
 
 ## GLMNET
 
@@ -259,37 +303,18 @@ mod_glmnet <- train(H4TO117 ~ .,
 All the info regarding our model, including the coefficients of the different predictors, are contained in ```mod_glmnet$finalModel```. A summary of the details regarding the *pre-processing*, *resampling*, *hyperparmeter tuning* can be easily retrived ```print``ing  the model.
 
 ```{r mod_print, include=FALSE}
-confusionMatrix(mod_glmnet)
+print(mod_glmnet)
 ```
 Notice that many variables, more than the number of columns, have been removed during the ```pre-Processing```. This is because ```caret``` automatically convert factors in [*dummy variables*](https://topepo.github.io/caret/pre-processing.html#creating-dummy-variables).
 
 _*Was the model was the model any good? Was it able to predict if a person was going to take the favorite drug despite negative consequences?*_.
 
-Some estimates of the model efficacy are reported above (ROC, Sens, Spec) and we will discuss them in depth during the next paragraphs. Right now, we can get a feel of how the model is performing by looking at the [confusionMatrix](https://en.wikipedia.org/wiki/Confusion_matrix) which indicates the correct prediction in each of the classes. Instead of using the ```caret::confusionMatrix```, I am going to create my own function for extracting that info from ```model$table``` and arrange it in table with a different layout.
-
-```{r eval_glmnet_matrix}
-confusionTable <- function (mod) {
-  tidy(confusionMatrix(mod)$table) %>% 
-  mutate( model = mod$method) %>% 
-  spread(model, n) %>% 
-  mutate(Case = c("True Negative", 
-                   "False Negative",
-                   "False Postive", 
-                   "True Positive")) %>% 
-  arrange(Case) %>% 
-  select(Case, everything()) %>% 
-  mutate_if(is.numeric, round, 2)
-}
-
-table_glmnet <- confusionTable(mod_glmnet)
-table_glmnet
-```
-You can see that while the model doesn't do that bad in predicting *No*, the performance deteriorate in identifying *Yes*. About 5% of the subjects in our dataset respond *Yes* with our model detecting less than half of them (true positive).  Let's try with different models.
+Some estimates of the model efficacy are reported above and we will discuss them in depth later in the post. Now, let's train few other models before looking at them all together.
 
 ## Classification Trees and Random Forest
 
 Another type of very popular predictive model is classification tree. Classification trees are very easy to implement and interpret (if number of predictors are not too much) and consist in recursively spliting the data in groups that are internally as homogeneus as possible in terms of measures of purity (i.e Gini index) of the target classifier. Here a good visual example of possible [splits](https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwjx4YPhpOngAhXMhOAKHeykDx0QjRx6BAgBEAU&url=https%3A%2F%2Fdimensionless.in%2Fintroduction-to-random-forest%2F&psig=AOvVaw2kexYImpv-x0wyxpnd_mzC&ust=1551816401888411) and of their relative level of *purity*. In other words, what the tree does is to create a concatatenation of if-then. 
-Continouing the analogy with Muay Thai, a branch of a classification tree might look like this : _*if*_ fighter A trains 7 days a week _*if*_ his/her opponent train only once a week and _*if*_ fighter A has 150 fights more than his opponent and _*if*_ fighter A is less than 30 years old and more than 18 _*than*_ fighter A is going to win the fight.
+Continouing the analogy of Muay Thai, a branch of a classification tree might look like this : _*if*_ fighter A trains 7 days a week _*if*_ his/her opponent train only once a week and _*if*_ fighter A has 150 fights more than his opponent and _*if*_ fighter A is less than 30 years old and more than 18 _*than*_ fighter A is going to win the fight.
 
 We  grow the first tree using the package ```rpart```.
 
@@ -305,7 +330,7 @@ mod_rpart <- train(H4TO117 ~ .,
               )
 ```
 
-Let's grow also a second tree using the package ```party```. The major difference with the preceding classification tree model is that ```party::ctree``` implement  infernatial static to evaluate improvements in measures of purity and thus to guide the recursive splitting.
+Let's grow also a second tree  model using the package ```party```. The major difference with the preceding classification tree model is that ```party::ctree``` implement  inferential statistic to evaluate improvements in measures of purity, and thus to guide the recursive splitting.
 
 ```{r mod_ctree, eval=FALSE, include=TRUE}
 mod_ctree <- train(H4TO117 ~ ., 
@@ -319,15 +344,15 @@ mod_ctree <- train(H4TO117 ~ .,
               )
 ```
 
-Finaly, we will train and evaluate a Random Forest model, that is an essamble of multiple classification trees. Usually Random Forest perform better than classification trees but this increase  accuracy comes with increase model complexity and decrease interpreatability.
+Finaly, we will train and evaluate a Random Forest model, that is an essamble of multiple classification trees. Usually Random Forest perform better than classification trees but this increased accuracy comes at the expenses of the model complexity and interpreatability.
 
 ```{r mod_rf, eval=FALSE, include=TRUE}
-mod_ranger <- train(H4TO117 ~ ., 
+mod_ranger_pr <- train(H4TO117 ~ ., 
               heal_sub_cl,
               met2hod = "ranger",
-              metric = "ROC",
+              metric = "F",
               tuneLength = 5,
-              trControl = fitControl,
+              trControl = fitControl2,
               na.action = na.pass,
               preProcess = c("nzv","corr", "knnImpute", "pca")
               )
@@ -339,107 +364,137 @@ How did the models performed? We will look in dept at different measures of accu
 
 ## Confusion Matrix
 
-Firstofall, we create a confusion "table' with the results of all 4 models.
+We can get a first feel of how the model is performing by looking at the [confusionMatrix](https://en.wikipedia.org/wiki/Confusion_matrix) which indicates the correct prediction in each of the classes. Instead of using the ```caret::confusionMatrix```, I am going to create my own function for extracting that info from ```model$table``` and arrange it in table with a different layout.
+We will create 2 different method dispatches depending on the class of the object in order to easily apply the function to a single model or a list of models.
 
 ```{r eval_matrix, eval=TRUE, include=FALSE}
-table_m4  <-  bind_cols(confusionTable(mod_glmnet),
-                confusionTable(mod_rpart)[,4],
-                confusionTable(mod_ctree)[,4],
-                confusionTable(mod_ranger)[,4])
-table_m4 
+model_list <- list( glmnet = mod_glmnet,
+                    rpart = mod_rpart,
+                    ctree = mod_ctree,
+                    rf = mod_ranger)
+
+confusionTable <- function(mod) {
+          UseMethod("confusionTable", mod)
+}
+
+
+confusionTable.default <- function (mod) {
+    if (!is(mod, "train")) stop("The object selected is not a model")
+  
+    tidy(confusionMatrix(mod)$table) %>% 
+    mutate(modname = paste0(mod[["method"]],"-",mod[["metric"]]) ) %>% 
+    spread(modname, n) %>% 
+    mutate(Case = c("True Negative", 
+                   "False Negative",
+                   "False Postive", 
+                   "True Positive")) %>% 
+    arrange(Case) %>% 
+    select(Case, everything()) %>% 
+    mutate_if(is.numeric, round, 2)
+}
+
+confusionTable.list <- function(mod) {
+    map_dfc(mod, confusionTable) %>% 
+    select(1:4, seq(8, length(model_list)*4, 4))
+}
+
+mod_table <- confusionTable(model_list)
+
+mod_names <- names(mod_table)[4 : ncol(mod_table)]
+  
+mod_table
+
 ```
 
 Of the 4 models, the ```glmnet``` is the one that has the highest rate of detection of *Yes* (True Positive), but also the highest rate of False Allarms (False Positive). The 2 tree based models detect only a very small fraction of True Positive, whereas the Random Forest does not get any hit and always bets for *No*.
 
-## ROC curves
+## ROC curves and ```precrec```
 
-Another way to evaluate and compare performance of different models in more detail is to look at the ROC curves. In ROC curves, the cutoff probabilty for assigning the prediction values ("yes" or "no") is varied systematically, and for each cutoff value the False Alarms generated by the model are plotted as a function of True Positives.
+When we trained our models we selected ```ROC``` as the metric for choosing the optimal model. ```ROC``` is the Area Under the Curve of the [Receiving Operating Characteristic](https://en.wikipedia.org/wiki/Receiver_operating_characteristic). The ROC curve is generated  by varying the cutoff probabilty for assigning the prediction values ("Yes" or "No") and by plotting the Sensitivity of the model ( TruePositives/ (TruePositive + FalseNegatives) ) as a function of  1 - Specificity ( TrueNegatives/ (TrueNegatives + FalsePositives) ). In other words, the ROC curve plots the rate of True Positives (over the total positive) as a function of the False Allarms ( identified "Yes" even if "No").
 
-We create a list of our models and the function ```get_roc``` to extract the data for the ROC curve from each of them.
+To calculate the data for the curves we will use the package ```precrec```. The [package](https://cran.r-project.org/web/packages/precrec/index.html) has been recently listed in CRAN and has same very handy functions to calculate (and plot) ROC and Precision-Recall curves of N-fold cross validation datasets. We will create our own function to extract the data from multiple models using ```precrec::mmdata``` and ```precrec::eval_mod``` and  apply it to the list of models.
 
-```{r ROC_function}
-model_list <- list( glmnet = mod_glmnet,
-                    rpart = mod_rpart,
-                    ctree = mod_ctree,
-                    rf = mod_ranger)
+```{r extract_rocpr}
+get_rocpr <- function(mod, out = "curve", resp = "Yes"){
+          
+          if (!is(mod, "train")) stop("The object selected is not a model")
+          
+          # we get the predicition from the caret model
+          df <- mod[["pred"]]
+         
+          # we insert scorese (probabilities) and observations and folds
+          cvdat <-  mmdata(scores = df$Yes, labels = df$obs, posclass = resp, fold_col = df$Resample)
+          
+          # this in thepry calculate basic metrics as sensitivy, recall but ATTENTION: BUG in the package!!!!!!!!
+          # it would have been a great code-saver
+          # https://goo.gl/Xp1d6t 
+          metrics_mod <-  data.frame(evalmod(cvdat, mode = "basic")) %>%
+                                mutate(modname = mod[["method"]])
 
-get_roc <- function(mod, cl) {
-   # function to extract ROC data from the different models
-   # Returns a dataframe 
-   # mod = model
-   # cl = character, name of class of interest 
-  
-   if (missing(cl)) stop("You have not inserted the class of interest!")
-   if (!cl %in% names(mod[["pred"]])) stop("Class of interest not present!")
-  
-   for_lift <-  tibble(Class = mod[["pred"]][["obs"]],  model = mod[["pred"]][[cl]])
-   lift_obj  <-  lift(Class ~ model, data = for_lift, class = cl)
-   lift_obj$data$liftModelVar <- mod[["method"]]
-   lift_obj$data
+          # this is to get the values of ROC and PRC curves
+          dat_rocpr <- as.data.frame(evalmod(cvdat)) %>%
+                          mutate(modname = paste0(mod[["method"]],"-",mod[["metric"]]))
+
+          if (out == "curve")  return(dat_rocpr) # this is for the curves
+          if (out == "evalmod") return(evalmod(cvdat)) # this is in case we want to get the evaluated model
+          if (out == "metrics") return(metrics_mod)  # this is if we want the metrics (but BUG in the package)
 }
+          
+data_rocpr <- map_dfr(model_list, get_rocpr)
+
+str(data_rocpr)
 ```
+We obtain a dataframe ```data_rocpr``` with the Y and X coordinates for plotting ROC or PRC.
 
-We apply the function to the list of models, we reshape the dataframe and plot the ROC with ```ggplot```. 
-
+Let's plot the ROC curves.
 ```{r ROC_plot, fig.align="center"}
-roc_data <- map_dfr(model_list, get_roc, "Yes")
-
-roc_data <-roc_data %>% 
-  # clean up and get important variables
-  rename(model = liftModelVar) %>% 
-  mutate(model = factor(model, levels = names(table_m4[4:7]))) %>%  # let's be consistent with the order 
-  mutate(TPR = Sn, FPR = 1 - Sp) 
-  
-roc_data %>% 
-  # plot
-  ggplot(aes(y = TPR, x = FPR, col = model)) +
+data_rocpr  %>% 
+  filter(type == "ROC") %>% 
+  mutate(modname = factor(modname, levels = mod_names)) %>%
+  ggplot(aes(y = y, x = x, col = modname)) +
   geom_line() +
   geom_abline(slope = 1, intercept = 0, linetype = 2) +
-  # facet_wrap(~model, ncol = 2) +
-  labs( y =  "True Positive Rate (TP/P)",
-        x = "False Positive Rate (1-TN/N)")
+  labs( y =  "Sensitivity (TP/(TP+FN))",
+        x = "1 - Specificity (TN/(TN + FP))",
+        title = "ROC curves")
 ```
 
-A perfect model will a curve that goes through the upper left corner and thus have specificity and selectivity equal to 1. A model with that gives random predictions will generate a curve that will lie in vicinity the dotted line. Of course we might have also a model that make predictions worse than random, in that case the curve will be to the right of the dotted line.
+A perfect model tha is able to capture alla the "yes"  and all the "No" will have Sensitivity = Specificity = 1, and this  will generate a curve that pass through the upper left corner and continuing parallel to the x-axes reach the top-right corner. In the other hand, a model that gives random predictions will generate a curve that will lie in vicinity the dotted line. Of course we might have also a model that make predictions worse than random, in that case the curve will be to the right of the dotted line.
 
-A near-perfect diagnostic test would have an ROC curve that is almost
-vertical from (0,0) to (0,1) and then horizontal to (1,1). The diagonal line serves as a reference line since it is the
-ROC curve of a diagnostic test that randomly classifies the condition.
+## Precision-Recall Curve
 
-Sensitivity o Recal = TP / P
+A [good argument](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4349800/) has been made that the ROC curve can be misleading when dealing with very unballanced classes. When the negative class is very small, the probability of making FalsePositive predictions increases. Becouse FalsePositive might still be a small percentage of  the indentified TrueNegative, the specificity of the model would be only minimally affected by such class unballance. Precision-Recall Curves, introduce a different measure, that take into account FalsePositives in the context of the positive predictions: the precision.
 
-Specifivity = TN / N
+The *precision* is the ratio of identified TruePositives / (TruePositives+FalsePositives), and thus indicates how likely is that a "Yes" predition is correct. Of course a model may be still 100 % correct when it predicts "Yes" but be able to identify _*very few*_  "Yes". In that particular case the Recall (aka Sensitivity: TruePositives/ (TruePositive + FalseNegatives) ) of the model will be very low. The best possible model is able to correctly identify all the "Yes", and so has Precision = Recall = F (the harmonic mean of the 2 measures) = 1.
 
-Precision = TP / (TP + FP)
+[Precision-Recall](https://ils.unc.edu/courses/2013_spring/inls509_001/lectures/10-EvaluationMetrics.pdf) curves are generated by retriving different percentages of the samples and plotting (for each of the retrived samples) those two metrics, the Precisions against the Recall. Remember that perfection would generate a precision-recall curve that pass to the up-right corner of the grapha and thus have Precision = Recall = F = 1.
 
+```{r precision_recal_alt, include=TRUE ,eval=TRUE}
+data_rocpr <- map_dfr(model_list, get_rocpr)
 
-## Sensitivity, Specificity and Balanced Accuracy
+data_rocpr  %>% 
+  filter(type == "PRC") %>% 
+  mutate(modname = factor(modname, levels = names_mod)) %>%
+  ggplot(aes(y = y, x = x, col = modname)) +
+  geom_line() +
+  geom_abline(slope = 0, intercept = 4.79/ 100, linetype = 2) +
+  labs( y = "Precision TP/(TP+FP)",
+        x = "Recall TP/(TP+FN)")
+```  
 
-```{r all_graph, eval=TRUE, include=TRUE, warning=FALSE}
-model_list <- list( glmnet = mod_glmnet,
-                    rpart = mod_rpart,
-                    ctree = mod_ctree,
-                    rf = mod_ranger)
+## Putting all together Sensitivity, Specificity
 
-model_list <- list( rpart = mod_rpart_pr,
-                    ctree = mod_ctree_pr)
-
-
-
+```{r ROC_sens_spec, eval=TRUE, include=TRUE, warning=FALSE}
 resamps <- resamples(model_list)
 
 resamps$values %>% 
   gather("model~metric", "value", 2:13) %>%  # from wide to long format
   separate ("model~metric", c("model", "metric")) %>%  # separate columns
-  mutate(model = factor(model, levels = names(table_m4[4:7]))) %>% # we reorder the levels of model
-  spread(metric, value) %>% # long to wide so that we can calculate balanced accuracy
-  mutate("Balanced Accuracy" = (Sens + Spec)/ 2) %>%  # we calculate the balance accuracy
-  rename(Sensitivity = Sens, Specificity = Spec) %>% 
-  gather("metric",  "value", 3:6) %>% 
-  # Calculate mean
+  mutate(model = factor(model, levels = c("glmnet", "rpart", "ctree", "rf"))) %>% 
+  mutate(metric = recode(metric, Sens = "Sensitivity", Spec = "Specificity")) %>% 
   group_by(model, metric) %>% 
   summarize(mean = mean(value), sd = sd(value)) %>% 
-  mutate(metric = factor(metric, levels = c("ROC", "Sensitivity", "Specificity", "Balanced Accuracy"))) %>% 
+  # mutate(metric = factor(metric, levels = c("ROC", "Sensitivity", "Specificity"))) %>% 
   
   
   ggplot(aes(y= mean, x = model, col = model)) +
@@ -451,45 +506,71 @@ resamps$values %>%
     theme(legend.position = "none")
 ```
 
-## Precision-Recall Curves
+```{r calc_metrics}
+summary_td <- function(x) {
+      pr <- prSummary(x, lev = c("Yes", "No")) %>% 
+            t() %>% 
+            as.data.frame()
+      tc <- twoClassSummary(x, lev = c("Yes", "No")) %>% 
+            t() %>% 
+            as.data.frame() 
+      bind_cols(pr, tc)
+}
 
-```{r precision_recal}
-
-get_pr <- function(mod) {
-   pr_data <- pr.curve(mod[["pred"]][["pred"]], mod[["pred"]][["obs"]], curve = TRUE) 
-   pr_data <-  as.data.frame(pr_data$curve[,1:2]) %>% 
-   rename( "Precision" = V2, "Recall" = V1) %>% 
-   mutate(model = mod[["method"]])
-}  
-   
-   
-pr_data <- map_dfr(model_list, get_pr)
-
-pr_data %>% 
-  mutate(model = factor(model, levels = names(table_m4[4:7]))) %>%  # let's be consistent with the order 
-  ggplot(aes(y = Precision, x = Recall, col = model)) +
-  geom_line() +
-  # facet_wrap(~model, ncol = 2) +
-  labs( y =  "Precision TP/(TP+FP)",
-        x = "Recall (TP/P)",
-        title = "Precision-Recall curve")
-
+get_metrics <- function(mod, metric = "No") {
+  
+  # this is just to decide if name the model + the metric used for 
+  # selecting hyperparameters or just the model
+  if (metric != "No") {
+      modname <-  paste0(mod[["method"]],"-",mod[["metric"]])
+  } else {
+      modname <-  mod[["method"]]
+  }
+  
+  mod[["pred"]] %>% 
+  select(obs, pred, Yes, No, Resample) %>%
+  # we split the dataframe in a list of dataframes
+  split(., .$Resample) %>% 
+  # here we apply summary_td to each of the dataframes
+  map_dfr(., summary_td, .id = "id") %>% 
+  mutate(model = !!modname ) %>%  
+  # reshape and summarize
+  gather("metric","value", 2:(ncol(.)-1)) %>% 
+  group_by(model, metric) %>% 
+  summarize(mean = mean(value,na.rm =TRUE), sd = sd(value, na.rm =TRUE)) %>% 
+  ungroup()
+}
 ```
 
-```{r}
-plot(prova)
+```{r plot_ROC, warning=FALSE}
+metrics <-map_dfr(model_list,get_metrics) 
+
+metrics %>% 
+    mutate(model = factor(model, levels = c("glmnet", "rpart", "ctree", "rf"))) %>% 
+    filter(metric %in% c("ROC", "Sens", "Spec")) %>% 
+    ggplot(aes(y= mean, x = model, col = model)) +
+    geom_point(size = 2.5) +
+    geom_errorbar(aes(ymin = mean - sd, ymax =  mean + sd), width = 0.1) +
+    scale_y_continuous(limits = c(0, 1)) + 
+    coord_flip() +
+    facet_wrap(metric ~ .) +
+    theme(legend.position = "none")
 ```
-## GAIN CURVE
 
 
 
-```{r}
 
-
-twoClassSummary(prova, lev = c("Yes", "No"))
-
-
-
+```{r plot_pr, warning=FALSE}
+metrics %>% 
+    mutate(model = factor(model, levels = c("glmnet", "rpart", "ctree", "rf"))) %>% 
+    filter(metric %in% c("AUC", "F", "Precision", "Recall")) %>% 
+    ggplot(aes(y= mean, x = model, col = model)) +
+    geom_point(size = 2.5) +
+    geom_errorbar(aes(ymin = mean - sd, ymax =  mean + sd), width = 0.1) +
+    scale_y_continuous(limits = c(0, 1)) + 
+    coord_flip() +
+    facet_wrap(metric ~ .) +
+    theme(legend.position = "none")
 ```
 
 
