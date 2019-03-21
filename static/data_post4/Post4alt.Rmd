@@ -32,6 +32,9 @@ library(party)
 library(MLmetrics)
 library(PRROC)
 library(precrec)
+library(rlang)
+library(forcats)
+library(grid)
 ```
 
 
@@ -60,8 +63,8 @@ confusionTable.default <- function (mod) {
     if (!is(mod, "train")) stop("The object selected is not a model")
   
     tidy(confusionMatrix(mod)$table) %>% 
-    mutate(modname = paste0(mod[["method"]],"-",mod[["metric"]]) ) %>% 
-    spread(model, n) %>% 
+    mutate(modname = mod[["method"]]) %>% 
+    spread(modname, n) %>% 
     mutate(Case = c("True Negative", 
                    "False Negative",
                    "False Postive", 
@@ -73,10 +76,12 @@ confusionTable.default <- function (mod) {
 
 confusionTable.list <- function(mod) {
     map_dfc(mod, confusionTable) %>% 
-    select(1:4, seq(8, length(model_list)*4, 4))
+    select(1:4, seq(8, length(mod)*4, 4))
 }
 
-confusionTable(model_list)
+
+mod_table <-  confusionTable(model_list)
+mod_names<- names(mod_table)[4 : ncol(mod_table)]
 
 ```
 
@@ -365,9 +370,10 @@ How did the models performed? We will look in dept at different measures of accu
 ## Confusion Matrix
 
 We can get a first feel of how the model is performing by looking at the [confusionMatrix](https://en.wikipedia.org/wiki/Confusion_matrix) which indicates the correct prediction in each of the classes. Instead of using the ```caret::confusionMatrix```, I am going to create my own function for extracting that info from ```model$table``` and arrange it in table with a different layout.
-We will create 2 different method dispatches depending on the class of the object in order to easily apply the function to a single model or a list of models.
+We will create 2 different method dispatches depending on the class of the object in order to easily apply the function to a single model or a list of models. 
 
 ```{r eval_matrix, eval=TRUE, include=FALSE}
+# we create the list of models
 model_list <- list( glmnet = mod_glmnet,
                     rpart = mod_rpart,
                     ctree = mod_ctree,
@@ -400,111 +406,29 @@ confusionTable.list <- function(mod) {
 
 mod_table <- confusionTable(model_list)
 
-mod_names <- names(mod_table)[4 : ncol(mod_table)]
+mod_names <- names(mod_table)[4 : ncol(mod_table)] # this is for saving the order of models
   
 mod_table
 
 ```
 
-Of the 4 models, the ```glmnet``` is the one that has the highest rate of detection of *Yes* (True Positive), but also the highest rate of False Allarms (False Positive). The 2 tree based models detect only a very small fraction of True Positive, whereas the Random Forest does not get any hit and always bets for *No*.
+Of the 4  models, ```glmnet``` is the one that has the highest rate of detection of *Yes* (True Positive), but also the highest rate of False Allarms (False Positive). The 2 tree based models detect only a very small fraction of True Positive, whereas the Random Forest does not get any hit and always bets for *No*.
 
-## ROC curves and ```precrec```
+## Sensitivity (Recall), Specificity, Recall
 
-When we trained our models we selected ```ROC``` as the metric for choosing the optimal model. ```ROC``` is the Area Under the Curve of the [Receiving Operating Characteristic](https://en.wikipedia.org/wiki/Receiver_operating_characteristic). The ROC curve is generated  by varying the cutoff probabilty for assigning the prediction values ("Yes" or "No") and by plotting the Sensitivity of the model ( TruePositives/ (TruePositive + FalseNegatives) ) as a function of  1 - Specificity ( TrueNegatives/ (TrueNegatives + FalsePositives) ). In other words, the ROC curve plots the rate of True Positives (over the total positive) as a function of the False Allarms ( identified "Yes" even if "No").
+The number of True and False predictions can be used to calculate other metrics of the performance of the models. The 
 
-To calculate the data for the curves we will use the package ```precrec```. The [package](https://cran.r-project.org/web/packages/precrec/index.html) has been recently listed in CRAN and has same very handy functions to calculate (and plot) ROC and Precision-Recall curves of N-fold cross validation datasets. We will create our own function to extract the data from multiple models using ```precrec::mmdata``` and ```precrec::eval_mod``` and  apply it to the list of models.
+**Sensitivity** AKA **Recall**: True Positive Rate, TruePositives/ (TruePositive + FalseNegatives). It  indicates the percentage of Positives that are detected by the model
 
-```{r extract_rocpr}
-get_rocpr <- function(mod, out = "curve", resp = "Yes"){
-          
-          if (!is(mod, "train")) stop("The object selected is not a model")
-          
-          # we get the predicition from the caret model
-          df <- mod[["pred"]]
-         
-          # we insert scorese (probabilities) and observations and folds
-          cvdat <-  mmdata(scores = df$Yes, labels = df$obs, posclass = resp, fold_col = df$Resample)
-          
-          # this in thepry calculate basic metrics as sensitivy, recall but ATTENTION: BUG in the package!!!!!!!!
-          # it would have been a great code-saver
-          # https://goo.gl/Xp1d6t 
-          metrics_mod <-  data.frame(evalmod(cvdat, mode = "basic")) %>%
-                                mutate(modname = mod[["method"]])
+**Specificity**: True Negative Rate,  TrueNegatives/ (TrueNegatives + FalsePositives). It indicates the percentage of Negatives identified by the model. 
 
-          # this is to get the values of ROC and PRC curves
-          dat_rocpr <- as.data.frame(evalmod(cvdat)) %>%
-                          mutate(modname = paste0(mod[["method"]],"-",mod[["metric"]]))
+While the sensitivity informs us on how likely is that a positive case will be detected, it does not tell us how much confident we can be that a positive prediction will be indeed true. This is expressed by the Precision
 
-          if (out == "curve")  return(dat_rocpr) # this is for the curves
-          if (out == "evalmod") return(evalmod(cvdat)) # this is in case we want to get the evaluated model
-          if (out == "metrics") return(metrics_mod)  # this is if we want the metrics (but BUG in the package)
-}
-          
-data_rocpr <- map_dfr(model_list, get_rocpr)
+**Precision**: TruePositives / (TruePositives+FalsePositives). While the Sensitivity informs us on how likely is that a positive case will be detected, it does not tell us how much confident we can be that a positive prediction will be indeed true.
 
-str(data_rocpr)
-```
-We obtain a dataframe ```data_rocpr``` with the Y and X coordinates for plotting ROC or PRC.
+**F**: the harmonic mean of Precision and Recall.
 
-Let's plot the ROC curves.
-```{r ROC_plot, fig.align="center"}
-data_rocpr  %>% 
-  filter(type == "ROC") %>% 
-  mutate(modname = factor(modname, levels = mod_names)) %>%
-  ggplot(aes(y = y, x = x, col = modname)) +
-  geom_line() +
-  geom_abline(slope = 1, intercept = 0, linetype = 2) +
-  labs( y =  "Sensitivity (TP/(TP+FN))",
-        x = "1 - Specificity (TN/(TN + FP))",
-        title = "ROC curves")
-```
-
-A perfect model tha is able to capture alla the "yes"  and all the "No" will have Sensitivity = Specificity = 1, and this  will generate a curve that pass through the upper left corner and continuing parallel to the x-axes reach the top-right corner. In the other hand, a model that gives random predictions will generate a curve that will lie in vicinity the dotted line. Of course we might have also a model that make predictions worse than random, in that case the curve will be to the right of the dotted line.
-
-## Precision-Recall Curve
-
-A [good argument](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4349800/) has been made that the ROC curve can be misleading when dealing with very unballanced classes. When the negative class is very small, the probability of making FalsePositive predictions increases. Becouse FalsePositive might still be a small percentage of  the indentified TrueNegative, the specificity of the model would be only minimally affected by such class unballance. Precision-Recall Curves, introduce a different measure, that take into account FalsePositives in the context of the positive predictions: the precision.
-
-The *precision* is the ratio of identified TruePositives / (TruePositives+FalsePositives), and thus indicates how likely is that a "Yes" predition is correct. Of course a model may be still 100 % correct when it predicts "Yes" but be able to identify _*very few*_  "Yes". In that particular case the Recall (aka Sensitivity: TruePositives/ (TruePositive + FalseNegatives) ) of the model will be very low. The best possible model is able to correctly identify all the "Yes", and so has Precision = Recall = F (the harmonic mean of the 2 measures) = 1.
-
-[Precision-Recall](https://ils.unc.edu/courses/2013_spring/inls509_001/lectures/10-EvaluationMetrics.pdf) curves are generated by retriving different percentages of the samples and plotting (for each of the retrived samples) those two metrics, the Precisions against the Recall. Remember that perfection would generate a precision-recall curve that pass to the up-right corner of the grapha and thus have Precision = Recall = F = 1.
-
-```{r precision_recal_alt, include=TRUE ,eval=TRUE}
-data_rocpr <- map_dfr(model_list, get_rocpr)
-
-data_rocpr  %>% 
-  filter(type == "PRC") %>% 
-  mutate(modname = factor(modname, levels = names_mod)) %>%
-  ggplot(aes(y = y, x = x, col = modname)) +
-  geom_line() +
-  geom_abline(slope = 0, intercept = 4.79/ 100, linetype = 2) +
-  labs( y = "Precision TP/(TP+FP)",
-        x = "Recall TP/(TP+FN)")
-```  
-
-## Putting all together Sensitivity, Specificity
-
-```{r ROC_sens_spec, eval=TRUE, include=TRUE, warning=FALSE}
-resamps <- resamples(model_list)
-
-resamps$values %>% 
-  gather("model~metric", "value", 2:13) %>%  # from wide to long format
-  separate ("model~metric", c("model", "metric")) %>%  # separate columns
-  mutate(model = factor(model, levels = c("glmnet", "rpart", "ctree", "rf"))) %>% 
-  mutate(metric = recode(metric, Sens = "Sensitivity", Spec = "Specificity")) %>% 
-  group_by(model, metric) %>% 
-  summarize(mean = mean(value), sd = sd(value)) %>% 
-  # mutate(metric = factor(metric, levels = c("ROC", "Sensitivity", "Specificity"))) %>% 
-  
-  
-  ggplot(aes(y= mean, x = model, col = model)) +
-    geom_point(size = 2.5) +
-    geom_errorbar(aes(ymin = mean - sd, ymax =  mean + sd), width = 0.1) +
-    scale_y_continuous(limits = c(0, 1)) + 
-    coord_flip() +
-    facet_wrap(metric ~ .) +
-    theme(legend.position = "none")
-```
+We create the function ```summary_td``` that calculates those metrics and then  ```get_metrics``` that we will use for appling them to the different folds of cross-validated dataset.
 
 ```{r calc_metrics}
 summary_td <- function(x) {
@@ -517,15 +441,9 @@ summary_td <- function(x) {
       bind_cols(pr, tc)
 }
 
-get_metrics <- function(mod, metric = "No") {
-  
-  # this is just to decide if name the model + the metric used for 
-  # selecting hyperparameters or just the model
-  if (metric != "No") {
-      modname <-  paste0(mod[["method"]],"-",mod[["metric"]])
-  } else {
-      modname <-  mod[["method"]]
-  }
+get_metrics <- function(mod) {
+
+  modname <-  mod[["method"]]
   
   mod[["pred"]] %>% 
   select(obs, pred, Yes, No, Resample) %>%
@@ -534,43 +452,201 @@ get_metrics <- function(mod, metric = "No") {
   # here we apply summary_td to each of the dataframes
   map_dfr(., summary_td, .id = "id") %>% 
   mutate(model = !!modname ) %>%  
+  rename(Sensitivity = Sens, Specificity = Spec) %>% 
   # reshape and summarize
   gather("metric","value", 2:(ncol(.)-1)) %>% 
   group_by(model, metric) %>% 
   summarize(mean = mean(value,na.rm =TRUE), sd = sd(value, na.rm =TRUE)) %>% 
   ungroup()
 }
+
+metrics <- map_dfr(model_list, get_metrics)
+glimpse(metrics)
 ```
 
-```{r plot_ROC, warning=FALSE}
-metrics <-map_dfr(model_list,get_metrics) 
+We plot the results.
 
+```{r plot_metrics1, warning=FALSE}
 metrics %>% 
-    mutate(model = factor(model, levels = c("glmnet", "rpart", "ctree", "rf"))) %>% 
-    filter(metric %in% c("ROC", "Sens", "Spec")) %>% 
+    filter(metric %in% c("Sensitivity", "Specificity", "Precision", "F")) %>%
+    mutate(metric = factor(metric, levels = c("Sensitivity", "Specificity", "Precision", "F"))) %>% 
+    mutate(model = factor(model, levels = mod_names)) %>% 
     ggplot(aes(y= mean, x = model, col = model)) +
     geom_point(size = 2.5) +
     geom_errorbar(aes(ymin = mean - sd, ymax =  mean + sd), width = 0.1) +
     scale_y_continuous(limits = c(0, 1)) + 
     coord_flip() +
-    facet_wrap(metric ~ .) +
-    theme(legend.position = "none")
+    facet_grid(. ~ metric) +
+    theme(legend.position = "none",
+          panel.spacing = unit(1.2, "lines"))
+```
+Again, the glmnet model is overall the one that performs better and has highest F.  The tree-based models have very good specificity but poor sensitivity and precision. Overall, all the 4 models have poor performances (i.e. 1).
+
+# Thresholds, ROC curves and Precision-Recall Curves
+
+## Thresholds
+
+Let's take a look at the predictions of one of the model.
+
+```{r }
+glimpse(mod_ranger$pred)
+```
+You  will notice that the model provides for each case a certain probability of Yes and of No. This proabilities are then used to generate the corresponding prediction, with values greater 0.5 cut-off flagged as Yes and  smaller as No. However, there are scenarios in which we might be willing to trade same precision and thus tollerate higher number of False Positives in exchange of an higher sensitivity, becouse for example a False Negative might mean that result in big explosion (e.s. algorithm that identifies mines from sonar data).
+
+The graph and the table above reported display metrics calculated using a cut-off probability of 0.5. A model like the RandomForest that did not predict any "Yes" might be able to get some positive hits, under specific thresholds conditions. This introduce another important parameter and makes everything a little bitmore complicated, right?
+What can we do?
+
+To have a better idea of how the models will perform under those different conditions, we can simply vary systematicaly the cut-of probability for assigning the prediction values ("Yes" or "No") and then calculate the metrics above indicated for each of the threshold. 
+
+That is exactly the concept behind the ROC and Precision-Recall Curves.
+
+## ROC curves
+
+[ROC](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) curves are generated  by varying the threshold proability and plotting the Sensitivity of the model ( TruePositives/ (TruePositive + FalseNegatives) ) as a function of  1 - Specificity ( TrueNegatives/ (TrueNegatives + FalsePositives) ). In other words, the ROC curve plots the rate of True Positives (over the total positive) as a function of the rate of True Negatives.
+
+To calculate the data of the curves we will use the package ```PRROC```. The [package](https://cran.r-project.org/web/packages/PRROC/vignettes/PRROC.pdf) has same very handy functions to calculate (and plot) ROC and Precision-Recall curves. We create our own function that extracts the data from multiple ````train``` objects using the comands ```PRROC::roc.curve``` and ```PRROC::pr_curve```,  and  then applys it to the same unpacked data-arguments (_*quasiquoted*_) with ``purrr:invoke_map```.
+
+```{r rocpr}
+get_rocpr <- function(mod, cv = "pr") {
+  # cv = c("pr", "ROC")
+  # 
+  
+  lab <- mod[["pred"]][["obs"]] %>% 
+            recode(Yes = 1, No = 0)
+  
+  # labels go in weightclass https://academic.oup.com/bioinformatics/article/31/15/2595/187781 
+  
+  # QuasiQuote https://adv-r.hadley.nz/quasiquotation.html
+  fr <- list(scores.class0 = mod[["pred"]][["Yes"]], weights.class0 = lab, curve = TRUE)
+  
+  #invoke_map to apply 2 functions and same quoted arguments to the same data 
+  rocpr_data <- exec("invoke_map", list(pr.curve, roc.curve), !!!fr)
+
+  # prec curve using the predition and observations of the model
+  pr_data <-  tibble(Recall = rocpr_data[[1]]$curve[, 1],
+                     Precision = rocpr_data[[1]]$curve[, 2],
+                     Threshold = rocpr_data[[1]]$curve[, 3],
+                     modname = mod[["method"]])
+
+  
+  roc_data <-   tibble(FPR = rocpr_data[[2]]$curve[, 1],
+                       Sensitivity =rocpr_data[[2]]$curve[, 2],
+                       Threshold = rocpr_data[[2]]$curve[, 3],
+                       modname = mod[["method"]])
+  
+  if (cv ==  "pr")  return(pr_data) 
+  if (cv == "ROC") return(roc_data) 
+}
+
 ```
 
+We obtain the data of the ROC curves applying our new created ```get_rocpr``` function to the list of models.
+
+```{r get_dataroc}
+data_roc <- map_dfr(model_list, get_rocpr, "ROC")
+
+str(data_roc)
+```
+
+A perfect model that is able to capture alla the "Yes"  and all the "No" will have Sensitivity = Specificity = 1, and thus  will generate a curve that passes through the upper left corner, continues parallel to the x-axes and reaches the top-right corner. On the other hand, a model that gives random predictions will generate a curve that will lie in the vicinity of the dotted line. Of course we might have also a model that make predictions worse than random, in that case the curve will be to the right of the dotted line. Let's look at the data.
+
+```{r ROC_plot, fig.align="center"}
+data_roc  %>% 
+  mutate(modname = factor(modname, levels = mod_names)) %>%
+  ggplot(aes(y = Sensitivity, x = FPR  , col = modname)) +
+  geom_line() +
+  geom_abline(slope = 1, intercept = 0, linetype = 2) +
+  labs( y =  "Sensitivity TP/(TP+FN)",
+        x = "1 - Specificity TN/(TN + FP)",
+        title = "ROC curves") +
+  theme(plot.title = element_text(hjust = 0.5)) 
+```
+The model glmnet still perform better than all the others, wheras rpart and ctree have predictions very close to pure chance.  The RandomForest performs better than chance but still less than the glmnet. 
+With the best model (glmnet), the trade-off for detecting 75% of the true positives (sensitivity=0.75), would be to have 50% chances of making a mistake identifing a negative (1 - Specificity = 0.5)...better than chance but still far from perfect.
+
+## Precision-Recall Curve
+
+A [good argument](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4349800/) has been made that the ROC curve can be misleading when dealing with very unballanced classes. When the positive class is very small, the probability of making False Positive predictions increases. Becouse False Positives might still be a small percentage of  the indentified True Negative, the specificity of the model would be only minimally affected by such class unballance. 
+
+[Precision-Recall](https://ils.unc.edu/courses/2013_spring/inls509_001/lectures/10-EvaluationMetrics.pdf) take that into account and plot the maximal Precision vs Recall (Sensitivity) obtained by varing the probability threshold.
+
+It is important to stress that becouse of this variation in the cut-off threshold, also a model that always assign probability < 0.5 for the class "Yes" (as our RandomForest) might have a good precision when there is a positive probability differential between "Yes" and "No".
+
+Here an example. We create 30 observation:  the first 29 are "No" wheras the last one is "Yes". The probabilities generated by the model are all < 0.5, with the first 29 = 0.4 and the the last one equal 0.41. We can automatically ```plot```the data of class ```PRROC```.
+
+```{r example, fig.align="center"}
+# observation are all No except the last one that is Yes
+lab <- c(rep(0, 29), 1)
+
+# probability is always < 0.5, 
+# but for the last case (the positive obs) 
+# is higher than the others (from 0.4 to 0.41)
+sc <- c(rep(0.4, 29), 0.41)
+
+cv <-  pr.curve(scores.class0 = sc, weights.class0 = lab, curve = TRUE)
+plot(cv)
+```
+The legend to the right indicate the threshold used to caculate precison and recall. When the threshold is set to 0.41 the predictions of the model are perfect even if originally the probabilities were all <0.5.
+
+OK, we are now ready to plot the Precision-Recall curves of our models.
+
+```{r precision_recal_alt, include=TRUE ,eval=TRUE, fig.align="center"}
+data_pr <- map_dfr(model_list, get_rocpr, "pr")
 
 
+data_pr  %>% 
+  mutate(modname = factor(modname, levels = mod_names)) %>%
+  ggplot(aes(y = Precision, x = Recall, col = modname)) +
+  geom_line() +
+  geom_abline(slope = 0, intercept = 4.79/ 100, linetype = 2) +
+  labs( y = "Precision TP/(TP+FP)",
+        x = "Recall TP/(TP+FN)",
+        title = "Precison-Recall Curves") +
+  scale_y_continuous(limits = c(0,1)) +
+  theme(plot.title = element_text(hjust = 0.5)) 
+```  
 
-```{r plot_pr, warning=FALSE}
-metrics %>% 
-    mutate(model = factor(model, levels = c("glmnet", "rpart", "ctree", "rf"))) %>% 
-    filter(metric %in% c("AUC", "F", "Precision", "Recall")) %>% 
-    ggplot(aes(y= mean, x = model, col = model)) +
-    geom_point(size = 2.5) +
-    geom_errorbar(aes(ymin = mean - sd, ymax =  mean + sd), width = 0.1) +
-    scale_y_continuous(limits = c(0, 1)) + 
-    coord_flip() +
-    facet_wrap(metric ~ .) +
-    theme(legend.position = "none")
+The rank of the models observed in previous graph is mantained also for the Precision-Recall curves, but the limitations of the models are more evident. The best model, glmnet, reaches a precision of 0.5 (only one over 2 positive prediction is true) 
+
+
+```{r extr_rocpr2}
+get_rocpr2 <- function(mod, out = "curve", resp = "Yes"){
+          
+          if (!is(mod, "train")) stop("The object selected is not a model")
+          
+          # we get the prediction from the caret model
+          df <- mod[["pred"]]
+         
+          # we insert scorese (probabilities) and observations and folds
+          cvdat <-  mmdata(scores = df$Yes, labels = df$obs, posclass = resp, fold_col = df$Resample)
+          
+          # it would have been a great code-saver
+          # https://goo.gl/Xp1d6t 
+          metrics_mod <-  fortify(evalmod(cvdat, mode = "basic")) %>%
+                                mutate(modname = mod[["method"]])
+
+          # this is to get the values of ROC and PRC curves
+          dat_rocpr <- as.data.frame(evalmod(cvdat)) %>%
+                          mutate(modname = mod[["method"]])
+
+          if (out == "curve")  return(dat_rocpr) # this is for the curves
+          if (out == "evalmod") return(evalmod(cvdat)) # this is in case we want to get the evaluated model
+          if (out == "metrics") return(metrics_mod)  # this is if we want the metrics (but BUG in the package)
+}
+          
+data_rocpr <- map_dfr(model_list, get_rocpr2)
+
+data_rocpr  %>%
+  filter(type == "PRC") %>% 
+  mutate(modname = factor(modname, levels = mod_names)) %>%
+  ggplot(aes(y = y, x = x, col = modname)) +
+  geom_line() +
+  geom_abline(slope = 0, intercept = 4.79/ 100, linetype = 2) +
+  labs( y = "Precision TP/(TP+FP)",
+        x = "Recall TP/(TP+FN)",
+        title = "Precison-Recall Curves") +
+  scale_y_continuous(limits = c(0,1)) +
+  theme(plot.title = element_text(hjust = 0.5)) 
 ```
 
 
