@@ -35,7 +35,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.53" />
+<meta name="generator" content="Hugo 0.54.0" />
 
 
 <link rel="canonical" href="/post/re-di-twitter-i/" />
@@ -66,7 +66,8 @@ Nella parte I analizzeremo le abitudini dei 3 leader e  scopriremo chi dei 3 è 
 Nella parte II ci addentreremo nel contenuto dei tweets e andremo a vedere quali sono le parole e i lemmi più usati dai 3 politici.
 " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/re-di-twitter-i/" /><meta property="article:published_time" content="2018-09-12T00:00:00&#43;00:00"/>
+<meta property="og:url" content="/post/re-di-twitter-i/" />
+<meta property="article:published_time" content="2018-09-12T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2018-09-12T00:00:00&#43;00:00"/>
 
 <meta itemprop="name" content="Il Re di Twitter? (PARTE I)">
@@ -80,7 +81,7 @@ Nella parte II ci addentreremo nel contenuto dei tweets e andremo a vedere quali
 
 <meta itemprop="datePublished" content="2018-09-12T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2018-09-12T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="3208">
+<meta itemprop="wordCount" content="3231">
 
 
 
@@ -304,7 +305,7 @@ if (!doNotTrack) {
             <a href="/categories/r/"> R </a>
             
           </div>
-        <span class="more-meta"> 3208 words </span>
+        <span class="more-meta"> 3231 words </span>
           <span class="more-meta"> 16 min read </span>
 
         
@@ -423,26 +424,28 @@ setup_twitter_oauth<span class="p">(</span>API_key<span class="p">,</span> API_s
 <p>Otteniamo i 3200 tweets di luigidimaio, maumartina, matteosalvinimi usando il comando <em>userTimeline</em> e diamo una pulita al dataframe (twdat = tweets data) ottenuto.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r">pol <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span><span class="s">&#34;luigidimaio&#34;</span><span class="p">,</span> <span class="s">&#34;matteosalvinimi&#34;</span><span class="p">,</span> <span class="s">&#34;maumartina&#34;</span><span class="p">)</span>
 
-twdat <span class="o">&lt;-</span> as_tibble<span class="p">(</span>map_dfr<span class="p">(</span>pol<span class="p">,</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">)</span> twListToDF<span class="p">(</span>userTimeline<span class="p">(</span>x<span class="p">,</span> includeRts <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> 
-    n <span class="o">=</span> <span class="m">3200</span><span class="p">))))</span>
+twdat <span class="o">&lt;-</span> as_tibble<span class="p">(</span>map_dfr<span class="p">(</span> pol<span class="p">,</span>
+                            <span class="kr">function</span><span class="p">(</span>x<span class="p">)</span> twListToDF<span class="p">(</span>userTimeline<span class="p">(</span>x<span class="p">,</span>  includeRts <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> n <span class="o">=</span> <span class="m">3200</span><span class="p">))))</span>
 
+ 
+twdat<span class="o">$</span>statusSource <span class="o">&lt;-</span> str_extract<span class="p">(</span>twdat<span class="o">$</span>statusSource<span class="p">,</span> 
+                  <span class="s">&#34;iPhone|Web Client|Android|TweetDeck|iPad|Hootsuite|Facebook|IoResto|Websites|IFTTT|Instagram|iOS|Periscope&#34;</span><span class="p">)</span> <span class="c1"># this is to extract the important info</span>
 
-twdat<span class="o">$</span>statusSource <span class="o">&lt;-</span> str_extract<span class="p">(</span>twdat<span class="o">$</span>statusSource<span class="p">,</span> <span class="s">&#34;iPhone|Web Client|Android|TweetDeck|iPad|Hootsuite|Facebook|IoResto|Websites|IFTTT|Instagram|iOS|Periscope&#34;</span><span class="p">)</span>  <span class="c1"># this is to extract the important info</span>
-
-twdat<span class="o">$</span>created <span class="o">&lt;-</span> with_tz<span class="p">(</span>twdat<span class="o">$</span>created<span class="p">,</span> <span class="s">&#34;CET&#34;</span><span class="p">)</span>  <span class="c1"># time-zone</span></code></pre></td></tr></table>
+twdat<span class="o">$</span>created <span class="o">&lt;-</span>  with_tz<span class="p">(</span>twdat<span class="o">$</span>created <span class="p">,</span> <span class="s">&#34;CET&#34;</span><span class="p">)</span> <span class="c1"># time-zone</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>OK, abbiamo a questo punto un dataframe/tibble con cui possiamo lavorare.</p>
@@ -823,23 +826,29 @@ date_lim <span class="o">&lt;-</span> as_datetime<span class="p">(</span><span c
 
 knitr<span class="o">::</span>kable<span class="p">(</span>as_data_frame<span class="p">(</span>date_lim<span class="p">)</span> <span class="p">,</span> align <span class="o">=</span> <span class="s">&#34;cc&#34;</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">## Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new semantics).
+## This warning is displayed once per session.</pre></td></tr></table>
+</div>
 </div>
 <table>
 <thead>
 <tr>
-<th align="left"></th>
 <th align="center">value</th>
 </tr>
 </thead>
 
 <tbody>
 <tr>
-<td align="left">min_shared</td>
 <td align="center">2017-12-01 01:00:00</td>
 </tr>
 
 <tr>
-<td align="left">max_shared</td>
 <td align="center">2018-08-01 02:00:00</td>
 </tr>
 </tbody>

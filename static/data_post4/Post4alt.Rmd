@@ -3,13 +3,13 @@ title: "Fighting diseases with predictive modeling"
 output: html_notebook
 ---
 
-In this post we will analyze the data of the [__ADD HEALTH__](https://www .cpc.unc.edu/projects/addhealth/about), a national longitudinal study that enrolled  ~90000 adolescents and followed them up for 20 years. Using the *R* package [```caret```](https://github.com/topepo/caret), we will train and evaluate different models (regression, decison tree, random Forrest) in order to predict drug use behavior in adulthood from information (friends, social activities, parents and others) collected during adolescence. This will give us the opportunity to play and get familiarized with the most important ```caret``` functions as well as to introduce seminal concepts of machine learning.
+In this post we will analyze the data of the [__ADD HEALTH__](https://www .cpc.unc.edu/projects/addhealth/about), a national longitudinal study that enrolled  ~90000 adolescents and followed them up for 20 years. Using the *R* package [```caret```](https://github.com/topepo/caret), we will train and evaluate different models (regression, decision tree, random Forrest) in order to predict drug use behavior in adulthood from information (friends, social activities, parents and others) collected during adolescence. This will give us the opportunity to play and get familiarized with the most important ```caret``` functions as well as to introduce seminal concepts of machine learning.
 
 # The bout: the data to analyze
 
 __ADD HEALTH__ is a unique study both in terms of the extent of information collected ("the largest, most comprehensive longitudinal survey of adolescents ever undertaken") and duration (started in 1994 and is still on going [study design](https://www.cpc.unc.edu/projects/addhealth/design/designpage001.jpg/@@images/b842a2e4-e345-4384-bfc5-c724a3b55b5c.jpeg)).
 
-We will analyze the  [publicly available data](https://www.cpc.unc.edu/projects/addhealth/documentation/publicdata), a small fraction of the total subjects surveyed ~5%, but still a quite decent dataset of ~ 6000 observations X several thousand variables.
+We will analyze the  [publicly available data](https://www.cpc.unc.edu/projects/addhealth/documentation/publicdata), a small fraction of the total subjects surveyed ~4%, but still a quite decent dataset of ~ 6000 observations X several thousand variables.
 
 It is important to keep in mind that the __current analysis will be performed on unweighted data__ (ADD  sampling design is quite complex) and models will be evaluated in samples not necessaries representative of the population. __This can affect the final estimates of the model effectiveness__. 
 
@@ -67,7 +67,7 @@ confusionTable.default <- function (mod) {
     spread(modname, n) %>% 
     mutate(Case = c("True Negative", 
                    "False Negative",
-                   "False Postive", 
+                   "False Positive", 
                    "True Positive")) %>% 
     arrange(Case) %>% 
     select(Case, everything()) %>% 
@@ -128,7 +128,7 @@ lev_1 <- unlist(attributes(nlevel_count[nlevel_count == 1]))
 heal_sub <- heal_sub[,  !names(heal_sub) %in% lev_1]
 ```
 
-Same columns miss quite a lot of data. We can *impute* missing observation only if missing data in each column does not rappresent a significant portion of the data. We are going to drop all the columns that have more than 15% of missing data.
+Same columns miss quite a lot of data. We can *impute* missing observation only if missing data in each column does not represent a significant portion of the data. We are going to drop all the columns that have more than 15% of missing data.
 
 ```{r NAs}
 na_byc <-  unlist(map(heal_sub, function(x) sum(is.na(x))))
@@ -173,13 +173,13 @@ summary(heal_sub_cl$H4TO117)
 
 #   Train (the Models) for the fight
 
-## Cross Validation, Class Inbalance
+## Cross Validation, Class Unbalance
 
 After some data exploration, we can finally develop (train) and evaluate (test) predictive models. In other words, we are going to find the best parameters for the different models and test them. Can we **train and test models using exactly the same data**? That would not be a good idea at all, as it **would results in an overestimation of the accuracy of our models** (we would end it up fitting also noise). Why? 
 
 Imagine to be **Muay Thai** fighter that is getting ready for his first fight. If you train and spar always with the same person, you might end it up knowing his/her strategies pretty well, and developing way to respond and exploit his/her way of attacking and defending. For an external observer you might look even very good when you spar with him/her. Does it mean that you are going to do well also in your fight? Not really. Your opponent might have a difference stance of your training partner or a completely different style. You might have not encountered those moves in training, and thus perform not well  under those different conditions (and get your ass kicked). So what can you do to get ready for your fight and have a more accurate understanding of your potential? Don't train and test your skill always with the same person. What you want to do is to **train with as many different people, and then occasionally test your skills with someone that you have never trained before. This will maximize your chance of having trained for someone similar to your actual fight opponent but also give you a better idea if you are ready or not**.
 
-We are going to do the same thing with our data. **We will divide our dataset in 10 samples, train our model with 9 of them and evaluate it with the 10th. Then select a different sample for testing and apply the same procedure until each one is used once for testing**. In this way, we well **never train and test our model with the same data** and we will get an **estimate of variability** for the accuracy of the model. The entire procedure will than be repeated 5 times with reshufled data (new partitions). This procedure is called ```repeated cross-validation```.
+We are going to do the same thing with our data. **We will divide our dataset in 10 samples, train our model with 9 of them and evaluate it with the 10th. Then select a different sample for testing and apply the same procedure until each one is used once for testing**. In this way, we well **never train and test our model with the same data** and we will get an **estimate of variability** for the accuracy of the model. The entire procedure will than be repeated 5 times with reshuffled data (new partitions). This procedure is called ```repeated cross-validation```.
 
 Unfortunately we have another problem. The people that keep taking drugs despite negative consequences are about 4% of the total number of people in our dataset. We have a severe **class imbalance**. Because of such a difference in the size of our 2 classes, **it is more likely that the small class we will have much less weight in the parameter optimization of our model**. There are several things that we can do to mitigate that problem. One possibility is to randomly up-sample the smaller class to make the class distribution equal. We could run the caret function ```upSample``` that does exactly that and than train and test our model on the re-sampled data.  What is the problem in doing that? It's that it is very likely that the same observations will be part of the data that used to train the model but also test its accuracy, that is because  we are going to duplicate a lot of observations for the class "yes". Here we are again, training and *sparring* with the same partners as before! **We need to train our model on the up Sample data, but then test it on part of the not re-sampled data!**[_*Max Kuhn*_](https://topepo.github.io/caret/index.html), the creator of ```caret```, made it easy for us, and not we can do that using an option when we invoke the function ```trainControl``` for cross-validating the data. Perfect!
 
@@ -187,7 +187,7 @@ Unfortunately we have another problem. The people that keep taking drugs despite
 
 There is another important detail to take in consideration when we partition data.  We want to make sure to **maintain as equal as possible the distribution of our class of interest in the train and test samples**. In other words, we want to avoid that for example the "*yes*" responses to question *H4TO117* will end up all in one of the training partitions but not the other. This is done automatically by ```caret::trainControl```.
 
-However, our dataset has another relevant variable that we need to take in consideration: *CLUSTER2*. In the ADD HEALTH study, subjects were chosen in clusters (i.e. schools). **It is likely that observations of same clusters will be more similar to each other than to those coming from a different cluster. Again, if the data that we use for training and testing the model are very similar, we might end up obtain overoptimistic estimates [overoptimistc estimates](https://topepo.github.io/caret/data-splitting.html#simple-splitting-with-important-groups) of accuracy**. This would be equivalent to test your fighting skills sparring with someone that you have never trained with before but that comes to your same gym. He/she has trained under the same coach, and thus it is very likely that is going to employ moves that you have seen before. Would you still perform well against someone with a completely different style and background? Difficult to say. It would be better to test your skills sparring with someone from a different gym. Similarly, we can **limit this problem taking in account the variable ```CLUSTER2``` when we partition our data  and try to avoid as much as possible to train and test the model with data from exactly the same cluster**. The function ```caret::groupKFold``` will do it for us.
+However, our dataset has another relevant variable that we need to take in consideration: *CLUSTER2*. In the ADD HEALTH study, subjects were chosen in clusters (i.e. schools). **It is likely that observations of same clusters will be more similar to each other than to those coming from a different cluster. Again, if the data that we use for training and testing the model are very similar, we might end up obtain overoptimistic estimates [overoptimistic estimates](https://topepo.github.io/caret/data-splitting.html#simple-splitting-with-important-groups) of accuracy**. This would be equivalent to test your fighting skills sparring with someone that you have never trained with before but that comes to your same gym. He/she has trained under the same coach, and thus it is very likely that is going to employ moves that you have seen before. Would you still perform well against someone with a completely different style and background? Difficult to say. It would be better to test your skills sparring with someone from a different gym. Similarly, we can **limit this problem taking in account the variable ```CLUSTER2``` when we partition our data  and try to avoid as much as possible to train and test the model with data from exactly the same cluster**. The function ```caret::groupKFold``` will do it for us.
 
 ```{r trainControl}
 seeds = 1502
@@ -304,7 +304,7 @@ mod_glmnet <- train(H4TO117 ~ .,
               )
 ```
 
-All the info regarding our model, including the coefficients of the different predictors, are contained in ```mod_glmnet$finalModel```. A summary of the details regarding the *pre-processing*, *resampling*, *hyperparmeter tuning* can be easily retrived ```print``ing  the model.
+All the info regarding our model, including the coefficients of the different predictors, are contained in ```mod_glmnet$finalModel```. A summary of the details regarding the *pre-processing*, *resampling*, *hyperparmeter tuning* can be easily retrieved ```print``ing  the model.
 
 ```{r mod_print, include=FALSE}
 print(mod_glmnet)
@@ -318,9 +318,9 @@ Some estimates of the model efficacy are reported above and we will discuss them
 
 ## Classification Trees and Random Forest
 
-Another type of very popular predictive model is classification tree. Classification trees are very easy to implement and interpret (if number of predictors are not too much) and employ **recursive spliting the data in groups that are internally as homogeneus as possible** in terms of measures of purity (i.e Gini index) of the target classifier. Here a good visual example of possible [splits](https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwjx4YPhpOngAhXMhOAKHeykDx0QjRx6BAgBEAU&url=https%3A%2F%2Fdimensionless.in%2Fintroduction-to-random-forest%2F&psig=AOvVaw2kexYImpv-x0wyxpnd_mzC&ust=1551816401888411) and of their relative level of *purity*. In other words, what the tree does is to create a concatatenation of if-then. 
+Another type of very popular predictive model is classification tree. Classification trees are very easy to implement and interpret (if number of predictors are not too much) and employ **recursive splitting the data in groups that are internally as homogeneous as possible** in terms of measures of purity (i.e Gini index) of the target classifier. Here a good visual example of possible [splits](https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwjx4YPhpOngAhXMhOAKHeykDx0QjRx6BAgBEAU&url=https%3A%2F%2Fdimensionless.in%2Fintroduction-to-random-forest%2F&psig=AOvVaw2kexYImpv-x0wyxpnd_mzC&ust=1551816401888411) and of their relative level of *purity*. In other words, what the tree does is to create a concatenation of if-then. 
 
-Continouing the analogy of Muay Thai, a branch of a classification tree might look like this : _*if*_ fighter A trains 7 days a week _*if*_ his/her opponent train only once a week and _*if*_ fighter A has 150 fights more than his opponent and _*if*_ fighter A is less than 30 years old and more than 18 _*than*_ fighter A is going to win the fight.
+Continuing the analogy of Muay Thai, a branch of a classification tree might look like this : _*if*_ fighter A trains 7 days a week _*if*_ his/her opponent train only once a week and _*if*_ fighter A has 150 fights more than his opponent and _*if*_ fighter A is less than 30 years old and more than 18 _*than*_ fighter A is going to win the fight.
 
 We  grow the first tree using the package ```rpart```.
 
@@ -370,7 +370,7 @@ How did the models performed? We will look in dept at different measures of accu
 
 ## Confusion Matrix
 
-We can get a first feel of how the model is performing by looking at the **[confusionMatrix](https://en.wikipedia.org/wiki/Confusion_matrix) which indicates the correct prediction in each of the classes**. Instead of using the ```caret::confusionMatrix```, I am going to create my own function for extracting that info from ```model$table``` and arrange it in table with a different layout.
+We can get a first feel of how the model is performing by looking at the **[confusion Matrix](https://en.wikipedia.org/wiki/Confusion_matrix) which indicates the correct prediction in each of the classes**. Instead of using the ```caret::confusionMatrix```, I am going to create my own function for extracting that info from ```model$table``` and arrange it in table with a different layout.
 We will create 2 different method dispatches depending on the class of the object. This will allow us to easily apply the function to a single model or a list of models. 
 
 ```{r eval_matrix, eval=TRUE, include=FALSE}
@@ -393,7 +393,7 @@ confusionTable.default <- function (mod) {
     spread(modname, n) %>% 
     mutate(Case = c("True Negative", 
                    "False Negative",
-                   "False Postive", 
+                   "False Positive", 
                    "True Positive")) %>% 
     arrange(Case) %>% 
     select(Case, everything()) %>% 
@@ -413,19 +413,19 @@ mod_table
 
 ```
 
-**Of the 4  models, ```glmnet``` is the one that has the highest rate of detection of *Yes* (True Positive), but also the highest rate of False Allarms (False Positive). The 2 tree-based models detect only a very small fraction of True Positive, whereas the Random Forest does not get any hit and always bets for *No*.**
+**Of the 4  models, ```glmnet``` is the one that has the highest rate of detection of *Yes* (True Positive), but also the highest rate of False Alarms (False Positive). The 2 tree-based models detect only a very small fraction of True Positive, whereas the Random Forest does not get any hit and always bets for *No*.**
 
 ## Sensitivity (Recall), Specificity, Precision
 
 The number of True and False predictions can be used to calculate other metrics of the performance of the models. The 
 
-**Sensitivity** AKA **Recall**: True Positive Rate, TruePositives/ (TruePositive + FalseNegatives). Itindicates the percentage of Positives that are detected by the model
+**Sensitivity** AKA **Recall**: True Positive Rate, TruePositives/ (TruePositive + FalseNegatives). It indicates the percentage of Positives that are detected by the model
 
 **Specificity**: True Negative Rate,  TrueNegatives/ (TrueNegatives + FalsePositives). It indicates the percentage of Negatives identified by the model. 
 
 While the *sensitivity* informs us on how likely is that a positive case will be detected, it does not tell us how much confident we can be that a positive prediction will be indeed true. This is expressed by the *precision*.
 
-**Precision**: TruePositives / (TruePositives+FalsePositives). It indicates how accurates are the positive predictions.
+**Precision**: TruePositives / (TruePositives+FalsePositives). It indicates how accurate are the positive predictions.
 
 **F**: the harmonic mean of Precision and Recall.
 
@@ -482,7 +482,7 @@ metrics %>%
           panel.spacing = unit(1.2, "lines"))
 ```
 
-Again, **the glmnet model has the highest *sensitivity* and *F***. The tree-based models  have very good *specificity* but poor *sensitivity* and *precision*. The performance of the Random Forest is even worse and, becouse no positive can be detected the *precision* and *F* cannot be calculated. **Overall, all the 4 models have poor performances**.
+Again, **the glmnet model has the highest *sensitivity* and *F***. The tree-based models  have very good *specificity* but poor *sensitivity* and *precision*. The performance of the Random Forest is even worse and, because no positive can be detected the *precision* and *F* cannot be calculated. **Overall, all the 4 models have poor performances**.
 
 # Thresholds, ROC curves and Precision-Recall Curves
 
@@ -493,19 +493,20 @@ Let's take a closer look at the predictions of one of the model.
 ```{r }
 glimpse(mod_ranger$pred)
 ```
-You  will notice that the model provides for each case a certain probability of *Yes* and of *No*. This proabilities are then used to generate the corresponding prediction, with values greater 0.5 cut-off flagged as *Yes* and smaller as *No*. However, there are scenarios in which **we might be willing to trade same precision and  tollerate higher number of False Positives in exchange of an higher *sensitivity* **, for example when a False Negative and an error of the model might result in a big explosion in the real life out there (e.s. algorithm that identifies mines from sonar data).
+
+You  will notice that the model provides for each case a certain probability of *Yes* and of *No*. This probabilities are then used to generate the corresponding prediction, with values greater 0.5 cut-off flagged as *Yes* and smaller as *No*. However, there are scenarios in which **we might be willing to trade same precision and  tolerate higher number of False Positives in exchange of an higher *sensitivity* **, for example when a False Negative and an error of the model might result in a big explosion in the real life out there (e.s. algorithm that identifies mines from sonar data).
 
 The graph and the table above reported display metrics calculated using a cut-off probability of 0.5. A model like the *RandomForest* that did not predict any *Yes* might be able to get some positive hits, under specific thresholds conditions. This introduce another important parameter and makes everything a little bit more complicated, right?
 What can we do?
  
-To have a better idea of how the models will perform under those different conditions, we can simply **vary systematicaly the cut-of probability for assigning the prediction values (*Yes* or *No*) and then calculate the metrics** above indicated for each of the threshold. 
+To have a better idea of how the models will perform under those different conditions, we can simply **vary systematical the cut-of probability for assigning the prediction values (*Yes* or *No*) and then calculate the metrics** above indicated for each of the threshold. 
 That is exactly the concept behind the ROC and Precision-Recall Curves.
 
 ## ROC curves
 
-[ROC](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) curves are generated  by varying the threshold proability and plotting the *sensitivity* of the model ( TruePositives/ (TruePositive + FalseNegatives) ) as a function of  1 - Specificity ( TrueNegatives/ (TrueNegatives + FalsePositives) ). In other words, the ROC curve plots the rate of True Positives (over the total positive) as a function of the rate of True Negatives.
+[ROC](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) curves are generated  by varying the threshold probability and plotting the *sensitivity* of the model ( TruePositives/ (TruePositive + FalseNegatives) ) as a function of  1 - Specificity ( TrueNegatives/ (TrueNegatives + FalsePositives) ). In other words, the ROC curve plots the rate of True Positives (over the total positive) as a function of the rate of True Negatives.
 
-To calculate the data of the curves we will use the package ```PRROC```. The [package](https://cran.r-project.org/web/packages/PRROC/vignettes/PRROC.pdf) has same very handy functions to calculate (and plot) ROC and Precision-Recall curves. We create our own function that extracts the data from multiple ````train``` objects using the comands ```PRROC::roc.curve``` and ```PRROC::pr_curve```,  and  then applys it to the same unpacked arguments (_*quasiquoted*_) with ``purrr:invoke_map```.
+To calculate the data of the curves we will use the package ```PRROC```. The [package](https://cran.r-project.org/web/packages/PRROC/vignettes/PRROC.pdf) has same very handy functions to calculate (and plot) ROC and Precision-Recall curves. We create our own function that extracts the data from multiple ````train``` objects using the commands ```PRROC::roc.curve``` and ```PRROC::pr_curve```,  and  then apply it to the same unpacked arguments (_*quasiquoted*_) with ``purrr:invoke_map```.
 
 ```{r rocpr}
 get_rocpr <- function(mod, cv = "pr") {
@@ -549,10 +550,10 @@ data_roc <- map_dfr(model_list, get_rocpr, "ROC")
 str(data_roc)
 ```
 
-**A perfect model that is able to capture alla the "Yes" and all the "No" will have Sensitivity = Specificity = 1**, and thus  will generate a curve that passes through the upper left corner, continues parallel to the x-axes and reaches the top-right corner. On the other hand, a model that gives **random predictions will generate a curve that will lie in the vicinity of diagonal of the graph**. Of course we might have also a model that make predictions worse than random, in that case the curve will be to the right of the dotted line. 
+**A perfect model that is able to capture all the "Yes" and all the "No" will have Sensitivity = Specificity = 1**, and thus  will generate a curve that passes through the upper left corner, continues parallel to the x-axes and reaches the top-right corner. On the other hand, a model that gives **random predictions will generate a curve that will lie in the vicinity of diagonal of the graph**. Of course we might have also a model that make predictions worse than random, in that case the curve will be to the right of the dotted line. 
 
-Before looking at the data, let's slow down a little bit and spend few more worlds on the concept of threeshold. At least initialy, it is  appealing to set the cut-off probability for assigning *Yes* or *No* equal to 0.5. What does that mean? 
-It means that  all the cases with probability of *Yes* less than 0.5  would be flagged as *No*, while all the other with probabilty more than 0.5 would be assigned to *Yes*. Our ````RandomForest``` model generates proabilities that are all less than 0.5, and thus, with that threshold, it always predicts *No*  (as we saw in the first table and graph). Becouse in ROC curves (and precision-recall curves) the threeshold is systematically varied, **a model with *Yes* probabilities always less than 0.5 ** (as our RandomForest) **can still have good *sensitivy*, as long as there is a consistent proability differential between "Yes" and "No" observations**.
+Before looking at the data, let's slow down a little bit and spend few more worlds on the concept of threshold. At least initially, it is  appealing to set the cut-off probability for assigning *Yes* or *No* equal to 0.5. What does that mean? 
+It means that  all the cases with probability of *Yes* less than 0.5  would be flagged as *No*, while all the other with probability more than 0.5 would be assigned to *Yes*. Our ````RandomForest``` model generates probabilities that are all less than 0.5, and thus, with that threshold, it always predicts *No*  (as we saw in the first table and graph). Because in ROC curves (and precision-recall curves) the threshold is systematically varied, **a model with *Yes* probabilities always less than 0.5 ** (as our RandomForest) **can still have good *sensitivity*, as long as there is a consistent probability differential between "Yes" and "No" observations**.
 
 Here an example. We create 30 observation:  the first 29 are "No" and the last one is "Yes"(```lab```). The probabilities generated by the model for the *Yes* cases are all less than 0.5 (```sc```), with the first 29 equal to 0.4 and the the last one, the Yes observation, equal to 0.41.
 We can automatically ```plot```the data of class ```PRROC```.
@@ -570,7 +571,8 @@ sc <- c(rep(0.4, 29), 0.41)
 roc <- roc.curve(scores.class0 = sc, weights.class0 = lab, curve = TRUE)
 plot(roc)
 ```
-The legend indicates the threshold at which *sensitivy* and *1-specificity* are calculated. When the threshold is set to 0.41, the model correctly recognizes the last observation as  *Yes* and all the others as *No*. The predictions of the model are perfect, even if the probabilities for *Yes* are all minor than 0.5. Bearing this in mind we can look at our models.
+
+The legend indicates the threshold at which *sensitivity* and *1-specificity* are calculated. When the threshold is set to 0.41, the model correctly recognizes the last observation as  *Yes* and all the others as *No*. The predictions of the model are perfect, even if the probabilities for *Yes* are all minor than 0.5. Bearing this in mind we can look at our models.
 
 Let's plot the data of our models using ```ggplot2```.
 
@@ -585,17 +587,18 @@ data_roc  %>%
         title = "ROC curves") +
   theme(plot.title = element_text(hjust = 0.5)) 
 ```
-The curve of the ```glmnet``` model is positioned more to the up-left of the graph than those of all the other models. The ```RandomForest``` ROC curve is immidiately below the ```glmnet```, followed by the ``rpart``` and ```ctree``` curves. These last two curves lie in close  proximity of diagonal of the graph.  
 
-Threfore, if we consider these 2 metrics, **the ```glmnet``` has the best perfomance**  and it is **followed by the ```RandomForest```**. As in the example above, varying the probability threshold of the ```RandomForest``` allows us  to capture more true positives and optimize the predictions of the model. On the other hand, the predictions of **```rpart`` and ```ctree``` models  remain only marginaly better than chance**. 
+The curve of the ```glmnet``` model is positioned more to the up-left of the graph than those of all the other models. The ```RandomForest``` ROC curve is immediately below the ```glmnet```, followed by the ``rpart``` and ```ctree``` curves. These last two curves lie in close  proximity of diagonal of the graph.  
 
-The best model (```glmnet```) detects 75% of the true positives (*sensitivity*=0.75), but has 50% chances of incorrectly identifing a negative (1 - Specificity = 0.5)...better than chance but still **far from perfect**.
+Therefore, if we consider these 2 metrics, **the ```glmnet``` has the best performance**  and it is **followed by the ```RandomForest```**. As in the example above, varying the probability threshold of the ```RandomForest``` allows us  to capture more true positives and optimize the predictions of the model. On the other hand, the predictions of **```rpart`` and ```ctree``` models  remain only marginally better than chance**. 
+
+The best model (```glmnet```) detects 75% of the true positives (*sensitivity*=0.75), but has 50% chances of incorrectly identifying a negative (1 - Specificity = 0.5)...better than chance but still **far from perfect**.
 
 ## Precision-Recall Curve
 
-A [good argument](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4349800/) has been made that the ROC curve can be misleading when dealing with very unballanced classes. When the positive class is very small, the probability of making False Positive predictions increases. Because False Positives might still be a small percentage in comparison with True Negative, this different probability might only minimaly affect the *specificity* of the model. 
+A [good argument](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4349800/) has been made that the ROC curve can be misleading when dealing with very unbalanced classes. When the positive class is very small, the probability of making False Positive predictions increases. Because False Positives might still be a small percentage in comparison with True Negative, this different probability might only minimally affect the *specificity* of the model. 
 
-[Precision-Recall](https://classeval.wordpress.com/introduction/introduction-to-the-precision-recall-plot/) curves take that into account and plot the Precision (TruePositives / (TruePositives+FalsePositives)), instead of the *specifity*, as a function of the *sensitivity* (refered as *recall*). In particular, the threshold probability is systematically varied, the 2 measures calulated and their maximal value plotted. 
+[Precision-Recall](https://classeval.wordpress.com/introduction/introduction-to-the-precision-recall-plot/) curves take that into account and plot the Precision (TruePositives / (TruePositives+FalsePositives)), instead of the *specificity*, as a function of the *sensitivity* (refereed as *recall*). In particular, the threshold probability is systematically varied, the 2 measures calculated and their maximal value plotted. 
 
 Let's plot precision-recall curves of our models.
 
@@ -609,15 +612,15 @@ data_pr  %>%
   geom_abline(slope = 0, intercept = 4.79/ 100, linetype = 2) +
   labs( y = "Precision TP/(TP+FP)",
         x = "Recall TP/(TP+FN)",
-        title = "Precison-Recall Curves") +
+        title = "Precision-Recall Curves") +
   scale_y_continuous(limits = c(0,1)) +
   theme(plot.title = element_text(hjust = 0.5)) 
 ```  
-The ```glmnet``` model show the highest *precision*, followed by the ```RandomForest```, the ```ctree``` and finaly the ```rpart``` model. **Even our best model ```glmnet```, has a maximal precision of 0.5 (only one over 2 positive predictions are true) at a *recall* of less than 10%.** This performance is better than pure chance but not as good as we would have hoped.
+The ```glmnet``` model show the highest *precision*, followed by the ```RandomForest```, the ```ctree``` and finally the ```rpart``` model. **Even our best model ```glmnet```, has a maximal precision of 0.5 (only one over 2 positive predictions are true) at a *recall* of less than 10%.** This performance is better than pure chance but not as good as we would have hoped.
 
 ## The Area Under the Curve
 
-We can summarize and compare the data of the ROC and precision-recall curves calculating  the Area Under the Curve (AUC). The previosly obtained``metrics`` tibble  contains the AUC of ROCs and precision-recall curves for each of the folds of the dataset. Let's extract the data, summarize it and plot it.
+We can summarize and compare the data of the ROC and precision-recall curves calculating  the Area Under the Curve (AUC). The previously obtained``metrics`` tibble  contains the AUC of ROCs and precision-recall curves for each of the folds of the dataset. Let's extract the data, summarize it and plot it.
 
 ```{r metrics2}
 metrics %>% 
@@ -634,41 +637,39 @@ metrics %>%
           panel.spacing = unit(1.2, "lines"))
 ```
 The ```glmnet``` has the larger AUCs of ROCs and precision-recall curves, followed by the ```RandomForest```. The 2 classification-tree models have the smallest AUCs, with values that approximate to those expected for random choices. 
-**The ```glmnet``` model produces the most accurate prodictions among the models, but its precision and sensitivity are still quite limited.**
+**The ```glmnet``` model produces the most accurate predictions among the models, but its precision and sensitivity are still quite limited.**
 
 # Highlights, judges score and result of the bout!
 
 Let's recap...
 
-**The aim of this post was to predict drug use behavior in adulthood using info (friends, social activities, parents and others) collected during adolescence**. The dataset used, the public portion of the [__ADD HEALTH PROJECT__](https://www .cpc.unc.edu/projects/addhealth/about) consists in over 2000 observations of more than 5000 subjects. The classifier is the response (*Yes* or *No*) that indicates drug use despite negarive consequences.
+**The aim of this post was to predict drug use behavior in adulthood using info (friends, social activities, parents and others) collected during adolescence**. The dataset used, the public portion of the [__ADD HEALTH PROJECT__](https://www .cpc.unc.edu/projects/addhealth/about) consists in over 2000 observations of more than 5000 subjects. The classifier is the response (*Yes* or *No*) that indicates drug use despite negative consequences.
 
 This is what we did:
 * got the data and made them tidy. 
 * scaled, normalized, removed near-zero variance variables, applied PCA to reduce dimensionality and impute missing data using Knn.
-* splitted the data using a *5-fold 10-repetion adaptative cross-validation*. 
+* splitted the data using a *5-fold 10-repetition adaptative cross-validation*. 
 * trained and found the optimal hyperparameters of a generalized linear model via penalized maximum likelihood (``glmnet```), 2 classification-tree models (```rpart``` and ```ctree```) and a Forest (```RandomForest```).
-* UpSample one of the class to manage a severe class unballance (only ~4% of *No*).
-* visualized confusion Matrixs, calculated metrics of accuracy,  ROC curves and precision-recall curves to identify the best model.
+* UpSample one of the class to manage a severe class unbalance (only ~4% of *No*).
+* visualized confusion Matrix, calculated metrics of accuracy,  ROC curves and precision-recall curves to identify the best model.
 
 
 ...so what is the outcome? Who won?
 
-**The best model, ```glmnet``, give us a consistent advange over pure change for predicting who in adulthood will have drug abuse problems. However, the predition as disappoitngly very far from perfect.** 
+**The best model, ```glmnet``, give us a consistent advantage over pure change for predicting who in adulthood will have drug abuse problems. However, the perdiction as disappointingly very far from perfect.** 
 
 ...so I would say that it's...
 
-<center>
-![draw](/data_post4/wfd.jpg)
 ...a DRAW.
 
-The performance of the best model was very modest but **we had the opportunity to explore a lot of the fundamental concepts in machine learning and predictive analysis**, and overall that was the most importatn aim.
+The performance of the best model was very modest but **we had the opportunity to explore a lot of the fundamental concepts in machine learning and predictive analysis**, and overall that was the most important aim.
 
 Moreover there are several things that can be done to increase the performance of the models:
-1. The poor performance was at least partially due to **the severe class unballance and the limited number of positive** (~4%: ~300). The public dataset that we analyzed is just a small portion of the data colleted by ADD HEALTH. Analyzing the whole dataset would give us access to more positive cases and most likely increase the performance of the models.
-2. **We have evaluated only an handfull of hyperparameters**. With higher computational power we would be able to find better hyperparameters and probably increase the performance of the models.
+1. The poor performance was at least partially due to **the severe class unbalance and the limited number of positive** (~4%: ~300). The public dataset that we analyzed is just a small portion of the data collected by ADD HEALTH. Analyzing the whole dataset would give us access to more positive cases and most likely increase the performance of the models.
+2. **We have evaluated only an handful of hyperparameters**. With higher computational power we would be able to find better hyperparameters and probably increase the performance of the models.
 3. This post was mainly focused on the use of ```caret``` for predictive modeling, and thus **not enough attention was placed on data exploration**. Know your data and you will be able to apply the most appropriate tools...
 
-I hope that you liked the post. Next post will be on Shiny, Python and Reticulate or on PCA. I still have to decide.
+I hope that you liked the post. Next post will be on Shiny, Python and Reticulate or on PCA or something else. I still have to decide.
 
 ```{r extr_rocpr2, include=FALSE, eval=FALSE}
 get_rocpr2 <- function(mod, out = "curve", resp = "Yes"){

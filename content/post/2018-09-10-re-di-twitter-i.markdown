@@ -76,13 +76,14 @@ Otteniamo i 3200 tweets di luigidimaio, maumartina, matteosalvinimi usando il co
 ```r
 pol <- list("luigidimaio", "matteosalvinimi", "maumartina")
 
-twdat <- as_tibble(map_dfr(pol, function(x) twListToDF(userTimeline(x, includeRts = TRUE, 
-    n = 3200))))
+twdat <- as_tibble(map_dfr( pol,
+                            function(x) twListToDF(userTimeline(x,  includeRts = TRUE, n = 3200))))
 
+ 
+twdat$statusSource <- str_extract(twdat$statusSource, 
+                  "iPhone|Web Client|Android|TweetDeck|iPad|Hootsuite|Facebook|IoResto|Websites|IFTTT|Instagram|iOS|Periscope") # this is to extract the important info
 
-twdat$statusSource <- str_extract(twdat$statusSource, "iPhone|Web Client|Android|TweetDeck|iPad|Hootsuite|Facebook|IoResto|Websites|IFTTT|Instagram|iOS|Periscope")  # this is to extract the important info
-
-twdat$created <- with_tz(twdat$created, "CET")  # time-zone
+twdat$created <-  with_tz(twdat$created , "CET") # time-zone
 ```
 
 OK, abbiamo a questo punto un dataframe/tibble con cui possiamo lavorare.
@@ -277,12 +278,17 @@ date_lim <- as_datetime(unlist(date_lim), tz = "CET")
 knitr::kable(as_data_frame(date_lim) , align = "cc")
 ```
 
+```
+## Warning: `as_data_frame()` is deprecated, use `as_tibble()` (but mind the new semantics).
+## This warning is displayed once per session.
+```
 
 
-|           |        value        |
-|:----------|:-------------------:|
-|min_shared | 2017-12-01 01:00:00 |
-|max_shared | 2018-08-01 02:00:00 |
+
+|        value        |
+|:-------------------:|
+| 2017-12-01 01:00:00 |
+| 2018-08-01 02:00:00 |
 
 Creiamo quindi i grafici riguardanti il numero di tweets al mese per l'intervallo di Dicembre-Luglio.
 
