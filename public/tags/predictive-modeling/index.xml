@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Predictive Modeling on MuayData blog</title>
-    <link>/tags/predictive-modeling/</link>
+    <link>https://muaydata.netlify.com/tags/predictive-modeling/</link>
     <description>Recent content in Predictive Modeling on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Sun, 24 Mar 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/predictive-modeling/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://muaydata.netlify.com/tags/predictive-modeling/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Figthing_diseases</title>
-      <link>/post/figthing-diseases/</link>
+      <title>Figthing Diseases with Predictive Modeling</title>
+      <link>https://muaydata.netlify.com/post/figthing-diseases/</link>
       <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/figthing-diseases/</guid>
+      <guid>https://muaydata.netlify.com/post/figthing-diseases/</guid>
       <description>&lt;p&gt;In this post we will analyze the data of the &lt;a href=&#34;https://www .cpc.unc.edu/projects/addhealth/about&#34;&gt;&lt;strong&gt;ADD HEALTH&lt;/strong&gt;&lt;/a&gt;, a national longitudinal study that enrolled  ~90000 adolescents and followed them up for 20 years. Using the &lt;em&gt;R&lt;/em&gt; package &lt;a href=&#34;https://github.com/topepo/caret&#34;&gt;&lt;code&gt;caret&lt;/code&gt;&lt;/a&gt;, we will train and evaluate different models (regression, decision tree, random Forrest) in order to predict drug use behavior in adulthood from information (friends, social activities, parents and others) collected during adolescence. This will give us the opportunity to play and get familiarized with the most important &lt;code&gt;caret&lt;/code&gt; functions as well as to introduce seminal concepts of machine learning.&lt;/p&gt;</description>
     </item>
     

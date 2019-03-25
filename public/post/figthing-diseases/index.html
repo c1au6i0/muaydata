@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Figthing_diseases - MuayData blog</title>
+  <title>Figthing Diseases with Predictive Modeling - MuayData blog</title>
   
 
 <meta name="renderer" content="webkit" />
@@ -36,7 +36,7 @@
 <meta name="generator" content="Hugo 0.54.0" />
 
 
-<link rel="canonical" href="/post/figthing-diseases/" />
+<link rel="canonical" href="https://muaydata.netlify.com/post/figthing-diseases/" />
 
 
 
@@ -56,26 +56,26 @@
 
 
 
-<meta property="og:title" content="Figthing_diseases" />
+<meta property="og:title" content="Figthing Diseases with Predictive Modeling" />
 <meta property="og:description" content="Predictive Modeling ADD_Health data" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/figthing-diseases/" />
+<meta property="og:url" content="https://muaydata.netlify.com/post/figthing-diseases/" />
 <meta property="article:published_time" content="2019-03-24T00:00:00&#43;00:00"/>
 <meta property="article:modified_time" content="2019-03-24T11:13:24-04:00"/>
 
-<meta itemprop="name" content="Figthing_diseases">
+<meta itemprop="name" content="Figthing Diseases with Predictive Modeling">
 <meta itemprop="description" content="Predictive Modeling ADD_Health data">
 
 
 <meta itemprop="datePublished" content="2019-03-24T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-03-24T11:13:24-04:00" />
-<meta itemprop="wordCount" content="5792">
+<meta itemprop="wordCount" content="5793">
 
 
 
 <meta itemprop="keywords" content="caret,predictive modeling,ADD_Health,ROC,precision recall," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Figthing_diseases"/>
+<meta name="twitter:title" content="Figthing Diseases with Predictive Modeling"/>
 <meta name="twitter:description" content="Predictive Modeling ADD_Health data"/>
 
 <!--[if lte IE 9]>
@@ -119,28 +119,28 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="/">Home</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/">Home</a>
           
         
       </li><li class="mobile-menu-item">
         
           
           
-            <a class="menu-item-link" href="/tags/">Tags</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/tags/">Tags</a>
           
         
       </li><li class="mobile-menu-item">
         
           
           
-            <a class="menu-item-link" href="/categories/">Categories</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/categories/">Categories</a>
           
         
       </li><li class="mobile-menu-item">
         
           
           
-            <a class="menu-item-link" href="/about/">About</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/about/">About</a>
           
         
       </li>
@@ -227,7 +227,7 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="/">Home</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/">Home</a>
           
 
         
@@ -238,7 +238,7 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="/tags/">Tags</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/tags/">Tags</a>
           
 
         
@@ -249,7 +249,7 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="/categories/">Categories</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/categories/">Categories</a>
           
 
         
@@ -260,7 +260,7 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="/about/">About</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/about/">About</a>
           
 
         
@@ -280,15 +280,15 @@ if (!doNotTrack) {
           <article class="post bg-white">
     
     <header class="post-header">
-      <h1 class="post-title">Figthing_diseases</h1>
+      <h1 class="post-title">Figthing Diseases with Predictive Modeling</h1>
       
       <div class="post-meta">
         <span class="post-time"> 2019-03-24 </span>
         <div class="post-category">
-            <a href="/categories/r/"> R </a>
+            <a href="https://muaydata.netlify.com/categories/r/"> R </a>
             
           </div>
-        <span class="more-meta"> 5792 words </span>
+        <span class="more-meta"> 5793 words </span>
           <span class="more-meta"> 28 min read </span>
 
         
@@ -310,7 +310,7 @@ if (!doNotTrack) {
 <li><a href="#obtain-the-dataset-and-make-it-tidy">Obtain the dataset and make it tidy</a></li>
 <li><a href="#train-the-models-for-the-fight">Train (the Models) for the fight</a>
 <ul>
-<li><a href="#cross-validation-class-unbalance">Cross Validation, Class Unbalance</a></li>
+<li><a href="#cross-validation-class-imbalance">Cross Validation, Class Imbalance</a></li>
 <li><a href="#traincontrol-and-hyperparameters">TrainControl and Hyperparameters</a></li>
 <li><a href="#preprocessing">Preprocessing</a></li>
 <li><a href="#glmnet">GLMNET</a></li>
@@ -388,9 +388,10 @@ if (!doNotTrack) {
 </div>
 </div>
 <p>The number of variables collected for the ADD HEALTH is of several thousands. We will focus our analysis on most of the variables collected in the first wave (first survey in 1994) that include demographic information, friend and social network details, parental information and many others . Our classifier will be a response to a question of fourth wave (2006).
-A description of all the variables of the study can be found using the <a href="https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/topics">codebook web Explorer</a>.</p>
+A description of all the variables of the study can be found using the
+<a href="https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/topics">codebook web Explorer</a>.</p>
 
-<p>I downloaded the public-use data from <a href="https://www.icpsr.umich.edu/icpsrweb/DSDR/studies/21600#">ICPSR</a> and then saved all the files with <em>dta</em> (Stata) extension in a folder. At this point, we can i) import all the files, ii) select the columns that are in the vector <code>var_select</code> and iii)join the dataframes together by the subject identification variable (<code>AID</code>). Finally, iv) all the the columns that contain character data are transformed to factors.</p>
+<p>I downloaded the public-use data from <a href="https://www.icpsr.umich.edu/icpsrweb/DSDR/studies/21600#">ICPSR</a> and then saved all the files with <em>dta</em> (Stata) extension in a folder. At this point, we can i) import all the files, ii) select the columns that are in the vector <code>var_select</code> and iii) join the dataframes together by the subject identification variable (<code>AID</code>). Finally, iv) all the the columns that contain character data are transformed to factors.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
@@ -464,7 +465,7 @@ lev_1 <span class="o">&lt;-</span> <span class="kp">unlist</span><span class="p"
 heal_sub <span class="o">&lt;-</span> heal_sub<span class="p">[,</span>  <span class="o">!</span><span class="kp">names</span><span class="p">(</span>heal_sub<span class="p">)</span> <span class="o">%in%</span> lev_1<span class="p">]</span></code></pre></td></tr></table>
 </div>
 </div>
-<p>Same columns miss quite a lot of data. We can <em>impute</em> missing observation only if missing data in each column does not represent a significant portion of the data. We are going to drop all the columns that have more than 15% of missing data.</p>
+<p>Some columns miss quite a lot of data. We can <em>impute</em> missing observations only if missing data does not represent a significant portion of the data of the column. We are going to drop all the columns that have more than 15% of missing data.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
@@ -506,9 +507,9 @@ heal_sub_cl <span class="o">&lt;-</span>
   mutate<span class="p">(</span>H4TO117 <span class="o">=</span> <span class="kp">as.factor</span><span class="p">(</span>str_extract<span class="p">(</span>H4TO117 <span class="p">,</span> <span class="s">&#34;[:alpha:]+&#34;</span><span class="p">)))</span>  <span class="c1"># keep only letters</span></code></pre></td></tr></table>
 </div>
 </div>
-<p><em>Legitimate</em> stands for Legitimate skips, that indicates those people that do not have a favorite drug.</p>
+<p><em>Legitimate</em> stands for <em>Legitimate skips</em>, that indicates those people that do not have a favorite drug.</p>
 
-<p>The answers to this question not only allow to distinguish people that use (or had used drugs) from people that did not (legitimate skip), but also to <strong>identify those individuals that continue to take drugs despite negative consequences (<em>yes</em>)</strong>. The class <em>yes</em> will be our class of interest because it indicates those people that are presumably more likely to develop health problems as a consequence of drug use patterns.</p>
+<p>The answers to this question not only allow to distinguish people that use (or had used drugs) from people that did not (<em>legitimate skip</em>), but also to <strong>identify those individuals that continue to take drugs despite negative consequences (<em>yes</em>)</strong>. The class <em>yes</em> will be our class of interest because it indicates those people that are presumably more likely to develop health problems as a consequence of drug use patterns.</p>
 
 <p>Therefore, we will try first to fit 2 class models, before trying something more complex. We replace <em>Legitimate</em> with <em>No</em> to obtain 2 classes: those that continued to take drugs despite negative consequences (<em>Yes</em>) and those that did not (<em>No</em>).</p>
 <div class="highlight"><div class="chroma">
@@ -542,15 +543,15 @@ heal_sub_cl<span class="o">$</span>H4TO117 <span class="o">&lt;-</span> <span cl
 </div>
 <h1 id="train-the-models-for-the-fight">Train (the Models) for the fight</h1>
 
-<h2 id="cross-validation-class-unbalance">Cross Validation, Class Unbalance</h2>
+<h2 id="cross-validation-class-imbalance">Cross Validation, Class Imbalance</h2>
 
 <p>After some data exploration, we can finally develop (train) and evaluate (test) predictive models. In other words, we are going to find the best parameters for the different models and test them. Can we <strong>train and test models using exactly the same data</strong>? That would not be a good idea at all, as it <strong>would results in an overestimation of the accuracy of our models</strong> (we would end it up fitting also noise). Why?</p>
 
 <p>Imagine to be <strong>Muay Thai</strong> fighter that is getting ready for his first fight. If you train and spar always with the same person, you might end it up knowing his/her strategies pretty well, and developing way to respond and exploit his/her way of attacking and defending. For an external observer you might look even very good when you spar with him/her. Does it mean that you are going to do well also in your fight? Not really. Your opponent might have a difference stance of your training partner or a completely different style. You might have not encountered those moves in training, and thus perform not well  under those different conditions (and get your ass kicked). So what can you do to get ready for your fight and have a more accurate understanding of your potential? Don&rsquo;t train and test your skill always with the same person. What you want to do is to <strong>train with as many different people, and then occasionally test your skills with someone that you have never trained before. This will maximize your chance of having trained for someone similar to your actual fight opponent but also give you a better idea if you are ready or not</strong>.</p>
 
-<p>We are going to do the same thing with our data. <strong>We will divide our dataset in 10 samples, train our model with 9 of them and evaluate it with the 10th. Then select a different sample for testing and apply the same procedure until each one is used once for testing</strong>. In this way, we well <strong>never train and test our model with the same data</strong> and we will get an <strong>estimate of variability</strong> for the accuracy of the model. The entire procedure will than be repeated 5 times with reshuffled data (new partitions). This procedure is called <code>repeated cross-validation</code>.</p>
+<p>We are going to do the same thing with our data. <strong>We will divide our dataset in 10 samples, train our model with 9 of them and evaluate it with the 10th. Then select a different sample for testing and apply the same procedure until each one is used once for testing</strong>. In this way, we well <strong>never train and test our model with the same data</strong> and we will get an <strong>estimate of variability</strong> for the accuracy of the model. The entire procedure will than be repeated 5 times with reshuffled data (new partitions). This procedure is called <em>repeated cross-validation</em>.</p>
 
-<p>Unfortunately we have another problem. The people that keep taking drugs despite negative consequences are about 4% of the total number of people in our dataset. We have a severe <strong>class imbalance</strong>. Because of such a difference in the size of our 2 classes, <strong>it is more likely that the small class we will have much less weight in the parameter optimization of our model</strong>. There are several things that we can do to mitigate that problem. One possibility is to randomly up-sample the smaller class to make the class distribution equal. We could run the caret function <code>upSample</code> that does exactly that and than train and test our model on the re-sampled data.  What is the problem in doing that? It&rsquo;s that it is very likely that the same observations will be part of the data that used to train the model but also test its accuracy, that is because  we are going to duplicate a lot of observations for the class &ldquo;yes&rdquo;. Here we are again, training and <em>sparring</em> with the same partners as before! <strong>We need to train our model on the up Sample data, but then test it on part of the not re-sampled data!</strong><a href="https://topepo.github.io/caret/index.html"><em><em>Max Kuhn</em></em></a>, the creator of <code>caret</code>, made it easy for us, and not we can do that using an option when we invoke the function <code>trainControl</code> for cross-validating the data. Perfect!</p>
+<p>Unfortunately we have another problem. The people that keep taking drugs despite negative consequences are about 4% of the total number of people in our dataset. We have a severe <strong>class imbalance</strong>. Because of such a difference in the size of our 2 classes, <strong>it is more likely that the small class we will have much less weight in the parameter optimization of our model</strong>. There are several things that we can do to mitigate that problem. One possibility is to randomly up-sample the smaller class to make the class distribution equal. We could run the caret function <code>upSample</code> that does exactly that and than train and test our model on the re-sampled data.  What is the problem in doing that? It&rsquo;s that it is very likely that the same observations will be part of the data that used to train the model but also test its accuracy, that is because  we are going to duplicate a lot of observations for the class &ldquo;yes&rdquo;. Here we are again, training and <em>sparring</em> with the same partners as before! <strong>We need to train our model on the up Sample data, but then test it on part of the not re-sampled data!</strong> <a href="https://topepo.github.io/caret/index.html"><em><em>Max Kuhn</em></em></a>, the creator of <code>caret</code>, made it easy for us, and not we can do that using an option when we invoke the function <code>trainControl</code> for cross-validating the data. Perfect!</p>
 
 <h2 id="traincontrol-and-hyperparameters">TrainControl and Hyperparameters</h2>
 
@@ -597,16 +598,16 @@ fitControl <span class="o">&lt;-</span> trainControl<span class="p">(</span>meth
                            verboseIter <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
-<p>All the operations that we discussed in the last two paragraphs are taken care of by <code>caret::trainControl</code>. You might have notice that in the code above we are not using a *repeated cross-validation<code>* but we have indicated instead</code><code>method = &quot;adaptive_cv</code><code>.  What is that? It is an [algorithm](https://topepo.github.io/caret/adaptive-resampling.html) to  adaptability look for the best *tuning parameters* for our model and, as Max Kuhn put it &quot;concentrates on values that are the in the neighborhood of the optimal settings&quot;.
-Let's clarify what are this *tuning parameters*. **The tuning parameters (hyperparamters) are those parameters that are not derived by the data but are decided beforehand**. For example, in order to increase the interpretability of regression and reduce co-linearity, we might decide to limit the number of coefficients and/or their total magnitude, and thus develop a more parsimonious model. In the package</code><code>glmnet</code><code>, we can do that setting the hyperparameters</code><code>alpha</code><code>and</code><code>lambda</code><code>.  Similarly, in decision tree we need to decide how many variables to consider at each split (</code><code>mtry</code><code>) or other parameters that control the tree size (</code><code>cp</code><code>). **Using</code><code>method = &quot;adaptive_cv</code>`, combinations of hyperparmetes will be automatically searched and evaluated in each sample to obtain the best parameters <em><em>and hyperparameters</em></em> for the model (i.e. that maximize accuracy)**.</p>
+<p>All the operations that we discussed in the last two paragraphs are taken care of by <code>caret::trainControl</code>. You might have notice that in the code above we are not using a <em>repeated cross-validation</em> but we have indicated instead <code>method = &quot;adaptive_cv</code>.  What is that? It is an <a href="https://topepo.github.io/caret/adaptive-resampling.html">algorithm</a> to  adaptability look for the best <em>tuning parameters</em> for our model and, as Max Kuhn put it &ldquo;concentrates on values that are the in the neighborhood of the optimal settings&rdquo;.
+Let&rsquo;s clarify what are this <em>tuning parameters</em>. <strong>The tuning parameters (hyperparamters) are those parameters that are not derived by the data but are decided beforehand</strong>. For example, in order to increase the interpretability of regression and reduce co-linearity, we might decide to limit the number of coefficients and/or their total magnitude, and thus develop a more parsimonious model. In the package <code>glmnet</code>, we can do that setting the hyperparameters <code>alpha</code> and <code>lambda</code>.  Similarly, in decision tree we need to decide how many variables to consider at each split (<code>mtry</code>) or other parameters that control the tree size (<code>cp</code>). <strong>Using <code>method = &quot;adaptive_cv</code>, combinations of hyperparmetes will be automatically searched and evaluated in each sample to obtain the best parameters <em><em>and hyperparameters</em></em> for the model (i.e. that maximize accuracy)</strong>.</p>
 
 <h2 id="preprocessing">Preprocessing</h2>
 
-<p>Before training our first model we need to spend also some few words on preprocessing. This is getting long but who cares? no one will really read this post (maybe Alessandro will check it out). We have a lot of variables, more than 2000 and that put quite some computational burden on my personal laptop. We might no need all those variables, because some of them might have <strong>near zero variance</strong> (imagine a column made of only one identical value) or might be <strong>very correlated to each other</strong>. Moreover, we can using <strong>principal component analysis</strong> (<a href="https://en.wikipedia.org/wiki/Principal_component_analysis">PCA</a>) to use linear combination of variables that explain most of the variability of the data. Finaly, we can <strong>impute missing data</strong> using a <strong>k-nearest neighbors algorithm</strong>, that use the distance to the closest sample to calculate the values that will be substitute to the missing data. All this computations can be very conveniently done before training our models using the argument <code>preProcess = c(&quot;nzv&quot;, &quot;corr&quot;,&quot;knnImpute&quot;,&quot;pca&quot;)</code>, when calling the function <code>caret::train</code>.</p>
+<p>Before training our first model we need to spend also some few words on preprocessing. This is getting long but who cares? No one will really read this post (maybe Alessandro will check it out). We have a lot of variables, more than 2000 and that put quite some computational burden on my personal laptop. We might no need all those variables, because some of them might have <strong>near zero variance</strong> (imagine a column made of only one identical value) or might be <strong>very correlated to each other</strong>. Moreover, we can employ <strong>principal component analysis</strong> (<a href="https://en.wikipedia.org/wiki/Principal_component_analysis">PCA</a>) to use linear combination of variables that explain most of the variability of the data. Finaly, we can <strong>impute missing data</strong> using a <strong>k-nearest neighbors algorithm</strong>, that use the distance to the closest sample to calculate the values that will be substitute to the missing data. All this computations can be very conveniently done before training our models using the argument <code>preProcess = c(&quot;nzv&quot;, &quot;corr&quot;,&quot;knnImpute&quot;,&quot;pca&quot;)</code>, when calling the function <code>caret::train</code>.</p>
 
 <h2 id="glmnet">GLMNET</h2>
 
-<p>We are ready! Let&rsquo;s train our first model, <a href="https://web.stanford.edu/~hastie/glmnet/glmnet_alpha.html">&ldquo;a generalized linear model via penalized maximum likelihood&rdquo;</a>, using the package above mentioned <code>glmnet</code>. Because of the limited computational capability of my laptop we are going to try only 5 different combinations of hyperparameters for each resample (`<code>tuneLength = 5</code>). <em><em>This is definitely an inadequate number of combinations</em></em> (I would have tried at least 100 if I could) <em><em>but will still give as the opportunity to see how to train a model an evaluate it.</em></em></p>
+<p>We are ready! Let&rsquo;s train our first model, <a href="https://web.stanford.edu/~hastie/glmnet/glmnet_alpha.html">&ldquo;a generalized linear model via penalized maximum likelihood&rdquo;</a>, using the package above mentioned <code>glmnet</code>. Because of the limited computational capability of my laptop we are going to try only 5 different combinations of hyperparameters for each resample (`<code>tuneLength = 5</code>). <strong>This is definitely an inadequate number of combinations*_ (I would have tried at least 100 if I could)</strong> but will still give as the opportunity to see how to train a model an evaluate it.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
@@ -633,17 +634,18 @@ Let's clarify what are this *tuning parameters*. **The tuning parameters (hyperp
 </div>
 <p>All the info regarding our model, including the coefficients of the different predictors, are contained in <code>mod_glmnet$finalModel</code>. A summary of the details regarding the <em>pre-processing</em>, <em>resampling</em>, <em>hyperparmeter tuning</em> can be easily retrieved `<code>print</code>ing  the model.</p>
 
-<p>Notice that many variables, more than the number of columns, have been removed during the <code>pre-Processing</code>. This is because <code>caret</code> automatically convert factors in <a href="https://topepo.github.io/caret/pre-processing.html#creating-dummy-variables"><em>dummy variables</em></a>.</p>
+<p>Notice that many variables, more than the number of columns, have been removed during the <code>pre-Processing</code>. This is because <code>caret</code> automatically convert factors in
+<a href="https://topepo.github.io/caret/pre-processing.html#creating-dummy-variables"><em>dummy variables</em></a>.</p>
 
-<p><em><em>Was the model was the model any good? Was it able to predict if a person was going to take the favorite drug despite negative consequences?</em></em>.</p>
+<p><strong>Was the model any good? Was it able to predict if a person was going to take the favorite drug despite negative consequences?</strong>.</p>
 
 <p>Some estimates of the model efficacy are reported above and we will discuss them in depth later in the post. Now, let&rsquo;s train few other models before looking at them all together.</p>
 
 <h2 id="classification-trees-and-random-forest">Classification Trees and Random Forest</h2>
 
-<p>Another type of very popular predictive model is classification tree. Classification trees are very easy to implement and interpret (if number of predictors are not too much) and employ <strong>recursive splitting the data in groups that are internally as homogeneous as possible</strong> in terms of measures of purity (i.e Gini index) of the target classifier. Here a good visual example of possible <a href="https://www.google.com/url?sa=i&amp;source=images&amp;cd=&amp;ved=2ahUKEwjx4YPhpOngAhXMhOAKHeykDx0QjRx6BAgBEAU&amp;url=https%3A%2F%2Fdimensionless.in%2Fintroduction-to-random-forest%2F&amp;psig=AOvVaw2kexYImpv-x0wyxpnd_mzC&amp;ust=1551816401888411">splits</a> and of their relative level of <em>purity</em>. In other words, what the tree does is to create a concatenation of if-then.</p>
+<p>Another type of very popular predictive model is classification tree. Classification trees are very easy to implement and interpret (if number of predictors are not too much) and employ <strong>recursive splitting the data in groups that are internally as homogeneous as possible</strong> in terms of measures of purity (i.e Gini index) of the target classifier. Here a good visual example of possible <a href="https://www.google.com/url?sa=i&amp;source=images&amp;cd=&amp;ved=2ahUKEwjx4YPhpOngAhXMhOAKHeykDx0QjRx6BAgBEAU&amp;url=https%3A%2F%2Fdimensionless.in%2Fintroduction-to-random-forest%2F&amp;psig=AOvVaw2kexYImpv-x0wyxpnd_mzC&amp;ust=1551816401888411">splits</a> and of their relative level of <em>purity</em>. In other words, what the tree does is to create a concatenation of <strong>if-then</strong>.</p>
 
-<p>Continuing the analogy of Muay Thai, a branch of a classification tree might look like this : <em><em>if</em></em> fighter A trains 7 days a week <em><em>if</em></em> his/her opponent train only once a week and <em><em>if</em></em> fighter A has 150 fights more than his opponent and <em><em>if</em></em> fighter A is less than 30 years old and more than 18 <em><em>than</em></em> fighter A is going to win the fight.</p>
+<p>Continuing the analogy of Muay Thai, a branch of a classification tree might look like this : <strong>if</strong> fighter A trains 7 days a week <strong>if</strong> his/her opponent train only once a week and <strong>if</strong> fighter A has 150 fights more than his opponent and <strong>if</strong> fighter A is less than 30 years old and more than 18 <strong>than</strong> fighter A is going to win the fight.</p>
 
 <p>We  grow the first tree using the package <code>rpart</code>.</p>
 <div class="highlight"><div class="chroma">
@@ -670,7 +672,7 @@ Let's clarify what are this *tuning parameters*. **The tuning parameters (hyperp
               <span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
-<p>Let&rsquo;s grow also a second tree model using the package <code>party</code>. The major difference with the preceding classification tree model is that <strong><code>party::ctree</code> implement  inferential statistic to evaluate improvements in measures of purity</strong>, and thus to guide the recursive splitting.</p>
+<p>Let&rsquo;s grow also a second tree model using the package <code>party</code>. The major difference with the preceding classification tree model is that <strong><code>party::ctree</code> implements  inferential statistic to evaluate improvements in measures of purity</strong>, and thus to guide the recursive splitting.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
@@ -733,9 +735,9 @@ We will create 2 different method dispatches depending on the class of the objec
 
 <h2 id="sensitivity-recall-specificity-precision">Sensitivity (Recall), Specificity, Precision</h2>
 
-<p>The number of True and False predictions can be used to calculate other metrics of the performance of the models. The</p>
+<p>The number of True and False predictions can be used to calculate other metrics of the performance of the models.</p>
 
-<p><strong>Sensitivity</strong> AKA <strong>Recall</strong>: True Positive Rate, TruePositives/ (TruePositive + FalseNegatives). It indicates the percentage of Positives that are detected by the model</p>
+<p><strong>Sensitivity</strong> AKA <strong>Recall</strong>: True Positive Rate, TruePositives/ (TruePositive + FalseNegatives). It indicates the percentage of Positives that are detected by the model.</p>
 
 <p><strong>Specificity</strong>: True Negative Rate,  TrueNegatives/ (TrueNegatives + FalsePositives). It indicates the percentage of Negatives identified by the model.</p>
 
@@ -745,7 +747,7 @@ We will create 2 different method dispatches depending on the class of the objec
 
 <p><strong>F</strong>: the harmonic mean of Precision and Recall.</p>
 
-<p>We create the function <code>summary_td</code> that calculates those metrics and then  <code>get_metrics</code> extract them from the different folds of the splitted dataset.</p>
+<p>We create the function <code>summary_td</code> that calculates those metrics and then  with <code>get_metrics</code> we extract them from the different folds of the splitted dataset.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
@@ -1009,10 +1011,10 @@ str<span class="p">(</span>data_roc<span class="p">)</span></code></pre></td></t
 ##  $ modname    : chr  &#34;glmnet&#34; &#34;glmnet&#34; &#34;glmnet&#34; &#34;glmnet&#34; ...</pre></td></tr></table>
 </div>
 </div>
-<p><strong>A perfect model that is able to capture all the &ldquo;Yes&rdquo; and all the &ldquo;No&rdquo; will have Sensitivity = Specificity = 1</strong>, and thus  will generate a curve that passes through the upper left corner, continues parallel to the x-axes and reaches the top-right corner. On the other hand, a model that gives <strong>random predictions will generate a curve that will lie in the vicinity of diagonal of the graph</strong>. Of course we might have also a model that make predictions worse than random, in that case the curve will be to the right of the dotted line.</p>
+<p><strong>A perfect model that is able to capture all the &ldquo;Yes&rdquo; and all the &ldquo;No&rdquo; will have Sensitivity = Specificity = 1</strong>, and thus  will generate a curve that passes through the up-left corner, continues parallel to the x-axes and reaches the top-right corner. On the other hand, a model that gives <strong>random predictions will generate a curve that will lie in the vicinity of diagonal of the graph</strong>. Of course we might have also a model that make predictions worse than random, in that case the curve will be to the right of the dotted line.</p>
 
 <p>Before looking at the data, let&rsquo;s slow down a little bit and spend few more worlds on the concept of threshold. At least initially, it is  appealing to set the cut-off probability for assigning <em>Yes</em> or <em>No</em> equal to 0.5. What does that mean?
-It means that  all the cases with probability of <em>Yes</em> less than 0.5  would be flagged as <em>No</em>, while all the other with probability more than 0.5 would be assigned to <em>Yes</em>. Our `<code>RandomForest</code> model generates probabilities that are all less than 0.5, and thus, with that threshold, it always predicts <em>No</em>  (as we saw in the first table and graph). Because in ROC curves (and precision-recall curves) the threshold is systematically varied, **a model with <em>Yes</em> probabilities always less than 0.5 ** (as our RandomForest) <strong>can still have good <em>sensitivity</em>, as long as there is a consistent probability differential between &ldquo;Yes&rdquo; and &ldquo;No&rdquo; observations</strong>.</p>
+It means that  all the cases with probability of <em>Yes</em> less than 0.5  would be flagged as <em>No</em>, while all the other with probability more than 0.5 would be assigned to <em>Yes</em>. Our <code>RandomForest</code> model generates probabilities that are all less than 0.5, and thus, with that threshold, it always predicts <em>No</em>  (as we saw in the first table and graph). Because in ROC curves (and precision-recall curves) the threshold is systematically varied, **a model with <em>Yes</em> probabilities always less than 0.5 ** (as our RandomForest) <strong>can still have good <em>sensitivity</em>, as long as there is a consistent probability differential between <em>Yes</em> and <em>No</em> observations</strong>.</p>
 
 <p>Here an example. We create 30 observation:  the first 29 are &ldquo;No&rdquo; and the last one is &ldquo;Yes&rdquo;(<code>lab</code>). The probabilities generated by the model for the <em>Yes</em> cases are all less than 0.5 (<code>sc</code>), with the first 29 equal to 0.4 and the the last one, the Yes observation, equal to 0.41.
 We can automatically <code>plot</code>the data of class <code>PRROC</code>.</p>
@@ -1077,13 +1079,13 @@ plot<span class="p">(</span>roc<span class="p">)</span></code></pre></td></tr></
 
 <p>The curve of the <code>glmnet</code> model is positioned more to the up-left of the graph than those of all the other models. The <code>RandomForest</code> ROC curve is immediately below the <code>glmnet</code>, followed by the <code>rpart</code><code>and</code><code>ctree</code>` curves. These last two curves lie in close  proximity of diagonal of the graph.</p>
 
-<p>Therefore, if we consider these 2 metrics, <strong>the <code>glmnet</code> has the best performance</strong>  and it is <strong>followed by the <code>RandomForest</code></strong>. As in the example above, varying the probability threshold of the <code>RandomForest</code> allows us  to capture more true positives and optimize the predictions of the model. On the other hand, the predictions of <strong><code>rpart`` and</code>ctree``` models  remain only marginally better than chance</strong>.</p>
+<p>Therefore, if we consider these 2 metrics, <strong>the <code>glmnet</code> has the best performance</strong>  and it is <strong>followed by the <code>RandomForest</code></strong>. As in the example above, varying the probability threshold of the <code>RandomForest</code> allows us  to capture more true positives and optimize the predictions of the model. On the other hand, the predictions of <strong><code>rpart</code> and <code>ctree</code> models  remain only marginally better than chance</strong>.</p>
 
-<p>The best model (<code>glmnet</code>) detects 75% of the true positives (<em>sensitivity</em>=0.75), but has 50% chances of incorrectly identifying a negative (1 - Specificity = 0.5)&hellip;better than chance but still <strong>far from perfect</strong>.</p>
+<p><strong>The best model</strong> (<code>glmnet</code>) detects 75% of the true positives (<em>sensitivity</em>=0.75), but has 50% chances of incorrectly identifying a negative (1 - Specificity = 0.5)&hellip;better than chance but still <strong>far from perfect</strong>.</p>
 
 <h2 id="precision-recall-curve">Precision-Recall Curve</h2>
 
-<p>A <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4349800/">good argument</a> has been made that the ROC curve can be misleading when dealing with very unbalanced classes. When the positive class is very small, the probability of making False Positive predictions increases. Because False Positives might still be a small percentage in comparison with True Negative, this different probability might only minimally affect the <em>specificity</em> of the model.</p>
+<p>A <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4349800/">good argument</a> has been made that the ROC curve can be misleading when dealing with very imbalanced classes. When the positive class is very small, the probability of making False Positive predictions increases. Because False Positives might still be a small percentage in comparison with True Negative, this different probability might only minimally affect the <em>specificity</em> of the model.</p>
 
 <p><a href="https://classeval.wordpress.com/introduction/introduction-to-the-precision-recall-plot/">Precision-Recall</a> curves take that into account and plot the Precision (TruePositives / (TruePositives+FalsePositives)), instead of the <em>specificity</em>, as a function of the <em>sensitivity</em> (refereed as <em>recall</em>). In particular, the threshold probability is systematically varied, the 2 measures calculated and their maximal value plotted.</p>
 
@@ -1154,8 +1156,9 @@ The <code>glmnet</code> model show the highest <em>precision</em>, followed by t
           panel.spacing <span class="o">=</span> unit<span class="p">(</span><span class="m">1.2</span><span class="p">,</span> <span class="s">&#34;lines&#34;</span><span class="p">))</span></code></pre></td></tr></table>
 </div>
 </div>
-<p><img src="/post/2019-03-24-figthing-diseases_files/figure-html/metrics2-1.png" width="672" />
-The <code>glmnet</code> has the larger AUCs of ROCs and precision-recall curves, followed by the <code>RandomForest</code>. The 2 classification-tree models have the smallest AUCs, with values that approximate to those expected for random choices.
+<p><img src="/post/2019-03-24-figthing-diseases_files/figure-html/metrics2-1.png" width="672" /></p>
+
+<p>The <code>glmnet</code> has the larger AUCs of ROCs and precision-recall curves, followed by the <code>RandomForest</code>. The 2 classification-tree models have the smallest AUCs, with values that approximate to those expected for random choices.
 <strong>The <code>glmnet</code> model produces the most accurate predictions among the models, but its precision and sensitivity are still quite limited.</strong></p>
 
 <h1 id="highlights-judges-score-and-result-of-the-bout">Highlights, judges score and result of the bout!</h1>
@@ -1164,28 +1167,32 @@ The <code>glmnet</code> has the larger AUCs of ROCs and precision-recall curves,
 
 <p><strong>The aim of this post was to predict drug use behavior in adulthood using info (friends, social activities, parents and others) collected during adolescence</strong>. The dataset used, the public portion of the <a href="https://www .cpc.unc.edu/projects/addhealth/about"><strong>ADD HEALTH PROJECT</strong></a> consists in over 2000 observations of more than 5000 subjects. The classifier is the response (<em>Yes</em> or <em>No</em>) that indicates drug use despite negative consequences.</p>
 
-<p>This is what we did:
-* got the data and made them tidy.
-* scaled, normalized, removed near-zero variance variables, applied PCA to reduce dimensionality and impute missing data using Knn.
-* splitted the data using a <em>5-fold 10-repetition adaptative cross-validation</em>.
-* trained and found the optimal hyperparameters of a generalized linear model via penalized maximum likelihood (<code>glmnet</code><code>), 2 classification-tree models (</code><code>rpart</code><code>and</code><code>ctree</code><code>) and a Forest (</code><code>RandomForest</code>`).
-* UpSample one of the class to manage a severe class unbalance (only ~4% of <em>No</em>).
-* visualized confusion Matrix, calculated metrics of accuracy,  ROC curves and precision-recall curves to identify the best model.</p>
+<p>This is what we did:</p>
+
+<ul>
+<li>got the data and made them tidy.</li>
+<li>scaled, normalized, removed near-zero variance variables, applied PCA to reduce dimensionality and impute missing data using Knn.</li>
+<li>splitted the data using a <em>5-fold 10-repetition adaptative cross-validation</em>.</li>
+<li>trained and found the optimal hyperparameters of a generalized linear model via penalized maximum likelihood (<code>glmnet</code><code>), 2 classification-tree models (</code><code>rpart</code><code>and</code><code>ctree</code><code>) and a Forest (</code><code>RandomForest</code>`).</li>
+<li>UpSample one of the class to manage a severe class imbalance (only ~4% of <em>No</em>).</li>
+<li>visualized confusion Matrix, calculated metrics of accuracy,  ROC curves and precision-recall curves to identify the best model.</li>
+</ul>
 
 <p>&hellip;so what is the outcome? Who won?</p>
 
-<p><strong>The best model, <code>glmnet</code>, give us a consistent advantage over pure change for predicting who in adulthood will have drug abuse problems. However, the perdiction as disappointingly very far from perfect.</strong></p>
+<p><strong>The best model, <code>glmnet</code>, give us a consistent advantage over pure change for predicting who in adulthood will experince some drug abuse problems. However, the perdictions were disappointingly very far from perfect.</strong></p>
 
 <p>&hellip;so I would say that it&rsquo;s&hellip;</p>
 
 <p><center>
 <img src="/data_post4/wfd.jpg" alt="draw" />
-&hellip;a DRAW.</p>
+<strong>&hellip;a DRAW!</strong>
+</center></p>
 
 <p>The performance of the best model was very modest but <strong>we had the opportunity to explore a lot of the fundamental concepts in machine learning and predictive analysis</strong>, and overall that was the most important aim.</p>
 
 <p>Moreover there are several things that can be done to increase the performance of the models:
-1. The poor performance was at least partially due to <strong>the severe class unbalance and the limited number of positive</strong> (~4%: ~300). The public dataset that we analyzed is just a small portion of the data collected by ADD HEALTH. Analyzing the whole dataset would give us access to more positive cases and most likely increase the performance of the models.
+1. The poor performance was at least partially due to <strong>the severe class imbalance and the limited number of positive</strong> (~4%: ~300). The public dataset that we analyzed is just a small portion of the data collected by ADD HEALTH. Analyzing the whole dataset would give us access to more positive cases and most likely increase the performance of the models.
 2. <strong>We have evaluated only an handful of hyperparameters</strong>. With higher computational power we would be able to find better hyperparameters and probably increase the performance of the models.
 3. This post was mainly focused on the use of <code>caret</code> for predictive modeling, and thus <strong>not enough attention was placed on data exploration</strong>. Know your data and you will be able to apply the most appropriate tools&hellip;</p>
 
@@ -1200,11 +1207,11 @@ The <code>glmnet</code> has the larger AUCs of ROCs and precision-recall curves,
 
     <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/caret/">caret</a>
-          <a href="/tags/predictive-modeling/">predictive modeling</a>
-          <a href="/tags/add_health/">ADD_Health</a>
-          <a href="/tags/roc/">ROC</a>
-          <a href="/tags/precision-recall/">precision recall</a>
+          <a href="https://muaydata.netlify.com/tags/caret/">caret</a>
+          <a href="https://muaydata.netlify.com/tags/predictive-modeling/">predictive modeling</a>
+          <a href="https://muaydata.netlify.com/tags/add_health/">ADD_Health</a>
+          <a href="https://muaydata.netlify.com/tags/roc/">ROC</a>
+          <a href="https://muaydata.netlify.com/tags/precision-recall/">precision recall</a>
           
         </div>
 
@@ -1268,7 +1275,7 @@ The <code>glmnet</code> has the larger AUCs of ROCs and precision-recall curves,
       <a href="https://twitter.com/c1au6i0" rel="me noopener" class="iconfont icon-twitter"
         title="twitter" target="_blank">
       </a>
-  <a href="/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="iconfont icon-rss"
+  <a href="https://muaydata.netlify.com/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="iconfont icon-rss"
     title="rss" target="_blank">
   </a>
   </div>

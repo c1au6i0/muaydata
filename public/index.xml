@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>MuayData blog</title>
-    <link>/</link>
+    <link>https://muaydata.netlify.com/</link>
     <description>Recent content on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Thu, 25 Oct 2018 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://muaydata.netlify.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About</title>
-      <link>/about/</link>
+      <link>https://muaydata.netlify.com/about/</link>
       <pubDate>Thu, 25 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>/about/</guid>
+      <guid>https://muaydata.netlify.com/about/</guid>
       
         <description>&lt;p&gt;I am a behavioral pharmacologist, &lt;em&gt;R&lt;/em&gt; and data enthusiast and reader of &lt;a href=&#34;https://www.r-bloggers.com/&#34;&gt;R-bloggers&lt;/a&gt;. I live in the city of the late Edgar and of Dwight Schultz.&lt;/p&gt;
 
@@ -27,11 +27,11 @@
     </item>
     
     <item>
-      <title>Figthing_diseases</title>
-      <link>/post/figthing-diseases/</link>
+      <title>Figthing Diseases with Predictive Modeling</title>
+      <link>https://muaydata.netlify.com/post/figthing-diseases/</link>
       <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/figthing-diseases/</guid>
+      <guid>https://muaydata.netlify.com/post/figthing-diseases/</guid>
       
         <description>&lt;p&gt;In this post we will analyze the data of the &lt;a href=&#34;https://www .cpc.unc.edu/projects/addhealth/about&#34;&gt;&lt;strong&gt;ADD HEALTH&lt;/strong&gt;&lt;/a&gt;, a national longitudinal study that enrolled  ~90000 adolescents and followed them up for 20 years. Using the &lt;em&gt;R&lt;/em&gt; package &lt;a href=&#34;https://github.com/topepo/caret&#34;&gt;&lt;code&gt;caret&lt;/code&gt;&lt;/a&gt;, we will train and evaluate different models (regression, decision tree, random Forrest) in order to predict drug use behavior in adulthood from information (friends, social activities, parents and others) collected during adolescence. This will give us the opportunity to play and get familiarized with the most important &lt;code&gt;caret&lt;/code&gt; functions as well as to introduce seminal concepts of machine learning.&lt;/p&gt;
 
@@ -85,9 +85,10 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;The number of variables collected for the ADD HEALTH is of several thousands. We will focus our analysis on most of the variables collected in the first wave (first survey in 1994) that include demographic information, friend and social network details, parental information and many others . Our classifier will be a response to a question of fourth wave (2006).
-A description of all the variables of the study can be found using the &lt;a href=&#34;https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/topics&#34;&gt;codebook web Explorer&lt;/a&gt;.&lt;/p&gt;
+A description of all the variables of the study can be found using the
+&lt;a href=&#34;https://www.cpc.unc.edu/projects/addhealth/documentation/ace/tool/topics&#34;&gt;codebook web Explorer&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;I downloaded the public-use data from &lt;a href=&#34;https://www.icpsr.umich.edu/icpsrweb/DSDR/studies/21600#&#34;&gt;ICPSR&lt;/a&gt; and then saved all the files with &lt;em&gt;dta&lt;/em&gt; (Stata) extension in a folder. At this point, we can i) import all the files, ii) select the columns that are in the vector &lt;code&gt;var_select&lt;/code&gt; and iii)join the dataframes together by the subject identification variable (&lt;code&gt;AID&lt;/code&gt;). Finally, iv) all the the columns that contain character data are transformed to factors.&lt;/p&gt;
+&lt;p&gt;I downloaded the public-use data from &lt;a href=&#34;https://www.icpsr.umich.edu/icpsrweb/DSDR/studies/21600#&#34;&gt;ICPSR&lt;/a&gt; and then saved all the files with &lt;em&gt;dta&lt;/em&gt; (Stata) extension in a folder. At this point, we can i) import all the files, ii) select the columns that are in the vector &lt;code&gt;var_select&lt;/code&gt; and iii) join the dataframes together by the subject identification variable (&lt;code&gt;AID&lt;/code&gt;). Finally, iv) all the the columns that contain character data are transformed to factors.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -161,7 +162,7 @@ lev_1 &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;k
 heal_sub &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; heal_sub&lt;span class=&#34;p&#34;&gt;[,&lt;/span&gt;  &lt;span class=&#34;o&#34;&gt;!&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;names&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;heal_sub&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%in%&lt;/span&gt; lev_1&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;Same columns miss quite a lot of data. We can &lt;em&gt;impute&lt;/em&gt; missing observation only if missing data in each column does not represent a significant portion of the data. We are going to drop all the columns that have more than 15% of missing data.&lt;/p&gt;
+&lt;p&gt;Some columns miss quite a lot of data. We can &lt;em&gt;impute&lt;/em&gt; missing observations only if missing data does not represent a significant portion of the data of the column. We are going to drop all the columns that have more than 15% of missing data.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -203,9 +204,9 @@ heal_sub_cl &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt;
   mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;H4TO117 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;as.factor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;str_extract&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;H4TO117 &lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;[:alpha:]+&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# keep only letters&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;em&gt;Legitimate&lt;/em&gt; stands for Legitimate skips, that indicates those people that do not have a favorite drug.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Legitimate&lt;/em&gt; stands for &lt;em&gt;Legitimate skips&lt;/em&gt;, that indicates those people that do not have a favorite drug.&lt;/p&gt;
 
-&lt;p&gt;The answers to this question not only allow to distinguish people that use (or had used drugs) from people that did not (legitimate skip), but also to &lt;strong&gt;identify those individuals that continue to take drugs despite negative consequences (&lt;em&gt;yes&lt;/em&gt;)&lt;/strong&gt;. The class &lt;em&gt;yes&lt;/em&gt; will be our class of interest because it indicates those people that are presumably more likely to develop health problems as a consequence of drug use patterns.&lt;/p&gt;
+&lt;p&gt;The answers to this question not only allow to distinguish people that use (or had used drugs) from people that did not (&lt;em&gt;legitimate skip&lt;/em&gt;), but also to &lt;strong&gt;identify those individuals that continue to take drugs despite negative consequences (&lt;em&gt;yes&lt;/em&gt;)&lt;/strong&gt;. The class &lt;em&gt;yes&lt;/em&gt; will be our class of interest because it indicates those people that are presumably more likely to develop health problems as a consequence of drug use patterns.&lt;/p&gt;
 
 &lt;p&gt;Therefore, we will try first to fit 2 class models, before trying something more complex. We replace &lt;em&gt;Legitimate&lt;/em&gt; with &lt;em&gt;No&lt;/em&gt; to obtain 2 classes: those that continued to take drugs despite negative consequences (&lt;em&gt;Yes&lt;/em&gt;) and those that did not (&lt;em&gt;No&lt;/em&gt;).&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -239,15 +240,15 @@ heal_sub_cl&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;H4TO117 &lt;span class=&#
 &lt;/div&gt;
 &lt;h1 id=&#34;train-the-models-for-the-fight&#34;&gt;Train (the Models) for the fight&lt;/h1&gt;
 
-&lt;h2 id=&#34;cross-validation-class-unbalance&#34;&gt;Cross Validation, Class Unbalance&lt;/h2&gt;
+&lt;h2 id=&#34;cross-validation-class-imbalance&#34;&gt;Cross Validation, Class Imbalance&lt;/h2&gt;
 
 &lt;p&gt;After some data exploration, we can finally develop (train) and evaluate (test) predictive models. In other words, we are going to find the best parameters for the different models and test them. Can we &lt;strong&gt;train and test models using exactly the same data&lt;/strong&gt;? That would not be a good idea at all, as it &lt;strong&gt;would results in an overestimation of the accuracy of our models&lt;/strong&gt; (we would end it up fitting also noise). Why?&lt;/p&gt;
 
 &lt;p&gt;Imagine to be &lt;strong&gt;Muay Thai&lt;/strong&gt; fighter that is getting ready for his first fight. If you train and spar always with the same person, you might end it up knowing his/her strategies pretty well, and developing way to respond and exploit his/her way of attacking and defending. For an external observer you might look even very good when you spar with him/her. Does it mean that you are going to do well also in your fight? Not really. Your opponent might have a difference stance of your training partner or a completely different style. You might have not encountered those moves in training, and thus perform not well  under those different conditions (and get your ass kicked). So what can you do to get ready for your fight and have a more accurate understanding of your potential? Don&amp;rsquo;t train and test your skill always with the same person. What you want to do is to &lt;strong&gt;train with as many different people, and then occasionally test your skills with someone that you have never trained before. This will maximize your chance of having trained for someone similar to your actual fight opponent but also give you a better idea if you are ready or not&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;We are going to do the same thing with our data. &lt;strong&gt;We will divide our dataset in 10 samples, train our model with 9 of them and evaluate it with the 10th. Then select a different sample for testing and apply the same procedure until each one is used once for testing&lt;/strong&gt;. In this way, we well &lt;strong&gt;never train and test our model with the same data&lt;/strong&gt; and we will get an &lt;strong&gt;estimate of variability&lt;/strong&gt; for the accuracy of the model. The entire procedure will than be repeated 5 times with reshuffled data (new partitions). This procedure is called &lt;code&gt;repeated cross-validation&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;We are going to do the same thing with our data. &lt;strong&gt;We will divide our dataset in 10 samples, train our model with 9 of them and evaluate it with the 10th. Then select a different sample for testing and apply the same procedure until each one is used once for testing&lt;/strong&gt;. In this way, we well &lt;strong&gt;never train and test our model with the same data&lt;/strong&gt; and we will get an &lt;strong&gt;estimate of variability&lt;/strong&gt; for the accuracy of the model. The entire procedure will than be repeated 5 times with reshuffled data (new partitions). This procedure is called &lt;em&gt;repeated cross-validation&lt;/em&gt;.&lt;/p&gt;
 
-&lt;p&gt;Unfortunately we have another problem. The people that keep taking drugs despite negative consequences are about 4% of the total number of people in our dataset. We have a severe &lt;strong&gt;class imbalance&lt;/strong&gt;. Because of such a difference in the size of our 2 classes, &lt;strong&gt;it is more likely that the small class we will have much less weight in the parameter optimization of our model&lt;/strong&gt;. There are several things that we can do to mitigate that problem. One possibility is to randomly up-sample the smaller class to make the class distribution equal. We could run the caret function &lt;code&gt;upSample&lt;/code&gt; that does exactly that and than train and test our model on the re-sampled data.  What is the problem in doing that? It&amp;rsquo;s that it is very likely that the same observations will be part of the data that used to train the model but also test its accuracy, that is because  we are going to duplicate a lot of observations for the class &amp;ldquo;yes&amp;rdquo;. Here we are again, training and &lt;em&gt;sparring&lt;/em&gt; with the same partners as before! &lt;strong&gt;We need to train our model on the up Sample data, but then test it on part of the not re-sampled data!&lt;/strong&gt;&lt;a href=&#34;https://topepo.github.io/caret/index.html&#34;&gt;&lt;em&gt;&lt;em&gt;Max Kuhn&lt;/em&gt;&lt;/em&gt;&lt;/a&gt;, the creator of &lt;code&gt;caret&lt;/code&gt;, made it easy for us, and not we can do that using an option when we invoke the function &lt;code&gt;trainControl&lt;/code&gt; for cross-validating the data. Perfect!&lt;/p&gt;
+&lt;p&gt;Unfortunately we have another problem. The people that keep taking drugs despite negative consequences are about 4% of the total number of people in our dataset. We have a severe &lt;strong&gt;class imbalance&lt;/strong&gt;. Because of such a difference in the size of our 2 classes, &lt;strong&gt;it is more likely that the small class we will have much less weight in the parameter optimization of our model&lt;/strong&gt;. There are several things that we can do to mitigate that problem. One possibility is to randomly up-sample the smaller class to make the class distribution equal. We could run the caret function &lt;code&gt;upSample&lt;/code&gt; that does exactly that and than train and test our model on the re-sampled data.  What is the problem in doing that? It&amp;rsquo;s that it is very likely that the same observations will be part of the data that used to train the model but also test its accuracy, that is because  we are going to duplicate a lot of observations for the class &amp;ldquo;yes&amp;rdquo;. Here we are again, training and &lt;em&gt;sparring&lt;/em&gt; with the same partners as before! &lt;strong&gt;We need to train our model on the up Sample data, but then test it on part of the not re-sampled data!&lt;/strong&gt; &lt;a href=&#34;https://topepo.github.io/caret/index.html&#34;&gt;&lt;em&gt;&lt;em&gt;Max Kuhn&lt;/em&gt;&lt;/em&gt;&lt;/a&gt;, the creator of &lt;code&gt;caret&lt;/code&gt;, made it easy for us, and not we can do that using an option when we invoke the function &lt;code&gt;trainControl&lt;/code&gt; for cross-validating the data. Perfect!&lt;/p&gt;
 
 &lt;h2 id=&#34;traincontrol-and-hyperparameters&#34;&gt;TrainControl and Hyperparameters&lt;/h2&gt;
 
@@ -294,16 +295,16 @@ fitControl &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; trainControl&lt;
                            verboseIter &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;All the operations that we discussed in the last two paragraphs are taken care of by &lt;code&gt;caret::trainControl&lt;/code&gt;. You might have notice that in the code above we are not using a *repeated cross-validation&lt;code&gt;* but we have indicated instead&lt;/code&gt;&lt;code&gt;method = &amp;quot;adaptive_cv&lt;/code&gt;&lt;code&gt;.  What is that? It is an [algorithm](https://topepo.github.io/caret/adaptive-resampling.html) to  adaptability look for the best *tuning parameters* for our model and, as Max Kuhn put it &amp;quot;concentrates on values that are the in the neighborhood of the optimal settings&amp;quot;.
-Let&#39;s clarify what are this *tuning parameters*. **The tuning parameters (hyperparamters) are those parameters that are not derived by the data but are decided beforehand**. For example, in order to increase the interpretability of regression and reduce co-linearity, we might decide to limit the number of coefficients and/or their total magnitude, and thus develop a more parsimonious model. In the package&lt;/code&gt;&lt;code&gt;glmnet&lt;/code&gt;&lt;code&gt;, we can do that setting the hyperparameters&lt;/code&gt;&lt;code&gt;alpha&lt;/code&gt;&lt;code&gt;and&lt;/code&gt;&lt;code&gt;lambda&lt;/code&gt;&lt;code&gt;.  Similarly, in decision tree we need to decide how many variables to consider at each split (&lt;/code&gt;&lt;code&gt;mtry&lt;/code&gt;&lt;code&gt;) or other parameters that control the tree size (&lt;/code&gt;&lt;code&gt;cp&lt;/code&gt;&lt;code&gt;). **Using&lt;/code&gt;&lt;code&gt;method = &amp;quot;adaptive_cv&lt;/code&gt;`, combinations of hyperparmetes will be automatically searched and evaluated in each sample to obtain the best parameters &lt;em&gt;&lt;em&gt;and hyperparameters&lt;/em&gt;&lt;/em&gt; for the model (i.e. that maximize accuracy)**.&lt;/p&gt;
+&lt;p&gt;All the operations that we discussed in the last two paragraphs are taken care of by &lt;code&gt;caret::trainControl&lt;/code&gt;. You might have notice that in the code above we are not using a &lt;em&gt;repeated cross-validation&lt;/em&gt; but we have indicated instead &lt;code&gt;method = &amp;quot;adaptive_cv&lt;/code&gt;.  What is that? It is an &lt;a href=&#34;https://topepo.github.io/caret/adaptive-resampling.html&#34;&gt;algorithm&lt;/a&gt; to  adaptability look for the best &lt;em&gt;tuning parameters&lt;/em&gt; for our model and, as Max Kuhn put it &amp;ldquo;concentrates on values that are the in the neighborhood of the optimal settings&amp;rdquo;.
+Let&amp;rsquo;s clarify what are this &lt;em&gt;tuning parameters&lt;/em&gt;. &lt;strong&gt;The tuning parameters (hyperparamters) are those parameters that are not derived by the data but are decided beforehand&lt;/strong&gt;. For example, in order to increase the interpretability of regression and reduce co-linearity, we might decide to limit the number of coefficients and/or their total magnitude, and thus develop a more parsimonious model. In the package &lt;code&gt;glmnet&lt;/code&gt;, we can do that setting the hyperparameters &lt;code&gt;alpha&lt;/code&gt; and &lt;code&gt;lambda&lt;/code&gt;.  Similarly, in decision tree we need to decide how many variables to consider at each split (&lt;code&gt;mtry&lt;/code&gt;) or other parameters that control the tree size (&lt;code&gt;cp&lt;/code&gt;). &lt;strong&gt;Using &lt;code&gt;method = &amp;quot;adaptive_cv&lt;/code&gt;, combinations of hyperparmetes will be automatically searched and evaluated in each sample to obtain the best parameters &lt;em&gt;&lt;em&gt;and hyperparameters&lt;/em&gt;&lt;/em&gt; for the model (i.e. that maximize accuracy)&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;h2 id=&#34;preprocessing&#34;&gt;Preprocessing&lt;/h2&gt;
 
-&lt;p&gt;Before training our first model we need to spend also some few words on preprocessing. This is getting long but who cares? no one will really read this post (maybe Alessandro will check it out). We have a lot of variables, more than 2000 and that put quite some computational burden on my personal laptop. We might no need all those variables, because some of them might have &lt;strong&gt;near zero variance&lt;/strong&gt; (imagine a column made of only one identical value) or might be &lt;strong&gt;very correlated to each other&lt;/strong&gt;. Moreover, we can using &lt;strong&gt;principal component analysis&lt;/strong&gt; (&lt;a href=&#34;https://en.wikipedia.org/wiki/Principal_component_analysis&#34;&gt;PCA&lt;/a&gt;) to use linear combination of variables that explain most of the variability of the data. Finaly, we can &lt;strong&gt;impute missing data&lt;/strong&gt; using a &lt;strong&gt;k-nearest neighbors algorithm&lt;/strong&gt;, that use the distance to the closest sample to calculate the values that will be substitute to the missing data. All this computations can be very conveniently done before training our models using the argument &lt;code&gt;preProcess = c(&amp;quot;nzv&amp;quot;, &amp;quot;corr&amp;quot;,&amp;quot;knnImpute&amp;quot;,&amp;quot;pca&amp;quot;)&lt;/code&gt;, when calling the function &lt;code&gt;caret::train&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Before training our first model we need to spend also some few words on preprocessing. This is getting long but who cares? No one will really read this post (maybe Alessandro will check it out). We have a lot of variables, more than 2000 and that put quite some computational burden on my personal laptop. We might no need all those variables, because some of them might have &lt;strong&gt;near zero variance&lt;/strong&gt; (imagine a column made of only one identical value) or might be &lt;strong&gt;very correlated to each other&lt;/strong&gt;. Moreover, we can employ &lt;strong&gt;principal component analysis&lt;/strong&gt; (&lt;a href=&#34;https://en.wikipedia.org/wiki/Principal_component_analysis&#34;&gt;PCA&lt;/a&gt;) to use linear combination of variables that explain most of the variability of the data. Finaly, we can &lt;strong&gt;impute missing data&lt;/strong&gt; using a &lt;strong&gt;k-nearest neighbors algorithm&lt;/strong&gt;, that use the distance to the closest sample to calculate the values that will be substitute to the missing data. All this computations can be very conveniently done before training our models using the argument &lt;code&gt;preProcess = c(&amp;quot;nzv&amp;quot;, &amp;quot;corr&amp;quot;,&amp;quot;knnImpute&amp;quot;,&amp;quot;pca&amp;quot;)&lt;/code&gt;, when calling the function &lt;code&gt;caret::train&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h2 id=&#34;glmnet&#34;&gt;GLMNET&lt;/h2&gt;
 
-&lt;p&gt;We are ready! Let&amp;rsquo;s train our first model, &lt;a href=&#34;https://web.stanford.edu/~hastie/glmnet/glmnet_alpha.html&#34;&gt;&amp;ldquo;a generalized linear model via penalized maximum likelihood&amp;rdquo;&lt;/a&gt;, using the package above mentioned &lt;code&gt;glmnet&lt;/code&gt;. Because of the limited computational capability of my laptop we are going to try only 5 different combinations of hyperparameters for each resample (`&lt;code&gt;tuneLength = 5&lt;/code&gt;). &lt;em&gt;&lt;em&gt;This is definitely an inadequate number of combinations&lt;/em&gt;&lt;/em&gt; (I would have tried at least 100 if I could) &lt;em&gt;&lt;em&gt;but will still give as the opportunity to see how to train a model an evaluate it.&lt;/em&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;We are ready! Let&amp;rsquo;s train our first model, &lt;a href=&#34;https://web.stanford.edu/~hastie/glmnet/glmnet_alpha.html&#34;&gt;&amp;ldquo;a generalized linear model via penalized maximum likelihood&amp;rdquo;&lt;/a&gt;, using the package above mentioned &lt;code&gt;glmnet&lt;/code&gt;. Because of the limited computational capability of my laptop we are going to try only 5 different combinations of hyperparameters for each resample (`&lt;code&gt;tuneLength = 5&lt;/code&gt;). &lt;strong&gt;This is definitely an inadequate number of combinations*_ (I would have tried at least 100 if I could)&lt;/strong&gt; but will still give as the opportunity to see how to train a model an evaluate it.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -330,17 +331,18 @@ Let&#39;s clarify what are this *tuning parameters*. **The tuning parameters (hy
 &lt;/div&gt;
 &lt;p&gt;All the info regarding our model, including the coefficients of the different predictors, are contained in &lt;code&gt;mod_glmnet$finalModel&lt;/code&gt;. A summary of the details regarding the &lt;em&gt;pre-processing&lt;/em&gt;, &lt;em&gt;resampling&lt;/em&gt;, &lt;em&gt;hyperparmeter tuning&lt;/em&gt; can be easily retrieved `&lt;code&gt;print&lt;/code&gt;ing  the model.&lt;/p&gt;
 
-&lt;p&gt;Notice that many variables, more than the number of columns, have been removed during the &lt;code&gt;pre-Processing&lt;/code&gt;. This is because &lt;code&gt;caret&lt;/code&gt; automatically convert factors in &lt;a href=&#34;https://topepo.github.io/caret/pre-processing.html#creating-dummy-variables&#34;&gt;&lt;em&gt;dummy variables&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Notice that many variables, more than the number of columns, have been removed during the &lt;code&gt;pre-Processing&lt;/code&gt;. This is because &lt;code&gt;caret&lt;/code&gt; automatically convert factors in
+&lt;a href=&#34;https://topepo.github.io/caret/pre-processing.html#creating-dummy-variables&#34;&gt;&lt;em&gt;dummy variables&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;em&gt;&lt;em&gt;Was the model was the model any good? Was it able to predict if a person was going to take the favorite drug despite negative consequences?&lt;/em&gt;&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Was the model any good? Was it able to predict if a person was going to take the favorite drug despite negative consequences?&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;Some estimates of the model efficacy are reported above and we will discuss them in depth later in the post. Now, let&amp;rsquo;s train few other models before looking at them all together.&lt;/p&gt;
 
 &lt;h2 id=&#34;classification-trees-and-random-forest&#34;&gt;Classification Trees and Random Forest&lt;/h2&gt;
 
-&lt;p&gt;Another type of very popular predictive model is classification tree. Classification trees are very easy to implement and interpret (if number of predictors are not too much) and employ &lt;strong&gt;recursive splitting the data in groups that are internally as homogeneous as possible&lt;/strong&gt; in terms of measures of purity (i.e Gini index) of the target classifier. Here a good visual example of possible &lt;a href=&#34;https://www.google.com/url?sa=i&amp;amp;source=images&amp;amp;cd=&amp;amp;ved=2ahUKEwjx4YPhpOngAhXMhOAKHeykDx0QjRx6BAgBEAU&amp;amp;url=https%3A%2F%2Fdimensionless.in%2Fintroduction-to-random-forest%2F&amp;amp;psig=AOvVaw2kexYImpv-x0wyxpnd_mzC&amp;amp;ust=1551816401888411&#34;&gt;splits&lt;/a&gt; and of their relative level of &lt;em&gt;purity&lt;/em&gt;. In other words, what the tree does is to create a concatenation of if-then.&lt;/p&gt;
+&lt;p&gt;Another type of very popular predictive model is classification tree. Classification trees are very easy to implement and interpret (if number of predictors are not too much) and employ &lt;strong&gt;recursive splitting the data in groups that are internally as homogeneous as possible&lt;/strong&gt; in terms of measures of purity (i.e Gini index) of the target classifier. Here a good visual example of possible &lt;a href=&#34;https://www.google.com/url?sa=i&amp;amp;source=images&amp;amp;cd=&amp;amp;ved=2ahUKEwjx4YPhpOngAhXMhOAKHeykDx0QjRx6BAgBEAU&amp;amp;url=https%3A%2F%2Fdimensionless.in%2Fintroduction-to-random-forest%2F&amp;amp;psig=AOvVaw2kexYImpv-x0wyxpnd_mzC&amp;amp;ust=1551816401888411&#34;&gt;splits&lt;/a&gt; and of their relative level of &lt;em&gt;purity&lt;/em&gt;. In other words, what the tree does is to create a concatenation of &lt;strong&gt;if-then&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;Continuing the analogy of Muay Thai, a branch of a classification tree might look like this : &lt;em&gt;&lt;em&gt;if&lt;/em&gt;&lt;/em&gt; fighter A trains 7 days a week &lt;em&gt;&lt;em&gt;if&lt;/em&gt;&lt;/em&gt; his/her opponent train only once a week and &lt;em&gt;&lt;em&gt;if&lt;/em&gt;&lt;/em&gt; fighter A has 150 fights more than his opponent and &lt;em&gt;&lt;em&gt;if&lt;/em&gt;&lt;/em&gt; fighter A is less than 30 years old and more than 18 &lt;em&gt;&lt;em&gt;than&lt;/em&gt;&lt;/em&gt; fighter A is going to win the fight.&lt;/p&gt;
+&lt;p&gt;Continuing the analogy of Muay Thai, a branch of a classification tree might look like this : &lt;strong&gt;if&lt;/strong&gt; fighter A trains 7 days a week &lt;strong&gt;if&lt;/strong&gt; his/her opponent train only once a week and &lt;strong&gt;if&lt;/strong&gt; fighter A has 150 fights more than his opponent and &lt;strong&gt;if&lt;/strong&gt; fighter A is less than 30 years old and more than 18 &lt;strong&gt;than&lt;/strong&gt; fighter A is going to win the fight.&lt;/p&gt;
 
 &lt;p&gt;We  grow the first tree using the package &lt;code&gt;rpart&lt;/code&gt;.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -367,7 +369,7 @@ Let&#39;s clarify what are this *tuning parameters*. **The tuning parameters (hy
               &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;Let&amp;rsquo;s grow also a second tree model using the package &lt;code&gt;party&lt;/code&gt;. The major difference with the preceding classification tree model is that &lt;strong&gt;&lt;code&gt;party::ctree&lt;/code&gt; implement  inferential statistic to evaluate improvements in measures of purity&lt;/strong&gt;, and thus to guide the recursive splitting.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s grow also a second tree model using the package &lt;code&gt;party&lt;/code&gt;. The major difference with the preceding classification tree model is that &lt;strong&gt;&lt;code&gt;party::ctree&lt;/code&gt; implements  inferential statistic to evaluate improvements in measures of purity&lt;/strong&gt;, and thus to guide the recursive splitting.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -430,9 +432,9 @@ We will create 2 different method dispatches depending on the class of the objec
 
 &lt;h2 id=&#34;sensitivity-recall-specificity-precision&#34;&gt;Sensitivity (Recall), Specificity, Precision&lt;/h2&gt;
 
-&lt;p&gt;The number of True and False predictions can be used to calculate other metrics of the performance of the models. The&lt;/p&gt;
+&lt;p&gt;The number of True and False predictions can be used to calculate other metrics of the performance of the models.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Sensitivity&lt;/strong&gt; AKA &lt;strong&gt;Recall&lt;/strong&gt;: True Positive Rate, TruePositives/ (TruePositive + FalseNegatives). It indicates the percentage of Positives that are detected by the model&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Sensitivity&lt;/strong&gt; AKA &lt;strong&gt;Recall&lt;/strong&gt;: True Positive Rate, TruePositives/ (TruePositive + FalseNegatives). It indicates the percentage of Positives that are detected by the model.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Specificity&lt;/strong&gt;: True Negative Rate,  TrueNegatives/ (TrueNegatives + FalsePositives). It indicates the percentage of Negatives identified by the model.&lt;/p&gt;
 
@@ -442,7 +444,7 @@ We will create 2 different method dispatches depending on the class of the objec
 
 &lt;p&gt;&lt;strong&gt;F&lt;/strong&gt;: the harmonic mean of Precision and Recall.&lt;/p&gt;
 
-&lt;p&gt;We create the function &lt;code&gt;summary_td&lt;/code&gt; that calculates those metrics and then  &lt;code&gt;get_metrics&lt;/code&gt; extract them from the different folds of the splitted dataset.&lt;/p&gt;
+&lt;p&gt;We create the function &lt;code&gt;summary_td&lt;/code&gt; that calculates those metrics and then  with &lt;code&gt;get_metrics&lt;/code&gt; we extract them from the different folds of the splitted dataset.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -559,7 +561,7 @@ glimpse&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;metrics&lt;span class=&#34;p&
           panel.spacing &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; unit&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1.2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;lines&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-03-24-figthing-diseases_files/figure-html/plot_metrics1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-figthing-diseases_files/figure-html/plot_metrics1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Again, &lt;strong&gt;the glmnet model has the highest &lt;em&gt;sensitivity&lt;/em&gt; and *F&lt;/strong&gt;*. The tree-based models  have very good &lt;em&gt;specificity&lt;/em&gt; but poor &lt;em&gt;sensitivity&lt;/em&gt; and &lt;em&gt;precision&lt;/em&gt;. The performance of the Random Forest is even worse and, because no positive can be detected the &lt;em&gt;precision&lt;/em&gt; and &lt;em&gt;F&lt;/em&gt; cannot be calculated. &lt;strong&gt;Overall, all the 4 models have poor performances&lt;/strong&gt;.&lt;/p&gt;
 
@@ -706,10 +708,10 @@ str&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;data_roc&lt;span class=&#34;p&#34
 ##  $ modname    : chr  &amp;#34;glmnet&amp;#34; &amp;#34;glmnet&amp;#34; &amp;#34;glmnet&amp;#34; &amp;#34;glmnet&amp;#34; ...&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;A perfect model that is able to capture all the &amp;ldquo;Yes&amp;rdquo; and all the &amp;ldquo;No&amp;rdquo; will have Sensitivity = Specificity = 1&lt;/strong&gt;, and thus  will generate a curve that passes through the upper left corner, continues parallel to the x-axes and reaches the top-right corner. On the other hand, a model that gives &lt;strong&gt;random predictions will generate a curve that will lie in the vicinity of diagonal of the graph&lt;/strong&gt;. Of course we might have also a model that make predictions worse than random, in that case the curve will be to the right of the dotted line.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;A perfect model that is able to capture all the &amp;ldquo;Yes&amp;rdquo; and all the &amp;ldquo;No&amp;rdquo; will have Sensitivity = Specificity = 1&lt;/strong&gt;, and thus  will generate a curve that passes through the up-left corner, continues parallel to the x-axes and reaches the top-right corner. On the other hand, a model that gives &lt;strong&gt;random predictions will generate a curve that will lie in the vicinity of diagonal of the graph&lt;/strong&gt;. Of course we might have also a model that make predictions worse than random, in that case the curve will be to the right of the dotted line.&lt;/p&gt;
 
 &lt;p&gt;Before looking at the data, let&amp;rsquo;s slow down a little bit and spend few more worlds on the concept of threshold. At least initially, it is  appealing to set the cut-off probability for assigning &lt;em&gt;Yes&lt;/em&gt; or &lt;em&gt;No&lt;/em&gt; equal to 0.5. What does that mean?
-It means that  all the cases with probability of &lt;em&gt;Yes&lt;/em&gt; less than 0.5  would be flagged as &lt;em&gt;No&lt;/em&gt;, while all the other with probability more than 0.5 would be assigned to &lt;em&gt;Yes&lt;/em&gt;. Our `&lt;code&gt;RandomForest&lt;/code&gt; model generates probabilities that are all less than 0.5, and thus, with that threshold, it always predicts &lt;em&gt;No&lt;/em&gt;  (as we saw in the first table and graph). Because in ROC curves (and precision-recall curves) the threshold is systematically varied, **a model with &lt;em&gt;Yes&lt;/em&gt; probabilities always less than 0.5 ** (as our RandomForest) &lt;strong&gt;can still have good &lt;em&gt;sensitivity&lt;/em&gt;, as long as there is a consistent probability differential between &amp;ldquo;Yes&amp;rdquo; and &amp;ldquo;No&amp;rdquo; observations&lt;/strong&gt;.&lt;/p&gt;
+It means that  all the cases with probability of &lt;em&gt;Yes&lt;/em&gt; less than 0.5  would be flagged as &lt;em&gt;No&lt;/em&gt;, while all the other with probability more than 0.5 would be assigned to &lt;em&gt;Yes&lt;/em&gt;. Our &lt;code&gt;RandomForest&lt;/code&gt; model generates probabilities that are all less than 0.5, and thus, with that threshold, it always predicts &lt;em&gt;No&lt;/em&gt;  (as we saw in the first table and graph). Because in ROC curves (and precision-recall curves) the threshold is systematically varied, **a model with &lt;em&gt;Yes&lt;/em&gt; probabilities always less than 0.5 ** (as our RandomForest) &lt;strong&gt;can still have good &lt;em&gt;sensitivity&lt;/em&gt;, as long as there is a consistent probability differential between &lt;em&gt;Yes&lt;/em&gt; and &lt;em&gt;No&lt;/em&gt; observations&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;p&gt;Here an example. We create 30 observation:  the first 29 are &amp;ldquo;No&amp;rdquo; and the last one is &amp;ldquo;Yes&amp;rdquo;(&lt;code&gt;lab&lt;/code&gt;). The probabilities generated by the model for the &lt;em&gt;Yes&lt;/em&gt; cases are all less than 0.5 (&lt;code&gt;sc&lt;/code&gt;), with the first 29 equal to 0.4 and the the last one, the Yes observation, equal to 0.41.
 We can automatically &lt;code&gt;plot&lt;/code&gt;the data of class &lt;code&gt;PRROC&lt;/code&gt;.&lt;/p&gt;
@@ -741,7 +743,7 @@ roc &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; roc.curve&lt;span class
 plot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;roc&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-03-24-figthing-diseases_files/figure-html/example-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-figthing-diseases_files/figure-html/example-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The legend indicates the threshold at which &lt;em&gt;sensitivity&lt;/em&gt; and &lt;em&gt;1-specificity&lt;/em&gt; are calculated. When the threshold is set to 0.41, the model correctly recognizes the last observation as  &lt;em&gt;Yes&lt;/em&gt; and all the others as &lt;em&gt;No&lt;/em&gt;. The predictions of the model are perfect, even if the probabilities for &lt;em&gt;Yes&lt;/em&gt; are all minor than 0.5. Bearing this in mind we can look at our models.&lt;/p&gt;
 
@@ -770,17 +772,17 @@ plot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;roc&lt;span class=&#34;p&#34;&gt
   theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-03-24-figthing-diseases_files/figure-html/ROC_plot-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-figthing-diseases_files/figure-html/ROC_plot-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The curve of the &lt;code&gt;glmnet&lt;/code&gt; model is positioned more to the up-left of the graph than those of all the other models. The &lt;code&gt;RandomForest&lt;/code&gt; ROC curve is immediately below the &lt;code&gt;glmnet&lt;/code&gt;, followed by the &lt;code&gt;rpart&lt;/code&gt;&lt;code&gt;and&lt;/code&gt;&lt;code&gt;ctree&lt;/code&gt;` curves. These last two curves lie in close  proximity of diagonal of the graph.&lt;/p&gt;
 
-&lt;p&gt;Therefore, if we consider these 2 metrics, &lt;strong&gt;the &lt;code&gt;glmnet&lt;/code&gt; has the best performance&lt;/strong&gt;  and it is &lt;strong&gt;followed by the &lt;code&gt;RandomForest&lt;/code&gt;&lt;/strong&gt;. As in the example above, varying the probability threshold of the &lt;code&gt;RandomForest&lt;/code&gt; allows us  to capture more true positives and optimize the predictions of the model. On the other hand, the predictions of &lt;strong&gt;&lt;code&gt;rpart`` and&lt;/code&gt;ctree``` models  remain only marginally better than chance&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Therefore, if we consider these 2 metrics, &lt;strong&gt;the &lt;code&gt;glmnet&lt;/code&gt; has the best performance&lt;/strong&gt;  and it is &lt;strong&gt;followed by the &lt;code&gt;RandomForest&lt;/code&gt;&lt;/strong&gt;. As in the example above, varying the probability threshold of the &lt;code&gt;RandomForest&lt;/code&gt; allows us  to capture more true positives and optimize the predictions of the model. On the other hand, the predictions of &lt;strong&gt;&lt;code&gt;rpart&lt;/code&gt; and &lt;code&gt;ctree&lt;/code&gt; models  remain only marginally better than chance&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;The best model (&lt;code&gt;glmnet&lt;/code&gt;) detects 75% of the true positives (&lt;em&gt;sensitivity&lt;/em&gt;=0.75), but has 50% chances of incorrectly identifying a negative (1 - Specificity = 0.5)&amp;hellip;better than chance but still &lt;strong&gt;far from perfect&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The best model&lt;/strong&gt; (&lt;code&gt;glmnet&lt;/code&gt;) detects 75% of the true positives (&lt;em&gt;sensitivity&lt;/em&gt;=0.75), but has 50% chances of incorrectly identifying a negative (1 - Specificity = 0.5)&amp;hellip;better than chance but still &lt;strong&gt;far from perfect&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;h2 id=&#34;precision-recall-curve&#34;&gt;Precision-Recall Curve&lt;/h2&gt;
 
-&lt;p&gt;A &lt;a href=&#34;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4349800/&#34;&gt;good argument&lt;/a&gt; has been made that the ROC curve can be misleading when dealing with very unbalanced classes. When the positive class is very small, the probability of making False Positive predictions increases. Because False Positives might still be a small percentage in comparison with True Negative, this different probability might only minimally affect the &lt;em&gt;specificity&lt;/em&gt; of the model.&lt;/p&gt;
+&lt;p&gt;A &lt;a href=&#34;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4349800/&#34;&gt;good argument&lt;/a&gt; has been made that the ROC curve can be misleading when dealing with very imbalanced classes. When the positive class is very small, the probability of making False Positive predictions increases. Because False Positives might still be a small percentage in comparison with True Negative, this different probability might only minimally affect the &lt;em&gt;specificity&lt;/em&gt; of the model.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://classeval.wordpress.com/introduction/introduction-to-the-precision-recall-plot/&#34;&gt;Precision-Recall&lt;/a&gt; curves take that into account and plot the Precision (TruePositives / (TruePositives+FalsePositives)), instead of the &lt;em&gt;specificity&lt;/em&gt;, as a function of the &lt;em&gt;sensitivity&lt;/em&gt; (refereed as &lt;em&gt;recall&lt;/em&gt;). In particular, the threshold probability is systematically varied, the 2 measures calculated and their maximal value plotted.&lt;/p&gt;
 
@@ -815,7 +817,7 @@ data_pr  &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
   theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-03-24-figthing-diseases_files/figure-html/precision_recal_alt-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-figthing-diseases_files/figure-html/precision_recal_alt-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;
 The &lt;code&gt;glmnet&lt;/code&gt; model show the highest &lt;em&gt;precision&lt;/em&gt;, followed by the &lt;code&gt;RandomForest&lt;/code&gt;, the &lt;code&gt;ctree&lt;/code&gt; and finally the &lt;code&gt;rpart&lt;/code&gt; model. &lt;strong&gt;Even our best model &lt;code&gt;glmnet&lt;/code&gt;, has a maximal precision of 0.5 (only one over 2 positive predictions are true) at a &lt;em&gt;recall&lt;/em&gt; of less than 10%.&lt;/strong&gt; This performance is better than pure chance but not as good as we would have hoped.&lt;/p&gt;
 
 &lt;h2 id=&#34;the-area-under-the-curve&#34;&gt;The Area Under the Curve&lt;/h2&gt;
@@ -851,8 +853,9 @@ The &lt;code&gt;glmnet&lt;/code&gt; model show the highest &lt;em&gt;precision&l
           panel.spacing &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; unit&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1.2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;lines&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-03-24-figthing-diseases_files/figure-html/metrics2-1.png&#34; width=&#34;672&#34; /&gt;
-The &lt;code&gt;glmnet&lt;/code&gt; has the larger AUCs of ROCs and precision-recall curves, followed by the &lt;code&gt;RandomForest&lt;/code&gt;. The 2 classification-tree models have the smallest AUCs, with values that approximate to those expected for random choices.
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-figthing-diseases_files/figure-html/metrics2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;code&gt;glmnet&lt;/code&gt; has the larger AUCs of ROCs and precision-recall curves, followed by the &lt;code&gt;RandomForest&lt;/code&gt;. The 2 classification-tree models have the smallest AUCs, with values that approximate to those expected for random choices.
 &lt;strong&gt;The &lt;code&gt;glmnet&lt;/code&gt; model produces the most accurate predictions among the models, but its precision and sensitivity are still quite limited.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;h1 id=&#34;highlights-judges-score-and-result-of-the-bout&#34;&gt;Highlights, judges score and result of the bout!&lt;/h1&gt;
@@ -861,28 +864,32 @@ The &lt;code&gt;glmnet&lt;/code&gt; has the larger AUCs of ROCs and precision-re
 
 &lt;p&gt;&lt;strong&gt;The aim of this post was to predict drug use behavior in adulthood using info (friends, social activities, parents and others) collected during adolescence&lt;/strong&gt;. The dataset used, the public portion of the &lt;a href=&#34;https://www .cpc.unc.edu/projects/addhealth/about&#34;&gt;&lt;strong&gt;ADD HEALTH PROJECT&lt;/strong&gt;&lt;/a&gt; consists in over 2000 observations of more than 5000 subjects. The classifier is the response (&lt;em&gt;Yes&lt;/em&gt; or &lt;em&gt;No&lt;/em&gt;) that indicates drug use despite negative consequences.&lt;/p&gt;
 
-&lt;p&gt;This is what we did:
-* got the data and made them tidy.
-* scaled, normalized, removed near-zero variance variables, applied PCA to reduce dimensionality and impute missing data using Knn.
-* splitted the data using a &lt;em&gt;5-fold 10-repetition adaptative cross-validation&lt;/em&gt;.
-* trained and found the optimal hyperparameters of a generalized linear model via penalized maximum likelihood (&lt;code&gt;glmnet&lt;/code&gt;&lt;code&gt;), 2 classification-tree models (&lt;/code&gt;&lt;code&gt;rpart&lt;/code&gt;&lt;code&gt;and&lt;/code&gt;&lt;code&gt;ctree&lt;/code&gt;&lt;code&gt;) and a Forest (&lt;/code&gt;&lt;code&gt;RandomForest&lt;/code&gt;`).
-* UpSample one of the class to manage a severe class unbalance (only ~4% of &lt;em&gt;No&lt;/em&gt;).
-* visualized confusion Matrix, calculated metrics of accuracy,  ROC curves and precision-recall curves to identify the best model.&lt;/p&gt;
+&lt;p&gt;This is what we did:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;got the data and made them tidy.&lt;/li&gt;
+&lt;li&gt;scaled, normalized, removed near-zero variance variables, applied PCA to reduce dimensionality and impute missing data using Knn.&lt;/li&gt;
+&lt;li&gt;splitted the data using a &lt;em&gt;5-fold 10-repetition adaptative cross-validation&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;trained and found the optimal hyperparameters of a generalized linear model via penalized maximum likelihood (&lt;code&gt;glmnet&lt;/code&gt;&lt;code&gt;), 2 classification-tree models (&lt;/code&gt;&lt;code&gt;rpart&lt;/code&gt;&lt;code&gt;and&lt;/code&gt;&lt;code&gt;ctree&lt;/code&gt;&lt;code&gt;) and a Forest (&lt;/code&gt;&lt;code&gt;RandomForest&lt;/code&gt;`).&lt;/li&gt;
+&lt;li&gt;UpSample one of the class to manage a severe class imbalance (only ~4% of &lt;em&gt;No&lt;/em&gt;).&lt;/li&gt;
+&lt;li&gt;visualized confusion Matrix, calculated metrics of accuracy,  ROC curves and precision-recall curves to identify the best model.&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;&amp;hellip;so what is the outcome? Who won?&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;The best model, &lt;code&gt;glmnet&lt;/code&gt;, give us a consistent advantage over pure change for predicting who in adulthood will have drug abuse problems. However, the perdiction as disappointingly very far from perfect.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The best model, &lt;code&gt;glmnet&lt;/code&gt;, give us a consistent advantage over pure change for predicting who in adulthood will experince some drug abuse problems. However, the perdictions were disappointingly very far from perfect.&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&amp;hellip;so I would say that it&amp;rsquo;s&amp;hellip;&lt;/p&gt;
 
 &lt;p&gt;&lt;center&gt;
-&lt;img src=&#34;/data_post4/wfd.jpg&#34; alt=&#34;draw&#34; /&gt;
-&amp;hellip;a DRAW.&lt;/p&gt;
+&lt;img src=&#34;https://muaydata.netlify.com/data_post4/wfd.jpg&#34; alt=&#34;draw&#34; /&gt;
+&lt;strong&gt;&amp;hellip;a DRAW!&lt;/strong&gt;
+&lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;The performance of the best model was very modest but &lt;strong&gt;we had the opportunity to explore a lot of the fundamental concepts in machine learning and predictive analysis&lt;/strong&gt;, and overall that was the most important aim.&lt;/p&gt;
 
 &lt;p&gt;Moreover there are several things that can be done to increase the performance of the models:
-1. The poor performance was at least partially due to &lt;strong&gt;the severe class unbalance and the limited number of positive&lt;/strong&gt; (~4%: ~300). The public dataset that we analyzed is just a small portion of the data collected by ADD HEALTH. Analyzing the whole dataset would give us access to more positive cases and most likely increase the performance of the models.
+1. The poor performance was at least partially due to &lt;strong&gt;the severe class imbalance and the limited number of positive&lt;/strong&gt; (~4%: ~300). The public dataset that we analyzed is just a small portion of the data collected by ADD HEALTH. Analyzing the whole dataset would give us access to more positive cases and most likely increase the performance of the models.
 2. &lt;strong&gt;We have evaluated only an handful of hyperparameters&lt;/strong&gt;. With higher computational power we would be able to find better hyperparameters and probably increase the performance of the models.
 3. This post was mainly focused on the use of &lt;code&gt;caret&lt;/code&gt; for predictive modeling, and thus &lt;strong&gt;not enough attention was placed on data exploration&lt;/strong&gt;. Know your data and you will be able to apply the most appropriate tools&amp;hellip;&lt;/p&gt;
 
@@ -892,16 +899,16 @@ The &lt;code&gt;glmnet&lt;/code&gt; has the larger AUCs of ROCs and precision-re
     
     <item>
       <title>Animated Prison</title>
-      <link>/post/animated-prison/</link>
+      <link>https://muaydata.netlify.com/post/animated-prison/</link>
       <pubDate>Thu, 25 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/animated-prison/</guid>
+      <guid>https://muaydata.netlify.com/post/animated-prison/</guid>
       
         <description>&lt;p&gt;In this post we will get the datasets and write the code to create the following visualization of the rate of incarceration over time in U.S (custody and jurisdiction counts of all prisoners).&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;[Double click for full screen]&lt;/em&gt;&lt;/p&gt;
 
-&lt;iframe title=&#34;Prison_video&#34; height=&#34;400&#34; src=&#34;/data_post3/output.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;iframe title=&#34;Prison_video&#34; height=&#34;400&#34; src=&#34;https://muaydata.netlify.com/data_post3/output.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
 
 &lt;p&gt;What are we looking at? The video-graph represents the number of people in private and public prisons (sentenced and unsentenced) normalized by the corresponding state population. The darker is a state, the higher is the prison population relative to the total population. The year is indicated on the top left and the video shows the data &lt;strong&gt;from 1999 to 2015&lt;/strong&gt;.&lt;/p&gt;
 
@@ -916,7 +923,7 @@ The &lt;code&gt;glmnet&lt;/code&gt; has the larger AUCs of ROCs and precision-re
 &lt;p&gt;Animated plots are like spinning-back kicks in muay Thai: they are extremely risky, seldom used, but they can be highly effective and hit you right between the eyes!&lt;/p&gt;
 
 &lt;p&gt;&lt;center&gt;
-&lt;img src=&#34;/data_post3/giphy.gif&#34; alt=&#34;prova&#34; /&gt;
+&lt;img src=&#34;https://muaydata.netlify.com/data_post3/giphy.gif&#34; alt=&#34;prova&#34; /&gt;
 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;Few weeks agon, I stumble upon a newly released package, &lt;a href=&#34;https://github.com/ropensci/av&#34;&gt;&lt;em&gt;av&lt;/em&gt;&lt;/a&gt;, that uses &lt;a href=&#34;https://ffmpeg.org/&#34;&gt;&lt;em&gt;ffmpeg&lt;/em&gt;&lt;/a&gt; to capture &lt;em&gt;R&lt;/em&gt; plots and create videos.
@@ -1291,7 +1298,7 @@ utils&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;browseURL&lt;span class=&#34;p
 &lt;p&gt;With that we have covered all the code related to the video/graph, but I could not resist&amp;hellip;&lt;/p&gt;
 
 &lt;p&gt;&lt;center&gt;
-&lt;img src=&#34;/data_post3/columbo.jpeg&#34; alt=&#34;prova&#34; /&gt;
+&lt;img src=&#34;https://muaydata.netlify.com/data_post3/columbo.jpeg&#34; alt=&#34;prova&#34; /&gt;
 &lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;&amp;hellip;making at least another plot.&lt;/p&gt;
@@ -1374,7 +1381,7 @@ ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;prison_norm_tot&lt;span class=
         axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;angle &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-25-animated-prison_files/figure-html/fig.2_prison_time-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-10-25-animated-prison_files/figure-html/fig.2_prison_time-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;From 2008 to 2015, the prison population went from about 44 inmates for 10 thousand people to about 39. It is ≈ 10% decrease!
 That is going to be the last graph of the post!&lt;/p&gt;
@@ -1385,10 +1392,10 @@ That is going to be the last graph of the post!&lt;/p&gt;
     
     <item>
       <title>Il Re di Twitter? (PART II)</title>
-      <link>/post/re-di-twitter-ii/</link>
+      <link>https://muaydata.netlify.com/post/re-di-twitter-ii/</link>
       <pubDate>Wed, 10 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/re-di-twitter-ii/</guid>
+      <guid>https://muaydata.netlify.com/post/re-di-twitter-ii/</guid>
       
         <description>&lt;p&gt;In questa seconda parte analizzeremo il contenuto dei tweets di Di Maio, Salvini e Martina e scopriremo quante volte e quando particolari parole sono state utilizzate dai 3 politici. Per finire andremo a vedere se alcune di queste parole sono associate ad un alto numero di like.&lt;/p&gt;
 
@@ -1545,7 +1552,7 @@ f_twwords &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twwords &lt;span 
           legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig1_most_used_words-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig1_most_used_words-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Per Salvini e Martina la parola più usata è il proprio nome/screenname&lt;/strong&gt;, mentre per &lt;strong&gt;Di Maio è il partito&lt;/strong&gt; &amp;ldquo;m5s&amp;rdquo;. &lt;strong&gt;Salvini menziona il suo nome in circa 1 tweets ogni 3, Martina e Di Maio menzionano nome e partito in 1 tweet ogni 10 , rispettivamente&lt;/strong&gt;.&lt;/p&gt;
 
@@ -1619,7 +1626,7 @@ knitr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;kable&lt;span class=&#34;p&#34
       facet_grid&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName&lt;span class=&#34;o&#34;&gt;~&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; scales &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#39;free_y&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; labeller &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; labeller&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;screenName &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.2_worcloud-1.png&#34; width=&#34;576&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.2_worcloud-1.png&#34; width=&#34;576&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Nella fig.2, le parole più usate hanno una dimensione maggiore.&lt;/p&gt;
 
@@ -1757,7 +1764,7 @@ fm_twwords_lm&lt;span class=&#34;p&#34;&gt;[,&lt;/span&gt; &lt;span class=&#34;s
   theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.3_timeline_dimaioa-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.3_timeline_dimaioa-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Le 3 parole relative al movimento e al suo fondatore (fig.3 panello A) sono state usate da Di Maio costantemente ma con frequenza variabile negli ultimi anni. È tuttavia negli ultimi mesi (da Marzo a Luglio 2018) che il loro uso è andato quasi scomparendo. Questa diminuzione si è verificata nel concitato periodo di consultazioni con il quirinale e formazione del governo (Febbraio-Giugno), mesi in cui la parola &lt;em&gt;governo&lt;/em&gt; è usata ogni 2-5 tweets (fig.3 panello B).
 E le parole relative al PD? &lt;strong&gt;I riferimenti da parte di Di Maio al attuale partito di opposizione (parola &lt;em&gt;pd&lt;/em&gt;) e al suo precedente segretario (parola &lt;em&gt;renzi&lt;/em&gt;)&lt;/strong&gt; se pure a tratti molto frequenti tra il 2014-2017, &lt;strong&gt;scompaiono completamente nel periodo in cui il movimento a 5 stelle diventa partito di maggioranza&lt;/strong&gt; (fig.3 pannello C, linea tratteggiata indica l&amp;rsquo;insediamento del governo).
@@ -1990,7 +1997,7 @@ fav_twwords &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; fav_twwords_all
     legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.4_like_word-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.4_like_word-1.png&#34; width=&#34;768&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Il primo dato che balza agli occhi dalla fig.4 è che &lt;strong&gt;le prime 10 parole più usate da Salvini hanno totalizzato un numero molto più alto di likes rispetto quelle di Di Maio e Martina&lt;/strong&gt;.
 Inoltre, le parole che hanno ricevuto più likes sono state utilizzate &lt;strong&gt;soltanto 1 o 2 volte dai vari politici&lt;/strong&gt;.  Perché?
@@ -2031,7 +2038,7 @@ twwords &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
         axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.5_vitalizi-1.png&#34; width=&#34;384&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.5_vitalizi-1.png&#34; width=&#34;384&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Anche se in quelle 2 occasioni il numero di like ricevuti è stato estremamente alto, la presenza di numerosi tweets con pochi like ha spostato la media di like per tweet verso il basso (fig.5).&lt;/p&gt;
 
@@ -2056,10 +2063,10 @@ Ma vista mancanza di strumenti adeguati per la lingua italiana, ho deciso di com
     
     <item>
       <title>Il Re di Twitter? (PARTE I)</title>
-      <link>/post/re-di-twitter-i/</link>
+      <link>https://muaydata.netlify.com/post/re-di-twitter-i/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/post/re-di-twitter-i/</guid>
+      <guid>https://muaydata.netlify.com/post/re-di-twitter-i/</guid>
       
         <description>&lt;p&gt;In questa serie di Posts andremo ad analizzare gli ultimi 3200 tweets di Di Maio, Salvini e Martina. Il mio studio sarà diviso in 2 parti:&lt;/p&gt;
 
@@ -2410,7 +2417,7 @@ tw_d &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&
   grid.arrange&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tw_h&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; tw_d&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; ncol &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; top &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Percentage of tweets          &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.1_plot_tw_wdays-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.1_plot_tw_wdays-1.png&#34; width=&#34;960&#34; /&gt;
 &lt;strong&gt;Salvini&lt;/strong&gt; tende ad iniziare a twittare al mattino come Di Maio e Martina, ma  rispetto a loro, tende a continuare ad essere &lt;strong&gt;attivo anche la sera (7-23)&lt;/strong&gt;. Per &lt;strong&gt;Martina&lt;/strong&gt; il picco di attività è &lt;strong&gt;la mattina (9-11)&lt;/strong&gt; mentre per &lt;strong&gt;Di Maio è dalle 9 alle 16&lt;/strong&gt; (fig.2, sinistra). &lt;strong&gt;Tutti e tre i politici hanno un giorno durante il week-end in cui sono molto meno attivi&lt;/strong&gt;: sia per Di Maio che Salvini è il Sabato, mentre per Martina la Domenica (fig.2, destra).&lt;/p&gt;
 
 &lt;p&gt;Ho usato &lt;em&gt;ggridges&lt;/em&gt;, una extention di &lt;em&gt;ggplot2&lt;/em&gt;, per creare dei &lt;em&gt;density plots&lt;/em&gt; e visualizzare in dettaglio l&amp;rsquo;interazione tra giorno della settimana ed ora del giorno dei tweets (fig.3 sottostante). L&amp;rsquo;analisi tende comunque a supportare la generabilità delle osservazioni precedenti ma con alcune precisazioni: la Domenica è Di Maio a distribuire i sui tweets  più tardi la sera. Inoltre, il Lunedì Salvini è, diversamente dagli altri giorni della settimana, molto più attivo nel primo pomeriggio tra le 14 e le 16 (fig.3).&lt;/p&gt;
@@ -2460,7 +2467,7 @@ tw_d &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; twdat &lt;span class=&
     guides&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;FALSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.2_ridges-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.2_ridges-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&#34;ultimi-mesi&#34;&gt;Ultimi mesi&lt;/h3&gt;
 
@@ -2616,7 +2623,7 @@ knitr&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;kable&lt;span class=&#34;p&#34
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;grid.arrange&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;timeline_abs&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; timeline_perc&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; ncol &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;  &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.4_timeline-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.4_timeline-1.png&#34; width=&#34;960&#34; /&gt;
 Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale. Questa normalizzazione ci permette di comparare meglio gli andamenti e i cambiamenti di attività tra i politici.&lt;/p&gt;
 
 &lt;p&gt;Salvini twitta molto più di Di Maio e Martina ma &lt;strong&gt;l&amp;rsquo;attività di tutti e 3 i politici aumenta drasticamente in Febbraio&lt;/strong&gt; di quest&amp;rsquo;anno, mese di &lt;a href=&#34;https://it.wikipedia.org/wiki/XVIII_legislatura_della_Repubblica_Italiana&#34;&gt;campagna elettorale&lt;/a&gt;) (con un inizio precoce per Salvini già in Gennaio). Questo picco di attività &lt;strong&gt;crolla velocemente&lt;/strong&gt; e in &lt;strong&gt;Marzo&lt;/strong&gt; già si ritorna a quei livelli di attività pre-elettorali (o anche inferiori nel caso di Di Maio). Un altro &lt;strong&gt;aumento dell&amp;rsquo;attività&lt;/strong&gt; di &lt;strong&gt;Salvini e Martina&lt;/strong&gt; si osserva &lt;strong&gt;negli ultimi mesi&lt;/strong&gt;, sospetto sia in qualche modo collegato alle vicenda dell&amp;rsquo;Acquarius e della &amp;ldquo;chiusura dei porti&amp;rdquo; (fig.3).&lt;/p&gt;
@@ -2660,7 +2667,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
   guides&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;col &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;FALSE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.4_distribution_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.4_distribution_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Tutte e tre le distribuzioni sono estremamente skewed verso destra ma anche da questo grafico è possibile cogliere che i tweets di Salvini con alti numeri di likes sono più numerosi rispetto a quelli degli altri 2 politici (barre verdi sono più alte rispetto alle gialle e rosse quando ci spostiamo verso destra,fig.4)&lt;/p&gt;
 
@@ -2683,7 +2690,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
   theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig5_jitter_likes-1.png&#34; width=&#34;480&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig5_jitter_likes-1.png&#34; width=&#34;480&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Nella figura ogni tweet è rappresentato da un punto che è in alto se il tweet ha ricevuto molti likes. Anche da questa rappresentazione si evince che &lt;strong&gt;Salvini è estremamente più popolare tra i suoi followers di Di Maio e Martina&lt;/strong&gt; (fig.5).&lt;/p&gt;
 
@@ -2691,7 +2698,7 @@ Sulla sinistra abbiamo i dati assoluti mentre sulla destra i dati in percentuale
 
 &lt;p&gt;Come è cambiata la popolarità dei vari politici negli ultimi mesi? Andiamo ad analizzarlo attraverso la visualizzazione di numero di like per tweet (fig.6, sinistra) e totale di like (fig.5) nei mesi di Dicembre 2017 fino a Luglio 2018. Utilizzeremo lo stesso codice impiegato per le fig.1.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.6_plot_timeline_likes-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.6_plot_timeline_likes-1.png&#34; width=&#34;960&#34; /&gt;
 Sia per &lt;strong&gt;Di Maio&lt;/strong&gt; che per &lt;strong&gt;Salvini&lt;/strong&gt; in numero di &lt;strong&gt;like per tweet è aumentato drasticamente&lt;/strong&gt; a partire &lt;strong&gt;da Marzo del 2018&lt;/strong&gt; con un &lt;strong&gt;picco quest&amp;rsquo;estaste&lt;/strong&gt; (fig.6 sinistra). Anche &lt;strong&gt;i like  per tweet di Martina sono aumentati&lt;/strong&gt;, ma &lt;strong&gt;in misura molto minore&lt;/strong&gt; rispetto a quelli degli altri 2 politici (fig.6 sinistra). Un altra considerazione interessante è che &lt;strong&gt;negli ultimi mesi la popolarità dei tweets di Di Maio e Salvini&lt;/strong&gt; in termini di likes per tweets &lt;strong&gt;non è&lt;/strong&gt; stata tutto sommato &lt;strong&gt;molto differente&lt;/strong&gt; (&lt;strong&gt;2500-4000 likes per tweet&lt;/strong&gt;, fig.6 sinistra) e il maggiore numero totale di likes da parte di Salvini è imputabile al sua maggiore presenza sul social media (fig.6 destra).&lt;/p&gt;
 
 &lt;h3 id=&#34;i-tweets-più-famosi&#34;&gt;I tweets più famosi&lt;/h3&gt;
@@ -2731,7 +2738,7 @@ twdat &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
           axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.25&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; angle &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;45&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.6_10_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.6_10_fav-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Alcuni dei temi più cari ai m5s e Lega emergono nei  tweets più apprezzati:&lt;/p&gt;
 
@@ -2808,7 +2815,7 @@ count_dev &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
       labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;fig.8&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.7_pie-1.png&#34; width=&#34;960&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2018-09-10-re-di-twitter-i_files/figure-html/fig.7_pie-1.png&#34; width=&#34;960&#34; /&gt;
 Sono piuttosto chiare le differenze tra i 3 politici:&lt;/p&gt;
 
 &lt;ul&gt;

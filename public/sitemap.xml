@@ -1,148 +1,148 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<?xml-stylesheet type="text/xsl" href="https://muaydata.netlify.com/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>/about/</loc>
+    <loc>https://muaydata.netlify.com/about/</loc>
     <lastmod>2018-10-25T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/figthing-diseases/</loc>
+    <loc>https://muaydata.netlify.com/post/figthing-diseases/</loc>
     <lastmod>2019-03-24T11:13:24-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/animated-prison/</loc>
+    <loc>https://muaydata.netlify.com/post/animated-prison/</loc>
     <lastmod>2018-10-23T18:19:53-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/re-di-twitter-ii/</loc>
+    <loc>https://muaydata.netlify.com/post/re-di-twitter-ii/</loc>
     <lastmod>2018-10-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/post/re-di-twitter-i/</loc>
+    <loc>https://muaydata.netlify.com/post/re-di-twitter-i/</loc>
     <lastmod>2018-09-12T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/tags/add_health/</loc>
+    <loc>https://muaydata.netlify.com/tags/add_health/</loc>
     <lastmod>2019-03-24T11:13:24-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/av/</loc>
+    <loc>https://muaydata.netlify.com/tags/av/</loc>
     <lastmod>2018-10-23T18:19:53-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/caret/</loc>
+    <loc>https://muaydata.netlify.com/tags/caret/</loc>
     <lastmod>2019-03-24T11:13:24-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>https://muaydata.netlify.com/categories/</loc>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/ggplot/</loc>
+    <loc>https://muaydata.netlify.com/tags/ggplot/</loc>
     <lastmod>2018-10-23T18:19:53-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>https://muaydata.netlify.com/</loc>
     <lastmod>2018-10-25T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/</loc>
+    <loc>https://muaydata.netlify.com/post/</loc>
     <lastmod>2019-03-24T11:13:24-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/precision-recall/</loc>
+    <loc>https://muaydata.netlify.com/tags/precision-recall/</loc>
     <lastmod>2019-03-24T11:13:24-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/predictive-modeling/</loc>
+    <loc>https://muaydata.netlify.com/tags/predictive-modeling/</loc>
     <lastmod>2019-03-24T11:13:24-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/r/</loc>
+    <loc>https://muaydata.netlify.com/tags/r/</loc>
     <lastmod>2018-09-12T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/r/</loc>
+    <loc>https://muaydata.netlify.com/categories/r/</loc>
     <lastmod>2019-03-24T11:13:24-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/roc/</loc>
+    <loc>https://muaydata.netlify.com/tags/roc/</loc>
     <lastmod>2019-03-24T11:13:24-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://muaydata.netlify.com/tags/</loc>
     <lastmod>2019-03-24T11:13:24-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/textmining/</loc>
+    <loc>https://muaydata.netlify.com/tags/textmining/</loc>
     <lastmod>2018-10-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/twitter/</loc>
+    <loc>https://muaydata.netlify.com/tags/twitter/</loc>
     <lastmod>2018-10-10T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/visualization/</loc>
+    <loc>https://muaydata.netlify.com/tags/visualization/</loc>
     <lastmod>2018-10-23T18:19:53-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
