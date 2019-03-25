@@ -594,6 +594,7 @@ This is what we did:
 The performance of the best model was very modest but **we had the opportunity to explore a lot of the fundamental concepts in machine learning and predictive analysis**, and overall that was the most important aim.
 
 Moreover there are several things that can be done to increase the performance of the models:
+
 1. The poor performance was at least partially due to **the severe class imbalance and the limited number of positive** (~4%: ~300). The public dataset that we analyzed is just a small portion of the data collected by ADD HEALTH. Analyzing the whole dataset would give us access to more positive cases and most likely increase the performance of the models.
 2. **We have evaluated only an handful of hyperparameters**. With higher computational power we would be able to find better hyperparameters and probably increase the performance of the models.
 3. This post was mainly focused on the use of ```caret``` for predictive modeling, and thus **not enough attention was placed on data exploration**. Know your data and you will be able to apply the most appropriate tools...
