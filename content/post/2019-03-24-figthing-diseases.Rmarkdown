@@ -55,7 +55,7 @@ library(tidyverse)
 ```
 
 ```{r load_all, eval= TRUE, include=FALSE}
-path_m <- "/Users/heverz/OneDrive/ALL/Claudio Documents/Work/R/muaydata/post4/"
+path_m <- "/Users/heverz/Documents/R_projects/muaydata/static/data_post4/"
 mod_glmnet <- readRDS(paste0(path_m,"mod_glmnet_ROC.RDS"))
 mod_rpart <- readRDS(paste0(path_m,"mod_rpart_ROC.RDS"))
 mod_ctree <- readRDS(paste0(path_m,"mod_ctree_ROC.RDS"))
