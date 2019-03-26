@@ -69,7 +69,7 @@
 
 <meta itemprop="datePublished" content="2019-03-24T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-03-24T11:13:24-04:00" />
-<meta itemprop="wordCount" content="5790">
+<meta itemprop="wordCount" content="5801">
 
 
 
@@ -288,7 +288,7 @@ if (!doNotTrack) {
             <a href="https://muaydata.netlify.com/categories/r/"> R </a>
             
           </div>
-        <span class="more-meta"> 5790 words </span>
+        <span class="more-meta"> 5801 words </span>
           <span class="more-meta"> 28 min read </span>
 
         
@@ -547,9 +547,9 @@ heal_sub_cl<span class="o">$</span>H4TO117 <span class="o">&lt;-</span> <span cl
 
 <p>After some data exploration, we can finally develop (train) and evaluate (test) predictive models. In other words, we are going to find the best parameters for the different models and test them. Can we <strong>train and test models using exactly the same data</strong>? That would not be a good idea at all, as it <strong>would results in an overestimation of the accuracy of our models</strong> (we would end it up fitting also noise). Why?</p>
 
-<p>Imagine to be <strong>Muay Thai</strong> fighter that is getting ready for his first fight. If you train and spar always with the same person, you might end it up knowing his/her strategies pretty well, and developing way to respond and exploit his/her way of attacking and defending. For an external observer you might look even very good when you spar with him/her. Does it mean that you are going to do well also in your fight? Not really. Your opponent might have a difference stance of your training partner or a completely different style. You might have not encountered those moves in training, and thus perform not well  under those different conditions (and get your ass kicked). So what can you do to get ready for your fight and have a more accurate understanding of your potential? Don&rsquo;t train and test your skill always with the same person. What you want to do is to <strong>train with as many different people, and then occasionally test your skills with someone that you have never trained before. This will maximize your chance of having trained for someone similar to your actual fight opponent but also give you a better idea if you are ready or not</strong>.</p>
+<p>Imagine to be <strong>Muay Thai fighter</strong> that is getting ready for his first fight. If you train and spar always with the same person, you might end it up knowing his/her strategies pretty well, and developing way to respond and exploit his/her way of attacking and defending. For an external observer you might look even very good when you spar with him/her. Does it mean that you are going to do well also in your fight? Not really. Your opponent might have a difference stance of your training partner or a completely different style. You might have not encountered those moves in training, and thus perform not well  under those different conditions (and get your ass kicked). So what can you do to get ready for your fight and have a more accurate understanding of your potential? Don&rsquo;t train and test your skill always with the same person. What you want to do is to <strong>train with as many different people as you can, and then occasionally test your skills with someone that you have never trained before. This will maximize your chances of having trained with someone similar to your actual fight opponent, and also give you a better idea if you are ready or not</strong>.</p>
 
-<p>We are going to do the same thing with our data. <strong>We will divide our dataset in 10 samples, train our model with 9 of them and evaluate it with the 10th. Then select a different sample for testing and apply the same procedure until each one is used once for testing</strong>. In this way, we well <strong>never train and test our model with the same data</strong> and we will get an <strong>estimate of variability</strong> for the accuracy of the model. The entire procedure will than be repeated 5 times with reshuffled data (new partitions). This procedure is called <em>repeated cross-validation</em>.</p>
+<p>We are going to do the same thing with our data. <strong>We will divide our dataset in 10 samples, train our model with 9 of them and evaluate it with the 10th. Afte that we will select a different sample for testing, and reapply the same procedure until each one of the folds is used at least once for testing</strong>. In this way, we well <strong>never train and test our model with the same data</strong> and we will get an <strong>estimate of variability</strong> for the accuracy of the model. The entire procedure will than be repeated 5 times with reshuffled data (new partitions). This procedure is called <em>repeated cross-validation</em>.</p>
 
 <p>Unfortunately we have another problem. The people that keep taking drugs despite negative consequences are about 4% of the total number of people in our dataset. We have a severe <strong>class imbalance</strong>. Because of such a difference in the size of our 2 classes, <strong>it is more likely that the small class we will have much less weight in the parameter optimization of our model</strong>. There are several things that we can do to mitigate that problem. One possibility is to randomly up-sample the smaller class to make the class distribution equal. We could run the caret function <code>upSample</code> that does exactly that and than train and test our model on the re-sampled data.  What is the problem in doing that? It&rsquo;s that it is very likely that the same observations will be part of the data that used to train the model but also test its accuracy, that is because  we are going to duplicate a lot of observations for the class &ldquo;yes&rdquo;. Here we are again, training and <em>sparring</em> with the same partners as before! <strong>We need to train our model on the up Sample data, but then test it on part of the not re-sampled data!</strong> <a href="https://topepo.github.io/caret/index.html"><em><em>Max Kuhn</em></em></a>, the creator of <code>caret</code>, made it easy for us, and not we can do that using an option when we invoke the function <code>trainControl</code> for cross-validating the data. Perfect!</p>
 
@@ -1170,7 +1170,7 @@ The <code>glmnet</code> model show the highest <em>precision</em>, followed by t
 <p>This is what we did:</p>
 
 <ul>
-<li>got the data and made them tidy.</li>
+<li>got the data and made it tidy.</li>
 <li>scaled, normalized, removed near-zero variance variables, applied PCA to reduce dimensionality and impute missing data using Knn.</li>
 <li>splitted the data using a <em>5-fold 10-repetition adaptative cross-validation</em>.</li>
 <li>trained and found the optimal hyperparameters of a generalized linear model via penalized maximum likelihood (<code>glmnet</code><code>), 2 classification-tree models (</code><code>rpart</code><code>and</code><code>ctree</code><code>) and a Forest (</code><code>RandomForest</code>`).</li>
