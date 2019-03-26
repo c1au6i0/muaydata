@@ -313,7 +313,7 @@ if (!doNotTrack) {
 <li><a href="#cross-validation-class-imbalance">Cross Validation, Class Imbalance</a></li>
 <li><a href="#traincontrol-and-hyperparameters">TrainControl and Hyperparameters</a></li>
 <li><a href="#preprocessing">Preprocessing</a></li>
-<li><a href="#glmnet">GLMNET</a></li>
+<li><a href="#glmnet">glmnet</a></li>
 <li><a href="#classification-trees-and-random-forest">Classification Trees and Random Forest</a></li>
 </ul></li>
 <li><a href="#fight-night-evaluation-of-the-models">Fight night: Evaluation of the Models</a>
@@ -605,7 +605,7 @@ Let&rsquo;s clarify what are this <em>tuning parameters</em>. <strong>The tuning
 
 <p>Before training our first model we need to spend also some few words on preprocessing. This is getting long but who cares? No one will really read this post (maybe Alessandro will check it out). We have a lot of variables, more than 2000 and that put quite some computational burden on my personal laptop. We might no need all those variables, because some of them might have <strong>near zero variance</strong> (imagine a column made of only one identical value) or might be <strong>very correlated to each other</strong>. Moreover, we can employ <strong>principal component analysis</strong> (<a href="https://en.wikipedia.org/wiki/Principal_component_analysis">PCA</a>) to use linear combination of variables that explain most of the variability of the data. Finaly, we can <strong>impute missing data</strong> using a <strong>k-nearest neighbors algorithm</strong>, that use the distance to the closest sample to calculate the values that will be substitute to the missing data. All this computations can be very conveniently done before training our models using the argument <code>preProcess = c(&quot;nzv&quot;, &quot;corr&quot;,&quot;knnImpute&quot;,&quot;pca&quot;)</code>, when calling the function <code>caret::train</code>.</p>
 
-<h2 id="glmnet">GLMNET</h2>
+<h2 id="glmnet">glmnet</h2>
 
 <p>We are ready! Let&rsquo;s train our first model, <a href="https://web.stanford.edu/~hastie/glmnet/glmnet_alpha.html">&ldquo;a generalized linear model via penalized maximum likelihood&rdquo;</a>, using the package above mentioned <code>glmnet</code>. Because of the limited computational capability of my laptop we are going to try only 5 different combinations of hyperparameters for each resample (`<code>tuneLength = 5</code>). <strong>This is definitely an inadequate number of combinations*_ (I would have tried at least 100 if I could)</strong> but will still give as the opportunity to see how to train a model an evaluate it.</p>
 <div class="highlight"><div class="chroma">

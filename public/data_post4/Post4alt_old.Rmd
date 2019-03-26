@@ -515,12 +515,27 @@ plot(prova)
 https://rviews.rstudio.com/2019/03/01/some-r-packages-for-roc-curves/
 
 ```{r}
+library(mlbench)
+data(Sonar)
+set.seed(998)
+
+# one of the variables is  equal the classifier
+Sonar[,"Vx"] <- Sonar$Class
+
+fitControl <- trainControl(## 10-fold CV
+                           method = "repeatedcv",
+                           number = 5,
+                           repeats = 5)
+
+gbmFit1 <- train(Class ~ ., data = Sonar, 
+                 method = "gbm", 
+                 trControl = fitControl,
+                 verbose = FALSE)
 
 
-twoClassSummary(prova, lev = c("Yes", "No"))
+resamps <- resamples(list(gbmFit1,))
 
-
-
+ggplot(resamps)
 ```
 
 
