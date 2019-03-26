@@ -325,7 +325,7 @@ if (!doNotTrack) {
 <ul>
 <li><a href="#thresholds">Thresholds</a></li>
 <li><a href="#roc-curves">ROC curves</a></li>
-<li><a href="#precision-recall-curve">Precision-Recall Curve</a></li>
+<li><a href="#precision-recall-curves">Precision-Recall Curves</a></li>
 <li><a href="#the-area-under-the-curve">The Area Under the Curve</a></li>
 </ul></li>
 <li><a href="#highlights-judges-score-and-result-of-the-bout">Highlights, judges score and result of the bout!</a></li>
@@ -1083,7 +1083,7 @@ plot<span class="p">(</span>roc<span class="p">)</span></code></pre></td></tr></
 
 <p><strong>The best model</strong> (<code>glmnet</code>) detects 75% of the true positives (<em>sensitivity</em>=0.75), but has 50% chances of incorrectly identifying a negative (1 - Specificity = 0.5)&hellip;better than chance but still <strong>far from perfect</strong>.</p>
 
-<h2 id="precision-recall-curve">Precision-Recall Curve</h2>
+<h2 id="precision-recall-curves">Precision-Recall Curves</h2>
 
 <p>A <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4349800/">good argument</a> has been made that the ROC curve can be misleading when dealing with very imbalanced classes. When the positive class is very small, the probability of making False Positive predictions increases. Because False Positives might still be a small percentage in comparison with True Negative, this different probability might only minimally affect the <em>specificity</em> of the model.</p>
 

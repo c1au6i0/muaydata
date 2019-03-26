@@ -611,7 +611,7 @@ Therefore, if we consider these 2 metrics, **the ```glmnet``` has the best perfo
 
 **The best model** (```glmnet```) detects 75% of the true positives (*sensitivity*=0.75), but has 50% chances of incorrectly identifying a negative (1 - Specificity = 0.5)...better than chance but still **far from perfect**.
 
-## Precision-Recall Curve
+## Precision-Recall Curves
 
 A [good argument](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4349800/) has been made that the ROC curve can be misleading when dealing with very imbalanced classes. When the positive class is very small, the probability of making False Positive predictions increases. Because False Positives might still be a small percentage in comparison with True Negative, this different probability might only minimally affect the *specificity* of the model. 
 
