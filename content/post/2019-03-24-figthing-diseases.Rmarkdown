@@ -370,10 +370,10 @@ mod_ctree <- train(H4TO117 ~ .,
 Finaly, we will train and evaluate a **Random Forest model**, that is an **essamble of multiple classification trees**. Usually Random Forest perform better than classification trees but this increased accuracy comes at the expenses of the model complexity and interpreatability.
 
 ```{r mod_rf, eval=FALSE, include=TRUE}
-mod_ranger_pr <- train(H4TO117 ~ ., 
+mod_ranger <- train(H4TO117 ~ ., 
               heal_sub_cl,
               met2hod = "ranger",
-              metric = "F",
+              metric = "ROC",
               tuneLength = 5,
               trControl = fitControl2,
               na.action = na.pass,

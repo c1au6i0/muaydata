@@ -269,10 +269,10 @@ Finaly, we will train and evaluate a **Random Forest model**, that is an **essam
 
 
 ```r
-mod_ranger_pr <- train(H4TO117 ~ ., 
+mod_ranger <- train(H4TO117 ~ ., 
               heal_sub_cl,
               met2hod = "ranger",
-              metric = "F",
+              metric = "ROC",
               tuneLength = 5,
               trControl = fitControl2,
               na.action = na.pass,

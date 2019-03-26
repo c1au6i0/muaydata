@@ -408,10 +408,10 @@ Let&amp;rsquo;s clarify what are this &lt;em&gt;tuning parameters&lt;/em&gt;. &l
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;mod_ranger_pr &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; train&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;H4TO117 &lt;span class=&#34;o&#34;&gt;~&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;mod_ranger &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; train&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;H4TO117 &lt;span class=&#34;o&#34;&gt;~&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
               heal_sub_cl&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
               met2hod &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;ranger&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-              metric &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;F&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+              metric &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;ROC&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
               tuneLength &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
               trControl &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; fitControl2&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
               na.action &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; na.pass&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;

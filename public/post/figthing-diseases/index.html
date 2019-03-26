@@ -711,10 +711,10 @@ Let&rsquo;s clarify what are this <em>tuning parameters</em>. <strong>The tuning
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r">mod_ranger_pr <span class="o">&lt;-</span> train<span class="p">(</span>H4TO117 <span class="o">~</span> <span class="m">.</span><span class="p">,</span> 
+<pre class="chroma"><code class="language-r" data-lang="r">mod_ranger <span class="o">&lt;-</span> train<span class="p">(</span>H4TO117 <span class="o">~</span> <span class="m">.</span><span class="p">,</span> 
               heal_sub_cl<span class="p">,</span>
               met2hod <span class="o">=</span> <span class="s">&#34;ranger&#34;</span><span class="p">,</span>
-              metric <span class="o">=</span> <span class="s">&#34;F&#34;</span><span class="p">,</span>
+              metric <span class="o">=</span> <span class="s">&#34;ROC&#34;</span><span class="p">,</span>
               tuneLength <span class="o">=</span> <span class="m">5</span><span class="p">,</span>
               trControl <span class="o">=</span> fitControl2<span class="p">,</span>
               na.action <span class="o">=</span> na.pass<span class="p">,</span>
