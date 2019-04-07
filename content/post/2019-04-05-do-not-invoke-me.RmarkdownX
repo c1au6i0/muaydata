@@ -1,0 +1,51 @@
+---
+title: Do not invoke me
+author: c1au6i0
+date: '2019-04-05'
+slug: do-not-invoke-me
+categories:
+  - R
+tags:
+  - purrr
+  - functions
+  - non-standard evaluation
+lastmod: '2019-04-05T23:01:25-04:00'
+keywords: []
+description: ''
+comment: yes
+toc: yes
+autoCollapseToc: no
+contentCopyright: no
+reward: no
+mathjax: no
+---
+
+<!--more-->
+
+
+To
+```{r}
+library(tidyverse)
+library(PRROC)
+library(purrr)
+library(rlang)
+library(r2d3)
+```
+
+
+
+
+```{r}
+# mod <- mod_glmnet
+# 
+#   
+# #invoke_map to apply 2 functions and same quoted arguments to the same data 
+# 
+# fr <- list(scores.class0 = mod[["pred"]][["Yes"]], weights.class0 = lab, curve = TRUE)
+# 
+# lab <- mod[["pred"]][["obs"]] %>% 
+#             recode(Yes = 1, No = 0)
+# 
+# map(list(pr.curve, roc.curve), exec, !!!fr)
+
+```
