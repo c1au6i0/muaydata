@@ -1,8 +1,8 @@
 ---
-title: Figthing Diseases with Predictive Modeling
+title: Fighting Diseases with Predictive Modeling
 author: ~
 date: '2019-03-24'
-slug: figthing-diseases
+slug: fighting-diseases
 categories:
   - R
 tags:
@@ -21,7 +21,7 @@ contentCopyright: no
 reward: no
 mathjax: no
 ---
-In this post we will analyze the data of the [__ADD HEALTH__](https://www .cpc.unc.edu/projects/addhealth/about), a national longitudinal study that enrolled  ~90000 adolescents and followed them up for 20 years. Using the *R* package [```caret```](https://github.com/topepo/caret), we will train and evaluate different models (regression, decision tree, random Forrest) in order to predict drug use behavior in adulthood from information (friends, social activities, parents and others) collected during adolescence. This will give us the opportunity to play and get familiarized with the most important ```caret``` functions as well as to introduce seminal concepts of machine learning.
+In this post we will analyze the data of the [__ADD HEALTH__](https://www .cpc.unc.edu/projects/addhealth/about), a national longitudinal study that enrolled  ~90000 adolescents and followed them up for 20 years. Using the *R* package [```caret```](https://github.com/topepo/caret), we will train and evaluate different models (regression, decision tree, random Forest) in order to predict drug use behavior in adulthood from information (friends, social activities, parents and others) collected during adolescence. This will give us the opportunity to play and get familiarized with the most important ```caret``` functions as well as to introduce seminal concepts of machine learning.
 <!--more-->
 # The bout: the data to analyze
 
