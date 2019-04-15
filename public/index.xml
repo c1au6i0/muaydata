@@ -27,13 +27,13 @@
     </item>
     
     <item>
-      <title>Figthing Diseases with Predictive Modeling</title>
-      <link>https://muaydata.netlify.com/post/figthing-diseases/</link>
+      <title>Fighting Diseases with Predictive Modeling</title>
+      <link>https://muaydata.netlify.com/post/fighting-diseases/</link>
       <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/post/figthing-diseases/</guid>
+      <guid>https://muaydata.netlify.com/post/fighting-diseases/</guid>
       
-        <description>&lt;p&gt;In this post we will analyze the data of the &lt;a href=&#34;https://www .cpc.unc.edu/projects/addhealth/about&#34;&gt;&lt;strong&gt;ADD HEALTH&lt;/strong&gt;&lt;/a&gt;, a national longitudinal study that enrolled  ~90000 adolescents and followed them up for 20 years. Using the &lt;em&gt;R&lt;/em&gt; package &lt;a href=&#34;https://github.com/topepo/caret&#34;&gt;&lt;code&gt;caret&lt;/code&gt;&lt;/a&gt;, we will train and evaluate different models (regression, decision tree, random Forrest) in order to predict drug use behavior in adulthood from information (friends, social activities, parents and others) collected during adolescence. This will give us the opportunity to play and get familiarized with the most important &lt;code&gt;caret&lt;/code&gt; functions as well as to introduce seminal concepts of machine learning.&lt;/p&gt;
+        <description>&lt;p&gt;In this post we will analyze the data of the &lt;a href=&#34;https://www .cpc.unc.edu/projects/addhealth/about&#34;&gt;&lt;strong&gt;ADD HEALTH&lt;/strong&gt;&lt;/a&gt;, a national longitudinal study that enrolled  ~90000 adolescents and followed them up for 20 years. Using the &lt;em&gt;R&lt;/em&gt; package &lt;a href=&#34;https://github.com/topepo/caret&#34;&gt;&lt;code&gt;caret&lt;/code&gt;&lt;/a&gt;, we will train and evaluate different models (regression, decision tree, random Forest) in order to predict drug use behavior in adulthood from information (friends, social activities, parents and others) collected during adolescence. This will give us the opportunity to play and get familiarized with the most important &lt;code&gt;caret&lt;/code&gt; functions as well as to introduce seminal concepts of machine learning.&lt;/p&gt;
 
 &lt;h1 id=&#34;the-bout-the-data-to-analyze&#34;&gt;The bout: the data to analyze&lt;/h1&gt;
 
@@ -561,7 +561,7 @@ glimpse&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;metrics&lt;span class=&#34;p&
           panel.spacing &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; unit&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1.2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;lines&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-figthing-diseases_files/figure-html/plot_metrics1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-fighting-diseases_files/figure-html/plot_metrics1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Again, &lt;strong&gt;the glmnet model has the highest &lt;em&gt;sensitivity&lt;/em&gt; and *F&lt;/strong&gt;*. The tree-based models  have very good &lt;em&gt;specificity&lt;/em&gt; but poor &lt;em&gt;sensitivity&lt;/em&gt; and &lt;em&gt;precision&lt;/em&gt;. The performance of the Random Forest is even worse and, because no positive can be detected the &lt;em&gt;precision&lt;/em&gt; and &lt;em&gt;F&lt;/em&gt; cannot be calculated. &lt;strong&gt;Overall, all the 4 models have poor performances&lt;/strong&gt;.&lt;/p&gt;
 
@@ -743,7 +743,7 @@ roc &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; roc.curve&lt;span class
 plot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;roc&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-figthing-diseases_files/figure-html/example-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-fighting-diseases_files/figure-html/example-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The legend indicates the threshold at which &lt;em&gt;sensitivity&lt;/em&gt; and &lt;em&gt;1-specificity&lt;/em&gt; are calculated. When the threshold is set to 0.41, the model correctly recognizes the last observation as  &lt;em&gt;Yes&lt;/em&gt; and all the others as &lt;em&gt;No&lt;/em&gt;. The predictions of the model are perfect, even if the probabilities for &lt;em&gt;Yes&lt;/em&gt; are all minor than 0.5. Bearing this in mind we can look at our models.&lt;/p&gt;
 
@@ -772,7 +772,7 @@ plot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;roc&lt;span class=&#34;p&#34;&gt
   theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-figthing-diseases_files/figure-html/ROC_plot-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-fighting-diseases_files/figure-html/ROC_plot-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The curve of the &lt;code&gt;glmnet&lt;/code&gt; model is positioned more to the up-left of the graph than those of all the other models. The &lt;code&gt;RandomForest&lt;/code&gt; ROC curve is immediately below the &lt;code&gt;glmnet&lt;/code&gt;, followed by the &lt;code&gt;rpart&lt;/code&gt;&lt;code&gt;and&lt;/code&gt;&lt;code&gt;ctree&lt;/code&gt;` curves. These last two curves lie in close  proximity of diagonal of the graph.&lt;/p&gt;
 
@@ -817,7 +817,7 @@ data_pr  &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt;
   theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-figthing-diseases_files/figure-html/precision_recal_alt-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-fighting-diseases_files/figure-html/precision_recal_alt-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;
 The &lt;code&gt;glmnet&lt;/code&gt; model show the highest &lt;em&gt;precision&lt;/em&gt;, followed by the &lt;code&gt;RandomForest&lt;/code&gt;, the &lt;code&gt;ctree&lt;/code&gt; and finally the &lt;code&gt;rpart&lt;/code&gt; model. &lt;strong&gt;Even our best model &lt;code&gt;glmnet&lt;/code&gt;, has a maximal precision of 0.5 (only one over 2 positive predictions are true) at a &lt;em&gt;recall&lt;/em&gt; of less than 10%.&lt;/strong&gt; This performance is better than pure chance but not as good as we would have hoped.&lt;/p&gt;
 
 &lt;h2 id=&#34;the-area-under-the-curve&#34;&gt;The Area Under the Curve&lt;/h2&gt;
@@ -853,7 +853,7 @@ The &lt;code&gt;glmnet&lt;/code&gt; model show the highest &lt;em&gt;precision&l
           panel.spacing &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; unit&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1.2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;lines&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-figthing-diseases_files/figure-html/metrics2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-03-24-fighting-diseases_files/figure-html/metrics2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The &lt;code&gt;glmnet&lt;/code&gt; has the larger AUCs of ROCs and precision-recall curves, followed by the &lt;code&gt;RandomForest&lt;/code&gt;. The 2 classification-tree models have the smallest AUCs, with values that approximate to those expected for random choices.
 &lt;strong&gt;The &lt;code&gt;glmnet&lt;/code&gt; model produces the most accurate predictions among the models, but its precision and sensitivity are still quite limited.&lt;/strong&gt;&lt;/p&gt;
