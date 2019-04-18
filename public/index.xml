@@ -27,6 +27,307 @@
     </item>
     
     <item>
+      <title>Do not invoke me</title>
+      <link>https://muaydata.netlify.com/post/do-not-invoke-me/</link>
+      <pubDate>Thu, 18 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/post/do-not-invoke-me/</guid>
+      
+        <description>&lt;p&gt;You know how to apply a function to a list of elements (&lt;code&gt;apply&lt;/code&gt;, &lt;code&gt;purrr:map&lt;/code&gt;) do you know how to apply a &lt;strong&gt;list of functions&lt;/strong&gt; to the &lt;strong&gt;same data/arguments&lt;/strong&gt;? In this short post we will answer that question.&lt;/p&gt;
+
+&lt;h1 id=&#34;iteration-over-multiple-dataframes-map-apply-family&#34;&gt;Iteration over multiple dataframes: map/apply family&lt;/h1&gt;
+
+&lt;p&gt;Let&amp;rsquo;s starts loading some libraries&amp;hellip;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;PRROC&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;rlang&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kn&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tidyverse&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;&amp;hellip;and creating a couple of dataframes with a column &lt;code&gt;prob&lt;/code&gt; of simulated probabilities and one column &lt;code&gt;lab&lt;/code&gt; of  classes (0 or 1).&lt;/p&gt;
+
+&lt;p&gt;Given some probabilities and relative class labels, the package &lt;code&gt;PRROC&lt;/code&gt; can be used to calculate the Area Under the ROC curve. Let&amp;rsquo;s calculate the AUC of &lt;code&gt;dfs$df1&lt;/code&gt;`.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;roc_1 &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; roc.curve&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;scores.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df1&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;prob&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; weights.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df1&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;lab&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; curve &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+roc_1&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;## 
+##   ROC curve
+## 
+##     Area under curve:
+##      0.4895718 
+## 
+##     Curve for scores from  0.001510504  to  0.999422 
+##     ( can be plotted with plot(x) )&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Using &lt;code&gt;purrr:pmap&lt;/code&gt; we can easily apply the &lt;code&gt;roc.curve&lt;/code&gt; function to multiple arguments and  calculate the ROC curve of both the dataframes in &lt;code&gt;dfs&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;args1 &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;scores.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df1&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;prob&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; weights.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df1&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;lab&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+args2 &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;scores.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df2&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;prob&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; weights.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df2&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;lab&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+pmap&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;args1&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; args2&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;f &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; roc.curve&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; curve &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;To reduce the repeated code, we can create a function that given a dataframe with those named columns calculate the ROC curve. We can then apply the  newly create function to the the list of &lt;code&gt;dfs&lt;/code&gt; using &lt;code&gt;purrr::map&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;roc_df &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;kr&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;df&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;...&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  roc.curve&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;scores.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; df&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;prob&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; weights.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; df&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;lab&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;...&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+
+map&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;dfs&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; roc_df&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; curve &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;## $df1
+## 
+##   ROC curve
+## 
+##     Area under curve:
+##      0.4895718 
+## 
+##     Curve for scores from  0.001510504  to  0.999422 
+##     ( can be plotted with plot(x) )
+## 
+## 
+## $df2
+## 
+##   ROC curve
+## 
+##     Area under curve:
+##      0.462952 
+## 
+##     Curve for scores from  1.273188e-05  to  0.9980255 
+##     ( can be plotted with plot(x) )&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;But what if we want to &lt;strong&gt;calculate both ROC and Precision-Recall curve of the same data&lt;/strong&gt;?&lt;/p&gt;
+
+&lt;p&gt;We could simply copy-paste the same code twice, changing only the function called.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-reval&#34; data-lang=&#34;reval&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-reval&#34; data-lang=&#34;reval&#34;&gt;roc.curve(scores.class0 = dfs$df1$prob, weights.class0 = dfs$df1$lab, curve = TRUE)
+
+pr.curve(scores.class0 = dfs$df1$prob, weights.class0 = dfs$df1$lab, curve = TRUE)&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;This would get us where we want but&amp;hellip; with &lt;strong&gt;code that mostly repeats itself, and thus is potentially hard to debug and prone to errors&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h1 id=&#34;invoke-not-anymore&#34;&gt;Invoke? Not anymore&lt;/h1&gt;
+
+&lt;p&gt;The family of functions &lt;code&gt;invoke_map&lt;/code&gt; can be used to &lt;strong&gt;call a list of functions to a list of parameters&lt;/strong&gt; ( similarly to &lt;a href=&#34;https://adv-r.hadley.nz/quasiquotation.html#do-call&#34;&gt;&lt;code&gt;do.call&lt;/code&gt;&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;However, the &lt;code&gt;invoke&lt;/code&gt; family of functions is no longer under development, and Lionel Henry and Hadley Wickham have suggested instead the use of &lt;code&gt;rlang::exec&lt;/code&gt; combined with an apply function.&lt;/p&gt;
+
+&lt;p&gt;In particular, &lt;code&gt;map&lt;/code&gt; is used to apply the &lt;code&gt;rlang::exec&lt;/code&gt;, and thus evaluate a list of functions and corresponding unquoted arguments.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;arg &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;scores.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df1&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;prob&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; weights.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df1&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;lab&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; curve &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+map&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;roc.curve&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; pr.curve&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; exec&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!!!&lt;/span&gt;arg&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;## [[1]]
+## 
+##   ROC curve
+## 
+##     Area under curve:
+##      0.4895718 
+## 
+##     Curve for scores from  0.001510504  to  0.999422 
+##     ( can be plotted with plot(x) )
+## 
+## 
+## [[2]]
+## 
+##   Precision-recall curve
+## 
+##     Area under curve (Integral):
+##      0.5145464 
+## 
+##     Area under curve (Davis &amp;amp; Goadrich):
+##      0.5145411 
+## 
+##     Curve for scores from  0.001510504  to  0.999422 
+##     ( can be plotted with plot(x) )&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;p&gt;Similarly, we can use &lt;code&gt;purrr::map2&lt;/code&gt; and &lt;code&gt;rlang::exec&lt;/code&gt;  &lt;strong&gt;to calculate both ROC and Precision-Recall curve of  the both the dataframes in &lt;code&gt;dfs&lt;/code&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;args1 &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;scores.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df1&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;prob&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; weights.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df1&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;lab&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+args2 &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;scores.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df2&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;prob&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; weights.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df2&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;lab&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+
+all &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; map2&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;rep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;roc.curve&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; pr.curve&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; 
+      &lt;span class=&#34;kp&#34;&gt;rep&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;args1&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; args2&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; each &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; 
+      &lt;span class=&#34;kr&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fn&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; exec&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fn&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;!!!&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;args&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+
+str&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kp&#34;&gt;all&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;## List of 4
+##  $ :List of 3
+##   ..$ type : chr &amp;#34;ROC&amp;#34;
+##   ..$ auc  : num 0.49
+##   ..$ curve: NULL
+##   ..- attr(*, &amp;#34;class&amp;#34;)= chr &amp;#34;PRROC&amp;#34;
+##  $ :List of 3
+##   ..$ type              : chr &amp;#34;PR&amp;#34;
+##   ..$ auc.integral      : num 0.515
+##   ..$ auc.davis.goadrich: num 0.515
+##   ..- attr(*, &amp;#34;class&amp;#34;)= chr &amp;#34;PRROC&amp;#34;
+##  $ :List of 3
+##   ..$ type : chr &amp;#34;ROC&amp;#34;
+##   ..$ auc  : num 0.463
+##   ..$ curve: NULL
+##   ..- attr(*, &amp;#34;class&amp;#34;)= chr &amp;#34;PRROC&amp;#34;
+##  $ :List of 3
+##   ..$ type              : chr &amp;#34;PR&amp;#34;
+##   ..$ auc.integral      : num 0.492
+##   ..$ auc.davis.goadrich: num 0.492
+##   ..- attr(*, &amp;#34;class&amp;#34;)= chr &amp;#34;PRROC&amp;#34;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;h1 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h1&gt;
+
+&lt;p&gt;The functions of the family of&lt;code&gt;purrr::map&lt;/code&gt; can be used with &lt;code&gt;rlang::exec&lt;/code&gt; and unquoting functions &lt;code&gt;!!!&lt;/code&gt; to call a list of functions with a list of different arguments.
+Take a look Hadly Wickaham&amp;rsquo;s  &lt;a href=&#34;https://adv-r.hadley.nz/quasiquotation.html&#34;&gt;&lt;em&gt;Advanced R&lt;/em&gt;&lt;/a&gt; if you want to read more about &lt;em&gt;quasiquatation&lt;/em&gt;.&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
       <title>Fighting Diseases with Predictive Modeling</title>
       <link>https://muaydata.netlify.com/post/fighting-diseases/</link>
       <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>

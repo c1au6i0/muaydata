@@ -40,11 +40,38 @@
     </item>
     
     <item>
+      <title>Exec</title>
+      <link>https://muaydata.netlify.com/tags/exec/</link>
+      <pubDate>Thu, 18 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/exec/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Functions</title>
+      <link>https://muaydata.netlify.com/tags/functions/</link>
+      <pubDate>Thu, 18 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/functions/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Ggplot</title>
       <link>https://muaydata.netlify.com/tags/ggplot/</link>
       <pubDate>Thu, 25 Oct 2018 00:00:00 +0000</pubDate>
       
       <guid>https://muaydata.netlify.com/tags/ggplot/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Invoke</title>
+      <link>https://muaydata.netlify.com/tags/invoke/</link>
+      <pubDate>Thu, 18 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/invoke/</guid>
       <description></description>
     </item>
     
@@ -67,11 +94,29 @@
     </item>
     
     <item>
+      <title>Purrr</title>
+      <link>https://muaydata.netlify.com/tags/purrr/</link>
+      <pubDate>Thu, 18 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/purrr/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>R</title>
       <link>https://muaydata.netlify.com/tags/r/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
       
       <guid>https://muaydata.netlify.com/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Rlang</title>
+      <link>https://muaydata.netlify.com/tags/rlang/</link>
+      <pubDate>Thu, 18 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/rlang/</guid>
       <description></description>
     </item>
     

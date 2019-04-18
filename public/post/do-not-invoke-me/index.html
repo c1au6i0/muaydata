@@ -25,7 +25,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="c1au6i0" />
-  <meta name="description" content="Today I decided to kill the man
+  <meta name="description" content="You know how to apply a function to a list of elements (apply, purrr:map) do you know how to apply a list of functions to the same data/arguments? In this short post we will answer that question.
 " />
 
   <meta name="keywords" content="Hugo, theme, jane" />
@@ -59,26 +59,26 @@
 
 
 <meta property="og:title" content="Do not invoke me" />
-<meta property="og:description" content="Today I decided to kill the man" />
+<meta property="og:description" content="You know how to apply a function to a list of elements (apply, purrr:map) do you know how to apply a list of functions to the same data/arguments? In this short post we will answer that question." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://muaydata.netlify.com/post/do-not-invoke-me/" />
-<meta property="article:published_time" content="2019-04-05T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-04-05T23:01:25-04:00"/>
+<meta property="article:published_time" content="2019-04-18T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-04-18T18:45:25-04:00"/>
 
 <meta itemprop="name" content="Do not invoke me">
-<meta itemprop="description" content="Today I decided to kill the man">
+<meta itemprop="description" content="You know how to apply a function to a list of elements (apply, purrr:map) do you know how to apply a list of functions to the same data/arguments? In this short post we will answer that question.">
 
 
-<meta itemprop="datePublished" content="2019-04-05T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2019-04-05T23:01:25-04:00" />
-<meta itemprop="wordCount" content="179">
+<meta itemprop="datePublished" content="2019-04-18T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-04-18T18:45:25-04:00" />
+<meta itemprop="wordCount" content="850">
 
 
 
-<meta itemprop="keywords" content="" />
+<meta itemprop="keywords" content="purrr,functions,rlang,invoke,exec," />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Do not invoke me"/>
-<meta name="twitter:description" content="Today I decided to kill the man"/>
+<meta name="twitter:description" content="You know how to apply a function to a list of elements (apply, purrr:map) do you know how to apply a list of functions to the same data/arguments? In this short post we will answer that question."/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -285,10 +285,13 @@ if (!doNotTrack) {
       <h1 class="post-title">Do not invoke me</h1>
       
       <div class="post-meta">
-        <span class="post-time"> 2019-04-05 </span>
-        
-        <span class="more-meta"> 179 words </span>
-          <span class="more-meta"> 1 min read </span>
+        <span class="post-time"> 2019-04-18 </span>
+        <div class="post-category">
+            <a href="https://muaydata.netlify.com/categories/r/"> R </a>
+            
+          </div>
+        <span class="more-meta"> 850 words </span>
+          <span class="more-meta"> 4 min read </span>
 
         
         
@@ -300,51 +303,27 @@ if (!doNotTrack) {
 
     
     
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#iteration-over-multiple-dataframes-map-apply-family">Iteration over multiple dataframes: map/apply family</a></li>
+<li><a href="#invoke-not-anymore">Invoke? Not anymore</a></li>
+<li><a href="#conclusions">Conclusions</a></li>
+</ul>
+</nav>
+  </div>
+</div>
 
     
     <div class="post-content">
-      <p>Today I decided to kill the man</p>
+      <p>You know how to apply a function to a list of elements (<code>apply</code>, <code>purrr:map</code>) do you know how to apply a <strong>list of functions</strong> to the <strong>same data/arguments</strong>? In this short post we will answer that question.</p>
 
-<p>To</p>
+<h1 id="iteration-over-multiple-dataframes-map-apply-family">Iteration over multiple dataframes: map/apply family</h1>
+
+<p>Let&rsquo;s starts loading some libraries&hellip;</p>
 <div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span></code></pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">## ── Attaching packages ───────────────────────────────── tidyverse 1.2.1 ──</pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">## ✔ ggplot2 3.1.0     ✔ purrr   0.2.5
-## ✔ tibble  2.0.1     ✔ dplyr   0.7.8
-## ✔ tidyr   0.8.2     ✔ stringr 1.3.1
-## ✔ readr   1.3.1     ✔ forcats 0.3.0</pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">## ── Conflicts ──────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</pre></td></tr></table>
-</div>
-</div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
 </span><span class="lnt">2
@@ -352,17 +331,21 @@ if (!doNotTrack) {
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>PRROC<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>purrr<span class="p">)</span>
-<span class="kn">library</span><span class="p">(</span>rlang<span class="p">)</span></code></pre></td></tr></table>
+<span class="kn">library</span><span class="p">(</span>rlang<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span></code></pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div>
+<p>&hellip;and creating a couple of dataframes with a column <code>prob</code> of simulated probabilities and one column <code>lab</code> of  classes (0 or 1).</p>
+
+<p>Given some probabilities and relative class labels, the package <code>PRROC</code> can be used to calculate the Area Under the ROC curve. Let&rsquo;s calculate the AUC of <code>dfs$df1</code>`.</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
 </span><span class="lnt">2
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">## 
-## Attaching package: &#39;rlang&#39;</pre></td></tr></table>
+<pre class="chroma"><code class="language-r" data-lang="r">roc_1 <span class="o">&lt;-</span> roc.curve<span class="p">(</span>scores.class0 <span class="o">=</span> dfs<span class="o">$</span>df1<span class="o">$</span>prob<span class="p">,</span> weights.class0 <span class="o">=</span> dfs<span class="o">$</span>df1<span class="o">$</span>lab<span class="p">,</span> curve <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+roc_1</code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -371,24 +354,57 @@ if (!doNotTrack) {
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
 </span></pre></td>
 <td class="lntd">
-<pre class="chroma">## The following objects are masked from &#39;package:purrr&#39;:
+<pre class="chroma">## 
+##   ROC curve
 ## 
-##     %@%, %||%, as_function, flatten, flatten_chr, flatten_dbl,
-##     flatten_int, flatten_lgl, invoke, list_along, modify, prepend,
-##     rep_along, splice</pre></td></tr></table>
+##     Area under curve:
+##      0.4895718 
+## 
+##     Curve for scores from  0.001510504  to  0.999422 
+##     ( can be plotted with plot(x) )</pre></td></tr></table>
 </div>
-</div><div class="highlight"><div class="chroma">
+</div>
+<p>Using <code>purrr:pmap</code> we can easily apply the <code>roc.curve</code> function to multiple arguments and  calculate the ROC curve of both the dataframes in <code>dfs</code>.</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>r2d3<span class="p">)</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-r" data-lang="r">args1 <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span>scores.class0 <span class="o">=</span> dfs<span class="o">$</span>df1<span class="o">$</span>prob<span class="p">,</span> weights.class0 <span class="o">=</span> dfs<span class="o">$</span>df1<span class="o">$</span>lab<span class="p">)</span>
+
+args2 <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span>scores.class0 <span class="o">=</span> dfs<span class="o">$</span>df2<span class="o">$</span>prob<span class="p">,</span> weights.class0 <span class="o">=</span> dfs<span class="o">$</span>df2<span class="o">$</span>lab<span class="p">)</span>
+
+pmap<span class="p">(</span><span class="kt">list</span><span class="p">(</span>args1<span class="p">,</span> args2<span class="p">),</span> <span class="m">.</span>f <span class="o">=</span> roc.curve<span class="p">,</span> curve <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>To reduce the repeated code, we can create a function that given a dataframe with those named columns calculate the ROC curve. We can then apply the  newly create function to the the list of <code>dfs</code> using <code>purrr::map</code>.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">roc_df <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>df<span class="p">,</span> <span class="kc">...</span> <span class="p">)</span> <span class="p">{</span>
+  roc.curve<span class="p">(</span>scores.class0 <span class="o">=</span> df<span class="o">$</span>prob<span class="p">,</span> weights.class0 <span class="o">=</span> df<span class="o">$</span>lab<span class="p">,</span> <span class="kc">...</span><span class="p">)</span>
+<span class="p">}</span>
+
+map<span class="p">(</span>dfs<span class="p">,</span> roc_df<span class="p">,</span> curve <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+<pre class="chroma"><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -399,21 +415,200 @@ if (!doNotTrack) {
 </span><span class="lnt"> 9
 </span><span class="lnt">10
 </span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">## $df1
+## 
+##   ROC curve
+## 
+##     Area under curve:
+##      0.4895718 
+## 
+##     Curve for scores from  0.001510504  to  0.999422 
+##     ( can be plotted with plot(x) )
+## 
+## 
+## $df2
+## 
+##   ROC curve
+## 
+##     Area under curve:
+##      0.462952 
+## 
+##     Curve for scores from  1.273188e-05  to  0.9980255 
+##     ( can be plotted with plot(x) )</pre></td></tr></table>
+</div>
+</div>
+<p>But what if we want to <strong>calculate both ROC and Precision-Recall curve of the same data</strong>?</p>
+
+<p>We could simply copy-paste the same code twice, changing only the function called.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-reval" data-lang="reval"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-r" data-lang="r"><span class="c1"># mod &lt;- mod_glmnet</span>
-<span class="c1"># </span>
-<span class="c1">#   </span>
-<span class="c1"># #invoke_map to apply 2 functions and same quoted arguments to the same data </span>
-<span class="c1"># </span>
-<span class="c1"># fr &lt;- list(scores.class0 = mod[[&#34;pred&#34;]][[&#34;Yes&#34;]], weights.class0 = lab, curve = TRUE)</span>
-<span class="c1"># </span>
-<span class="c1"># lab &lt;- mod[[&#34;pred&#34;]][[&#34;obs&#34;]] %&gt;% </span>
-<span class="c1">#             recode(Yes = 1, No = 0)</span>
-<span class="c1"># </span>
-<span class="c1"># map(list(pr.curve, roc.curve), exec, !!!fr)</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-reval" data-lang="reval">roc.curve(scores.class0 = dfs$df1$prob, weights.class0 = dfs$df1$lab, curve = TRUE)
+
+pr.curve(scores.class0 = dfs$df1$prob, weights.class0 = dfs$df1$lab, curve = TRUE)</code></pre></td></tr></table>
 </div>
 </div>
+<p>This would get us where we want but&hellip; with <strong>code that mostly repeats itself, and thus is potentially hard to debug and prone to errors</strong>.</p>
+
+<h1 id="invoke-not-anymore">Invoke? Not anymore</h1>
+
+<p>The family of functions <code>invoke_map</code> can be used to <strong>call a list of functions to a list of parameters</strong> ( similarly to <a href="https://adv-r.hadley.nz/quasiquotation.html#do-call"><code>do.call</code></a>).</p>
+
+<p>However, the <code>invoke</code> family of functions is no longer under development, and Lionel Henry and Hadley Wickham have suggested instead the use of <code>rlang::exec</code> combined with an apply function.</p>
+
+<p>In particular, <code>map</code> is used to apply the <code>rlang::exec</code>, and thus evaluate a list of functions and corresponding unquoted arguments.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">arg <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span>scores.class0 <span class="o">=</span> dfs<span class="o">$</span>df1<span class="o">$</span>prob<span class="p">,</span> weights.class0 <span class="o">=</span> dfs<span class="o">$</span>df1<span class="o">$</span>lab<span class="p">,</span> curve <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+
+map<span class="p">(</span><span class="kt">list</span><span class="p">(</span>roc.curve<span class="p">,</span> pr.curve<span class="p">),</span> exec<span class="p">,</span> <span class="o">!!!</span>arg<span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">## [[1]]
+## 
+##   ROC curve
+## 
+##     Area under curve:
+##      0.4895718 
+## 
+##     Curve for scores from  0.001510504  to  0.999422 
+##     ( can be plotted with plot(x) )
+## 
+## 
+## [[2]]
+## 
+##   Precision-recall curve
+## 
+##     Area under curve (Integral):
+##      0.5145464 
+## 
+##     Area under curve (Davis &amp; Goadrich):
+##      0.5145411 
+## 
+##     Curve for scores from  0.001510504  to  0.999422 
+##     ( can be plotted with plot(x) )</pre></td></tr></table>
+</div>
+</div>
+<p>Similarly, we can use <code>purrr::map2</code> and <code>rlang::exec</code>  <strong>to calculate both ROC and Precision-Recall curve of  the both the dataframes in <code>dfs</code></strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">args1 <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span>scores.class0 <span class="o">=</span> dfs<span class="o">$</span>df1<span class="o">$</span>prob<span class="p">,</span> weights.class0 <span class="o">=</span> dfs<span class="o">$</span>df1<span class="o">$</span>lab<span class="p">)</span>
+args2 <span class="o">&lt;-</span> <span class="kt">list</span><span class="p">(</span>scores.class0 <span class="o">=</span> dfs<span class="o">$</span>df2<span class="o">$</span>prob<span class="p">,</span> weights.class0 <span class="o">=</span> dfs<span class="o">$</span>df2<span class="o">$</span>lab<span class="p">)</span>
+
+all <span class="o">&lt;-</span> map2<span class="p">(</span><span class="kp">rep</span><span class="p">(</span><span class="kt">list</span><span class="p">(</span>roc.curve<span class="p">,</span> pr.curve<span class="p">),</span><span class="m">2</span><span class="p">),</span> 
+      <span class="kp">rep</span><span class="p">(</span><span class="kt">list</span><span class="p">(</span>args1<span class="p">,</span> args2<span class="p">),</span> each <span class="o">=</span> <span class="m">2</span><span class="p">),</span> 
+      <span class="kr">function</span><span class="p">(</span>fn<span class="p">,</span> <span class="kp">args</span><span class="p">)</span> exec<span class="p">(</span>fn<span class="p">,</span> <span class="o">!!!</span><span class="kp">args</span><span class="p">))</span>
+
+str<span class="p">(</span><span class="kp">all</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">## List of 4
+##  $ :List of 3
+##   ..$ type : chr &#34;ROC&#34;
+##   ..$ auc  : num 0.49
+##   ..$ curve: NULL
+##   ..- attr(*, &#34;class&#34;)= chr &#34;PRROC&#34;
+##  $ :List of 3
+##   ..$ type              : chr &#34;PR&#34;
+##   ..$ auc.integral      : num 0.515
+##   ..$ auc.davis.goadrich: num 0.515
+##   ..- attr(*, &#34;class&#34;)= chr &#34;PRROC&#34;
+##  $ :List of 3
+##   ..$ type : chr &#34;ROC&#34;
+##   ..$ auc  : num 0.463
+##   ..$ curve: NULL
+##   ..- attr(*, &#34;class&#34;)= chr &#34;PRROC&#34;
+##  $ :List of 3
+##   ..$ type              : chr &#34;PR&#34;
+##   ..$ auc.integral      : num 0.492
+##   ..$ auc.davis.goadrich: num 0.492
+##   ..- attr(*, &#34;class&#34;)= chr &#34;PRROC&#34;</pre></td></tr></table>
+</div>
+</div>
+<h1 id="conclusions">Conclusions</h1>
+
+<p>The functions of the family of<code>purrr::map</code> can be used with <code>rlang::exec</code> and unquoting functions <code>!!!</code> to call a list of functions with a list of different arguments.
+Take a look Hadly Wickaham&rsquo;s  <a href="https://adv-r.hadley.nz/quasiquotation.html"><em>Advanced R</em></a> if you want to read more about <em>quasiquatation</em>.</p>
     </div>
 
     
@@ -423,19 +618,21 @@ if (!doNotTrack) {
     
 
     <footer class="post-footer">
-      
+      <div class="post-tags">
+          <a href="https://muaydata.netlify.com/tags/purrr/">purrr</a>
+          <a href="https://muaydata.netlify.com/tags/functions/">functions</a>
+          <a href="https://muaydata.netlify.com/tags/rlang/">rlang</a>
+          <a href="https://muaydata.netlify.com/tags/invoke/">invoke</a>
+          <a href="https://muaydata.netlify.com/tags/exec/">exec</a>
+          
+        </div>
 
       
       <nav class="post-nav">
         
-          <a class="prev" href="/post/prova/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">prova</span>
-            <span class="prev-text nav-mobile">Prev</span>
-          </a>
         
-          <a class="next" href="/post/figthing-diseases/">
-            <span class="next-text nav-default">Figthing Diseases with Predictive Modeling</span>
+          <a class="next" href="/post/fighting-diseases/">
+            <span class="next-text nav-default">Fighting Diseases with Predictive Modeling</span>
             <span class="prev-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>
@@ -445,6 +642,38 @@ if (!doNotTrack) {
 
   
   
+
+  
+  
+
+  
+
+  
+
+  <div class="disqus-comment">
+  <div class="disqus-button" id="load_disqus" onclick="load_disqus()">
+    Show Disqus Comments
+  </div>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    function load_disqus() {
+      
+      
+      if (window.location.hostname === 'localhost') return;
+
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      var disqus_shortname = 'muaydata';
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+
+      $('#load_disqus').remove();
+    };
+  </script>
+  <noscript>Please enable JavaScript to view the
+    <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+  </noscript>
+  
+  </div>
 
         </div>
       </div>
