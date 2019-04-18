@@ -22,7 +22,7 @@ reward: no
 mathjax: no
 ---
 
-You know how to apply a function to a list of elements (```apply```, ```purrr:map```) do you know how to apply a **list of functions** to the **same data/arguments**? In this short post we will answer that question.
+You know how to apply a function to a list of elements (```apply```, ```purrr:map```) but... do you know how to apply a **list of functions** to the **same data/arguments**? In this short post we will answer that question.
 
 <!--more-->
 
@@ -198,5 +198,5 @@ str(all)
 ```
 # Conclusions
 
-The functions of the family of```purrr::map``` can be used with ```rlang::exec``` and unquoting functions ```!!!``` to call a list of functions with a list of different arguments. 
-Take a look Hadly Wickaham's  [*Advanced R*](https://adv-r.hadley.nz/quasiquotation.html) if you want to read more about *quasiquatation*. 
+The family of functions ```purrr::map``` can be used with ```rlang::exec``` and unquoting functions ```!!!``` to call a list of functions with a list of different arguments. 
+Take a look Hadly Wickaham's  [*Advanced R*](https://adv-r.hadley.nz/quasiquotation.html) if you want to know more about *quasiquatation*. 
