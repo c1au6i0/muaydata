@@ -51,7 +51,49 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;&amp;hellip;and creating a couple of dataframes with a column &lt;code&gt;prob&lt;/code&gt; of simulated probabilities and one column &lt;code&gt;lab&lt;/code&gt; of  classes (0 or 1).&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;create_values &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;kr&#34;&gt;function&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;seed&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+  &lt;span class=&#34;kp&#34;&gt;set.seed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;seed&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+  tibble&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;prob &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; runif&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; min &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; max &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
+         lab &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; rbinom&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 
+dfs &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; map&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;15&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; create_values&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;span class=&#34;kp&#34;&gt;names&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;dfs&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;df1&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;df2&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+str&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;dfs&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;## List of 2
+##  $ df1:Classes &amp;#39;tbl_df&amp;#39;, &amp;#39;tbl&amp;#39; and &amp;#39;data.frame&amp;#39;:	1000 obs. of  2 variables:
+##   ..$ prob: num [1:1000] 0.683 0.244 0.45 0.229 0.864 ...
+##   ..$ lab : int [1:1000] 0 1 1 0 1 1 0 1 1 0 ...
+##  $ df2:Classes &amp;#39;tbl_df&amp;#39;, &amp;#39;tbl&amp;#39; and &amp;#39;data.frame&amp;#39;:	1000 obs. of  2 variables:
+##   ..$ prob: num [1:1000] 0.602 0.195 0.966 0.651 0.367 ...
+##   ..$ lab : int [1:1000] 1 1 0 1 0 0 0 1 1 0 ...&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;p&gt;Given some probabilities and relative class labels, the package &lt;code&gt;PRROC&lt;/code&gt; can be used to calculate the Area Under the ROC curve. Let&amp;rsquo;s calculate the AUC of &lt;code&gt;dfs$df1&lt;/code&gt;`.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -168,14 +210,14 @@ map&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;dfs&lt;span class=&#34;p&#34;&gt;
 &lt;p&gt;We could simply copy-paste the same code twice, changing only the function called.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-reval&#34; data-lang=&#34;reval&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-reval&#34; data-lang=&#34;reval&#34;&gt;roc.curve(scores.class0 = dfs$df1$prob, weights.class0 = dfs$df1$lab, curve = TRUE)
+&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;roc.curve&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;scores.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df1&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;prob&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; weights.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df1&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;lab&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; curve &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
 
-pr.curve(scores.class0 = dfs$df1$prob, weights.class0 = dfs$df1$lab, curve = TRUE)&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+pr.curve&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;scores.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df1&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;prob&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; weights.class0 &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; dfs&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;df1&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;lab&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; curve &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;This would get us where we want but&amp;hellip; with &lt;strong&gt;code that mostly repeats itself, and thus is potentially hard to debug and prone to errors&lt;/strong&gt;.&lt;/p&gt;

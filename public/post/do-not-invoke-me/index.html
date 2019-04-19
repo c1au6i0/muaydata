@@ -71,7 +71,7 @@
 
 <meta itemprop="datePublished" content="2019-04-18T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2019-04-18T18:45:25-04:00" />
-<meta itemprop="wordCount" content="850">
+<meta itemprop="wordCount" content="980">
 
 
 
@@ -290,8 +290,8 @@ if (!doNotTrack) {
             <a href="https://muaydata.netlify.com/categories/r/"> R </a>
             
           </div>
-        <span class="more-meta"> 850 words </span>
-          <span class="more-meta"> 4 min read </span>
+        <span class="more-meta"> 980 words </span>
+          <span class="more-meta"> 5 min read </span>
 
         
         
@@ -336,7 +336,49 @@ if (!doNotTrack) {
 </div>
 </div>
 <p>&hellip;and creating a couple of dataframes with a column <code>prob</code> of simulated probabilities and one column <code>lab</code> of  classes (0 or 1).</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">create_values <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>seed<span class="p">)</span> <span class="p">{</span>
+  <span class="kp">set.seed</span><span class="p">(</span>seed<span class="p">)</span>
+  tibble<span class="p">(</span>prob <span class="o">=</span> runif<span class="p">(</span><span class="m">1000</span><span class="p">,</span> min <span class="o">=</span> <span class="m">0</span><span class="p">,</span> max <span class="o">=</span> <span class="m">1</span><span class="p">),</span>
+         lab <span class="o">=</span> rbinom<span class="p">(</span><span class="m">1000</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0.5</span><span class="p">))</span>
+<span class="p">}</span>
 
+dfs <span class="o">&lt;-</span> map<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">16</span><span class="p">,</span> <span class="m">15</span><span class="p">),</span> create_values<span class="p">)</span>
+<span class="kp">names</span><span class="p">(</span>dfs<span class="p">)</span> <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#34;df1&#34;</span><span class="p">,</span> <span class="s">&#34;df2&#34;</span><span class="p">)</span>
+str<span class="p">(</span>dfs<span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">## List of 2
+##  $ df1:Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:	1000 obs. of  2 variables:
+##   ..$ prob: num [1:1000] 0.683 0.244 0.45 0.229 0.864 ...
+##   ..$ lab : int [1:1000] 0 1 1 0 1 1 0 1 1 0 ...
+##  $ df2:Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:	1000 obs. of  2 variables:
+##   ..$ prob: num [1:1000] 0.602 0.195 0.966 0.651 0.367 ...
+##   ..$ lab : int [1:1000] 1 1 0 1 0 0 0 1 1 0 ...</pre></td></tr></table>
+</div>
+</div>
 <p>Given some probabilities and relative class labels, the package <code>PRROC</code> can be used to calculate the Area Under the ROC curve. Let&rsquo;s calculate the AUC of <code>dfs$df1</code>`.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -453,14 +495,14 @@ map<span class="p">(</span>dfs<span class="p">,</span> roc_df<span class="p">,</
 <p>We could simply copy-paste the same code twice, changing only the function called.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-reval" data-lang="reval"><span class="lnt">1
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-reval" data-lang="reval">roc.curve(scores.class0 = dfs$df1$prob, weights.class0 = dfs$df1$lab, curve = TRUE)
+<pre class="chroma"><code class="language-r" data-lang="r">roc.curve<span class="p">(</span>scores.class0 <span class="o">=</span> dfs<span class="o">$</span>df1<span class="o">$</span>prob<span class="p">,</span> weights.class0 <span class="o">=</span> dfs<span class="o">$</span>df1<span class="o">$</span>lab<span class="p">,</span> curve <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
 
-pr.curve(scores.class0 = dfs$df1$prob, weights.class0 = dfs$df1$lab, curve = TRUE)</code></pre></td></tr></table>
+pr.curve<span class="p">(</span>scores.class0 <span class="o">=</span> dfs<span class="o">$</span>df1<span class="o">$</span>prob<span class="p">,</span> weights.class0 <span class="o">=</span> dfs<span class="o">$</span>df1<span class="o">$</span>lab<span class="p">,</span> curve <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>This would get us where we want but&hellip; with <strong>code that mostly repeats itself, and thus is potentially hard to debug and prone to errors</strong>.</p>

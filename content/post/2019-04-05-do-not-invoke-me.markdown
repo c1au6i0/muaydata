@@ -40,6 +40,27 @@ library(tidyverse)
 ...and creating a couple of dataframes with a column ```prob``` of simulated probabilities and one column ```lab``` of  classes (0 or 1).
 
 
+```r
+create_values <- function(seed) {
+  set.seed(seed)
+  tibble(prob = runif(1000, min = 0, max = 1),
+         lab = rbinom(1000, 1, 0.5))
+}
+
+dfs <- map(c(16, 15), create_values)
+names(dfs) <- c("df1", "df2")
+str(dfs)
+```
+
+```
+## List of 2
+##  $ df1:Classes 'tbl_df', 'tbl' and 'data.frame':	1000 obs. of  2 variables:
+##   ..$ prob: num [1:1000] 0.683 0.244 0.45 0.229 0.864 ...
+##   ..$ lab : int [1:1000] 0 1 1 0 1 1 0 1 1 0 ...
+##  $ df2:Classes 'tbl_df', 'tbl' and 'data.frame':	1000 obs. of  2 variables:
+##   ..$ prob: num [1:1000] 0.602 0.195 0.966 0.651 0.367 ...
+##   ..$ lab : int [1:1000] 1 1 0 1 0 0 0 1 1 0 ...
+```
 
 Given some probabilities and relative class labels, the package ```PRROC``` can be used to calculate the Area Under the ROC curve. Let's calculate the AUC of ```dfs$df1````.
 
@@ -110,7 +131,7 @@ But what if we want to **calculate both ROC and Precision-Recall curve of the sa
 We could simply copy-paste the same code twice, changing only the function called. 
 
 
-```reval
+```r
 roc.curve(scores.class0 = dfs$df1$prob, weights.class0 = dfs$df1$lab, curve = TRUE)
 
 pr.curve(scores.class0 = dfs$df1$prob, weights.class0 = dfs$df1$lab, curve = TRUE)

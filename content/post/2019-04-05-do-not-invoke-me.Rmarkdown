@@ -38,7 +38,7 @@ library(tidyverse)
 
 ...and creating a couple of dataframes with a column ```prob``` of simulated probabilities and one column ```lab``` of  classes (0 or 1).
 
-```{r generate_dfs, eval=TRUE, include=FALSE}
+```{r generate_dfs, eval=TRUE, include=TRUE}
 create_values <- function(seed) {
   set.seed(seed)
   tibble(prob = runif(1000, min = 0, max = 1),
@@ -81,7 +81,7 @@ But what if we want to **calculate both ROC and Precision-Recall curve of the sa
 
 We could simply copy-paste the same code twice, changing only the function called. 
 
-```{reval=FALSE}
+```{r eval=FALSE}
 roc.curve(scores.class0 = dfs$df1$prob, weights.class0 = dfs$df1$lab, curve = TRUE)
 
 pr.curve(scores.class0 = dfs$df1$prob, weights.class0 = dfs$df1$lab, curve = TRUE)
