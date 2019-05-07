@@ -51,7 +51,7 @@ I downloaded the [dataset](https://vincentarelbundock.github.io/Rdatasets/csv/bo
 
 We are going to read the csv file using:
 
-* base *R* function `read.csv`
+* base `R` function `read.csv`
 * `pandas` function `read_csv`
 * `readr::read_csv`
 * `data.table::fread`
@@ -141,13 +141,13 @@ We could graphically visualize the `microbenchmark` performance just launching `
 
 # Seaborn
 
-First we need to convert the *R* object `mb` to `python` object.
+First we need to convert the `R` object `mb` to `python` object.
 
 ```r
 py$mb <- r_to_py(mb, convert = TRUE)
 ```
 
-In what is dataframe converted in *R*?
+In what is dataframe converted in `R`?
 
 
 ```python
@@ -181,7 +181,7 @@ plt.show()
 
 # Conclusion
 
-In this sprint race to import csv in *R*, the first place is still hold by the favourite `data.table::fread` followed by `pandas read_csv` and then by `readr::read_csv`. These two last packages/functions were really close at the final line. The base `R` function `read.csv` was not able to get to the podium and had reading times about 4-fold larger than `data.table::fread`.
+In this sprint race to import csv in `R`, the first place is still hold by the favourite `data.table::fread` followed by `pandas read_csv` and then by `readr::read_csv`. These two last packages/functions were really close at the final line. The base `R` function `read.csv` was not able to get to the podium and had reading times about 4-fold larger than `data.table::fread`.
 
 Ciao Ciao!
 

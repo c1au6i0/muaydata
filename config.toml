@@ -137,7 +137,7 @@ defaultContentLanguage = "en"           # Default language to use
   [params.social]                                         # 社交链接
     a-email = "clau6ioHH@email.com"
 #    b-stack-overflow = "http://localhost:1313"
-    c-twitter = "https://twitter.com/c1au6i0"
+#    c-twitter = "https://twitter.com/c1au6i0"
 #    d-facebook = "http://localhost:1313"
 #    e-linkedin = "http://localhost:1313"
 #    f-google = "http://localhost:1313"

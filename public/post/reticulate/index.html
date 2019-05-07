@@ -352,7 +352,7 @@ if (!doNotTrack) {
 <p>We are going to read the csv file using:</p>
 
 <ul>
-<li>base <em>R</em> function <code>read.csv</code></li>
+<li>base <code>R</code> function <code>read.csv</code></li>
 <li><code>pandas</code> function <code>read_csv</code></li>
 <li><code>readr::read_csv</code></li>
 <li><code>data.table::fread</code></li>
@@ -466,7 +466,7 @@ if (!doNotTrack) {
 
 <h1 id="seaborn">Seaborn</h1>
 
-<p>First we need to convert the <em>R</em> object <code>mb</code> to <code>python</code> object.</p>
+<p>First we need to convert the <code>R</code> object <code>mb</code> to <code>python</code> object.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
@@ -475,7 +475,7 @@ if (!doNotTrack) {
 <pre class="chroma"><code class="language-r" data-lang="r">py<span class="o">$</span>mb <span class="o">&lt;-</span> r_to_py<span class="p">(</span>mb<span class="p">,</span> convert <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
-<p>In what is dataframe converted in <em>R</em>?</p>
+<p>In what is dataframe converted in <code>R</code>?</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
@@ -530,7 +530,7 @@ if (!doNotTrack) {
 
 <h1 id="conclusion">Conclusion</h1>
 
-<p>In this sprint race to import csv in <em>R</em>, the first place is still hold by the favourite <code>data.table::fread</code> followed by <code>pandas read_csv</code> and then by <code>readr::read_csv</code>. These two last packages/functions were really close at the final line. The base <code>R</code> function <code>read.csv</code> was not able to get to the podium and had reading times about 4-fold larger than <code>data.table::fread</code>.</p>
+<p>In this sprint race to import csv in <code>R</code>, the first place is still hold by the favourite <code>data.table::fread</code> followed by <code>pandas read_csv</code> and then by <code>readr::read_csv</code>. These two last packages/functions were really close at the final line. The base <code>R</code> function <code>read.csv</code> was not able to get to the podium and had reading times about 4-fold larger than <code>data.table::fread</code>.</p>
 
 <p>Ciao Ciao!</p>
     </div>
@@ -621,9 +621,6 @@ if (!doNotTrack) {
       <div class="social-links">
       <a href="clau6ioHH@email.com" rel="me noopener" class="iconfont icon-email"
         title="email" target="_blank">
-      </a>
-      <a href="https://twitter.com/c1au6i0" rel="me noopener" class="iconfont icon-twitter"
-        title="twitter" target="_blank">
       </a>
   <a href="https://muaydata.netlify.com/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="iconfont icon-rss"
     title="rss" target="_blank">

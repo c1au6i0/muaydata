@@ -66,7 +66,7 @@
 &lt;p&gt;We are going to read the csv file using:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;base &lt;em&gt;R&lt;/em&gt; function &lt;code&gt;read.csv&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;base &lt;code&gt;R&lt;/code&gt; function &lt;code&gt;read.csv&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;pandas&lt;/code&gt; function &lt;code&gt;read_csv&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;readr::read_csv&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;data.table::fread&lt;/code&gt;&lt;/li&gt;
@@ -180,7 +180,7 @@
 
 &lt;h1 id=&#34;seaborn&#34;&gt;Seaborn&lt;/h1&gt;
 
-&lt;p&gt;First we need to convert the &lt;em&gt;R&lt;/em&gt; object &lt;code&gt;mb&lt;/code&gt; to &lt;code&gt;python&lt;/code&gt; object.&lt;/p&gt;
+&lt;p&gt;First we need to convert the &lt;code&gt;R&lt;/code&gt; object &lt;code&gt;mb&lt;/code&gt; to &lt;code&gt;python&lt;/code&gt; object.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -189,7 +189,7 @@
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;py&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;mb &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; r_to_py&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;mb&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; convert &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;TRUE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;In what is dataframe converted in &lt;em&gt;R&lt;/em&gt;?&lt;/p&gt;
+&lt;p&gt;In what is dataframe converted in &lt;code&gt;R&lt;/code&gt;?&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -244,7 +244,7 @@
 
 &lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
 
-&lt;p&gt;In this sprint race to import csv in &lt;em&gt;R&lt;/em&gt;, the first place is still hold by the favourite &lt;code&gt;data.table::fread&lt;/code&gt; followed by &lt;code&gt;pandas read_csv&lt;/code&gt; and then by &lt;code&gt;readr::read_csv&lt;/code&gt;. These two last packages/functions were really close at the final line. The base &lt;code&gt;R&lt;/code&gt; function &lt;code&gt;read.csv&lt;/code&gt; was not able to get to the podium and had reading times about 4-fold larger than &lt;code&gt;data.table::fread&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In this sprint race to import csv in &lt;code&gt;R&lt;/code&gt;, the first place is still hold by the favourite &lt;code&gt;data.table::fread&lt;/code&gt; followed by &lt;code&gt;pandas read_csv&lt;/code&gt; and then by &lt;code&gt;readr::read_csv&lt;/code&gt;. These two last packages/functions were really close at the final line. The base &lt;code&gt;R&lt;/code&gt; function &lt;code&gt;read.csv&lt;/code&gt; was not able to get to the podium and had reading times about 4-fold larger than &lt;code&gt;data.table::fread&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Ciao Ciao!&lt;/p&gt;</description>
       
