@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>reticulate - MuayData blog</title>
+  <title>Snakes, pandas, sea born creatures and how to find them. - MuayData blog</title>
   
 
 <meta name="renderer" content="webkit" />
@@ -25,7 +25,8 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="c1au6io_hh" />
-  <meta name="description" content="" />
+  <meta name="description" content="What&amp;rsquo;s the fasted way to read a csv file in R? Among the R packages, the ultra-fast sprinter is certainly data.table but&amp;hellip;few years ago, the introduction of the package reticulate gave us the possibility of use python and in particular the library pandas to read files in R. Would pandas (used in R) be faster than data.table? How would its performance compare with readr or base R? Let&amp;rsquo;s take a look.
+" />
 
   <meta name="keywords" content="Hugo, theme, jane" />
 
@@ -37,7 +38,7 @@
 <meta name="generator" content="Hugo 0.54.0" />
 
 
-<link rel="canonical" href="/post/reticulate/" />
+<link rel="canonical" href="https://muaydata.netlify.com/post/reticulate/" />
 
 
 
@@ -57,27 +58,27 @@
 
 
 
-<meta property="og:title" content="reticulate" />
-<meta property="og:description" content="" />
+<meta property="og:title" content="Snakes, pandas, sea born creatures and how to find them." />
+<meta property="og:description" content="What&rsquo;s the fasted way to read a csv file in R? Among the R packages, the ultra-fast sprinter is certainly data.table but&hellip;few years ago, the introduction of the package reticulate gave us the possibility of use python and in particular the library pandas to read files in R. Would pandas (used in R) be faster than data.table? How would its performance compare with readr or base R? Let&rsquo;s take a look." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="/post/reticulate/" />
-<meta property="article:published_time" content="2019-04-17T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2019-04-17T12:45:32-04:00"/>
+<meta property="og:url" content="https://muaydata.netlify.com/post/reticulate/" />
+<meta property="article:published_time" content="2019-05-06T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2019-05-06T11:46:00-04:00"/>
 
-<meta itemprop="name" content="reticulate">
-<meta itemprop="description" content="">
-
-
-<meta itemprop="datePublished" content="2019-04-17T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2019-04-17T12:45:32-04:00" />
-<meta itemprop="wordCount" content="0">
+<meta itemprop="name" content="Snakes, pandas, sea born creatures and how to find them.">
+<meta itemprop="description" content="What&rsquo;s the fasted way to read a csv file in R? Among the R packages, the ultra-fast sprinter is certainly data.table but&hellip;few years ago, the introduction of the package reticulate gave us the possibility of use python and in particular the library pandas to read files in R. Would pandas (used in R) be faster than data.table? How would its performance compare with readr or base R? Let&rsquo;s take a look.">
 
 
+<meta itemprop="datePublished" content="2019-05-06T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2019-05-06T11:46:00-04:00" />
+<meta itemprop="wordCount" content="532">
 
-<meta itemprop="keywords" content="reticulate," />
+
+
+<meta itemprop="keywords" content="reticulate,import_csv,microbenchmark,seaborn," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="reticulate"/>
-<meta name="twitter:description" content=""/>
+<meta name="twitter:title" content="Snakes, pandas, sea born creatures and how to find them."/>
+<meta name="twitter:description" content="What&rsquo;s the fasted way to read a csv file in R? Among the R packages, the ultra-fast sprinter is certainly data.table but&hellip;few years ago, the introduction of the package reticulate gave us the possibility of use python and in particular the library pandas to read files in R. Would pandas (used in R) be faster than data.table? How would its performance compare with readr or base R? Let&rsquo;s take a look."/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -120,28 +121,28 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="/">Home</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/">Home</a>
           
         
       </li><li class="mobile-menu-item">
         
           
           
-            <a class="menu-item-link" href="/tags/">Tags</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/tags/">Tags</a>
           
         
       </li><li class="mobile-menu-item">
         
           
           
-            <a class="menu-item-link" href="/categories/">Categories</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/categories/">Categories</a>
           
         
       </li><li class="mobile-menu-item">
         
           
           
-            <a class="menu-item-link" href="/about/">About</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/about/">About</a>
           
         
       </li>
@@ -228,7 +229,7 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="/">Home</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/">Home</a>
           
 
         
@@ -239,7 +240,7 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="/tags/">Tags</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/tags/">Tags</a>
           
 
         
@@ -250,7 +251,7 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="/categories/">Categories</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/categories/">Categories</a>
           
 
         
@@ -261,7 +262,7 @@ if (!doNotTrack) {
         
           
           
-            <a class="menu-item-link" href="/about/">About</a>
+            <a class="menu-item-link" href="https://muaydata.netlify.com/about/">About</a>
           
 
         
@@ -281,17 +282,17 @@ if (!doNotTrack) {
           <article class="post bg-white">
     
     <header class="post-header">
-      <h1 class="post-title">reticulate</h1>
+      <h1 class="post-title">Snakes, pandas, sea born creatures and how to find them.</h1>
       
       <div class="post-meta">
-        <span class="post-time"> 2019-04-17 </span>
+        <span class="post-time"> 2019-05-06 </span>
         <div class="post-category">
-            <a href="/categories/r/"> R </a>
-            <a href="/categories/python/"> Python </a>
+            <a href="https://muaydata.netlify.com/categories/r/"> R </a>
+            <a href="https://muaydata.netlify.com/categories/python/"> Python </a>
             
           </div>
-        <span class="more-meta"> 0 words </span>
-          <span class="more-meta"> 0 min read </span>
+        <span class="more-meta"> 532 words </span>
+          <span class="more-meta"> 3 min read </span>
 
         
         
@@ -306,13 +307,232 @@ if (!doNotTrack) {
 <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">Table of Contents</h2>
   <div class="post-toc-content">
-    
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#benchmark-evaluation">Benchmark evaluation</a></li>
+<li><a href="#seaborn">Seaborn</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</nav>
   </div>
 </div>
 
     
     <div class="post-content">
-      
+      <p>What&rsquo;s the fasted way to read a csv file in <code>R</code>? Among the <code>R</code> packages, the ultra-fast sprinter is certainly <code>data.table</code> but&hellip;few years ago, the introduction of the package <a href="https://blog.rstudio.com/2018/03/26/reticulate-r-interface-to-python/"><code>reticulate</code></a> gave us the possibility of use <code>python</code> and in particular the library <code>pandas</code> to read files in <code>R</code>. Would <code>pandas</code> (used in <code>R</code>) be faster than <code>data.table</code>? How would its performance compare with <code>readr</code> or base <code>R</code>? Let&rsquo;s take a look.</p>
+
+<h1 id="benchmark-evaluation">Benchmark evaluation</h1>
+
+<p>We  start by loading few <code>R</code> libraries to read the csv file and  evaluate the performance (<code>microbenchmark</code>) of our contestants&hellip;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>reticulate<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>data.table<span class="p">)</span>
+<span class="kn">library</span><span class="p">(</span>microbenchmark<span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>and by getting <code>pandas</code> in the <code>python</code> environment.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>I downloaded the <a href="https://vincentarelbundock.github.io/Rdatasets/csv/boot/amis.csv">dataset</a> that consists of 8437  observations of 4 variables and I placed on my home folder.</p>
+
+<p>We are going to read the csv file using:</p>
+
+<ul>
+<li>base <em>R</em> function <code>read.csv</code></li>
+<li><code>pandas</code> function <code>read_csv</code></li>
+<li><code>readr::read_csv</code></li>
+<li><code>data.table::fread</code></li>
+</ul>
+
+<p>We read the file  1000 times for each of the package and record the performance with <code>microbenchmark::microbenchmark</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">mb <span class="o">&lt;-</span> microbenchmark<span class="p">(</span>
+          <span class="s">&#34;base&#34;</span> <span class="o">=</span> <span class="p">{</span>
+            read.csv<span class="p">(</span><span class="s">&#34;~/amis.csv&#34;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&#34;,&#34;</span><span class="p">)</span>
+          <span class="p">},</span>
+          <span class="s">&#34;readr&#34;</span> <span class="o">=</span> <span class="p">{</span>
+            read_csv<span class="p">(</span><span class="s">&#34;~/amis.csv&#34;</span><span class="p">)</span>
+          <span class="p">},</span>
+          <span class="s">&#34;pandas&#34;</span> <span class="o">=</span> <span class="p">{</span>py_run_string<span class="p">(</span><span class="s">&#34;pd.read_csv(&#39;~/amis.csv&#39;)&#34;</span><span class="p">)</span>
+          <span class="p">},</span>
+          <span class="s">&#34;data.table&#34;</span> <span class="o">=</span> <span class="p">{</span>
+            fread<span class="p">(</span><span class="s">&#34;~/amis.csv&#34;</span><span class="p">)</span>
+          <span class="p">},</span>
+          times <span class="o">=</span> <span class="m">1000</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>And we summarize it</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">mb <span class="o">%&gt;%</span> 
+  group_by<span class="p">(</span>expr<span class="p">)</span> <span class="o">%&gt;%</span> 
+  rename<span class="p">(</span>package <span class="o">=</span> expr<span class="p">)</span> <span class="o">%&gt;%</span> 
+  mutate<span class="p">(</span>time_ms <span class="o">=</span> time <span class="o">*</span> <span class="m">0.000001</span><span class="p">)</span> <span class="o">%&gt;%</span> 
+  summarize<span class="p">(</span>mean <span class="o">=</span> <span class="kp">mean</span><span class="p">(</span>time_ms<span class="p">),</span> median <span class="o">=</span> median<span class="p">(</span>time_ms<span class="p">),</span> min <span class="o">=</span> <span class="kp">min</span><span class="p">(</span>time_ms<span class="p">),</span> max <span class="o">=</span> <span class="kp">max</span><span class="p">(</span>time_ms<span class="p">),</span> sd <span class="o">=</span> sd<span class="p">(</span>time_ms<span class="p">))</span> <span class="o">%&gt;%</span> 
+  arrange<span class="p">(</span><span class="kp">mean</span><span class="p">)</span> <span class="o">%&gt;%</span> 
+  knitr<span class="o">::</span>kable<span class="p">(</span>format <span class="o">=</span> <span class="s">&#34;html&#34;</span><span class="p">,</span> caption <span class="o">=</span> <span class="s">&#34;: Milliseconds to read a csv file&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<table>
+<caption>Table 1 : Milliseconds to read a csv file</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> package </th>
+   <th style="text-align:right;"> mean </th>
+   <th style="text-align:right;"> median </th>
+   <th style="text-align:right;"> min </th>
+   <th style="text-align:right;"> max </th>
+   <th style="text-align:right;"> sd </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> data.table </td>
+   <td style="text-align:right;"> 1.223535 </td>
+   <td style="text-align:right;"> 1.097575 </td>
+   <td style="text-align:right;"> 0.917987 </td>
+   <td style="text-align:right;"> 19.32791 </td>
+   <td style="text-align:right;"> 0.9523787 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> pandas </td>
+   <td style="text-align:right;"> 4.351742 </td>
+   <td style="text-align:right;"> 4.108359 </td>
+   <td style="text-align:right;"> 3.311811 </td>
+   <td style="text-align:right;"> 19.04214 </td>
+   <td style="text-align:right;"> 0.8833873 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> readr </td>
+   <td style="text-align:right;"> 4.807779 </td>
+   <td style="text-align:right;"> 4.450297 </td>
+   <td style="text-align:right;"> 3.970501 </td>
+   <td style="text-align:right;"> 20.70830 </td>
+   <td style="text-align:right;"> 1.5432615 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> base </td>
+   <td style="text-align:right;"> 8.758645 </td>
+   <td style="text-align:right;"> 8.396993 </td>
+   <td style="text-align:right;"> 7.747258 </td>
+   <td style="text-align:right;"> 25.51482 </td>
+   <td style="text-align:right;"> 1.4263080 </td>
+  </tr>
+</tbody>
+</table>
+
+<p>The faster function is still <code>data.table::fread</code> with a mean reading time of about ~1 ms,  followed by <code>pandas</code> (4.35 ms) and <code>readr</code> (4.81 ms). The R base function <code>read.csv</code> is the slowest, with reading times about 4-fold  larger than <code>data.table::fread</code>.</p>
+
+<p>We could graphically visualize the <code>microbenchmark</code> performance just launching <code>autoplot(mb)</code> but that would not be fun! We come so far, why not visualize the data using <code>python</code>?</p>
+
+<h1 id="seaborn">Seaborn</h1>
+
+<p>First we need to convert the <em>R</em> object <code>mb</code> to <code>python</code> object.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-r" data-lang="r">py<span class="o">$</span>mb <span class="o">&lt;-</span> r_to_py<span class="p">(</span>mb<span class="p">,</span> convert <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>In what is dataframe converted in <em>R</em>?</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="nb">type</span><span class="p">(</span><span class="n">mb</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">## &lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</pre></td></tr></table>
+</div>
+</div>
+<p>&hellip;of course in a <code>pandas Dataframe</code>.</p>
+
+<p>Now, let&rsquo;s import some libraries and plot the data using <code>seaborn</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&#34;whitegrid&#34;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&#34;muted&#34;</span><span class="p">)</span>
+
+<span class="n">mb</span><span class="p">[</span><span class="s1">&#39;time_ms&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mb</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.000001</span> <span class="c1"># from nano seconds to millisecond</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&#34;expr&#34;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&#34;time_ms&#34;</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">mb</span><span class="p">)</span>
+
+<span class="n">ax</span>  <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="nb">set</span><span class="p">(</span><span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;Time (milliseconds)&#39;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;package&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><img src="/post/2019-04-17-reticulate_files/figure-html/p_libraries-1.png" width="672" /></p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>In this sprint race to import csv in <em>R</em>, the first place is still hold by the favourite <code>data.table::fread</code> followed by <code>pandas read_csv</code> and then by <code>readr::read_csv</code>. These two last packages/functions were really close at the final line. The base <code>R</code> function <code>read.csv</code> was not able to get to the podium and had reading times about 4-fold larger than <code>data.table::fread</code>.</p>
+
+<p>Ciao Ciao!</p>
     </div>
 
     
@@ -324,7 +544,7 @@ if (!doNotTrack) {
   </p>
   <p class="copyright-item">
     <span class="item-title">LastMod</span>
-    <span class="item-content">2019-04-17</span>
+    <span class="item-content">2019-05-06</span>
   </p>
   
   <p class="copyright-item">
@@ -338,7 +558,10 @@ if (!doNotTrack) {
 
     <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/reticulate/">reticulate</a>
+          <a href="https://muaydata.netlify.com/tags/reticulate/">reticulate</a>
+          <a href="https://muaydata.netlify.com/tags/import_csv/">import_csv</a>
+          <a href="https://muaydata.netlify.com/tags/microbenchmark/">microbenchmark</a>
+          <a href="https://muaydata.netlify.com/tags/seaborn/">seaborn</a>
           
         </div>
 
@@ -347,7 +570,7 @@ if (!doNotTrack) {
         
         
           <a class="next" href="/post/do-not-invoke-me/">
-            <span class="next-text nav-default">Do not invoke me, apply yourself</span>
+            <span class="next-text nav-default">Do not invoke me</span>
             <span class="prev-text nav-mobile">Next</span>
             <i class="iconfont icon-right"></i>
           </a>
@@ -402,7 +625,7 @@ if (!doNotTrack) {
       <a href="https://twitter.com/c1au6i0" rel="me noopener" class="iconfont icon-twitter"
         title="twitter" target="_blank">
       </a>
-  <a href="/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="iconfont icon-rss"
+  <a href="https://muaydata.netlify.com/index.xml" rel="noopener alternate" type="application/rss&#43;xml" class="iconfont icon-rss"
     title="rss" target="_blank">
   </a>
   </div>

@@ -67,11 +67,29 @@
     </item>
     
     <item>
+      <title>Import_csv</title>
+      <link>https://muaydata.netlify.com/tags/import_csv/</link>
+      <pubDate>Mon, 06 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/import_csv/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Invoke</title>
       <link>https://muaydata.netlify.com/tags/invoke/</link>
       <pubDate>Thu, 18 Apr 2019 00:00:00 +0000</pubDate>
       
       <guid>https://muaydata.netlify.com/tags/invoke/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Microbenchmark</title>
+      <link>https://muaydata.netlify.com/tags/microbenchmark/</link>
+      <pubDate>Mon, 06 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/microbenchmark/</guid>
       <description></description>
     </item>
     
@@ -112,6 +130,15 @@
     </item>
     
     <item>
+      <title>Reticulate</title>
+      <link>https://muaydata.netlify.com/tags/reticulate/</link>
+      <pubDate>Mon, 06 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/reticulate/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Rlang</title>
       <link>https://muaydata.netlify.com/tags/rlang/</link>
       <pubDate>Thu, 18 Apr 2019 00:00:00 +0000</pubDate>
@@ -126,6 +153,15 @@
       <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>https://muaydata.netlify.com/tags/roc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Seaborn</title>
+      <link>https://muaydata.netlify.com/tags/seaborn/</link>
+      <pubDate>Mon, 06 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/seaborn/</guid>
       <description></description>
     </item>
     

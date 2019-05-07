@@ -10,6 +10,13 @@
   </url>
   
   <url>
+    <loc>https://muaydata.netlify.com/post/reticulate/</loc>
+    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://muaydata.netlify.com/post/do-not-invoke-me/</loc>
     <lastmod>2019-04-18T18:45:25-04:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -93,8 +100,22 @@
   </url>
   
   <url>
+    <loc>https://muaydata.netlify.com/tags/import_csv/</loc>
+    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://muaydata.netlify.com/tags/invoke/</loc>
     <lastmod>2019-04-18T18:45:25-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://muaydata.netlify.com/tags/microbenchmark/</loc>
+    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -108,7 +129,7 @@
   
   <url>
     <loc>https://muaydata.netlify.com/post/</loc>
-    <lastmod>2019-04-18T18:45:25-04:00</lastmod>
+    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -135,6 +156,13 @@
   </url>
   
   <url>
+    <loc>https://muaydata.netlify.com/categories/python/</loc>
+    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://muaydata.netlify.com/tags/r/</loc>
     <lastmod>2018-09-12T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -143,7 +171,14 @@
   
   <url>
     <loc>https://muaydata.netlify.com/categories/r/</loc>
-    <lastmod>2019-04-18T18:45:25-04:00</lastmod>
+    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://muaydata.netlify.com/tags/reticulate/</loc>
+    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
@@ -158,6 +193,13 @@
   <url>
     <loc>https://muaydata.netlify.com/tags/roc/</loc>
     <lastmod>2019-03-24T11:13:24-04:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://muaydata.netlify.com/tags/seaborn/</loc>
+    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>

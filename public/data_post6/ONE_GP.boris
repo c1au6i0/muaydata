@@ -1,0 +1,245 @@
+{
+ "time_format":"s",
+ "project_date":"2019-04-28T00:33:33",
+ "project_name":"ONE_GP",
+ "project_description":" ONE Super Series Featherweight World Grand Prix.",
+ "project_format_version":"7.0",
+ "subjects_conf":{},
+ "behaviors_conf":{
+  "0":{
+   "type":"Point event",
+   "key":"f",
+   "code":"straight",
+   "description":"",
+   "category":"punches",
+   "modifiers":{
+    "0":{
+     "name":"",
+     "type":0,
+     "values":[
+      "back (;)"
+     ]
+    },
+    "1":{
+     "name":"",
+     "type":0,
+     "values":[
+      "landed (')"
+     ]
+    }
+   },
+   "excluded":"",
+   "coding map":""
+  },
+  "1":{
+   "type":"Point event",
+   "key":"d",
+   "code":"hook",
+   "description":"",
+   "category":"punches",
+   "modifiers":{
+    "0":{
+     "name":"",
+     "type":0,
+     "values":[
+      "back (;)"
+     ]
+    },
+    "1":{
+     "name":"",
+     "type":0,
+     "values":[
+      "landed (')"
+     ]
+    }
+   },
+   "excluded":"",
+   "coding map":""
+  },
+  "2":{
+   "type":"Point event",
+   "key":"s",
+   "code":"upper",
+   "description":"",
+   "category":"punches",
+   "modifiers":{
+    "0":{
+     "name":"",
+     "type":0,
+     "values":[
+      "back (;)"
+     ]
+    },
+    "1":{
+     "name":"",
+     "type":0,
+     "values":[
+      "landed (')"
+     ]
+    }
+   },
+   "excluded":"",
+   "coding map":""
+  },
+  "3":{
+   "type":"Point event",
+   "key":"a",
+   "code":"body",
+   "description":"",
+   "category":"punches",
+   "modifiers":{
+    "0":{
+     "name":"",
+     "type":0,
+     "values":[
+      "back (;)"
+     ]
+    },
+    "1":{
+     "name":"",
+     "type":0,
+     "values":[
+      "landed (')"
+     ]
+    }
+   },
+   "excluded":"",
+   "coding map":""
+  },
+  "4":{
+   "type":"Point event",
+   "key":"v",
+   "code":"low",
+   "description":"",
+   "category":"kicks",
+   "modifiers":{
+    "0":{
+     "name":"",
+     "type":0,
+     "values":[
+      "back (;)"
+     ]
+    },
+    "1":{
+     "name":"",
+     "type":0,
+     "values":[
+      "landed (')"
+     ]
+    }
+   },
+   "excluded":"",
+   "coding map":""
+  },
+  "5":{
+   "type":"Point event",
+   "key":"c",
+   "code":"middle",
+   "description":"",
+   "category":"kicks",
+   "modifiers":{
+    "0":{
+     "name":"",
+     "type":0,
+     "values":[
+      "back (;)"
+     ]
+    },
+    "1":{
+     "name":"",
+     "type":0,
+     "values":[
+      "landed (')"
+     ]
+    }
+   },
+   "excluded":"",
+   "coding map":""
+  },
+  "6":{
+   "type":"Point event",
+   "key":"x",
+   "code":"high",
+   "description":"",
+   "category":"kicks",
+   "modifiers":{
+    "0":{
+     "name":"",
+     "type":0,
+     "values":[
+      "back (;)"
+     ]
+    },
+    "1":{
+     "name":"",
+     "type":0,
+     "values":[
+      "landed (')"
+     ]
+    }
+   },
+   "excluded":"",
+   "coding map":""
+  },
+  "7":{
+   "type":"Point event",
+   "key":"z",
+   "code":"front",
+   "description":"",
+   "category":"kicks",
+   "modifiers":{
+    "0":{
+     "name":"",
+     "type":0,
+     "values":[
+      "back (;)"
+     ]
+    },
+    "1":{
+     "name":"",
+     "type":0,
+     "values":[
+      "landed (')"
+     ]
+    }
+   },
+   "excluded":"",
+   "coding map":""
+  },
+  "8":{
+   "type":"Point event",
+   "key":"w",
+   "code":"knee",
+   "description":"",
+   "category":"knees",
+   "modifiers":{
+    "0":{
+     "name":"",
+     "type":0,
+     "values":[
+      "back (;)"
+     ]
+    },
+    "1":{
+     "name":"",
+     "type":0,
+     "values":[
+      "landed (')"
+     ]
+    }
+   },
+   "excluded":"",
+   "coding map":""
+  }
+ },
+ "observations":{},
+ "behavioral_categories":[
+  "punches",
+  "kicks",
+  "knees"
+ ],
+ "independent_variables":{},
+ "coding_map":{},
+ "behaviors_coding_map":[],
+ "converters":{}
+}
