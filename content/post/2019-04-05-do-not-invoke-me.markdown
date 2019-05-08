@@ -17,7 +17,7 @@ description: ''
 comment: yes
 toc: yes
 autoCollapseToc: no
-contentCopyright: no
+contentCopyright: yes
 reward: no
 mathjax: no
 ---

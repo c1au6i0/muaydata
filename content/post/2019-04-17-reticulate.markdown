@@ -11,6 +11,7 @@ tags:
   - import_csv
   - microbenchmark
   - seaborn
+  - vroom
 lastmod: '2019-05-06T11:46:00-04:00'
 keywords: []
 description: ''
@@ -102,40 +103,40 @@ mb %>%
 <tbody>
   <tr>
    <td style="text-align:left;"> data.table </td>
-   <td style="text-align:right;"> 1.223535 </td>
-   <td style="text-align:right;"> 1.097575 </td>
-   <td style="text-align:right;"> 0.917987 </td>
-   <td style="text-align:right;"> 19.32791 </td>
-   <td style="text-align:right;"> 0.9523787 </td>
+   <td style="text-align:right;"> 1.163429 </td>
+   <td style="text-align:right;"> 1.051192 </td>
+   <td style="text-align:right;"> 0.893294 </td>
+   <td style="text-align:right;"> 11.988350 </td>
+   <td style="text-align:right;"> 0.5746664 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> pandas </td>
-   <td style="text-align:right;"> 4.351742 </td>
-   <td style="text-align:right;"> 4.108359 </td>
-   <td style="text-align:right;"> 3.311811 </td>
-   <td style="text-align:right;"> 19.04214 </td>
-   <td style="text-align:right;"> 0.8833873 </td>
+   <td style="text-align:right;"> 4.174706 </td>
+   <td style="text-align:right;"> 3.900311 </td>
+   <td style="text-align:right;"> 3.176870 </td>
+   <td style="text-align:right;"> 9.903987 </td>
+   <td style="text-align:right;"> 0.9339007 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> readr </td>
-   <td style="text-align:right;"> 4.807779 </td>
-   <td style="text-align:right;"> 4.450297 </td>
-   <td style="text-align:right;"> 3.970501 </td>
-   <td style="text-align:right;"> 20.70830 </td>
-   <td style="text-align:right;"> 1.5432615 </td>
+   <td style="text-align:right;"> 4.763939 </td>
+   <td style="text-align:right;"> 4.117349 </td>
+   <td style="text-align:right;"> 3.787468 </td>
+   <td style="text-align:right;"> 169.842847 </td>
+   <td style="text-align:right;"> 5.5154385 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> base </td>
-   <td style="text-align:right;"> 8.758645 </td>
-   <td style="text-align:right;"> 8.396993 </td>
-   <td style="text-align:right;"> 7.747258 </td>
-   <td style="text-align:right;"> 25.51482 </td>
-   <td style="text-align:right;"> 1.4263080 </td>
+   <td style="text-align:right;"> 8.979738 </td>
+   <td style="text-align:right;"> 8.309741 </td>
+   <td style="text-align:right;"> 7.746079 </td>
+   <td style="text-align:right;"> 33.335507 </td>
+   <td style="text-align:right;"> 2.4232146 </td>
   </tr>
 </tbody>
 </table>
 
-The faster function is still `data.table::fread` with a mean reading time of about ~1 ms,  followed by `pandas` (4.35 ms) and `readr` (4.81 ms). The R base function `read.csv` is the slowest, with reading times about 4-fold  larger than `data.table::fread`.
+The faster function is still `data.table::fread` with a mean reading time of about ~1 ms,  followed by `pandas` (4.17 ms) and `readr` (4.76 ms). The R base function `read.csv` is the slowest, with reading times about 4-fold  larger than `data.table::fread`.
 
 We could graphically visualize the `microbenchmark` performance just launching `autoplot(mb)` but that would not be fun! We come so far, why not visualize the data using `python`?
 
@@ -184,4 +185,18 @@ plt.show()
 In this sprint race to import csv in `R`, the first place is still hold by the favourite `data.table::fread` followed by `pandas read_csv` and then by `readr::read_csv`. These two last packages/functions were really close at the final line. The base `R` function `read.csv` was not able to get to the podium and had reading times about 4-fold larger than `data.table::fread`.
 
 Ciao Ciao!
+
+# EDIT (05-08-2019): vroom!
+
+Few days ago, [vroom 1.0.0](https://www.tidyverse.org/articles/2019/05/vroom-1-0-0/?fbclid=IwAR0JN1wqX8U1CarXdKbKPkkg77RlNX1bew_k6bZbINb1uZloSXvNyjotxVg) was released in CRAN, and so we have another important contestant in our competition. Let's look at an update table of the reading benchmark for the `amis.csv` file.
+
+
+Under these conditions, `vroom` appears to be even slower than base `R` in terms of reading times
+
+
+To undestand why, we need to take a look at our `amis.csv` data.
+
+Our data consists of numeric data and `vroom` advantage over the other packages/fucntion is that *"character data is read from the file lazily; you only pay for the data you use"*. 
+So under these conditions, `data.table::fread` is still a gold medal!
+
 
