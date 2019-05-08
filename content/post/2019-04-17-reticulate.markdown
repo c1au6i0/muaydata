@@ -1,5 +1,5 @@
 ---
-title: Snakes, pandas, sea born creatures and how to find them.
+title: Snakes, pandas, sea born creatures and how to find them
 author: c1au6io_hh
 date: '2019-05-06'
 slug: reticulate
