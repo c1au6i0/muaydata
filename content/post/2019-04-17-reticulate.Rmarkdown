@@ -117,7 +117,7 @@ sns.set(style="whitegrid", palette="muted")
 
 mb['time_ms'] = mb['time'] * 0.000001 # from nano seconds to millisecond
 
-ax = sns.boxplot(x="expr", y="time_ms", data = mb)
+ax = sns.stripplot(x="expr", y="time_ms", data = mb)
 
 ax  = ax.set(ylabel='Time (milliseconds)', xlabel='package')
 
