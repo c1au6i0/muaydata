@@ -190,12 +190,74 @@ Ciao Ciao!
 
 Few days ago, [vroom 1.0.0](https://www.tidyverse.org/articles/2019/05/vroom-1-0-0/?fbclid=IwAR0JN1wqX8U1CarXdKbKPkkg77RlNX1bew_k6bZbINb1uZloSXvNyjotxVg) was released in CRAN, and so we have another important contestant in our competition. Let's look at an update table of the reading benchmark for the `amis.csv` file.
 
-
+<table>
+<caption>Table 2 : UPDATED Milliseconds to read a csv file</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> package </th>
+   <th style="text-align:right;"> mean </th>
+   <th style="text-align:right;"> median </th>
+   <th style="text-align:right;"> min </th>
+   <th style="text-align:right;"> max </th>
+   <th style="text-align:right;"> sd </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> data.table </td>
+   <td style="text-align:right;"> 1.060955 </td>
+   <td style="text-align:right;"> 1.031286 </td>
+   <td style="text-align:right;"> 0.877797 </td>
+   <td style="text-align:right;"> 2.874855 </td>
+   <td style="text-align:right;"> 0.1540645 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> pandas </td>
+   <td style="text-align:right;"> 3.897818 </td>
+   <td style="text-align:right;"> 3.780800 </td>
+   <td style="text-align:right;"> 3.137245 </td>
+   <td style="text-align:right;"> 12.067028 </td>
+   <td style="text-align:right;"> 0.6595005 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> readr </td>
+   <td style="text-align:right;"> 4.298844 </td>
+   <td style="text-align:right;"> 4.128091 </td>
+   <td style="text-align:right;"> 3.871632 </td>
+   <td style="text-align:right;"> 23.730213 </td>
+   <td style="text-align:right;"> 1.3351350 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> base </td>
+   <td style="text-align:right;"> 8.062673 </td>
+   <td style="text-align:right;"> 7.951877 </td>
+   <td style="text-align:right;"> 7.501073 </td>
+   <td style="text-align:right;"> 13.467489 </td>
+   <td style="text-align:right;"> 0.5136744 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> vroom </td>
+   <td style="text-align:right;"> 13.325987 </td>
+   <td style="text-align:right;"> 12.528962 </td>
+   <td style="text-align:right;"> 11.977720 </td>
+   <td style="text-align:right;"> 40.054096 </td>
+   <td style="text-align:right;"> 3.2400886 </td>
+  </tr>
+</tbody>
+</table>
 Under these conditions, `vroom` appears to be even slower than base `R` in terms of reading times
 
-
+<img src="/post/2019-04-17-reticulate_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 To undestand why, we need to take a look at our `amis.csv` data.
 
+```
+## Classes 'data.table' and 'data.frame':	8437 obs. of  4 variables:
+##  $ speed  : int  26 26 26 26 27 28 28 28 28 29 ...
+##  $ period : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ warning: int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ pair   : int  1 1 1 1 1 1 1 1 1 1 ...
+##  - attr(*, ".internal.selfref")=<externalptr>
+```
 Our data consists of numeric data and `vroom` advantage over the other packages/fucntion is that *"character data is read from the file lazily; you only pay for the data you use"*. 
 So under these conditions, `data.table::fread` is still a gold medal!
 

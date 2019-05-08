@@ -134,7 +134,7 @@ Ciao Ciao!
 
 Few days ago, [vroom 1.0.0](https://www.tidyverse.org/articles/2019/05/vroom-1-0-0/?fbclid=IwAR0JN1wqX8U1CarXdKbKPkkg77RlNX1bew_k6bZbINb1uZloSXvNyjotxVg) was released in CRAN, and so we have another important contestant in our competition. Let's look at an update table of the reading benchmark for the `amis.csv` file.
 
-```{r microbench2, include=FALSE, eval=TRUE, message=FALSE}
+```{r microbench2, echo=FALSE, message=FALSE}
 # library(vroom)
 # mb2 <- microbenchmark(
 #           "vroom" = {
@@ -167,11 +167,11 @@ mb2 %>%
 ```
 Under these conditions, `vroom` appears to be even slower than base `R` in terms of reading times
 
-```{r, message=FALSE, include=FALSE, eval=TRUE}
+```{r, message=FALSE, echo=FALSE}
 autoplot(mb2)
 ```
 To undestand why, we need to take a look at our `amis.csv` data.
-```{r include=FALSE, eval=TRUE}
+```{r echo=FALSE}
 str(fread("/Users/heverz/Documents/R_projects/muaydata/static/data_post5/amis.csv"))
 ```
 Our data consists of numeric data and `vroom` advantage over the other packages/fucntion is that *"character data is read from the file lazily; you only pay for the data you use"*. 

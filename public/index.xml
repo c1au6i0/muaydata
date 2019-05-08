@@ -252,10 +252,83 @@
 
 &lt;p&gt;Few days ago, &lt;a href=&#34;https://www.tidyverse.org/articles/2019/05/vroom-1-0-0/?fbclid=IwAR0JN1wqX8U1CarXdKbKPkkg77RlNX1bew_k6bZbINb1uZloSXvNyjotxVg&#34;&gt;vroom 1.0.0&lt;/a&gt; was released in CRAN, and so we have another important contestant in our competition. Let&amp;rsquo;s look at an update table of the reading benchmark for the &lt;code&gt;amis.csv&lt;/code&gt; file.&lt;/p&gt;
 
-&lt;p&gt;Under these conditions, &lt;code&gt;vroom&lt;/code&gt; appears to be even slower than base &lt;code&gt;R&lt;/code&gt; in terms of reading times&lt;/p&gt;
+&lt;p&gt;&lt;table&gt;
+&lt;caption&gt;Table 2 : UPDATED Milliseconds to read a csv file&lt;/caption&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; package &lt;/th&gt;
+   &lt;th style=&#34;text-align:right;&#34;&gt; mean &lt;/th&gt;
+   &lt;th style=&#34;text-align:right;&#34;&gt; median &lt;/th&gt;
+   &lt;th style=&#34;text-align:right;&#34;&gt; min &lt;/th&gt;
+   &lt;th style=&#34;text-align:right;&#34;&gt; max &lt;/th&gt;
+   &lt;th style=&#34;text-align:right;&#34;&gt; sd &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; data.table &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 1.060955 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 1.031286 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 0.877797 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 2.874855 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 0.1540645 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; pandas &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 3.897818 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 3.780800 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 3.137245 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 12.067028 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 0.6595005 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; readr &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 4.298844 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 4.128091 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 3.871632 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 23.730213 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 1.3351350 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; base &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 8.062673 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 7.951877 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 7.501073 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 13.467489 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 0.5136744 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; vroom &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 13.325987 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 12.528962 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 11.977720 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 40.054096 &lt;/td&gt;
+   &lt;td style=&#34;text-align:right;&#34;&gt; 3.2400886 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+Under these conditions, &lt;code&gt;vroom&lt;/code&gt; appears to be even slower than base &lt;code&gt;R&lt;/code&gt; in terms of reading times&lt;/p&gt;
 
-&lt;p&gt;To undestand why, we need to take a look at our &lt;code&gt;amis.csv&lt;/code&gt; data.&lt;/p&gt;
-
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-04-17-reticulate_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;
+To undestand why, we need to take a look at our &lt;code&gt;amis.csv&lt;/code&gt; data.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre class=&#34;chroma&#34;&gt;## Classes &amp;#39;data.table&amp;#39; and &amp;#39;data.frame&amp;#39;:	8437 obs. of  4 variables:
+##  $ speed  : int  26 26 26 26 27 28 28 28 28 29 ...
+##  $ period : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ warning: int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ pair   : int  1 1 1 1 1 1 1 1 1 1 ...
+##  - attr(*, &amp;#34;.internal.selfref&amp;#34;)=&amp;lt;externalptr&amp;gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;p&gt;Our data consists of numeric data and &lt;code&gt;vroom&lt;/code&gt; advantage over the other packages/fucntion is that &lt;em&gt;&amp;ldquo;character data is read from the file lazily; you only pay for the data you use&amp;rdquo;&lt;/em&gt;.
 So under these conditions, &lt;code&gt;data.table::fread&lt;/code&gt; is still a gold medal!&lt;/p&gt;</description>
       
