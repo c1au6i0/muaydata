@@ -539,7 +539,7 @@ if (!doNotTrack) {
 
 <p>Few days ago, <a href="https://www.tidyverse.org/articles/2019/05/vroom-1-0-0/?fbclid=IwAR0JN1wqX8U1CarXdKbKPkkg77RlNX1bew_k6bZbINb1uZloSXvNyjotxVg">vroom 1.0.0</a> was released in CRAN, and so we have another important contestant in our competition. Let&rsquo;s look at an update table of the reading benchmark for the <code>amis.csv</code> file.</p>
 
-<p><table>
+<table>
 <caption>Table 2 : UPDATED Milliseconds to read a csv file</caption>
  <thead>
   <tr>
@@ -594,10 +594,12 @@ if (!doNotTrack) {
   </tr>
 </tbody>
 </table>
-Under these conditions, <code>vroom</code> appears to be even slower than base <code>R</code> in terms of reading times</p>
 
-<p><img src="/post/2019-04-17-reticulate_files/figure-html/unnamed-chunk-2-1.png" width="672" />
-To undestand why, we need to take a look at our <code>amis.csv</code> data.</p>
+<p>Under these conditions, <code>vroom</code> appears to be even slower than base <code>R</code> in terms of reading times</p>
+
+<p><img src="/post/2019-04-17-reticulate_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+
+<p>To undestand why, we need to take a look at our <code>amis.csv</code> data.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><span class="lnt">1

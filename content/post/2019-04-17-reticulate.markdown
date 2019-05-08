@@ -245,10 +245,13 @@ Few days ago, [vroom 1.0.0](https://www.tidyverse.org/articles/2019/05/vroom-1-0
   </tr>
 </tbody>
 </table>
+
 Under these conditions, `vroom` appears to be even slower than base `R` in terms of reading times
 
 <img src="/post/2019-04-17-reticulate_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+
 To undestand why, we need to take a look at our `amis.csv` data.
+
 
 ```
 ## Classes 'data.table' and 'data.frame':	8437 obs. of  4 variables:
@@ -258,6 +261,7 @@ To undestand why, we need to take a look at our `amis.csv` data.
 ##  $ pair   : int  1 1 1 1 1 1 1 1 1 1 ...
 ##  - attr(*, ".internal.selfref")=<externalptr>
 ```
+
 Our data consists of numeric data and `vroom` advantage over the other packages/fucntion is that *"character data is read from the file lazily; you only pay for the data you use"*. 
 So under these conditions, `data.table::fread` is still a gold medal!
 

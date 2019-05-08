@@ -165,15 +165,19 @@ mb2 %>%
   arrange(mean) %>% 
   knitr::kable(format = "html", caption = ": UPDATED Milliseconds to read a csv file")
 ```
+
 Under these conditions, `vroom` appears to be even slower than base `R` in terms of reading times
 
 ```{r, message=FALSE, echo=FALSE}
 autoplot(mb2)
 ```
+
 To undestand why, we need to take a look at our `amis.csv` data.
+
 ```{r echo=FALSE}
 str(fread("/Users/heverz/Documents/R_projects/muaydata/static/data_post5/amis.csv"))
 ```
+
 Our data consists of numeric data and `vroom` advantage over the other packages/fucntion is that *"character data is read from the file lazily; you only pay for the data you use"*. 
 So under these conditions, `data.table::fread` is still a gold medal!
 

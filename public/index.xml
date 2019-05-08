@@ -252,7 +252,7 @@
 
 &lt;p&gt;Few days ago, &lt;a href=&#34;https://www.tidyverse.org/articles/2019/05/vroom-1-0-0/?fbclid=IwAR0JN1wqX8U1CarXdKbKPkkg77RlNX1bew_k6bZbINb1uZloSXvNyjotxVg&#34;&gt;vroom 1.0.0&lt;/a&gt; was released in CRAN, and so we have another important contestant in our competition. Let&amp;rsquo;s look at an update table of the reading benchmark for the &lt;code&gt;amis.csv&lt;/code&gt; file.&lt;/p&gt;
 
-&lt;p&gt;&lt;table&gt;
+&lt;table&gt;
 &lt;caption&gt;Table 2 : UPDATED Milliseconds to read a csv file&lt;/caption&gt;
  &lt;thead&gt;
   &lt;tr&gt;
@@ -307,10 +307,12 @@
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-Under these conditions, &lt;code&gt;vroom&lt;/code&gt; appears to be even slower than base &lt;code&gt;R&lt;/code&gt; in terms of reading times&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-04-17-reticulate_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;
-To undestand why, we need to take a look at our &lt;code&gt;amis.csv&lt;/code&gt; data.&lt;/p&gt;
+&lt;p&gt;Under these conditions, &lt;code&gt;vroom&lt;/code&gt; appears to be even slower than base &lt;code&gt;R&lt;/code&gt; in terms of reading times&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-04-17-reticulate_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To undestand why, we need to take a look at our &lt;code&gt;amis.csv&lt;/code&gt; data.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
