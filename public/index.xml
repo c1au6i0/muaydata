@@ -250,7 +250,7 @@
 
 &lt;h1 id=&#34;edit-05-08-2019-vroom&#34;&gt;EDIT (05-08-2019): vroom!&lt;/h1&gt;
 
-&lt;p&gt;Few days ago, &lt;a href=&#34;https://www.tidyverse.org/articles/2019/05/vroom-1-0-0/?fbclid=IwAR0JN1wqX8U1CarXdKbKPkkg77RlNX1bew_k6bZbINb1uZloSXvNyjotxVg&#34;&gt;vroom 1.0.0&lt;/a&gt; was released in CRAN, and so we have another important contestant in our competition. Let&amp;rsquo;s look at an update table of the reading benchmark for the &lt;code&gt;amis.csv&lt;/code&gt; file.&lt;/p&gt;
+&lt;p&gt;Few days ago, &lt;a href=&#34;https://www.tidyverse.org/articles/2019/05/vroom-1-0-0/?fbclid=IwAR0JN1wqX8U1CarXdKbKPkkg77RlNX1bew_k6bZbINb1uZloSXvNyjotxVg&#34;&gt;vroom 1.0.0&lt;/a&gt; was released on CRAN, and so we have another important contestant in our competition. Let&amp;rsquo;s look at an update table of the reading benchmark for the &lt;code&gt;amis.csv&lt;/code&gt; file.&lt;/p&gt;
 
 &lt;table&gt;
 &lt;caption&gt;Table 2 : UPDATED Milliseconds to read a csv file&lt;/caption&gt;
@@ -331,7 +331,7 @@
 ##  - attr(*, &amp;#34;.internal.selfref&amp;#34;)=&amp;lt;externalptr&amp;gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;p&gt;Our data consists of numeric data and &lt;code&gt;vroom&lt;/code&gt; advantage over the other packages/fucntion is that &lt;em&gt;&amp;ldquo;character data is read from the file lazily; you only pay for the data you use&amp;rdquo;&lt;/em&gt;.
+&lt;p&gt;Our data consists of numeric variables and &lt;code&gt;vroom&lt;/code&gt; advantage over the other packages/fucntions is that &lt;em&gt;&amp;ldquo;character data is read from the file lazily; you only pay for the data you use&amp;rdquo;&lt;/em&gt;.
 So under these conditions, &lt;code&gt;data.table::fread&lt;/code&gt; is still a gold medal!&lt;/p&gt;</description>
       
     </item>
