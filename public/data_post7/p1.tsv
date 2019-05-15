@@ -1,0 +1,84 @@
+Observation id	prova3									
+										
+Media file(s)										
+										
+Player #1	/Users/heverz/Desktop/PROVA.mp4									
+										
+Observation date	5/8/19 14:45									
+										
+Description										
+										
+Time offset (s)	0									
+										
+independent variables										
+variable	value									
+										
+Time	Media file path	Total length	FPS	Subject	Behavior	Behavioral category	Modifier 1	Modifier 2	Comment	Status
+27.401	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	r1					POINT
+31.652	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	front_high	kicks	back	None		POINT
+32.652	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	front_high	kicks	None	landed		POINT
+35.901	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	low_low	kicks	None	landed		POINT
+38.406	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	None	landed		POINT
+45.154	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	high_high	kicks	back	landed		POINT
+59.408	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	hook_middle	punches	None	None		POINT
+59.408	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	None	landed		POINT
+75.406	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	low_low	kicks	back	landed		POINT
+78.657	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	low_low	kicks	None	landed		POINT
+78.657	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	None	None		POINT
+79.77	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	None	landed		POINT
+81.77	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	back	None		POINT
+111.022	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	back	None		POINT
+130.768	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	low_low	kicks	back	None		POINT
+134.518	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	straight_high	punches	back	None		POINT
+155.019	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	low_low	kicks	None	None		POINT
+162.518	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	straight_high	punches	None	None		POINT
+167.521	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	knee_middle	knees	None	None		POINT
+177.018	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	back	None		POINT
+208.772	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	r1					POINT
+277.772	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	r2					POINT
+287.768	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	back	landed		POINT
+292.52	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	knee_middle	knees	None	None		POINT
+294.769	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	knee_middle	knees	None	landed		POINT
+302.019	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	None	landed		POINT
+308.019	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	knee_middle	knees	None	landed		POINT
+319.767	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	straight_high	punches	None	landed		POINT
+335.518	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	r2					POINT
+497.767	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	r2					POINT
+506.268	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	back	landed		POINT
+509.269	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	back	None		POINT
+512.771	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	low_low	kicks	back	landed		POINT
+528.522	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	low_low	kicks	back	landed		POINT
+557.772	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	straight_high	punches	None	None		POINT
+558.766	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	straight_high	punches	back	None		POINT
+570.017	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	straight_high	punches	back	None		POINT
+570.77	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	None	None		POINT
+580.02	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	back	landed		POINT
+581.266	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	straight_high	punches	None	landed		POINT
+593.017	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	hook_middle	punches	back	None		POINT
+593.017	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	straight_high	punches	None	None		POINT
+594.772	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	straight_high	punches	None	landed		POINT
+595.771	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	None	landed		POINT
+595.771	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	straight_high	punches	None	landed		POINT
+601.268	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	knee_middle	knees	back	landed		POINT
+612.271	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	r2					POINT
+626.019	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	r2					POINT
+636.019	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	r2					POINT
+706.019	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	r3					POINT
+710.019	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	straight_high	punches	None	None		POINT
+712.023	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	low_low	kicks	back	None		POINT
+717.269	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	knee_middle	knees	None	landed		POINT
+731.27	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	None	None		POINT
+751.022	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	back	None		POINT
+755.52	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	front_high	kicks	back	landed		POINT
+756.769	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	straight_high	punches	back	None		POINT
+782.019	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	knee_middle	knees	back	landed		POINT
+790.268	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	front_high	kicks	back	landed		POINT
+794.269	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	knee_middle	knees	None	None		POINT
+820.521	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	straight_high	punches	back	landed		POINT
+829.519	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	upper_high	punches	None	landed		POINT
+831.021	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	upper_high	punches	None	landed		POINT
+842.768	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	hook_middle	punches	None	landed		POINT
+846.517	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	middle_middle	kicks	back	landed		POINT
+864.519	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	knee_middle	knees	back	landed		POINT
+882.267	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	knee_middle	knees	back	None		POINT
+887.017	/Users/heverz/Desktop/PROVA.mp4	946.83	25	Panicos_Yusuf.Mohamed_Bin_Mahamud	r3					POINT

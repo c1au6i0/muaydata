@@ -23,7 +23,7 @@ reward: no
 mathjax: no
 ---
 
-What's the fasted way to read a csv file in `R`? Among the `R` packages, the ultra-fast sprinter is certainly `data.table` but...few years ago, the introduction of the package [`reticulate`](https://blog.rstudio.com/2018/03/26/reticulate-r-interface-to-python/) gave us the possibility of use `python` and in particular the library `pandas` to read files in `R`. Would `pandas` (used in `R`) be faster than `data.table`? How would its performance compare with `readr` or base `R`? Let's take a look.
+What's the fastest way to read a csv file in `R`? Among the `R` packages, the ultra-fast sprinter is certainly `data.table` but...few years ago, the introduction of the package [`reticulate`](https://blog.rstudio.com/2018/03/26/reticulate-r-interface-to-python/) gave us the possibility of use `python` and in particular the library `pandas` to read files in `R`. Would `pandas` (used in `R`) be faster than `data.table`? How would its performance compare with `readr` or base `R`? Let's take a look.
 
 <!--more-->
 
@@ -89,7 +89,7 @@ mb %>%
 ```
 
 <table>
-<caption>Table 1 : Milliseconds to read a csv file</caption>
+<caption>Table 1: : Milliseconds to read a csv file</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> package </th>
@@ -191,7 +191,7 @@ Ciao Ciao!
 Few days ago, [vroom 1.0.0](https://www.tidyverse.org/articles/2019/05/vroom-1-0-0/?fbclid=IwAR0JN1wqX8U1CarXdKbKPkkg77RlNX1bew_k6bZbINb1uZloSXvNyjotxVg) was released on CRAN, and so we have another important contestant in our competition. Let's look at an update table of the reading benchmark for the `amis.csv` file.
 
 <table>
-<caption>Table 2 : UPDATED Milliseconds to read a csv file</caption>
+<caption>Table 2: : UPDATED Milliseconds to read a csv file</caption>
  <thead>
   <tr>
    <th style="text-align:left;"> package </th>
