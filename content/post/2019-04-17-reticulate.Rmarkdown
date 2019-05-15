@@ -23,7 +23,7 @@ reward: no
 mathjax: no
 ---
 
-What's the fasted way to read a csv file in `R`? Among the `R` packages, the ultra-fast sprinter is certainly `data.table` but...few years ago, the introduction of the package [`reticulate`](https://blog.rstudio.com/2018/03/26/reticulate-r-interface-to-python/) gave us the possibility of use `python` and in particular the library `pandas` to read files in `R`. Would `pandas` (used in `R`) be faster than `data.table`? How would its performance compare with `readr` or base `R`? Let's take a look.
+What's the fastest way to read a csv file in `R`? Among the `R` packages, the ultra-fast sprinter is certainly `data.table` but...few years ago, the introduction of the package [`reticulate`](https://blog.rstudio.com/2018/03/26/reticulate-r-interface-to-python/) gave us the possibility of use `python` and in particular the library `pandas` to read files in `R`. Would `pandas` (used in `R`) be faster than `data.table`? How would its performance compare with `readr` or base `R`? Let's take a look.
 
 <!--more-->
 

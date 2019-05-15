@@ -9,7 +9,7 @@
   "0":{
    "type":"Point event",
    "key":"f",
-   "code":"straight",
+   "code":"straight_high",
    "description":"",
    "category":"punches",
    "modifiers":{
@@ -34,7 +34,7 @@
   "1":{
    "type":"Point event",
    "key":"d",
-   "code":"hook",
+   "code":"hook_high",
    "description":"",
    "category":"punches",
    "modifiers":{
@@ -59,7 +59,7 @@
   "2":{
    "type":"Point event",
    "key":"s",
-   "code":"upper",
+   "code":"upper_high",
    "description":"",
    "category":"punches",
    "modifiers":{
@@ -84,7 +84,7 @@
   "3":{
    "type":"Point event",
    "key":"a",
-   "code":"body",
+   "code":"body_middle",
    "description":"",
    "category":"punches",
    "modifiers":{
@@ -109,7 +109,7 @@
   "4":{
    "type":"Point event",
    "key":"v",
-   "code":"low",
+   "code":"low_low",
    "description":"",
    "category":"kicks",
    "modifiers":{
@@ -134,7 +134,7 @@
   "5":{
    "type":"Point event",
    "key":"c",
-   "code":"middle",
+   "code":"middle_middle",
    "description":"",
    "category":"kicks",
    "modifiers":{
@@ -159,7 +159,7 @@
   "6":{
    "type":"Point event",
    "key":"x",
-   "code":"high",
+   "code":"high_high",
    "description":"",
    "category":"kicks",
    "modifiers":{
@@ -184,7 +184,7 @@
   "7":{
    "type":"Point event",
    "key":"z",
-   "code":"front",
+   "code":"front_middle",
    "description":"",
    "category":"kicks",
    "modifiers":{
@@ -209,7 +209,7 @@
   "8":{
    "type":"Point event",
    "key":"w",
-   "code":"knee",
+   "code":"knee_middle",
    "description":"",
    "category":"knees",
    "modifiers":{
@@ -258,6 +258,81 @@
    "description":"r1",
    "category":"",
    "modifiers":"",
+   "excluded":"",
+   "coding map":""
+  },
+  "12":{
+   "type":"Point event",
+   "key":"g",
+   "code":"straight_middle",
+   "description":"",
+   "category":"punches",
+   "modifiers":{
+    "0":{
+     "name":"",
+     "type":0,
+     "values":[
+      "back (;)"
+     ]
+    },
+    "1":{
+     "name":"",
+     "type":0,
+     "values":[
+      "landed (')"
+     ]
+    }
+   },
+   "excluded":"",
+   "coding map":""
+  },
+  "13":{
+   "type":"Point event",
+   "key":"b",
+   "code":"front_high",
+   "description":"",
+   "category":"kicks",
+   "modifiers":{
+    "0":{
+     "name":"",
+     "type":0,
+     "values":[
+      "back (;)"
+     ]
+    },
+    "1":{
+     "name":"",
+     "type":0,
+     "values":[
+      "landed (')"
+     ]
+    }
+   },
+   "excluded":"",
+   "coding map":""
+  },
+  "14":{
+   "type":"Point event",
+   "key":"q",
+   "code":"knee_high",
+   "description":"",
+   "category":"knees",
+   "modifiers":{
+    "0":{
+     "name":"",
+     "type":0,
+     "values":[
+      "back (;)"
+     ]
+    },
+    "1":{
+     "name":"",
+     "type":0,
+     "values":[
+      "landed (')"
+     ]
+    }
+   },
    "excluded":"",
    "coding map":""
   }
