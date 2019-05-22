@@ -1,0 +1,239 @@
+---
+title: 'ONE World GP: Petrosyan vs Petchmorakot'
+author: c1au6io_hh
+date: '2019-05-20'
+slug: onefc-wc
+categories:
+  - R
+tags: 
+  - onefc
+  - scoring
+  - likert chart
+  - radarchart
+  - kickboxing
+lastmod: '2019-05-20T13:39:58-04:00'
+keywords: []
+description: 'post7'
+comment: yes
+toc: no
+autoCollapseToc: no
+contentCopyright: no
+reward: no
+mathjax: no
+---
+Last Friday, **Petchmorakot Pechindee Academy** brought home a stunning win against  **Giorgio "the Doctor" Petrosyan** and, as often happens with split decisions, the judges score generated a lot of discussion. 
+The decision was later declared **No Contest** because of the inadequate control by the referee of excessive clinching. **I carefully looked at the video of the fight, patiently recorded each single strike to come out with few charts of stats**. 
+<!--more-->
+```{r libraries, message=FALSE, warning=FALSE, echo=FALSE}
+source("/Users/heverz/Documents/R_projects/muaydata/static/data_post7/import_fight.R")
+```
+<!-- https://discourse.gohugo.io/t/solved-add-line-break-in-yaml-file/13446/2 -->
+# The tale of the numbers
+
+## Count by class and round
+
+The much anticipated **ONE Featherweight Kickboxing Grand Prix** met the fan expectations with a show that  kept us on the edge of the seat, delivered memorable knock downs and unanticipated turn of events. 
+
+The underdog, Petchmorakot Pechindee Accademy got an unexpected win, under kickboxing rules, against arguably the best pound-for-pound kickboxer of all times, Giorgio Petrosyan. The 2 division Lumpinee Stadium World Championships **Petchmorakot  Pechindee Accademy** is certainly not a rookie of the game, but under these tournament rules he could not use some of his most sharp weapons (elbows)...nevertheless he managed to keep up with Giorgio.
+
+Today (Wednesday, May 22), Chatri Sityodtong announced on Facebook that **a Competition Committee declared the bout a No Contest*: Petchmorakot  Pechindee Accademy relied to heavily on clinch.
+
+I looked at the fight in slow-motion and, using a profession [event logging software](https://www.boris.unito.it/), **I recorded all the strikes annotating those that landed**. I intentionally avoided to include any metric of the "intensity" of the strikes which would have required a much more subjective and thus opinable evaluation. 
+
+Well, let's cut to the chase and get to the first chart: **strikes landed**. <br />
+<center>
+*Click on the figure to enlarge it*
+</center>
+```{r likert, warning=FALSE, message=FALSE, echo = FALSE, fig.height=6, fig.align="center"}
+fold_f <- "/Users/heverz/Documents/R_projects/muaydata/static/data_post7/outputs/petrosyan_petchmorakot_quarter"
+fights <- unlist(paste0(fold_f, "/", list.files(fold_f)))
+f1 <- map_dfr(fights, import_fight)
+
+# tot_strikes = all the strikes in the round
+# tot_cat_strickes = all the strikes in that category for that round
+f1_likert <- f1 %>%
+  mutate(fighter = factor(recode(fighter, giorgio_petrosyan = "petrosyan",
+                                   petchmorakot_petchindee_accademy = "petchmorakot"),
+                          levels= c("petchmorakot", "petrosyan"))) %>% 
+  # # group_by(fighter, rnd) %>% 
+  # mutate(tot_strikes = sum(n())) %>% 
+  group_by(category, fighter, rnd) %>% 
+  mutate(tot_cat_strikes = sum(n())) %>% 
+  group_by(landed, category, fighter, rnd) %>% 
+  summarize(perc = sum(n())/first(tot_cat_strikes), strikes = sum(n()), tot_cat_strikes = first(tot_cat_strikes)) %>% 
+  mutate(mult = recode(fighter, petrosyan = -1, petchmorakot = 1)) %>% 
+  mutate_at(.vars = c("perc", "strikes", "tot_cat_strikes"), ~ (-. * mult)) 
+
+
+p <- f1_likert %>% 
+  mutate(rnd = recode(rnd, r1 = "round 1", r2 = "round 2", r3 = "round 3")) %>% 
+  mutate(strikes_lab = abs(strikes)) %>% 
+  # unite("fighter_landed", c("fighter", "landed")) %>%
+  filter(landed == "landed") %>% 
+  ggplot(aes(x = category, fill = fighter,  y = strikes)) +
+  scale_y_continuous(limits= c(-20, 20),
+                     labels = c(20, 10, 0, 10, 20)) +
+  geom_col( position = "stack") +
+  facet_grid(rnd ~ .) +
+  coord_flip() +
+  geom_label(aes(y = strikes, 
+                 label = strikes_lab), 
+                 position = position_stack(vjust = .5), 
+                 label.padding = unit(0.1,"lines"),
+                 size = 3
+             ) +
+  labs(y = "strikes landed", x = "") +
+  theme(legend.position = "none") 
+
+theme_set(theme_grey()) 
+
+ggdraw(p, xlim = c(0, 1.1), ylim = c(0, 1.1)) +
+  draw_label("Petchmorakot", x = 0.4, y = 1.02, colour = "#F8766D", fontface = "bold") +
+  draw_label("Petrosyan", x = 0.65, y = 1.02, colour = "#00BFC4", fontface = "bold")
+```
+
+The **first round was all about Petrosyan**. He outboxed Petchmorakot (11 punches landed), he was successful with low and front kicks (8 kicks landed) and he also landed a couple of knees.  **Pechmorakot** had really few answers. Most observators (Petchmorakot too!) agree that this was Petrosyan's round.
+
+In the **second round, Pechmorakot** come back with a strategy: **jab his way in, [clinch and land knees](https://www.onefc.com/articles/emotional-petchmorakot-reveals-how-he-beat-petrosyan/)**. This strategy payed and **Petchmorakot** landed many knees (19) and also occasional punches (4). **Petrosyan relied less on kicks but continued to score  with his boxing** (14 punches). He also managed to land some knees in the clinch too. In terms of number of strikes landed (see also table below), **this was a very very close round** (I counted 24 for Petchmorakot and 25 for Petrosyan).
+
+The **third round was the consolidation of Pechmorakot's strategy**. He continued to enter into clinch to knee (10 knees) and effectively nullifying Petrosyan's attempt of boxing. This was the round in which **Petrosyan landed the least number of strikes**. In this round **Petchmorakot got a slight edge over  Petroysian in terms of strikes landed**.
+
+## Tabulated totals by round
+
+We can have an even simpler **bare-bone picture of the fight** looking at the **strikes landed vs total** (landed + thrown; table below). 
+
+```{r table, echo=FALSE}
+tab <- f1 %>% 
+  mutate(fighter = recode(fighter, giorgio_petrosyan = "petrosyan",
+                                   petchmorakot_petchindee_accademy = "petchmorakot")) %>%
+  mutate(rnd = recode(rnd, r1 = "1", r2 = "2", r3 = "3")) %>% 
+  rename(round = rnd) %>% 
+  group_by(fighter, round, landed) %>% 
+  dplyr::summarize(landed_strikes = n()) %>% 
+  group_by(fighter, round) %>% 
+  mutate(tot = sum(landed_strikes)) %>% 
+  filter(landed == "landed") %>% 
+  gather(var, value, landed_strikes:tot) %>% 
+  unite(fighter_values, fighter, var) %>% 
+  select(-landed) %>% 
+  spread(fighter_values, value) %>% 
+  select(round, petchmorakot_landed_strikes, petrosyan_landed_strikes, petchmorakot_tot, petrosyan_tot) 
+
+tab %>% 
+  kable(col.names = c("round", "Petchmorakot", "Petrosyan", "Petchmorakot", "Petrosyan"), format = "html", allign = 'c') %>% 
+  add_header_above(c(" ", "Landed" = 2, "Total" = 2)) 
+```
+
+In the **first round Petrosyan landed about 3-times more strikes than Pechmorakot**. In the **second round, the number of strikes landed by the 2 fighters was quite close** (24 vs 25), whereas **in the third, Petchmorakot had a slight edge over Petrosyan** (11 vs 8). In terms of strikes thrown, **both the fighters were similarly active**.
+
+I have to admit that these numbers surprised me: I had the impression that **Petrosyan** was much more active than **Petchmorakot**. So I decided to look back at the fight, check more metrics and then I got it...
+
+### Lead and Back side
+
+Let's look at the total shots and distinguish them depending on the side used to strikes. 
+In the following plot the lead side strikes are plotted on the right side of the polygon while the back side strikes on the left.  
+
+<center>
+<div style="width:500px; height:500px">
+![stellar](/data_post7/g134.png)
+</div>
+</center>
+<br />
+<br />
+<br />
+**Petrosyan extensively used his boxing throwing both his left and power hand in similar proportions**. He usually avoid to throw bare single shots and prefers to relies more on strike combinations, in this fight jab-cross-hook.
+
+**Petchmorak** used extensively his lead head that throw more than 100 times. How many of these lead hands did he successfully landed? Only 6 times in all the fight (data not shown). While this seems a quite fructose use of a technique, it was just part of the strategy: Petchmorak **used his left hand to disrupt Petrosyan boxing, enter in to clinch, and to land knees**. He literally throw more than 105 jabs in order to land 33 knees.
+
+## Conclusion
+
+I counted each single strike and... **it still was a really tight fight!**. 
+
+**Petrosyan** clearly dominated in the first round and landed 3-times more strikes than **Petchmorakot**. 
+
+In the second round **Petchmorakot** started **clinching** and landed several knees: overall the number of strikes landed by the 2 fighters was virtually the same. 
+
+In the last round **Petchmorakot** kept kneeing while **Petrosyan** landed fewer punches than in the previous rounds: in these last round **Petchmorakot** landed few more strikes than **Petrosyan**. 
+
+In summary, **if we look at the strikes landed, it could have gone one way or the other, and thus the decision mostly depends on the damage and "cleanness" that you attribute to the shots**. Do you think that Petchmorakot's knees made more damage than Petrosyan's punches or viceversa?
+
+The bout has been declared a No Contest [see link](https://www.facebook.com/yodchatri/posts/2345566252172189)...so we are ready and excited for the next battle of these 2 fighters.
+
+## Did you see this?
+
+A couple of actions that you might have overlooked.
+
+**Petrosyan Upper-Hook**
+<br />
+
+<iframe title="petrosyan" height="400" src="/data_post7/petrosyan.mp4" frameBorder="0" allowfullscreen></iframe>
+
+<br />
+<br />
+<br />
+
+**Petchmorakot Overhand**
+<br />
+<iframe title="petrosyan" height="400" src="/data_post7/petch.mp4" frameBorder="0" allowfullscreen></iframe>
+
+
+```{r data_rad, echo=FALSE, eval=FALSE}
+f1_rad <- f1 %>% 
+  mutate(fighter = recode(fighter, giorgio_petrosyan = "petrosyan",
+                                   petchmorakot_petchindee_accademy = "petchmorakot")) %>%
+  unite("category_lead", category, lead_back, remove = FALSE) %>% 
+  # mutate(beh_def2 = ifelse(category_lead %in% c("punches_lead", "punches_back"), category_lead, beh_def)) %>% 
+  # mutate(beh_def2 = ifelse(beh_def2 %in% c("punches_lead", "punches_back"), category_lead, beh_def)) %>%
+  filter(landed == "landed") %>%
+  group_by(fighter, category_lead) %>% 
+  summarize(count = n()) %>% 
+  spread(category_lead, count, fill = 0) %>% 
+  select(fighter, punches_lead, punches_back, kicks_back, knees_back, 
+       knees_lead, kicks_lead)
+  
+  
+# To use the fmsb package, I have to add 2 lines to the dataframe: the max and min of each topic to show on the plot!
+data_rad <-  rbind(rep(125,6) , rep(0,6) , f1_rad[,2:7])
+
+names(data_rad) <- c("lead hand", "power hand", "back\n kick", "back\n knee", "lead\n knee", "lead\n kick")
+setwd("~/Desktop")
+pdf("total.pdf")
+rad2(
+  data_rad,
+  seg = 5,
+  angle =  -29.5,
+  
+  #Grid and axis
+  axistype = 1,
+  cglcol = "gray",
+  cglty = 2,
+  axislabcol = "gray",
+  caxislabels = seq(0, 125, 25),
+  cglwd = 1,
+  calcex = 0.8,
+  
+  #labels
+  vlcex = 0.8,
+  
+  #custom polygon
+  pfcol= alpha(c("#F8766D", "#00BFC4"), 0.8),
+  
+  
+  #symbols and lines
+  plwd = c(1, 1), # line width
+  plty = c(0, 0),  # line type
+  pty = c(32, 32), # shape
+  cex = 1,
+  pcol = c("#00BFC4", "#F8766D"),
+)
+dev.off()
+
+f1 %>% 
+  filter(fighter == "giorgio_petrosyan", landed == "landed", beh_def == "uppercut_back")
+```
+
+
+
+
+
+

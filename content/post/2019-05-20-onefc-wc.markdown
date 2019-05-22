@@ -1,0 +1,156 @@
+---
+title: 'ONE World GP: Petrosyan vs Petchmorakot'
+author: c1au6io_hh
+date: '2019-05-20'
+slug: onefc-wc
+categories:
+  - R
+tags: 
+  - onefc
+  - scoring
+  - likert chart
+  - radarchart
+  - kickboxing
+lastmod: '2019-05-20T13:39:58-04:00'
+keywords: []
+description: 'post7'
+comment: yes
+toc: no
+autoCollapseToc: no
+contentCopyright: no
+reward: no
+mathjax: no
+---
+Last Friday, **Petchmorakot Pechindee Academy** brought home a stunning win against  **Giorgio "the Doctor" Petrosyan** and, as often happens with split decisions, the judges score generated a lot of discussion. 
+The decision was later declared **No Contest** because of the inadequate control by the referee of excessive clinching. **I carefully looked at the video of the fight, patiently recorded each single strike to come out with few charts of stats**. 
+<!--more-->
+
+<!-- https://discourse.gohugo.io/t/solved-add-line-break-in-yaml-file/13446/2 -->
+# The tale of the numbers
+
+## Count by class and round
+
+The much anticipated **ONE Featherweight Kickboxing Grand Prix** met the fan expectations with a show that  kept us on the edge of the seat, delivered memorable knock downs and unanticipated turn of events. 
+
+The underdog, Petchmorakot Pechindee Accademy got an unexpected win, under kickboxing rules, against arguably the best pound-for-pound kickboxer of all times, Giorgio Petrosyan. The 2 division Lumpinee Stadium World Championships **Petchmorakot  Pechindee Accademy** is certainly not a rookie of the game, but under these tournament rules he could not use some of his most sharp weapons (elbows)...nevertheless he managed to keep up with Giorgio.
+
+Today (Wednesday, May 22), Chatri Sityodtong announced on Facebook that **a Competition Committee declared the bout a No Contest*: Petchmorakot  Pechindee Accademy relied to heavily on clinch.
+
+I looked at the fight in slow-motion and, using a profession [event logging software](https://www.boris.unito.it/), **I recorded all the strikes annotating those that landed**. I intentionally avoided to include any metric of the "intensity" of the strikes which would have required a much more subjective and thus opinable evaluation. 
+
+Well, let's cut to the chase and get to the first chart: **strikes landed**. <br />
+<center>
+*Click on the figure to enlarge it*
+</center>
+<img src="/post/2019-05-20-onefc-wc_files/figure-html/likert-1.png" width="672" style="display: block; margin: auto;" />
+
+The **first round was all about Petrosyan**. He outboxed Petchmorakot (11 punches landed), he was successful with low and front kicks (8 kicks landed) and he also landed a couple of knees.  **Pechmorakot** had really few answers. Most observators (Petchmorakot too!) agree that this was Petrosyan's round.
+
+In the **second round, Pechmorakot** come back with a strategy: **jab his way in, [clinch and land knees](https://www.onefc.com/articles/emotional-petchmorakot-reveals-how-he-beat-petrosyan/)**. This strategy payed and **Petchmorakot** landed many knees (19) and also occasional punches (4). **Petrosyan relied less on kicks but continued to score  with his boxing** (14 punches). He also managed to land some knees in the clinch too. In terms of number of strikes landed (see also table below), **this was a very very close round** (I counted 24 for Petchmorakot and 25 for Petrosyan).
+
+The **third round was the consolidation of Pechmorakot's strategy**. He continued to enter into clinch to knee (10 knees) and effectively nullifying Petrosyan's attempt of boxing. This was the round in which **Petrosyan landed the least number of strikes**. In this round **Petchmorakot got a slight edge over  Petroysian in terms of strikes landed**.
+
+## Tabulated totals by round
+
+We can have an even simpler **bare-bone picture of the fight** looking at the **strikes landed vs total** (landed + thrown; table below). 
+
+<table>
+ <thead>
+<tr>
+<th style="border-bottom:hidden" colspan="1"></th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Landed</div></th>
+<th style="border-bottom:hidden; padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">Total</div></th>
+</tr>
+  <tr>
+   <th style="text-align:left;"> round </th>
+   <th style="text-align:right;"> Petchmorakot </th>
+   <th style="text-align:right;"> Petrosyan </th>
+   <th style="text-align:right;"> Petchmorakot </th>
+   <th style="text-align:right;"> Petrosyan </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> 1 </td>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 21 </td>
+   <td style="text-align:right;"> 65 </td>
+   <td style="text-align:right;"> 70 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 2 </td>
+   <td style="text-align:right;"> 24 </td>
+   <td style="text-align:right;"> 25 </td>
+   <td style="text-align:right;"> 78 </td>
+   <td style="text-align:right;"> 64 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> 3 </td>
+   <td style="text-align:right;"> 11 </td>
+   <td style="text-align:right;"> 8 </td>
+   <td style="text-align:right;"> 59 </td>
+   <td style="text-align:right;"> 43 </td>
+  </tr>
+</tbody>
+</table>
+
+In the **first round Petrosyan landed about 3-times more strikes than Pechmorakot**. In the **second round, the number of strikes landed by the 2 fighters was quite close** (24 vs 25), whereas **in the third, Petchmorakot had a slight edge over Petrosyan** (11 vs 8). In terms of strikes thrown, **both the fighters were similarly active**.
+
+I have to admit that these numbers surprised me: I had the impression that **Petrosyan** was much more active than **Petchmorakot**. So I decided to look back at the fight, check more metrics and then I got it...
+
+### Lead and Back side
+
+Let's look at the total shots and distinguish them depending on the side used to strikes. 
+In the following plot the lead side strikes are plotted on the right side of the polygon while the back side strikes on the left.  
+
+<center>
+<div style="width:500px; height:500px">
+![stellar](/data_post7/g134.png)
+</div>
+</center>
+<br />
+<br />
+<br />
+**Petrosyan extensively used his boxing throwing both his left and power hand in similar proportions**. He usually avoid to throw bare single shots and prefers to relies more on strike combinations, in this fight jab-cross-hook.
+
+**Petchmorak** used extensively his lead head that throw more than 100 times. How many of these lead hands did he successfully landed? Only 6 times in all the fight (data not shown). While this seems a quite fructose use of a technique, it was just part of the strategy: Petchmorak **used his left hand to disrupt Petrosyan boxing, enter in to clinch, and to land knees**. He literally throw more than 105 jabs in order to land 33 knees.
+
+## Conclusion
+
+I counted each single strike and... **it still was a really tight fight!**. 
+
+**Petrosyan** clearly dominated in the first round and landed 3-times more strikes than **Petchmorakot**. 
+
+In the second round **Petchmorakot** started **clinching** and landed several knees: overall the number of strikes landed by the 2 fighters was virtually the same. 
+
+In the last round **Petchmorakot** kept kneeing while **Petrosyan** landed fewer punches than in the previous rounds: in these last round **Petchmorakot** landed few more strikes than **Petrosyan**. 
+
+In summary, **if we look at the strikes landed, it could have gone one way or the other, and thus the decision mostly depends on the damage and "cleanness" that you attribute to the shots**. Do you think that Petchmorakot's knees made more damage than Petrosyan's punches or viceversa?
+
+The bout has been declared a No Contest [see link](https://www.facebook.com/yodchatri/posts/2345566252172189)...so we are ready and excited for the next battle of these 2 fighters.
+
+## Did you see this?
+
+A couple of actions that you might have overlooked.
+
+**Petrosyan Upper-Hook**
+<br />
+
+<iframe title="petrosyan" height="400" src="/data_post7/petrosyan.mp4" frameBorder="0" allowfullscreen></iframe>
+
+<br />
+<br />
+<br />
+
+**Petchmorakot Overhand**
+<br />
+<iframe title="petrosyan" height="400" src="/data_post7/petch.mp4" frameBorder="0" allowfullscreen></iframe>
+
+
+
+
+
+
+
+
+

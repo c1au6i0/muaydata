@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Exec on MuayData blog</title>
-    <link>https://muaydata.netlify.com/tags/exec/</link>
+    <link>/tags/exec/</link>
     <description>Recent content in Exec on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Thu, 18 Apr 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://muaydata.netlify.com/tags/exec/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/exec/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Do not invoke me</title>
-      <link>https://muaydata.netlify.com/post/do-not-invoke-me/</link>
+      <link>/post/do-not-invoke-me/</link>
       <pubDate>Thu, 18 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/post/do-not-invoke-me/</guid>
+      <guid>/post/do-not-invoke-me/</guid>
       <description>&lt;p&gt;You know how to apply a function to a list of elements (&lt;code&gt;apply&lt;/code&gt;, &lt;code&gt;purrr:map&lt;/code&gt;) but&amp;hellip; do you know how to apply a &lt;strong&gt;list of functions&lt;/strong&gt; to the &lt;strong&gt;same data/arguments&lt;/strong&gt;? In this short post we will answer that question.&lt;/p&gt;</description>
     </item>
     

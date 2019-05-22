@@ -14,6 +14,10 @@ library(lubridate)
 library(RSQLite)
 library(fmsb)
 library(purrr)
+library(fmsb)
+library(cowplot)
+library(kableExtra)
+library(knitr)
 
 import_fight <- function(link_file,
                          rd_n = 3, 
@@ -73,7 +77,7 @@ import_fight <- function(link_file,
   return(f1_2)
 }
 
-
+#----------
 rad2 <- function (df, axistype = 0, seg = 4, pty = 16, pcol = 1:8, plty = 1:6, 
                   plwd = 1, pdensity = NULL, pangle = 45, pfcol = NA, cglty = 3, 
                   cglwd = 1, cglcol = "navy", axislabcol = "blue", title = "", 

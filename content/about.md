@@ -9,9 +9,11 @@ comment: false
 mathjax: false
 ---
 
-I am a behavioral pharmacologist, *R* and data enthusiast and reader of [R-bloggers](https://www.r-bloggers.com/). I live in the city of the late Edgar and of Dwight Schultz.
+I am a data analysis enthusiast and fan of the art of the eight limbs (Muay Thai). I was born and I grow up in the eternal city. Now I live in the city of the late Edgar Allan Poe. 
 
-This blog was built in *R Studio* using *R Markdown*, *R blogdown* and *Hugo*.
+This is where I play with data and `R`.
+
+This blog was built in `RStudio` using `RMarkdown`, `Rblogdown` and `Hugo`.
 
 
 
