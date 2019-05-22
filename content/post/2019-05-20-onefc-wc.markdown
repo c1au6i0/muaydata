@@ -15,9 +15,9 @@ lastmod: '2019-05-20T13:39:58-04:00'
 keywords: []
 description: 'post7'
 comment: yes
-toc: no
+toc: yes
 autoCollapseToc: no
-contentCopyright: no
+contentCopyright: yes
 reward: no
 mathjax: no
 ---
