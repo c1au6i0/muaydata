@@ -2,193 +2,193 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on MuayData blog</title>
-    <link>/tags/</link>
+    <link>https://muaydata.netlify.com/tags/</link>
     <description>Recent content in Tags on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Sun, 24 Mar 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://muaydata.netlify.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Add_health</title>
-      <link>/tags/add_health/</link>
+      <link>https://muaydata.netlify.com/tags/add_health/</link>
       <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/add_health/</guid>
+      <guid>https://muaydata.netlify.com/tags/add_health/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Av</title>
-      <link>/tags/av/</link>
+      <link>https://muaydata.netlify.com/tags/av/</link>
       <pubDate>Thu, 25 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/av/</guid>
+      <guid>https://muaydata.netlify.com/tags/av/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Caret</title>
-      <link>/tags/caret/</link>
+      <link>https://muaydata.netlify.com/tags/caret/</link>
       <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/caret/</guid>
+      <guid>https://muaydata.netlify.com/tags/caret/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Exec</title>
-      <link>/tags/exec/</link>
+      <link>https://muaydata.netlify.com/tags/exec/</link>
       <pubDate>Thu, 18 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/exec/</guid>
+      <guid>https://muaydata.netlify.com/tags/exec/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Functions</title>
-      <link>/tags/functions/</link>
+      <link>https://muaydata.netlify.com/tags/functions/</link>
       <pubDate>Thu, 18 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/functions/</guid>
+      <guid>https://muaydata.netlify.com/tags/functions/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ggplot</title>
-      <link>/tags/ggplot/</link>
+      <link>https://muaydata.netlify.com/tags/ggplot/</link>
       <pubDate>Thu, 25 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/ggplot/</guid>
+      <guid>https://muaydata.netlify.com/tags/ggplot/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Import_csv</title>
-      <link>/tags/import_csv/</link>
+      <link>https://muaydata.netlify.com/tags/import_csv/</link>
       <pubDate>Mon, 06 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/import_csv/</guid>
+      <guid>https://muaydata.netlify.com/tags/import_csv/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Invoke</title>
-      <link>/tags/invoke/</link>
+      <link>https://muaydata.netlify.com/tags/invoke/</link>
       <pubDate>Thu, 18 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/invoke/</guid>
+      <guid>https://muaydata.netlify.com/tags/invoke/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kickboxing</title>
+      <link>https://muaydata.netlify.com/tags/kickboxing/</link>
+      <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/kickboxing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Likert Chart</title>
+      <link>https://muaydata.netlify.com/tags/likert-chart/</link>
+      <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/likert-chart/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Microbenchmark</title>
-      <link>/tags/microbenchmark/</link>
+      <link>https://muaydata.netlify.com/tags/microbenchmark/</link>
       <pubDate>Mon, 06 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/microbenchmark/</guid>
+      <guid>https://muaydata.netlify.com/tags/microbenchmark/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Onefc</title>
-      <link>/tags/onefc/</link>
+      <link>https://muaydata.netlify.com/tags/onefc/</link>
       <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/onefc/</guid>
+      <guid>https://muaydata.netlify.com/tags/onefc/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Precision Recall</title>
-      <link>/tags/precision-recall/</link>
+      <link>https://muaydata.netlify.com/tags/precision-recall/</link>
       <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/precision-recall/</guid>
+      <guid>https://muaydata.netlify.com/tags/precision-recall/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Predictive Modeling</title>
-      <link>/tags/predictive-modeling/</link>
+      <link>https://muaydata.netlify.com/tags/predictive-modeling/</link>
       <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/predictive-modeling/</guid>
+      <guid>https://muaydata.netlify.com/tags/predictive-modeling/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Purrr</title>
-      <link>/tags/purrr/</link>
+      <link>https://muaydata.netlify.com/tags/purrr/</link>
       <pubDate>Thu, 18 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/purrr/</guid>
+      <guid>https://muaydata.netlify.com/tags/purrr/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>/tags/r/</link>
+      <link>https://muaydata.netlify.com/tags/r/</link>
       <pubDate>Wed, 12 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/tags/r/</guid>
+      <guid>https://muaydata.netlify.com/tags/r/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Radarchart</title>
+      <link>https://muaydata.netlify.com/tags/radarchart/</link>
+      <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/radarchart/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Reticulate</title>
-      <link>/tags/reticulate/</link>
+      <link>https://muaydata.netlify.com/tags/reticulate/</link>
       <pubDate>Mon, 06 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/reticulate/</guid>
+      <guid>https://muaydata.netlify.com/tags/reticulate/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Rlang</title>
-      <link>/tags/rlang/</link>
+      <link>https://muaydata.netlify.com/tags/rlang/</link>
       <pubDate>Thu, 18 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/rlang/</guid>
+      <guid>https://muaydata.netlify.com/tags/rlang/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Roc</title>
-      <link>/tags/roc/</link>
+      <link>https://muaydata.netlify.com/tags/roc/</link>
       <pubDate>Sun, 24 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/roc/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Scoring</title>
-      <link>/tags/scoring/</link>
-      <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/scoring/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Seaborn</title>
-      <link>/tags/seaborn/</link>
-      <pubDate>Mon, 06 May 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/seaborn/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Textmining</title>
-      <link>/tags/textmining/</link>
-      <pubDate>Wed, 10 Oct 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/textmining/</guid>
+      <guid>https://muaydata.netlify.com/tags/roc/</guid>
       <description></description>
     </item>
     

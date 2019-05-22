@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Microbenchmark on MuayData blog</title>
-    <link>/tags/microbenchmark/</link>
+    <link>https://muaydata.netlify.com/tags/microbenchmark/</link>
     <description>Recent content in Microbenchmark on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Mon, 06 May 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/microbenchmark/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://muaydata.netlify.com/tags/microbenchmark/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Snakes, pandas, sea born creatures and how to find them</title>
-      <link>/post/reticulate/</link>
+      <link>https://muaydata.netlify.com/post/reticulate/</link>
       <pubDate>Mon, 06 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/reticulate/</guid>
+      <guid>https://muaydata.netlify.com/post/reticulate/</guid>
       <description>&lt;p&gt;What&amp;rsquo;s the fastest way to read a csv file in &lt;code&gt;R&lt;/code&gt;? Among the &lt;code&gt;R&lt;/code&gt; packages, the ultra-fast sprinter is certainly &lt;code&gt;data.table&lt;/code&gt; but&amp;hellip;few years ago, the introduction of the package &lt;a href=&#34;https://blog.rstudio.com/2018/03/26/reticulate-r-interface-to-python/&#34;&gt;&lt;code&gt;reticulate&lt;/code&gt;&lt;/a&gt; gave us the possibility of use &lt;code&gt;python&lt;/code&gt; and in particular the library &lt;code&gt;pandas&lt;/code&gt; to read files in &lt;code&gt;R&lt;/code&gt;. Would &lt;code&gt;pandas&lt;/code&gt; (used in &lt;code&gt;R&lt;/code&gt;) be faster than &lt;code&gt;data.table&lt;/code&gt;? How would its performance compare with &lt;code&gt;readr&lt;/code&gt; or base &lt;code&gt;R&lt;/code&gt;? Let&amp;rsquo;s take a look.&lt;/p&gt;</description>
     </item>
     
