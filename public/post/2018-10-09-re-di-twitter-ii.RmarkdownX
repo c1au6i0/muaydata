@@ -3,7 +3,7 @@ title: Il Re di Twitter? (PART II)
 subtitle: Analisi dei tweets
 author: C1au6i0_HH
 date:  '2018-10-10'
-# lastmod: "2019 May 22 17 36"
+# lastmod: "`r format(Sys.time(),'%Y %B %d %H %M')`"
 slug: re-di-twitter-ii
 categories:
   - R
@@ -36,8 +36,7 @@ Nella prima parte di prima serie di [posts] (https://muaydata.netlify.com/post/i
 La procedura per ottenere un dataframe/tibble dei tweets dei 3 politici (a cui assegneremo il nome di __twdat__) è spiegata in dettaglio nel mio primo [post](https://muaydata.netlify.com/post/il-re-di-twitter-parte-i/) della serie e nella [guida di Michael Galarnyk](https://medium.com/@GalarnykMichael/accessing-data-from-Twitter-api-using-r-part1-b387a1c7d3e). 
 
 Queste sono le librerie che ci serviranno per le nostre analisi.
-
-```r
+```{r libraries, include=TRUE, message=FALSE, results='hide', collapse=TRUE}
 library("ggridges")
 library("ggrepel")
 library("lubridate")
@@ -49,7 +48,16 @@ library("tidyverse")
 ```
 
 <!-- Database -->
+```{r database, include=FALSE}
+mydb <- dbConnect(RSQLite::SQLite(), "~/Documents/R_Projects/muaydata/static/tweets2_polit.sqlite")
 
+# dbRemoveTable(mydb, "twdat2")
+# dbWriteTable(mydb, "twdat", twdat)
+# dbListTables(mydb)
+twdat <- as_tibble(tbl(mydb, "twdat"))
+twdat$created <- as_datetime(twdat$created)
+dbDisconnect(mydb)
+```
 
 Il primo processo necessario prima di qualunque analisi del testo è la *tokenizzazione*, ovvero l'estrazione di singole unità di testo con significato, nel nostro caso singole parole.
 Il codice sottostante che è stato adattato da quello di [David Robinson](http://varianceexplained.org/r/trump-tweets/) serve a:
@@ -58,8 +66,7 @@ Il codice sottostante che è stato adattato da quello di [David Robinson](http:/
 * rimuove *stop words*, ossia parole come articoli e proposizioni prive di significato.
 * rimuovere links, simboli e particelle come *https* o *rt*.
 
-
-```r
+```{r tokenized}
 reg <- "([^[:alpha:]\\d#@']|'(?![[:alpha:]\\d#@]))"
 ita_stop_words <- get_stopwords(language = "it", source = "snowball")
 
@@ -80,8 +87,7 @@ Il risultato viene assegnato ad un dataframe/tibble in cui le informazioni origi
 
 Come prima cosa andiamo a vedere quali sono le parole più usate dai 3 politici. Per ogni politico calcoliamo la percentuale di tweets che contiene le varie parole, andiamo poi a selezionare le prime 20 parole e le assegnamo ad un nuovo database/tibble (*f_twwords*).
 
-
-```r
+```{r calc_mostused}
 # filtered tweets with percent times a word has been used
 f_twwords <- twwords %>%
   group_by(screenName) %>% 
@@ -94,23 +100,16 @@ f_twwords <- twwords %>%
 
 Disegneremo il grafico con  *ggplot* ma prima sarà necessario ordinare per ogni politico i livelli della colonna *word* a seconda di quella delle percentuali *perc* (grazie [MrFlick](https://stackoverflow.com/questions/48179726/ordering-factors-in-each-facet-of-ggplot-by-y-axis-value))
 
-
-```r
+```{r order_factors}
 new_order <-
   f_twwords %>%
   do(data_frame(al=levels(reorder(interaction(.$screenName, .$word, drop=TRUE), .$perc)))) %>%
   pull(al)
 ```
 
-```
-## Warning: `data_frame()` is deprecated, use `tibble()`.
-## This warning is displayed once per session.
-```
-
 Creiamo a questo punto il grafico in cui le parole usate da ogni politico saranno nell'asse delle Y e la loro frequenza in quello delle X.
 
-
-```r
+```{r fig1_most_used_words, fig.height=12, fig.width=8,  fig.align="center"}
 f_twwords %>% # frequency tweet words
   mutate(al = factor(interaction(screenName, word), levels = new_order)) %>%
   ggplot(aes(x = perc, y = al, col = screenName)) +
@@ -124,8 +123,6 @@ f_twwords %>% # frequency tweet words
           legend.position = "none")
 ```
 
-<img src="/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig1_most_used_words-1.png" width="768" style="display: block; margin: auto;" />
-
 __Per Salvini e Martina la parola più usata è il proprio nome/screenname__, mentre per __Di Maio è il partito__ "m5s". __Salvini menziona il suo nome in circa 1 tweets ogni 3, Martina e Di Maio menzionano nome e partito in 1 tweet ogni 10 , rispettivamente__.
 
 In termini di frequenza d'uso, __il primo riferimento diretto Di Maio a se stesso (*luigidimaio*) è all'undicesimo posto__, dopo 6 riferimenti al partito e al suo fondatore (fig.1). __È inoltre più probabile trovare le parole _renzi_ o _pd_ in un tweet di Di Maio che la parola *luigidimaio*! È più probabile trovare la parola *pd* in un tweet di Di Maio che im uno di Martina*__
@@ -134,27 +131,17 @@ Sono tuttavia necessarie alcune precisazioni per meglio interpretare questi risu
   
 I temi/slogan (*agricoltura, primagliitaliani*) e espressioni (*amici*) cari ai 3 politici emergono tra le 20 parole più usate, con alcuni elementi chiaramente in comune. Quali sono questi temi condivisi? Andiamo a vedere con alcuni semplici comandi per intersecare le tre liste di parole.
   
-
-```r
+```{r tab.1_words_in_common}
 # Split dataframe, select words  column and create a list. Intersect list
 words_m <- map(split.data.frame(f_twwords , f_twwords$screenName),
               function(x) {ungroup(x) %>% select(word)})
 knitr::kable(Reduce(intersect, words_m), caption = "tab.1")
 ```
 
-
-
-|word   |
-|:------|
-|italia |
-|oggi   |
-|pd     |
-
 I temi in comune tra i 3 politici sono la patria (*italia*), il presente (*oggi*) e il...__partito democratico __(*pd*). I sostenitori del m5s sono stati spesso bersaglio di satira per l'uso considerato eccessivo di riferimenti e comparazioni con il PD [link](https://www.lercio.it/maturita-al-posto-della-soluzione-scrive-e-allora-il-pd-e-passa-la-prova-di-matematica/)
 
 In fine ricorriamo ad una diverso strumento, il *wordcloud* per rappresentare in maniera più accattivante i dati della figura precedente. Ho usato la libreria *ggrepel* per evitare che le parole si sovrapponessero.
-
-```r
+```{r fig.2_worcloud, fig.height=6, fig.width=6, fig.align="center"}
 f_twwords %>%
     ggplot(aes(x = 1, y = 1, size = perc, label = word, col = screenName)) +
       geom_text_repel(segment.size = NA, force = 100) +
@@ -167,8 +154,6 @@ f_twwords %>%
       facet_grid(screenName~., scales = 'free_y', labeller = labeller(screenName = NULL))
 ```
 
-<img src="/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.2_worcloud-1.png" width="576" style="display: block; margin: auto;" />
-
 Nella fig.2, le parole più usate hanno una dimensione maggiore.
 
 ## Andamento 
@@ -180,8 +165,7 @@ Nelle analisi precedenti abbiamo infatti accorpando insieme gli ultimi ≈3200 t
 
 Andiamo perciò a vedere come l'uso di alcune delle parole più frequenti è cambiato nel tempo. Iniziamo con creare la lista delle 7 parole (*top_w*) più usate da ogni politico come mostrato in fig.1. Per motivi pratici salveremo queste informazioni in un unica lista (invece che un dataframe) in cui ogni elemento sara nel formato nomepolitico_parola.
 
-
-```r
+```{r select_top_w}
 top_w <- f_twwords %>%   
   group_by(screenName) %>% 
   do(top_n(., 7, perc)) %>% 
@@ -192,8 +176,7 @@ top_w <- f_twwords %>%
 ```
 A questo punto calcoliamo per ogni mese il totale dei tweets, il numero di tweets che contengono ogni diversa parola, e relativa percentuale. Uniamo anche per questo dataframe/tibble la colonna con il nome del politico e quella delle parole.
 
-
-```r
+```{r calc_word_month}
 fm_twwords <- twwords %>%  # frequencymonth_tweetswords
   mutate(month_r = floor_date(created, "month") ) %>%
   group_by(screenName, month_r) %>% 
@@ -206,8 +189,7 @@ fm_twwords <- twwords %>%  # frequencymonth_tweetswords
 
 Mi concentrerò sui dati di Di Maio che sono quelli in cui un analisi temporale rivela informazioni più interessanti. Il codice sottostante serve a filtrare il dataframe/tibble con le 7 parole più usate (*top_w*), a riordinarle per il grafico, e a codificarle in modo da creare delle appropriate *facet* nel grafico successivo.
 
-
-```r
+```{r recode_facet}
 fm_twwords_lm <- fm_twwords %>% 
   filter(screenName == "luigidimaio", screenName_word %in% top_w)
 
@@ -229,8 +211,7 @@ fm_twwords_lm[, "facet_w"] <- newnames[fm_twwords_lm$word]
 
 Andiamo finalmente a rappresentare graficamente le 7 parole più usate da Di Maio in funzione del tempo, per gli ultimi 3 anni.
 
-
-```r
+```{r fig.3_timeline_dimaioa, fig.width=7, fig.height=7,  fig.align="center"}
   fm_twwords_lm  %>% 
   filter(month_r >= ymd("2014-07-01"), month_r <=  ymd("2018-07-01")) %>% 
   ggplot(aes(x = month_r, y = perc,  col = word)) +
@@ -251,16 +232,13 @@ Andiamo finalmente a rappresentare graficamente le 7 parole più usate da Di Mai
   theme(plot.title = element_text(hjust = 0.5)) 
 ```
 
-<img src="/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.3_timeline_dimaioa-1.png" width="672" style="display: block; margin: auto;" />
-
 Le 3 parole relative al movimento e al suo fondatore (fig.3 panello A) sono state usate da Di Maio costantemente ma con frequenza variabile negli ultimi anni. È tuttavia negli ultimi mesi (da Marzo a Luglio 2018) che il loro uso è andato quasi scomparendo. Questa diminuzione si è verificata nel concitato periodo di consultazioni con il quirinale e formazione del governo (Febbraio-Giugno), mesi in cui la parola *governo* è usata ogni 2-5 tweets (fig.3 panello B). 
 E le parole relative al PD? __I riferimenti da parte di Di Maio al attuale partito di opposizione (parola *pd*) e al suo precedente segretario (parola *renzi*)__ se pure a tratti molto frequenti tra il 2014-2017, __scompaiono completamente nel periodo in cui il movimento a 5 stelle diventa partito di maggioranza__ (fig.3 pannello C, linea tratteggiata indica l'insediamento del governo). 
 Anche riferimenti al *governo* e le la parola *stelle* diminuiscono di frequenza o scompaiono dai tweets di Di Maio in Giugno e Luglio.
 Di che cosa parla allora negli Di Maio in questi ultimi mesi presi in esame?
 Andiamo a vedere le 2 parole utilizzate in diversi tweets per i mesi di Giugolo e Luglio.
 
-
-```r
+```{r tab.2_lastword_lm}
 fm_twwords  %>% 
   filter(screenName == "luigidimaio") %>% 
   filter(month_r >= ymd("2018-06-01"), month_r <= ymd("2018-07-01")) %>% 
@@ -272,24 +250,6 @@ fm_twwords  %>%
   knitr::kable(caption = "tab.2")
 ```
 
-
-
-|word            |month_r    |  n| tot|     perc|
-|:---------------|:----------|--:|---:|--------:|
-|byebyevitalizi  |2018-07-01 | 22|  44| 50.00000|
-|mov5stelle      |2018-07-01 | 11|  44| 25.00000|
-|oggi            |2018-07-01 |  7|  44| 15.90909|
-|giuseppeconteit |2018-06-01 |  5|  16| 31.25000|
-|presidente      |2018-06-01 |  3|  16| 18.75000|
-|domani          |2018-06-01 |  2|  16| 12.50000|
-|ex              |2018-06-01 |  2|  16| 12.50000|
-|finalmente      |2018-06-01 |  2|  16| 12.50000|
-|italy           |2018-06-01 |  2|  16| 12.50000|
-|lavoro          |2018-06-01 |  2|  16| 12.50000|
-|oggi            |2018-06-01 |  2|  16| 12.50000|
-|parlamentari    |2018-06-01 |  2|  16| 12.50000|
-|realdonaldtrump |2018-06-01 |  2|  16| 12.50000|
-
 I riferimenti di Di Maio al movimento restano alti anche se attraverso parole (*mov5stelle*) differenti da quelle indicate in fig.3 (ma già individuate tra le 20 parole più utilizzate da Di Maio). Inoltre, __(ri/)affiorano con alta frequenza menzioni al presidente del consiglio (*giuseppeconte.it*, *presidente*) e all'opera del governo (*byebyevitalizi*). 
   Pertanto, __nei mesi di Giugno e Luglio, Di Maio continua a parlare del movimento  e dell'opera del governo ma usando con più frequenza parole differenti da quelle usate precedentemente__. Inoltre in Giugno, __i riferimente al fondatore (*beppe*), sembrano essere stati rimpiazzati con quelli diretti al presidente del consiglio__.
 
@@ -298,8 +258,7 @@ I riferimenti di Di Maio al movimento restano alti anche se attraverso parole (*
 Il processo di *tokenizzazione*  iniziale  ci ha permesso di associare ad ogni parola un numero di likes (quello del tweet in cui è stata usata) che rappresenta un ottimo indice di popolarità/approvazione da parte della base dei followers. __Andiamo quindi a vedere quali sono le parole che sono più apprezzate dai relativi followers dei 3 politici__.
 
 Iniziamo calcolando per ogni politico,la media dei likes per parola/tweet e selezionando le 10 parole con maggiori likes.
-
-```r
+```{r calc_fav_word}
 fav_twwords_all <- twwords %>%  # favmonth_tweetswords
   group_by(screenName) %>% 
   mutate(tot = length(unique(id))) %>% # here calculate the tot number of 
@@ -313,8 +272,7 @@ fav_twwords <- fav_twwords_all %>%
 
 Ordiniamo i livelli del fattore *word* per poter conseguentemente riorganizzare i livelli nell'asse delle x del prossimo grafico in ordine di media di likes.
 
-
-```r
+```{r order_factors2}
 new_order <-
   fav_twwords %>%
   do(data_frame(al=levels(reorder(interaction(.$screenName, .$word, drop=TRUE), .$fav)))) %>%
@@ -322,8 +280,7 @@ new_order <-
 ```
 
 Per ultimo creiamo il grafico a barre del numero di like per tweet delle 10 parole che sono state più apprezzate. Attraverso *geom_text* possiamo indichiamo all'interno di ogni barra il numero di tweets che contiene la parola sotto esame.
-
-```r
+```{r fig.4_like_word, fig.height=6, fig.width=8,  fig.align="center"}
 fav_twwords %>% 
   mutate(al = factor(interaction(screenName, word), levels = new_order)) %>% 
   ggplot(aes(x = al, y = fav, fill = screenName)) +
@@ -339,9 +296,8 @@ fav_twwords %>%
                                hjust = 1,
                                angle = 45),
     legend.position = "none")
+    
 ```
-
-<img src="/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.4_like_word-1.png" width="768" style="display: block; margin: auto;" />
 
 Il primo dato che balza agli occhi dalla fig.4 è che __le prime 10 parole più usate da Salvini hanno totalizzato un numero molto più alto di likes rispetto quelle di Di Maio e Martina__.
 Inoltre, le parole che hanno ricevuto più likes sono state utilizzate __soltanto 1 o 2 volte dai vari politici__.  Perché? 
@@ -351,8 +307,7 @@ Per la stessa ragione, alcune parole se pure presenti nei tweets più popolari n
 
 Nella figura sottostante ogni punto rappresenta un tweet che contiene la parola *vitalizi*, collocato più in alto a seconda del numero di likes ricevuti.
 
-
-```r
+```{r fig.5_vitalizi, fig.height=5, fig.width=4, fig.align="center" }
 vital <- fav_twwords_all %>% 
   filter(screenName == "luigidimaio", word == "vitalizi") 
 
@@ -367,8 +322,6 @@ twwords %>%
   theme(legend.position = "none",
         axis.text.x = element_text(size = 14))
 ```
-
-<img src="/post/2018-10-09-re-di-twitter-ii_files/figure-html/fig.5_vitalizi-1.png" width="384" style="display: block; margin: auto;" />
 
 Anche se in quelle 2 occasioni il numero di like ricevuti è stato estremamente alto, la presenza di numerosi tweets con pochi like ha spostato la media di like per tweet verso il basso (fig.5).
 
