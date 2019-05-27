@@ -11,7 +11,7 @@ mathjax: false
 
 I am a data analysis enthusiast and fan of the art of the eight limbs (Muay Thai). I was born and I grow up in the eternal city. Now I live in the city of the late Edgar Allan Poe. 
 
-This is where I play with data and `R`.
+In this blog I will published analysis of muay thai and kickboxing fights.
 
 This blog was built in `RStudio` using `RMarkdown`, `Rblogdown` and `Hugo`.
 
