@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <?xml-stylesheet type="text/xsl" href="https://muaydata.netlify.com/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
@@ -10,6 +9,18 @@
   </url>
   
   <url>
+    <loc>https://muaydata.netlify.com/categories/</loc>
+    <lastmod>2019-05-22T19:42:58-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://muaydata.netlify.com/</loc>
+    <lastmod>2019-05-22T19:42:58-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://muaydata.netlify.com/post/onefc-wc/</loc>
     <lastmod>2019-05-22T19:42:58-04:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -17,267 +28,50 @@
   </url>
   
   <url>
-    <loc>https://muaydata.netlify.com/post/reticulate/</loc>
-    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/post/do-not-invoke-me/</loc>
-    <lastmod>2019-04-18T18:45:25-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/post/fighting-diseases/</loc>
-    <lastmod>2019-03-24T11:13:24-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/post/animated-prison/</loc>
-    <lastmod>2018-10-23T18:19:53-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/post/re-di-twitter-ii/</loc>
-    <lastmod>2018-10-10T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/post/re-di-twitter-i/</loc>
-    <lastmod>2018-09-12T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/add_health/</loc>
-    <lastmod>2019-03-24T11:13:24-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/av/</loc>
-    <lastmod>2018-10-23T18:19:53-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/caret/</loc>
-    <lastmod>2019-03-24T11:13:24-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/categories/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/exec/</loc>
-    <lastmod>2019-04-18T18:45:25-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/functions/</loc>
-    <lastmod>2019-04-18T18:45:25-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/ggplot/</loc>
-    <lastmod>2018-10-23T18:19:53-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/import_csv/</loc>
-    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/invoke/</loc>
-    <lastmod>2019-04-18T18:45:25-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/kickboxing/</loc>
-    <lastmod>2019-05-22T19:42:58-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/likert-chart/</loc>
-    <lastmod>2019-05-22T19:42:58-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/microbenchmark/</loc>
-    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/</loc>
-    <lastmod>2018-10-25T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/onefc/</loc>
-    <lastmod>2019-05-22T19:42:58-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://muaydata.netlify.com/post/</loc>
     <lastmod>2019-05-22T19:42:58-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/precision-recall/</loc>
-    <lastmod>2019-03-24T11:13:24-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/predictive-modeling/</loc>
-    <lastmod>2019-03-24T11:13:24-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/purrr/</loc>
-    <lastmod>2019-04-18T18:45:25-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/categories/python/</loc>
-    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/r/</loc>
-    <lastmod>2018-09-12T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://muaydata.netlify.com/categories/r/</loc>
     <lastmod>2019-05-22T19:42:58-04:00</lastmod>
-    <changefreq>weekly</changefreq>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://muaydata.netlify.com/tags/</loc>
+    <lastmod>2019-05-22T19:42:58-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://muaydata.netlify.com/tags/kickboxing/</loc>
+    <lastmod>2019-05-22T19:42:58-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://muaydata.netlify.com/tags/likert-chart/</loc>
+    <lastmod>2019-05-22T19:42:58-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://muaydata.netlify.com/tags/onefc/</loc>
+    <lastmod>2019-05-22T19:42:58-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://muaydata.netlify.com/tags/radarchart/</loc>
     <lastmod>2019-05-22T19:42:58-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/reticulate/</loc>
-    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/rlang/</loc>
-    <lastmod>2019-04-18T18:45:25-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/roc/</loc>
-    <lastmod>2019-03-24T11:13:24-04:00</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://muaydata.netlify.com/tags/scoring/</loc>
     <lastmod>2019-05-22T19:42:58-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/seaborn/</loc>
-    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/</loc>
-    <lastmod>2019-03-24T11:13:24-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/textmining/</loc>
-    <lastmod>2018-10-10T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/twitter/</loc>
-    <lastmod>2018-10-10T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/visualization/</loc>
-    <lastmod>2018-10-23T18:19:53-04:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/vroom/</loc>
-    <lastmod>2019-05-06T11:46:00-04:00</lastmod>
-    <changefreq>weekly</changefreq>
     <priority>0</priority>
   </url>
   
