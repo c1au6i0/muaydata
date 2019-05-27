@@ -28,13 +28,19 @@
   </url>
   
   <url>
-    <loc>https://muaydata.netlify.com/post/</loc>
+    <loc>https://muaydata.netlify.com/tags/petchmorakot/</loc>
     <lastmod>2019-05-22T19:42:58-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://muaydata.netlify.com/categories/r/</loc>
+    <loc>https://muaydata.netlify.com/tags/petrosyan/</loc>
+    <lastmod>2019-05-22T19:42:58-04:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://muaydata.netlify.com/post/</loc>
     <lastmod>2019-05-22T19:42:58-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -46,13 +52,7 @@
   </url>
   
   <url>
-    <loc>https://muaydata.netlify.com/tags/kickboxing/</loc>
-    <lastmod>2019-05-22T19:42:58-04:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://muaydata.netlify.com/tags/likert-chart/</loc>
+    <loc>https://muaydata.netlify.com/categories/kickboxing/</loc>
     <lastmod>2019-05-22T19:42:58-04:00</lastmod>
     <priority>0</priority>
   </url>
@@ -64,13 +64,13 @@
   </url>
   
   <url>
-    <loc>https://muaydata.netlify.com/tags/radarchart/</loc>
+    <loc>https://muaydata.netlify.com/tags/scoring/</loc>
     <lastmod>2019-05-22T19:42:58-04:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://muaydata.netlify.com/tags/scoring/</loc>
+    <loc>https://muaydata.netlify.com/tags/world-gp/</loc>
     <lastmod>2019-05-22T19:42:58-04:00</lastmod>
     <priority>0</priority>
   </url>
