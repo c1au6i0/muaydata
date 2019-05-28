@@ -104,14 +104,9 @@ I have to admit that these numbers surprised me: I had the impression that **Pet
 Let's look at the total shots and distinguish them depending on the side used to strikes. 
 In the following plot the lead side strikes are plotted on the right side of the polygon while the back side strikes on the left.  
 
-<center>
-<div style="width:500px; height:500px">
-![stellar](/data_post7/g134.png)
-</div>
-</center>
-<br />
-<br />
-<br />
+<img src="/post/2019-05-20-onefc-wc_files/g134.png" alt="radar" width="500px" height="500px" style="display: block; margin: auto;"/>
+
+
 **Petrosyan extensively used his boxing throwing both his left and power hand in similar proportions**. He usually avoid to throw bare single shots and prefers to rely more on strike combinations, in this fight jab-cross-hook.
 
 **Petchmorak** used extensively his lead head that throw more than 100 times. How many of these lead hands did he successfully land? Only 6 times in all the fight (data not shown). While this seems a quite 
