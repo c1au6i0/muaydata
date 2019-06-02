@@ -60,7 +60,7 @@ defaultContentLanguage = "en"           # Default language to use
 
   # site info (optional)                                  # 站点信息（可选，不需要的可以直接注释掉）
   logoTitle = "muaydata"        # default: the title value    # 默认值: 上面设置的title值
-  keywords = ["Hugo", "theme","jane"]
+  keywords = ["muay thai", "data","stats"]
   description = "My personal blog."
 
   # paginate of archives, tags and categories             # 归档、标签、分类每页显示的文章数目，建议修改为一个较大的值
@@ -97,7 +97,7 @@ defaultContentLanguage = "en"           # Default language to use
 
   # Link custom CSS and JS assets
   #   (relative to /static/css and /static/js respectively)
-  customCSS = []            # if ['custom.css'], load '/static/css/custom.css' file
+  customCSS = ['custom.css']            # if ['custom.css'], load '/static/css/custom.css' file
   customJS = []             # if ['custom.js'], load '/static/js/custom.js' file
 
   # enable 'fork me on github', see https://blog.github.com/2008-12-19-github-ribbons/

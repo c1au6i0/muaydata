@@ -1,22 +1,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>MuayData blog</title>
-    <link>https://muaydata.netlify.com/</link>
+    <link>/</link>
     <description>Recent content on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Mon, 20 May 2019 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://muaydata.netlify.com/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About</title>
-      <link>https://muaydata.netlify.com/about/</link>
+      <link>/about/</link>
       <pubDate>Thu, 25 Oct 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/about/</guid>
+      <guid>/about/</guid>
       
         <description>&lt;p&gt;I am a data analysis enthusiast and fan of the art of the eight limbs (Muay Thai). I was born and I grow up in the eternal city. Now I live in the city of the late Edgar Allan Poe.&lt;/p&gt;
 
@@ -29,10 +29,10 @@
     
     <item>
       <title>ONE World GP: Petrosyan vs Petchmorakot</title>
-      <link>https://muaydata.netlify.com/post/onefc-wc/</link>
+      <link>/post/onefc-wc/</link>
       <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/post/onefc-wc/</guid>
+      <guid>/post/onefc-wc/</guid>
       
         <description>&lt;p&gt;Last Friday, &lt;strong&gt;Petchmorakot Pechindee Academy&lt;/strong&gt; brought home a stunning win against  &lt;strong&gt;Giorgio &amp;ldquo;the Doctor&amp;rdquo; Petrosyan&lt;/strong&gt; and, as often happens with split decisions, the judges score generated a lot of discussion.
 The decision was later declared &lt;strong&gt;No Contest&lt;/strong&gt; because of the inadequate control by the referee of excessive clinching. &lt;strong&gt;I carefully looked at the video of the fight, patiently recorded each single strike to come out with few charts of stats&lt;/strong&gt;.&lt;/p&gt;
@@ -56,7 +56,7 @@ The decision was later declared &lt;strong&gt;No Contest&lt;/strong&gt; because 
 &lt;em&gt;Click on the figure to enlarge it&lt;/em&gt;
 &lt;/center&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-05-20-onefc-wc_files/figure-html/likert-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-05-20-onefc-wc_files/figure-html/likert-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The &lt;strong&gt;first round was all about Petrosyan&lt;/strong&gt;. He outboxed Petchmorakot (11 punches landed), he was successful with low and front kicks (8 kicks landed) and he also landed a couple of knees.  &lt;strong&gt;Pechmorakot&lt;/strong&gt; had really few answers. Most observators (Petchmorakot too!) agree that this was Petrosyan&amp;rsquo;s round.&lt;/p&gt;
 
@@ -117,7 +117,7 @@ The decision was later declared &lt;strong&gt;No Contest&lt;/strong&gt; because 
 &lt;p&gt;Let&amp;rsquo;s look at the total shots and distinguish them depending on the side used to strikes.
 In the following plot the lead side strikes are plotted on the right side of the polygon while the back side strikes on the left.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-05-20-onefc-wc_files/g134.png&#34; alt=&#34;radar&#34; width=&#34;500px&#34; height=&#34;500px&#34; style=&#34;display: block; margin: auto;&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-05-20-onefc-wc_files/g134.png&#34; alt=&#34;radar&#34; width=&#34;500px&#34; height=&#34;500px&#34; style=&#34;display: block; margin: auto;&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Petrosyan extensively used his boxing throwing both his left and power hand in similar proportions&lt;/strong&gt;. He usually avoid to throw bare single shots and prefers to rely more on strike combinations, in this fight jab-cross-hook.&lt;/p&gt;
 
@@ -145,7 +145,7 @@ unsuccessful use of a technique, it was just part of the strategy: Petchmorak &l
 &lt;p&gt;&lt;strong&gt;Petrosyan Upper-Hook&lt;/strong&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;iframe title=&#34;petrosyan&#34; height=&#34;400&#34; src=&#34;https://muaydata.netlify.com/data_post7/petrosyan.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;iframe title=&#34;petrosyan&#34; height=&#34;400&#34; src=&#34;/data_post7/petrosyan.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;
@@ -153,7 +153,7 @@ unsuccessful use of a technique, it was just part of the strategy: Petchmorak &l
 
 &lt;p&gt;&lt;strong&gt;Petchmorakot Overhand&lt;/strong&gt;
 &lt;br /&gt;
-&lt;iframe title=&#34;petrosyan&#34; height=&#34;400&#34; src=&#34;https://muaydata.netlify.com/data_post7/petch.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;</description>
+&lt;iframe title=&#34;petrosyan&#34; height=&#34;400&#34; src=&#34;/data_post7/petch.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;</description>
       
     </item>
     

@@ -13,7 +13,7 @@ tags:
   - world GP
 lastmod: '2019-05-22T19:42:58-04:00'
 keywords: []
-description: 'post7'
+description: 'post1'
 comment: yes
 toc: yes
 autoCollapseToc: yes
@@ -163,7 +163,7 @@ A couple of actions that you might have overlooked.
 **Petrosyan Upper-Hook**
 <br />
 
-<iframe title="petrosyan" height="400" src="/data_post7/petrosyan.mp4" frameBorder="0" allowfullscreen></iframe>
+<iframe title="petrosyan" height="400" src="/data/data_post1/petrosyan.mp4" frameBorder="0" allowfullscreen></iframe>
 
 <br />
 <br />
@@ -171,7 +171,7 @@ A couple of actions that you might have overlooked.
 
 **Petchmorakot Overhand**
 <br />
-<iframe title="petrosyan" height="400" src="/data_post7/petch.mp4" frameBorder="0" allowfullscreen></iframe>
+<iframe title="petrosyan" height="400" src="/data/data_post1/petch.mp4" frameBorder="0" allowfullscreen></iframe>
 
 
 ```{r data_rad, echo=FALSE, eval=FALSE}
