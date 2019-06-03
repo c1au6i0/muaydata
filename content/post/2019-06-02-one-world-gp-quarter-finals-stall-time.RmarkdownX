@@ -95,22 +95,80 @@ fold_f <- "/Users/heverz/Documents/R_projects/muaydata/static/data/data_post2/ou
 fights <- unlist(paste0(fold_f, "/", list.files(fold_f)))
 f1 <- map_dfr(fights, import_fight)
 
-f1 %>% 
-    unite("fight", fighter, opponent) %>% 
-    group_by_at(vars(-c("time", "behavior")), .drop = FALSE) %>% 
-    summarize(events = n()/2) %>% 
-    mutate(events = recode(events, `0` = 0.1)) %>% 
-    ggplot(aes(x = rnd, y = events, fill = fight)) + 
-      geom_col(position = "dodge") +
-  # theme_fivethirtyeight() +
-  # scale_color_fivethirtyeight() +
-  theme_grey() +
-  theme(legend.position = "bottom")
+# f1 %>% 
+#     unite("fight", fighter, opponent) %>% 
+#     group_by_at(vars(-c("time", "behavior")), .drop = FALSE) %>% 
+#     summarize(events = n()/2) %>% 
+#     mutate(events = recode(events, `0` = 0.1)) %>% 
+#     ggplot(aes(x = rnd, y = events, fill = fight)) + 
+#       geom_col(position = "dodge") +
+#   # theme_fivethirtyeight() +
+#   # scale_color_fivethirtyeight() +
+#   theme_grey() +
+#   theme(legend.position = "bottom")
   
 
 
 ```
 
+```{r, warning=FALSE, message=FALSE}
+f1_times <- f1 %>% 
+  mutate(s_e = rep(c("start", "end"), nrow(.)/2)) %>% {
+    t_off <- .$time[.$s_e == "end"] - .$time[.$s_e == "start"]
+    (.) %>% 
+      filter(s_e == "end") %>% 
+      mutate(t_off = t_off)
+  } %>% 
+  unite("fight", fighter, opponent) 
+
+f1_times <- f1_times %>% 
+   mutate(tot_fight = 3 * 60 * 3) 
+f1_times$tot_fight[f1_times$fight == "jo.nattawut_sasha.moisa"] <-  444
+
+
+f1_times %>% 
+  mutate(fight = fct_relevel(fight, c("petchmorakot.petchindee.accademy_giorgio.petrosyan",
+                                      "dzhabar.askerov_enriko.kehl",
+                                      "yodsanklai.iwe.fairtex_samy.sana",
+                                      "jo.nattawut_sasha.moisa"))) %>% 
+  group_by_at(vars(-c("time", "behavior","t_off")), .drop = FALSE) %>% 
+  summarize(tot = sum(t_off), perc = tot/180*100) %>% 
+  mutate(perc = recode(perc, `0` = 0.2)) %>% 
+
+  ggplot(aes(x = rnd, y = perc, fill = fight, label = paste0(round(tot, 0), " sec"))) + 
+    geom_col(position = "dodge") +
+    scale_y_continuous(limits = c(0, 30), labels = paste0(seq(0, 30, 5), "%"), breaks = seq(0, 30, 5), minor_breaks = NULL) +
+    scale_x_discrete(labels = c("round1", "round2", "round3")) +
+    labs(title = "Time in break", y = "Percent of time", x = "") +
+    scale_fill_brewer(palette = "Dark2",name = "", labels = c("Petchmorakot\nPetrosyan", 
+                                              "Askerov\nKehel", 
+                                               "Yodsanklai\nSana",
+                                                "Nattawut\nMoisa") ) +
+    geom_text(position = position_dodge(0.9), vjust = -0.5, size = 3) +
+
+    theme_grey() +
+    theme(legend.position = "bottom",
+          plot.title = element_text(size = 16, face = "bold", hjust = 0.5)
+          )
+
+```  
+
+```{r}
+  
+ f1_times %>% 
+  group_by_at(vars(-c("time", "behavior","t_off", "rnd")), .drop = FALSE) %>% 
+  summarize(tot = sum(t_off) / first(tot_fight) * 100) %>% 
+  ggplot(aes(x = fight, y = tot, fill = fight)) + 
+      geom_col(position = "dodge") +
+    scale_y_continuous(limits = c(0, 30)) +
+  # theme_fivethirtyeight() +
+  # scale_color_fivethirtyeight() +
+  theme_grey() +
+  theme(legend.position = "bottom") 
+ 
+theme_set(theme_grey())
+```
+vai su percentuali di cambiamento rispetto al piu piccolo
 ```{r}
 f1 %>% 
   mutate(s_e = rep(c("start", "end"), nrow(.)/2)) %>% {
@@ -120,19 +178,9 @@ f1 %>%
       mutate(t_off = t_off)
   } %>% 
   unite("fight", fighter, opponent) %>% 
-  group_by_at(vars(-c("time", "behavior","t_off")), .drop = FALSE) %>% 
-  summarize(tot = sum(t_off)) %>% 
-  ggplot(aes(x = rnd, y = tot, fill = fight)) + 
-      geom_col(position = "dodge") +
-  # theme_fivethirtyeight() +
-  # scale_color_fivethirtyeight() +
-  theme_grey() +
-  theme(legend.position = "bottom")
-  
-  
-  
-
-row(f1)
+  ggplot(aes(t_off)) +
+  geom_histogram(binwidth = 0.2) +
+  facet_grid(fight~rnd) 
 
 ```
 

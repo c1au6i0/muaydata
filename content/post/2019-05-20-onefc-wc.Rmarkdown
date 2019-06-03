@@ -25,7 +25,7 @@ Last Friday, **Petchmorakot Pechindee Academy** brought home a stunning win agai
 The decision was later declared **No Contest** because of the inadequate control by the referee of excessive clinching. **I carefully looked at the video of the fight, patiently recorded each single strike to come out with few charts of stats**. 
 <!--more-->
 ```{r libraries, message=FALSE, warning=FALSE, echo=FALSE}
-source("/Users/heverz/Documents/R_projects/muaydata/static/data_post7/import_fight.R")
+source("/Users/heverz/Documents/R_projects/muaydata/static/data/data_post1/import_fight.R")
 ```
 <!-- https://discourse.gohugo.io/t/solved-add-line-break-in-yaml-file/13446/2 -->
 # The tale of the numbers
@@ -46,7 +46,7 @@ Well, let's cut to the chase and get to the first chart: **strikes landed**. <br
 </center>
 
 ```{r likert, warning=FALSE, message=FALSE, echo=FALSE, eval=TRUE, fig.height=6, fig.align="center"}
-fold_f <- "/Users/heverz/Documents/R_projects/muaydata/static/data_post7/outputs/petrosyan_petchmorakot_quarter"
+fold_f <- "/Users/heverz/Documents/R_projects/muaydata/static/data/data_post1/outputs/petrosyan_petchmorakot_quarter"
 fights <- unlist(paste0(fold_f, "/", list.files(fold_f)))
 f1 <- map_dfr(fights, import_fight)
 
