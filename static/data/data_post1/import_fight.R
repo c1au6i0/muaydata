@@ -21,7 +21,7 @@ library(knitr)
 
 import_fight <- function(link_file,
                          rd_n = 3, 
-                         link_db = "/Users/heverz/Documents/R_projects/muaydata/static/data_post7/one_db.sqlite",
+                         link_db = "/Users/heverz/Documents/R_projects/muaydata/static/data/data_post1/one_db.sqlite",
                          write_db = FALSE){
   # function to import fight as in BORIS output
   
@@ -43,7 +43,7 @@ import_fight <- function(link_file,
   # dataframe containing 2 cols: beh_mod and corresponding 
   # beh_def (that stands for beh_def...inition). Used for recoding. 
   # example: front_rear_kick is a push kick
-  beh_recode <- read_csv("/Users/heverz/Documents/R_projects/muaydata/static/data_post7/beh_recode.csv")
+  beh_recode <- read_csv("/Users/heverz/Documents/R_projects/muaydata/static/data/data_post1/beh_recode.csv")
   
   # this is used to create labels for rounds
   rds <- paste0( rep("r", rd_n), 1:rd_n)
@@ -70,7 +70,7 @@ import_fight <- function(link_file,
   
   
   if(write_db == TRUE) {
-    mydb <- dbConnect(RSQLite::SQLite(), "/Users/heverz/Documents/R_projects/muaydata/static/data_post7/one_db.sqlite")
+    mydb <- dbConnect(RSQLite::SQLite(), "/Users/heverz/Documents/R_projects/muaydata/static/data/data_post1/one_db.sqlite")
     dbWriteTable(mydb, "one_GP", f1_2, append = TRUE)
     dbDisconnect(mydb)
   } 

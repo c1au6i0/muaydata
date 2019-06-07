@@ -13,7 +13,7 @@ tags:
   - world GP
 lastmod: '2019-05-22T19:42:58-04:00'
 keywords: []
-description: 'post7'
+description: 'post1'
 comment: yes
 toc: yes
 autoCollapseToc: yes
@@ -43,7 +43,7 @@ Well, let's cut to the chase and get to the first chart: **strikes landed**. <br
 *Click on the figure to enlarge it*
 </center>
 
-<img src="/post/2019-05-20-onefc-wc_files/figure-html/likert-1.png" width="672" style="display: block; margin: auto;" />
+<img src="/post/2019-05-20-onefc-wc_files/figure-html/likert-1.png" width="672" />
 
 The **first round was all about Petrosyan**. He outboxed Petchmorakot (11 punches landed), he was successful with low and front kicks (8 kicks landed) and he also landed a couple of knees.  **Pechmorakot** had really few answers. Most observators (Petchmorakot too!) agree that this was Petrosyan's round.
 
@@ -133,7 +133,7 @@ A couple of actions that you might have overlooked.
 **Petrosyan Upper-Hook**
 <br />
 
-<iframe title="petrosyan" height="400" src="/data_post7/petrosyan.mp4" frameBorder="0" allowfullscreen></iframe>
+<iframe title="petrosyan" height="400" src="/data/data_post1/petrosyan.mp4" frameBorder="0" allowfullscreen></iframe>
 
 <br />
 <br />
@@ -141,7 +141,7 @@ A couple of actions that you might have overlooked.
 
 **Petchmorakot Overhand**
 <br />
-<iframe title="petrosyan" height="400" src="/data_post7/petch.mp4" frameBorder="0" allowfullscreen></iframe>
+<iframe title="petrosyan" height="400" src="/data/data_post1/petch.mp4" frameBorder="0" allowfullscreen></iframe>
 
 
 

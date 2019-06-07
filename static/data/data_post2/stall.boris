@@ -1519,6 +1519,46 @@
      "1":0.0
     }
    }
+  },
+  "stamp.fairtex_kai.ting.chuang":{
+   "file":{
+    "1":[
+     "/Users/heverz/Desktop/ONE Full Fight  Stamp Fairtex vs. Kai Ting Chuang  A Champion Is Born  October 2018.mp4"
+    ],
+    "2":[],
+    "3":[],
+    "4":[],
+    "5":[],
+    "6":[],
+    "7":[],
+    "8":[]
+   },
+   "type":"MEDIA",
+   "date":"2019-06-03T23:49:18",
+   "description":"06102018_kingdom.of.heros_super.series.kickboxing.atomweight.world.championship_title_atsushi.onari",
+   "time offset":0.0,
+   "events":[],
+   "independent_variables":{},
+   "visualize_spectrogram":false,
+   "visualize_waveform":false,
+   "close_behaviors_between_videos":false,
+   "media_info":{
+    "length":{
+     "/Users/heverz/Desktop/ONE Full Fight  Stamp Fairtex vs. Kai Ting Chuang  A Champion Is Born  October 2018.mp4":1410.1
+    },
+    "fps":{
+     "/Users/heverz/Desktop/ONE Full Fight  Stamp Fairtex vs. Kai Ting Chuang  A Champion Is Born  October 2018.mp4":25.0
+    },
+    "hasVideo":{
+     "/Users/heverz/Desktop/ONE Full Fight  Stamp Fairtex vs. Kai Ting Chuang  A Champion Is Born  October 2018.mp4":true
+    },
+    "hasAudio":{
+     "/Users/heverz/Desktop/ONE Full Fight  Stamp Fairtex vs. Kai Ting Chuang  A Champion Is Born  October 2018.mp4":true
+    },
+    "offset":{
+     "1":0.0
+    }
+   }
   }
  },
  "behavioral_categories":[],

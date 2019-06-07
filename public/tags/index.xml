@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Mon, 20 May 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 02 Jun 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +15,7 @@
     <item>
       <title>Petchmorakot</title>
       <link>/tags/petchmorakot/</link>
-      <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/petchmorakot/</guid>
       <description></description>
@@ -24,7 +24,7 @@
     <item>
       <title>Petrosyan</title>
       <link>/tags/petrosyan/</link>
-      <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/petrosyan/</guid>
       <description></description>
@@ -33,9 +33,18 @@
     <item>
       <title>onefc</title>
       <link>/tags/onefc/</link>
-      <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/onefc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>world GP</title>
+      <link>/tags/world-gp/</link>
+      <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/world-gp/</guid>
       <description></description>
     </item>
     
@@ -45,15 +54,6 @@
       <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/scoring/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>world GP</title>
-      <link>/tags/world-gp/</link>
-      <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/world-gp/</guid>
       <description></description>
     </item>
     

@@ -1,0 +1,32 @@
+Observation id	jo.nattawut_sasha.moisa							
+								
+Media file(s)								
+								
+Player #1	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov							
+								
+Observation date	2019-06-02 18:19:12							
+								
+Description	17052019_enter.the.dragon_featherweight.kickboxing.wolrd.grand.prix_quarter.final_elias.dolaptsis							
+								
+Time offset (s)	0.000							
+								
+independent variables								
+variable	value							
+								
+Time	Media file path	Total length	FPS	Subject	Behavior	Behavioral category	Comment	Status
+365.601	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		r1			POINT
+382.105	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		stall			START
+383.356	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		stall			STOP
+388.604	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		stall			START
+390.353	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		stall			STOP
+548.867	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		r1			POINT
+610.367	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		r2			POINT
+646.664	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		stall			START
+648.625	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		stall			STOP
+710.629	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		stall			START
+712.875	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		stall			STOP
+735.388	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		stall			START
+737.403	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		stall			STOP
+792.888	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		r2			POINT
+850.396	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		r3			POINT
+935.639	/Volumes/BackUp/Quarter/Nattawut_Moisa.mov	1078.330	60.0		r3			POINT
