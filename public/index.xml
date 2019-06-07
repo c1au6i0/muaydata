@@ -1,26 +1,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>MuayData blog</title>
-    <link>/</link>
+    <link>https://muaydata.netlify.com/</link>
     <description>Recent content on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Sun, 02 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 06 Jun 2019 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://muaydata.netlify.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About</title>
-      <link>/about/</link>
-      <pubDate>Thu, 25 Oct 2018 00:00:00 +0000</pubDate>
+      <link>https://muaydata.netlify.com/about/</link>
+      <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/about/</guid>
+      <guid>https://muaydata.netlify.com/about/</guid>
       
-        <description>&lt;p&gt;I am a data analysis enthusiast and fan of the art of the eight limbs (Muay Thai). I was born and I grow up in the eternal city. Now I live in the city of the late Edgar Allan Poe.&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/data/other/image_cover.png&#34; alt=&#34;cover&#34; width=&#34;600px&#34; hight=&#34;400px&#34; style=&#34;display: block; margin: auto;&#34;/&gt;&lt;/p&gt;
 
-&lt;p&gt;In this blog I will publish analysis of muay thai and kickboxing fights.&lt;/p&gt;
+&lt;p&gt;I am a data analysis enthusiast and fan of the art of the eight limbs (Muay Thai). I was born and I grow up in the eternal city. Now I live in the city of the late Edgar Allan Poe.&lt;/p&gt;
+
+&lt;p&gt;In this blog I will publish analysis of muay-thai and kickboxing fights. Why do I do that? Well, even when I watch fights I cannot avoid to think about numbers!&lt;/p&gt;
+
+&lt;p&gt;If you like &lt;code&gt;R&lt;/code&gt; check &lt;a href=&#34;https://rden.netlify.com/&#34;&gt;my other blog&lt;/a&gt; that focuses on programming.&lt;/p&gt;
 
 &lt;p&gt;This blog was built in &lt;code&gt;RStudio&lt;/code&gt; using &lt;code&gt;RMarkdown&lt;/code&gt;, &lt;code&gt;Rblogdown&lt;/code&gt; and &lt;code&gt;Hugo&lt;/code&gt;.&lt;/p&gt;
 </description>
@@ -28,53 +32,61 @@
     </item>
     
     <item>
-      <title>ONE World GP:stall time</title>
-      <link>/post/one-world-gp-quarter-finals-stall-time/</link>
-      <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
+      <title>ONE World GP quarter-final: time in break</title>
+      <link>https://muaydata.netlify.com/post/one-world-gp-quarter-final-breaks/</link>
+      <pubDate>Thu, 06 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/one-world-gp-quarter-finals-stall-time/</guid>
+      <guid>https://muaydata.netlify.com/post/one-world-gp-quarter-final-breaks/</guid>
       
-        <description>&lt;p&gt;&lt;img src=&#34;/post/2019-06-02-onefc_wc_breaks_files/figure-html/tot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;f1_times &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fight &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; fct_relevel&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fight&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;petchmorakot.petchindee.accademy_giorgio.petrosyan&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                                      &lt;span class=&#34;s&#34;&gt;&amp;#34;dzhabar.askerov_enriko.kehl&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                                      &lt;span class=&#34;s&#34;&gt;&amp;#34;yodsanklai.iwe.fairtex_samy.sana&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                                      &lt;span class=&#34;s&#34;&gt;&amp;#34;jo.nattawut_sasha.moisa&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  group_by_at&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vars&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;behavior&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;t_off&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;rnd&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  summarize&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tot &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;sum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;t_off&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; mean &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;mean&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;t_off&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;  &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  ungroup&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  select&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fight&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; tot&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;petch &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; tot&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;$&lt;/span&gt;fight &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;petchmorakot.petchindee.accademy_giorgio.petrosyan&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;diff &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;round&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tot&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;petch&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; petch &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;round&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;petch&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; perc &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;round&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;tot&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;petch&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;tot &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;100&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; tot &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;round&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;tot&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  slice&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fight &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Askerov-Kehel&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Yodsanklai-Sana&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Nattawut-Moisa&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  select&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;petch&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  kable&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;col.names &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Fight&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;sec&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;sec&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;percent&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; format &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;html&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; allign &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#39;c&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; caption &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Time in Break&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  add_header_above&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34; &amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Relative to Petchmorakot-Petrosyan&amp;#34;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;table&gt;
-&lt;caption&gt;Table 1: Time in Break&lt;/caption&gt;
+        <description>&lt;p&gt;After an official review, the bout between &lt;strong&gt;Petchmorakot versus Petroysan&lt;/strong&gt; was overturn to a &amp;ldquo;No Contest&amp;rdquo; because &lt;a href=&#34;https://www.facebook.com/yodchatri/posts/2345566252172189&#34;&gt;illegal clinching was not adequately controlled by the referee&lt;/a&gt;.  &lt;/br&gt;
+&lt;strong&gt;How much time was wasted&lt;/strong&gt; because the referee had to repeatedly break the fighters during clinch?&lt;/br&gt;
+..and &lt;strong&gt;how does that compare with&lt;/strong&gt; the time in break of &lt;strong&gt;the other quarter-final fights?&lt;/strong&gt; &lt;/br&gt;
+We will answer those questions using few charts.&lt;/p&gt;
+
+&lt;h1 id=&#34;the-tale-of-the-numbers&#34;&gt;The tale of the numbers&lt;/h1&gt;
+
+&lt;h2 id=&#34;time-in-break-by-round&#34;&gt;Time in break by round&lt;/h2&gt;
+
+&lt;p&gt;Last month ONE Championship put out an amazing fight card with 8 among the best kickboxers in the world battling for the kickboxing featherweight belt and the 1 million dollar prize. The event delivered some  breathtaking action but also one of the biggest controversy in the recent kickboxing history: &lt;strong&gt;Petchmorakot versus Petroysan&lt;/strong&gt; was overturn to a &amp;ldquo;No Contest&amp;rdquo; because of the illegal clinching by Petchmorakot.&lt;/p&gt;
+
+&lt;p&gt;Why was the clinching by Petchmorakot considered illegal? In a &lt;a href=&#34;https://www.facebook.com/yodchatri/posts/2350703531658461&#34;&gt;facebook post&lt;/a&gt;, the ONE Championship CEO Chatri Sityodtong explained that [clinch]&amp;hellip;&lt;em&gt;&amp;ldquo;is not allowed for stalling, tying up an opponent, or holding. It is also not allowed directly after an attack as a defensive technique. Under ONE rules, the clinch is ONLY allowed for offensive aggression with strikes&amp;rdquo;&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://lawrencekenshin.com/&#34;&gt;Lawrence Kenshin&lt;/a&gt; expended on that with an in-dept video analysis and breakdown of the fight. Here is an extract of the video in which he explains some of the key concepts behind the &amp;ldquo;No Contest&amp;rdquo; decision (make sure to check the &lt;a href=&#34;https://www.youtube.com/watch?v=80NDxqWfeys&#34;&gt;full video&lt;/a&gt; of Lawrence Kenshin):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/data/data_post2/Picture1.png&#34; alt=&#34;Kenshin&#34; width=&#34;500px&#34; height=&#34;500px&#34; style=&#34;display: block; margin: auto;&#34;/&gt;&lt;/p&gt;
+
+&lt;p&gt;In other words, kickboxing is all about &lt;strong&gt;continuing striking action&lt;/strong&gt;, and thus fighters are expected to &lt;strong&gt;&amp;ldquo;transition out of clinch without referee&amp;rdquo;&lt;/strong&gt;. When the fighters engage in clinch and hold after, they force the referee to step in and break them, &lt;strong&gt;taking away a lot of time from the real action&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;How much time was taken away from the action by the referee breaks?&lt;/strong&gt;&lt;/br&gt;
+&lt;strong&gt;I analyzed all the four fights and recorded the time in break&lt;/strong&gt; (time from the referee saying &amp;ldquo;Stop&amp;rdquo; to &amp;ldquo;Go&amp;rdquo;). I did not include breaks resulting from knock downs or cut kicks that are normal part of an &amp;ldquo;healthy&amp;rdquo; striking action.&lt;/p&gt;
+
+&lt;p&gt;The following chart shows for each round (in the x axis),  the percent of  time (y axis) spent in break. Data of each of the fights is displayed in a different colored column.&lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;
+&lt;em&gt;Click on the figure to enlarge it&lt;/em&gt;
+&lt;/center&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-06-02-onefc_wc_breaks_files/figure-html/tot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In round1, action was mostly continuous in all of the 4 fights&lt;/strong&gt; and time in break was not more than 10% of the round time (Askerov-Kehel: 18 sec). Petchmorakot-Petrosyan were in break for about 5% of the round (10 sec that included the low blow by Petrosyan),
+whereas Yodsanklay-Sana and Nattawut-Moisa gave us a round of unstopped (or almost unstopped)  action.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;In round2, time in break went up in all the fights, but to an alarming level in Petchmorakot-Petrosyan&lt;/strong&gt;. Askerov-Kehel, Yodsanklai-Sana and Nattawut-Moisa spent ~20%, 13% and 3% of round2 in break, respectively. On the other hand, &lt;strong&gt;Petchmorakot-Petrosyan had almost 30% of round2  in break&amp;hellip;52 sec of the 180 sec of the round not fighting!&lt;/strong&gt; Noteworthy, the measure that I am reporting here is the time in which action is &lt;em&gt;not allowed&lt;/em&gt; (the referee said &amp;ldquo;Stop&amp;rdquo;), and so does not include other inactive periods (in clinch or outside) in which action is permitted but fighters do not engage. In other words, the current measure is quite conservative and presumably is an underestimate of  the inactive time of the fight.&lt;/p&gt;
+
+&lt;p&gt;Why did break time increase of 5 fold (from 10 to 52 sec) in round2 of Petchmorakot-Petrosyan fight? &lt;/br&gt;
+Well, we know that &lt;strong&gt;this was part of (or a collateral effect) of Petchmorakot&amp;rsquo;s strategy for landing knees&lt;/strong&gt;. In a post-fight interview Petchmorakot said:
+&lt;em&gt;&amp;ldquo;I changed my strategy going into the second round. My manager, Mr. Nuttadaj, told me to use my reach, jab my way in, and land the left long knee&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;He also added: &lt;em&gt;&amp;ldquo;Going into the third, I stuck with that game plan, and it worked.&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;And indeed &lt;strong&gt;Petchmorakot stuck with his strategy and time in break remain quite stable in round3 (~27%, 49 sec)&lt;/strong&gt;. Also in Askerov-Kehel and Yodsanklay-Sana fights the time in break did not change considerably and remain under or equal to 18% of the round time (≤34 sec). There was no break due to holding in Nattawut-Moisa round3 but in that round Moisa was knock down twice and then TKO at 1&amp;rsquo;36&amp;rdquo;.&lt;/p&gt;
+
+&lt;h2 id=&#34;total-time-in-break&#34;&gt;Total time in break&lt;/h2&gt;
+
+&lt;p&gt;In total, &lt;strong&gt;Petchmorakot-Petrosyan spent 111 sec of the fight in break&lt;/strong&gt; (that is dangerously close to 2 minutes of no fight). How does that compare with the totals of the other fights?&lt;/p&gt;
+
+&lt;p&gt;&lt;table&gt;
+&lt;caption&gt;Table 1: Total time in Break&lt;/caption&gt;
  &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style=&#34;border-bottom:hidden&#34; colspan=&#34;1&#34;&gt;&lt;/th&gt;
@@ -85,7 +97,7 @@
    &lt;th style=&#34;text-align:left;&#34;&gt; Fight &lt;/th&gt;
    &lt;th style=&#34;text-align:right;&#34;&gt; sec &lt;/th&gt;
    &lt;th style=&#34;text-align:right;&#34;&gt; sec &lt;/th&gt;
-   &lt;th style=&#34;text-align:right;&#34;&gt; percent &lt;/th&gt;
+   &lt;th style=&#34;text-align:left;&#34;&gt; percent &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -93,176 +105,58 @@
    &lt;td style=&#34;text-align:left;&#34;&gt; Askerov-Kehel &lt;/td&gt;
    &lt;td style=&#34;text-align:right;&#34;&gt; 87 &lt;/td&gt;
    &lt;td style=&#34;text-align:right;&#34;&gt; -24 &lt;/td&gt;
-   &lt;td style=&#34;text-align:right;&#34;&gt; -27 &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; -27% &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style=&#34;text-align:left;&#34;&gt; Yodsanklai-Sana &lt;/td&gt;
    &lt;td style=&#34;text-align:right;&#34;&gt; 58 &lt;/td&gt;
    &lt;td style=&#34;text-align:right;&#34;&gt; -53 &lt;/td&gt;
-   &lt;td style=&#34;text-align:right;&#34;&gt; -92 &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; -92% &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style=&#34;text-align:left;&#34;&gt; Nattawut-Moisa &lt;/td&gt;
    &lt;td style=&#34;text-align:right;&#34;&gt; 9 &lt;/td&gt;
    &lt;td style=&#34;text-align:right;&#34;&gt; -102 &lt;/td&gt;
-   &lt;td style=&#34;text-align:right;&#34;&gt; -1104 &lt;/td&gt;
+   &lt;td style=&#34;text-align:left;&#34;&gt; -1104% &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;  &lt;span class=&#34;c1&#34;&gt;# mutate(perc = (petchmorakot.petchindee.accademy_giorgio.petrosyan - dzhabar.askerov_enriko.kehl)/dzhabar.askerov_enriko.kehl * 100,&lt;/span&gt;
-  &lt;span class=&#34;c1&#34;&gt;#        diff = petchmorakot.petchindee.accademy_giorgio.petrosyan - dzhabar.askerov_enriko.kehl) %&amp;gt;% &lt;/span&gt;
-  &lt;span class=&#34;c1&#34;&gt;# select(perc, diff)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;27% percent more, 24 sec more. (8 count - 3 times)&lt;/p&gt;
+&lt;/br&gt;
+Among the 4 fights of the quarter final, &lt;strong&gt;Petchmorakot-Petrosyan was the fight with most time in break&lt;/strong&gt;, followed by Askerov-Kehel (87 sec), Yodsanklai-Sana (58 sec) and  Nattawut-Moisa (9 sec; &lt;strong&gt;table above&lt;/strong&gt;). Askerov-Kehel spent ~24 sec (~27%) less in break  than Petchmorakot-Petrosyan. &lt;/br&gt;
+Is this difference of time in break between Petchmorakot-Petrosyan and Askerov-Kehel big enough to justify alone the overturn of one of the fight but not the other? There are a couple of considerations that need to be made to answer that question. &lt;strong&gt;1) Petchmorakot-Petrosyan overturn was also motivated by the fact that, of the 2 fighters only one was almost exclusively responsible for the holding and defensive clinch&lt;/strong&gt;. &lt;strong&gt;Lawrance Kenshin&lt;/strong&gt; argued in &lt;a href=&#34;https://www.youtube.com/watch?v=80NDxqWfeys&#34;&gt;his analysis&lt;/a&gt; that there was &lt;strong&gt;enough ground for deducting multiple points to Petchmorakot&lt;/strong&gt;. &lt;strong&gt;2) When put it in prospective, the difference of time in break between Petchmorakot-Petrosyan and Askerov-Kehel is not trivial&lt;/strong&gt;. Petchmorakot-Petrosyan spent 24 sec more in break than Askerov-Kehel. That is equivalent of having &lt;strong&gt;3 separate 8-counts more of inactivity in in Petchmorakot-Petrosyanthan fight than in Askerov-Kehel (i.e. on the top of 87 seconds)&lt;/strong&gt; but&amp;hellip; without even a knock down. Just few days ago we were reminded that 8 seconds can be enough to get back on your feet after a knock down and  punch your way to a win (i.e. Joshua-Ruiz!).&lt;/p&gt;
 
-&lt;p&gt;1000 dollars  and 1270 dollars&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;f1_times &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fight &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; fct_relevel&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fight&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;petchmorakot.petchindee.accademy_giorgio.petrosyan&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                                      &lt;span class=&#34;s&#34;&gt;&amp;#34;dzhabar.askerov_enriko.kehl&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                                      &lt;span class=&#34;s&#34;&gt;&amp;#34;yodsanklai.iwe.fairtex_samy.sana&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                                      &lt;span class=&#34;s&#34;&gt;&amp;#34;jo.nattawut_sasha.moisa&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;h2 id=&#34;single-breaks&#34;&gt;Single breaks&lt;/h2&gt;
 
-  ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; fight&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; t_off&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; colour &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; fight&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; 
-    geom_jitter&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;width &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2.5&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
-    scale_y_continuous&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;limits &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;seq&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; breaks &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kp&#34;&gt;seq&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;8&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; minor_breaks &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kc&#34;&gt;NULL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; 
-    scale_x_discrete&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; labs_f&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
-    scale_color_brewer&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;palette &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Dark2&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; name &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; labs_f&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
-    labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Breaks&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Time (sec)&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
-    coord_fixed&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;ratio &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
-    theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;none&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-          plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; face &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;bold&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt;
-          axis.text.x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;colour &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; brewer.pal&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;n &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; name &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Dark2&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;),&lt;/span&gt; face &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;bold&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;10&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-          &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-06-02-onefc_wc_breaks_files/figure-html/jitter-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;f1_times &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  filter&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fight &lt;span class=&#34;o&#34;&gt;==&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;jo.nattawut_sasha.moisa&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  arrange&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;desc&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;t_off&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  &lt;span class=&#34;kp&#34;&gt;head&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;4&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
-&lt;/span&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;## # A tibble: 4 x 12
-##    time behavior fight date_e     name_event tournament stage referee rnd  
-##   &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;    &amp;lt;fct&amp;gt; &amp;lt;date&amp;gt;     &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;   &amp;lt;fct&amp;gt;
-## 1  713. stall    jo.n… 2019-05-17 enter.the… featherwe… quar… elias.… r2   
-## 2  737. stall    jo.n… 2019-05-17 enter.the… featherwe… quar… elias.… r2   
-## 3  649. stall    jo.n… 2019-05-17 enter.the… featherwe… quar… elias.… r2   
-## 4  390. stall    jo.n… 2019-05-17 enter.the… featherwe… quar… elias.… r1   
-## # … with 3 more variables: s_e &amp;lt;chr&amp;gt;, t_off &amp;lt;dbl&amp;gt;, tot_fight &amp;lt;dbl&amp;gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;21
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;22
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;23
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;24
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;f1_times &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  mutate&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fight &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; fct_relevel&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;fight&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;petchmorakot.petchindee.accademy_giorgio.petrosyan&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                                      &lt;span class=&#34;s&#34;&gt;&amp;#34;dzhabar.askerov_enriko.kehl&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                                      &lt;span class=&#34;s&#34;&gt;&amp;#34;yodsanklai.iwe.fairtex_samy.sana&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                                      &lt;span class=&#34;s&#34;&gt;&amp;#34;jo.nattawut_sasha.moisa&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  group_by_at&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;vars&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;time&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;behavior&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;t_off&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;rnd&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
-  summarize&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;median &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; median&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;t_off&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&amp;gt;%&lt;/span&gt; 
+&lt;p&gt;Why did Petchmorakot-Petrosyan spent more time in break than the other fighters? Were the breaks more numerous or were they longer than in  the other of the quarter-final fights?&lt;/p&gt;
 
+&lt;p&gt;Well a little bit of both.&lt;/p&gt;
 
-  ggplot&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;aes&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;x &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; fight&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; y &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; median&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; fill &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; fight&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; 
-    geom_col&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;dodge&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
-    scale_x_discrete&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Petchmorakot\nPetrosyan&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
-                                 &lt;span class=&#34;s&#34;&gt;&amp;#34;Askerov\nKehel&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                                 &lt;span class=&#34;s&#34;&gt;&amp;#34;Yodsanklai\nSana&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                                 &lt;span class=&#34;s&#34;&gt;&amp;#34;Nattawut\nMoisa&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
+&lt;p&gt;&lt;center&gt;
+&lt;em&gt;Click on the figure to enlarge it&lt;/em&gt;
+&lt;/center&gt;&lt;/p&gt;
 
-    scale_fill_brewer&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;palette &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Dark2&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;name &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; labels &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;c&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;Petchmorakot\nPetrosyan&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
-                                              &lt;span class=&#34;s&#34;&gt;&amp;#34;Askerov\nKehel&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
-                                               &lt;span class=&#34;s&#34;&gt;&amp;#34;Yodsanklai\nSana&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-                                                &lt;span class=&#34;s&#34;&gt;&amp;#34;Nattawut\nMoisa&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
-    labs&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;Median Time in Break&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt;
-    theme&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;legend.position &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;bottom&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-          plot.title &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; element_text&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;size &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; face &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;bold&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; hjust &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;0.5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
-          &lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;p&gt;vai su percentuali di cambiamento rispetto al piu piccolo&lt;/p&gt;</description>
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-06-02-onefc_wc_breaks_files/figure-html/jitter-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In the chart above, each point represents a break. The length of the break  is indicated on the y axis on the left, the fight where the break was observed is reported on the x-axis on the bottom. Again,  we have different colors associated to different fights. The more the points are high, the more the break are long. If you see many points of the same color, then that means that there were many breaks in that fight! As you can see, &lt;strong&gt;there were numerous breaks in Petchmorakot-Petrosyan but also in Askerov-Kehel&lt;/strong&gt; (where Onari was a referee too). The problem is that &lt;strong&gt;the breaks in Petchmorakot-Petrosyan fight tended to be longer than in the other fights!&lt;/strong&gt; There are 5 breaks that lasted between 6 to ~7 seconds in Petchmorakot-Petrosyan, but only one that is that long in Askerov-Kehel fight.&lt;/p&gt;
+
+&lt;p&gt;Why did it took so long? For 2 reasons. In some of those breaks the referee talked to Petchmorakot, and that took extra time away from action. In others, the referee had to physically separate the fighters, a process that eats up time.&lt;/p&gt;
+
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Petchmorakot-Petrosyan spent more time in break than any of the quarter-final fights. A total of  ~111 seconds of that fight were spent actually&amp;hellip;not fighting&lt;/strong&gt; (break time), with most of this inactive time in round2 (52 sec, 29% of round time) and round3 (49 sec, ~27).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The breaks in Petchmorakot-Petrosyan  were numerous but also tended to last more than in the other fights&lt;/strong&gt;. This was due to the extra time needed by the referee to talk to Petchmorakot and/or to actively separate the 2 fighters.&lt;/p&gt;
+
+&lt;p&gt;And so? I enjoyed the fight and I was not that excited for kickboxing tournament since the time of the old K1 of Masato, Buakaw and Souwer. I think that Petchmorakot is an extremely dangerous fighter also under kickboxing rules and he showed it to us by landing some heavy punches and quite scary knees. So&amp;hellip;I just hope that there will be soon a rematch!&lt;/p&gt;</description>
       
     </item>
     
     <item>
       <title>ONE World GP: Petrosyan vs Petchmorakot</title>
-      <link>/post/onefc-wc/</link>
+      <link>https://muaydata.netlify.com/post/onefc-wc/</link>
       <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/post/onefc-wc/</guid>
+      <guid>https://muaydata.netlify.com/post/onefc-wc/</guid>
       
         <description>&lt;p&gt;Last Friday, &lt;strong&gt;Petchmorakot Pechindee Academy&lt;/strong&gt; brought home a stunning win against  &lt;strong&gt;Giorgio &amp;ldquo;the Doctor&amp;rdquo; Petrosyan&lt;/strong&gt; and, as often happens with split decisions, the judges score generated a lot of discussion.
 The decision was later declared &lt;strong&gt;No Contest&lt;/strong&gt; because of the inadequate control by the referee of excessive clinching. &lt;strong&gt;I carefully looked at the video of the fight, patiently recorded each single strike to come out with few charts of stats&lt;/strong&gt;.&lt;/p&gt;
@@ -286,7 +180,7 @@ The decision was later declared &lt;strong&gt;No Contest&lt;/strong&gt; because 
 &lt;em&gt;Click on the figure to enlarge it&lt;/em&gt;
 &lt;/center&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/post/2019-05-20-onefc-wc_files/figure-html/likert-1.png&#34; width=&#34;672&#34; style=&#34;display: block; margin: auto;&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-05-20-onefc-wc_files/figure-html/likert-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The &lt;strong&gt;first round was all about Petrosyan&lt;/strong&gt;. He outboxed Petchmorakot (11 punches landed), he was successful with low and front kicks (8 kicks landed) and he also landed a couple of knees.  &lt;strong&gt;Pechmorakot&lt;/strong&gt; had really few answers. Most observators (Petchmorakot too!) agree that this was Petrosyan&amp;rsquo;s round.&lt;/p&gt;
 
@@ -347,7 +241,7 @@ The decision was later declared &lt;strong&gt;No Contest&lt;/strong&gt; because 
 &lt;p&gt;Let&amp;rsquo;s look at the total shots and distinguish them depending on the side used to strikes.
 In the following plot the lead side strikes are plotted on the right side of the polygon while the back side strikes on the left.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/post/2019-05-20-onefc-wc_files/g134.png&#34; alt=&#34;radar&#34; width=&#34;500px&#34; height=&#34;500px&#34; style=&#34;display: block; margin: auto;&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-05-20-onefc-wc_files/g134.png&#34; alt=&#34;radar&#34; width=&#34;500px&#34; height=&#34;500px&#34; style=&#34;display: block; margin: auto;&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Petrosyan extensively used his boxing throwing both his left and power hand in similar proportions&lt;/strong&gt;. He usually avoid to throw bare single shots and prefers to rely more on strike combinations, in this fight jab-cross-hook.&lt;/p&gt;
 
@@ -375,7 +269,7 @@ unsuccessful use of a technique, it was just part of the strategy: Petchmorak &l
 &lt;p&gt;&lt;strong&gt;Petrosyan Upper-Hook&lt;/strong&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;iframe title=&#34;petrosyan&#34; height=&#34;400&#34; src=&#34;/data/data_post1/petrosyan.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;iframe title=&#34;petrosyan&#34; height=&#34;400&#34; src=&#34;https://muaydata.netlify.com/data/data_post1/petrosyan.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;
@@ -383,7 +277,7 @@ unsuccessful use of a technique, it was just part of the strategy: Petchmorak &l
 
 &lt;p&gt;&lt;strong&gt;Petchmorakot Overhand&lt;/strong&gt;
 &lt;br /&gt;
-&lt;iframe title=&#34;petrosyan&#34; height=&#34;400&#34; src=&#34;/data/data_post1/petch.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;</description>
+&lt;iframe title=&#34;petrosyan&#34; height=&#34;400&#34; src=&#34;https://muaydata.netlify.com/data/data_post1/petch.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;</description>
       
     </item>
     

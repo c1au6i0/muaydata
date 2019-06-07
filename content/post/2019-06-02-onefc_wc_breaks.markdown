@@ -2,7 +2,7 @@
 title: "ONE World GP quarter-final: time in break"
 author: c1au6ioHH
 date: '2019-06-06'
-slug: one-world-gp-quarter-finals-stall-time
+slug: one-world-gp-quarter-final-breaks
 categories:
   - kickboxing
   - one
@@ -28,7 +28,7 @@ reward: no
 mathjax: no
 ---
 
-After an official review, the bout between **Petchmorakot versus Petroysan** was overturn to a "No Contest" because [illegal clinching was not adequately controled by the referee](https://www.facebook.com/yodchatri/posts/2345566252172189).  </br>
+After an official review, the bout between **Petchmorakot versus Petroysan** was overturn to a "No Contest" because [illegal clinching was not adequately controlled by the referee](https://www.facebook.com/yodchatri/posts/2345566252172189).  </br>
 **How much time was wasted** because the referee had to repeatedly break the fighters during clinch?</br>
 ..and **how does that compare with** the time in break of **the other quarter-final fights?** </br>
 We will answer those questions using few charts.
@@ -120,7 +120,7 @@ In total, **Petchmorakot-Petrosyan spent 111 sec of the fight in break** (that i
 </table>
 </br>
 Among the 4 fights of the quarter final, **Petchmorakot-Petrosyan was the fight with most time in break**, followed by Askerov-Kehel (87 sec), Yodsanklai-Sana (58 sec) and  Nattawut-Moisa (9 sec; **table above**). Askerov-Kehel spent ~24 sec (~27%) less in break  than Petchmorakot-Petrosyan. </br>
-Is this difference of time in break between Petchmorakot-Petrosyan and Askerov-Kehel big enough to justify alone the overturn of one of the fight but not the other? There are a couple of considerations that need to be made to answer that question. **1) Petchmorakot-Petrosyan overturn was also motivated by the fact that, of the 2 fighters only one was almost exclusively responsible for the holding and defensive clinch**. **Lawrance Kenshin** argued in [his analysis](https://www.youtube.com/watch?v=80NDxqWfeys) that there was **enough ground for deducting multiple points to Petchmorakot**. **2) When put it in prospective, the difference of time in break between Petchmorakot-Petrosyan and Askerov-Kehel is not trivial**. Petchmorakot-Petrosyan spent 24 sec more in break than Askerov-Kehel. That is equivalent of having in **Petchmorakot-Petrosyan  3 separate 8-counts more of inactivity than Askerov-Kehel (i.e. on the top of 87 seconds)** but... without even a knock down. Just few days ago we were reminded that 8 seconds can be enough to get back on your feet after a knock down and  punch your way to a win (i.e. Joshua-Ruiz!). 
+Is this difference of time in break between Petchmorakot-Petrosyan and Askerov-Kehel big enough to justify alone the overturn of one of the fight but not the other? There are a couple of considerations that need to be made to answer that question. **1) Petchmorakot-Petrosyan overturn was also motivated by the fact that, of the 2 fighters only one was almost exclusively responsible for the holding and defensive clinch**. **Lawrance Kenshin** argued in [his analysis](https://www.youtube.com/watch?v=80NDxqWfeys) that there was **enough ground for deducting multiple points to Petchmorakot**. **2) When put it in prospective, the difference of time in break between Petchmorakot-Petrosyan and Askerov-Kehel is not trivial**. Petchmorakot-Petrosyan spent 24 sec more in break than Askerov-Kehel. That is equivalent of having **3 separate 8-counts more of inactivity in in Petchmorakot-Petrosyanthan fight than in Askerov-Kehel (i.e. on the top of 87 seconds)** but... without even a knock down. Just few days ago we were reminded that 8 seconds can be enough to get back on your feet after a knock down and  punch your way to a win (i.e. Joshua-Ruiz!). 
 
 ## Single breaks
 
@@ -134,9 +134,9 @@ Well a little bit of both.
 
 <img src="/post/2019-06-02-onefc_wc_breaks_files/figure-html/jitter-1.png" width="672" />
 
-In the chart above, each point represents a break. The length of the break  is indicated on the y axis on the left, the fight where the break was observed is reported on the x-axis on the bottom. Again,  we have different colours associated to different fights. The more the points are high, the more the break are long. If you see many points of the same colour, then that means that there were many breaks in that fight! As you can see, **there were numerous breaks in Petchmorakot-Petrosyan but also in Askerov-Kehel** (where Onari was a referee too). The problem is that **the breaks in Petchmorakot-Petrosyan fight tended to be longer than in the other fights!** There are 5 breaks that lasted between 6 to ~7 seconds in Petchmorakot-Petrosyan, but only one that is that long in Askerov-Kehel fight.
+In the chart above, each point represents a break. The length of the break  is indicated on the y axis on the left, the fight where the break was observed is reported on the x-axis on the bottom. Again,  we have different colors associated to different fights. The more the points are high, the more the break are long. If you see many points of the same color, then that means that there were many breaks in that fight! As you can see, **there were numerous breaks in Petchmorakot-Petrosyan but also in Askerov-Kehel** (where Onari was a referee too). The problem is that **the breaks in Petchmorakot-Petrosyan fight tended to be longer than in the other fights!** There are 5 breaks that lasted between 6 to ~7 seconds in Petchmorakot-Petrosyan, but only one that is that long in Askerov-Kehel fight.
 
-Why did it took so long? For 2 reasons. In some of those breaks the referee talked to Petchmorakot, and that took extra time away from action. In other, the referee had to physically separate the fighters, a process that eat up time.
+Why did it took so long? For 2 reasons. In some of those breaks the referee talked to Petchmorakot, and that took extra time away from action. In others, the referee had to physically separate the fighters, a process that eats up time.
 
 ## Conclusion
 
@@ -144,10 +144,7 @@ Why did it took so long? For 2 reasons. In some of those breaks the referee talk
 
 **The breaks in Petchmorakot-Petrosyan  were numerous but also tended to last more than in the other fights**. This was due to the extra time needed by the referee to talk to Petchmorakot and/or to actively separate the 2 fighters.
 
-And so? I enjoyed the fight and I was not that existed for kickboxing tournament since the time of the old K1 of Masato, Buakaw and Souwer. I think that Petchmorakot is an extremely dangerous fighter also under kickboxing rules and he showed it to us by landing some heavy punches and quite scary knees. So...I just hope that there will be soon a rematch!
-
-
-
+And so? I enjoyed the fight and I was not that excited for kickboxing tournament since the time of the old K1 of Masato, Buakaw and Souwer. I think that Petchmorakot is an extremely dangerous fighter also under kickboxing rules and he showed it to us by landing some heavy punches and quite scary knees. So...I just hope that there will be soon a rematch!
 
 
 

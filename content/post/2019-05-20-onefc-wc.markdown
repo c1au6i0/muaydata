@@ -5,6 +5,7 @@ date: '2019-05-20'
 slug: onefc-wc
 categories:
   - kickboxing
+  - one
 tags: 
   - onefc
   - scoring

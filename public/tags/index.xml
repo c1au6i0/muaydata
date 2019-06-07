@@ -2,58 +2,112 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on MuayData blog</title>
-    <link>/tags/</link>
+    <link>https://muaydata.netlify.com/tags/</link>
     <description>Recent content in Tags on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Sun, 02 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 06 Jun 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://muaydata.netlify.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Petchmorakot</title>
-      <link>/tags/petchmorakot/</link>
-      <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
+      <title>Askerov</title>
+      <link>https://muaydata.netlify.com/tags/askerov/</link>
+      <pubDate>Thu, 06 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/petchmorakot/</guid>
+      <guid>https://muaydata.netlify.com/tags/askerov/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kehel</title>
+      <link>https://muaydata.netlify.com/tags/kehel/</link>
+      <pubDate>Thu, 06 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/kehel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Moisa</title>
+      <link>https://muaydata.netlify.com/tags/moisa/</link>
+      <pubDate>Thu, 06 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/moisa/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nattawut</title>
+      <link>https://muaydata.netlify.com/tags/nattawut/</link>
+      <pubDate>Thu, 06 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/nattawut/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Petchmorakot</title>
+      <link>https://muaydata.netlify.com/tags/petchmorakot/</link>
+      <pubDate>Thu, 06 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/petchmorakot/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Petrosyan</title>
-      <link>/tags/petrosyan/</link>
-      <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
+      <link>https://muaydata.netlify.com/tags/petrosyan/</link>
+      <pubDate>Thu, 06 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/petrosyan/</guid>
+      <guid>https://muaydata.netlify.com/tags/petrosyan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sana</title>
+      <link>https://muaydata.netlify.com/tags/sana/</link>
+      <pubDate>Thu, 06 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/sana/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Yodsanklai</title>
+      <link>https://muaydata.netlify.com/tags/yodsanklai/</link>
+      <pubDate>Thu, 06 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/tags/yodsanklai/</guid>
       <description></description>
     </item>
     
     <item>
       <title>onefc</title>
-      <link>/tags/onefc/</link>
-      <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
+      <link>https://muaydata.netlify.com/tags/onefc/</link>
+      <pubDate>Thu, 06 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/onefc/</guid>
+      <guid>https://muaydata.netlify.com/tags/onefc/</guid>
       <description></description>
     </item>
     
     <item>
       <title>world GP</title>
-      <link>/tags/world-gp/</link>
-      <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
+      <link>https://muaydata.netlify.com/tags/world-gp/</link>
+      <pubDate>Thu, 06 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/world-gp/</guid>
+      <guid>https://muaydata.netlify.com/tags/world-gp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>scoring</title>
-      <link>/tags/scoring/</link>
+      <link>https://muaydata.netlify.com/tags/scoring/</link>
       <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>/tags/scoring/</guid>
+      <guid>https://muaydata.netlify.com/tags/scoring/</guid>
       <description></description>
     </item>
     
