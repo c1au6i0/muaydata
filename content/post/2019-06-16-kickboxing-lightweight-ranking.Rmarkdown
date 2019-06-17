@@ -390,7 +390,7 @@ age_plot
 **All of the top 5 kickboxers have phenomenal records, with ~75% (Superbon) to ~95% (Petrosyan and Allazov) of victories**.
 
 ```{r perc_win, echo=FALSE, message=FALSE, warning=FALSE}
-KO_wins_plot
+perc_win_plot
 ```
 
 **Petrosyan and Allazov are close to perfection** with about 19 victories every 20 fights. Let's suppose that we toss a  coin 4 times and we get every single time head... Would you bet on that? Well, for those 2 fighters, the probability of **not winning a fight** is very close to that (actually a little bit less for Petrosyan)...we can say that is extremely unlikely!

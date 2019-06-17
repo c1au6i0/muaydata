@@ -1,24 +1,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>MuayData blog</title>
-    <link>https://muaydata.netlify.com/</link>
+    <link>/</link>
     <description>Recent content on MuayData blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Mon, 17 Jun 2019 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="https://muaydata.netlify.com/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About</title>
-      <link>https://muaydata.netlify.com/about/</link>
+      <link>/about/</link>
       <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/about/</guid>
+      <guid>/about/</guid>
       
-        <description>&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/data/other/image_cover.png&#34; alt=&#34;cover&#34; width=&#34;600px&#34; hight=&#34;400px&#34; style=&#34;display: block; margin: auto;&#34;/&gt;&lt;/p&gt;
+        <description>&lt;p&gt;&lt;img src=&#34;/data/other/image_cover.png&#34; alt=&#34;cover&#34; width=&#34;600px&#34; hight=&#34;400px&#34; style=&#34;display: block; margin: auto;&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;I am a data analysis enthusiast and fan of the art of the eight limbs (Muay Thai). I was born and I grow up in the eternal city. Now I live in the city of the late Edgar Allan Poe.&lt;/p&gt;
 
@@ -33,10 +33,10 @@
     
     <item>
       <title>The best lightweight kickboxers by the numbers</title>
-      <link>https://muaydata.netlify.com/post/lightweight-ranking/</link>
+      <link>/post/lightweight-ranking/</link>
       <pubDate>Mon, 17 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/post/lightweight-ranking/</guid>
+      <guid>/post/lightweight-ranking/</guid>
       
         <description>&lt;p&gt;How well do you know the best 5 lightweight kickboxers of the world? Do you know who is the tallest? &amp;hellip;or the oldest? Who would you say is the scariest in terms of knock-out power? Let&amp;rsquo;s check it out!&lt;/p&gt;
 
@@ -64,23 +64,23 @@ This June, the lightweight kickboxing ranking by &lt;a href=&#34;http://combatpr
 
 &lt;p&gt;The tallest fighter is Allazov (5 ft 11 in), whereas the shortest is Sitthichai (5 ft 8 &lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;2&lt;/sub&gt; in). &lt;strong&gt;The top 2 ranked fighters are also the shortest.&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/height-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/height-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The top 5 fighters are &lt;strong&gt;between 26 (Allazov) and 34 (Petrosyan) years old&lt;/strong&gt;. Grigorian and Sitthichai are both 28 years old (but Grigorian is few months younger).&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/age-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/age-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;wins-and-kos&#34;&gt;Wins and  KOs&lt;/h2&gt;
 
 &lt;p&gt;&lt;strong&gt;All of the top 5 kickboxers have phenomenal records, with ~75% (Superbon) to ~95% (Petrosyan and Allazov) of victories&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/perc_win-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/perc_win-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Petrosyan and Allazov are close to perfection&lt;/strong&gt; with about 19 victories every 20 fights. Let&amp;rsquo;s suppose that we toss a  coin 4 times and we get every single time head&amp;hellip; Would you bet on that? Well, for those 2 fighters, the probability of &lt;strong&gt;not winning a fight&lt;/strong&gt; is very close to that (actually a little bit less for Petrosyan)&amp;hellip;we can say that is extremely unlikely!&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Who is more likely to end up a fight with a KO win?&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/KO_wins-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/KO_wins-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;The KO machine is Allazov&lt;/strong&gt;. He finished &lt;strong&gt;more than half of his fights with his opponent lying on the canvas&lt;/strong&gt;.&lt;/p&gt;
 
@@ -96,7 +96,7 @@ This June, the lightweight kickboxing ranking by &lt;a href=&#34;http://combatpr
 
 &lt;p&gt;&lt;strong&gt;Grigorian, Sitthichai, Allazov, they have all recently lost a fight in bouts against each other or Petrosyan&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/curr_streak-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/curr_streak-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;h2 id=&#34;summary-and-table&#34;&gt;Summary and Table&lt;/h2&gt;
 
@@ -113,7 +113,7 @@ This June, the lightweight kickboxing ranking by &lt;a href=&#34;http://combatpr
 &lt;p&gt;Check the table below if you want to make more comparisons by your own! &lt;/br&gt;
 &lt;em&gt;scroll to the left to see all the columns and the arrows to order them&lt;/em&gt;&lt;/p&gt;
 
-&lt;iframe seamless src=&#34;https://muaydata.netlify.com/data/data_post3/d1.html&#34; width=&#34;100%&#34; height=&#34;400&#34;&gt;&lt;/iframe&gt;
+&lt;iframe seamless src=&#34;/data/data_post3/d1.html&#34; width=&#34;100%&#34; height=&#34;400&#34;&gt;&lt;/iframe&gt;
 
 &lt;p&gt;Buonanotte e buone botte.&lt;/p&gt;
 
@@ -123,10 +123,10 @@ This June, the lightweight kickboxing ranking by &lt;a href=&#34;http://combatpr
     
     <item>
       <title>ONE World GP quarter-final: time in break</title>
-      <link>https://muaydata.netlify.com/post/one-world-gp-quarter-final-breaks/</link>
+      <link>/post/one-world-gp-quarter-final-breaks/</link>
       <pubDate>Thu, 06 Jun 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/post/one-world-gp-quarter-final-breaks/</guid>
+      <guid>/post/one-world-gp-quarter-final-breaks/</guid>
       
         <description>&lt;p&gt;After an official review, the bout between &lt;strong&gt;Petchmorakot versus Petroysan&lt;/strong&gt; was overturn to a &amp;ldquo;No Contest&amp;rdquo; because &lt;a href=&#34;https://www.facebook.com/yodchatri/posts/2345566252172189&#34;&gt;illegal clinching was not adequately controlled by the referee&lt;/a&gt;.  &lt;/br&gt;
 &lt;strong&gt;How much time was wasted&lt;/strong&gt; because the referee had to repeatedly break the fighters during clinch?&lt;/br&gt;
@@ -143,7 +143,7 @@ We will answer those questions using few charts.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://lawrencekenshin.com/&#34;&gt;Lawrence Kenshin&lt;/a&gt; expended on that with an in-dept video analysis and breakdown of the fight. Here is an extract of the video in which he explains some of the key concepts behind the &amp;ldquo;No Contest&amp;rdquo; decision (make sure to check the &lt;a href=&#34;https://www.youtube.com/watch?v=80NDxqWfeys&#34;&gt;full video&lt;/a&gt; of Lawrence Kenshin):&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/data/data_post2/Picture1.png&#34; alt=&#34;Kenshin&#34; width=&#34;500px&#34; height=&#34;500px&#34; style=&#34;display: block; margin: auto;&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/data/data_post2/Picture1.png&#34; alt=&#34;Kenshin&#34; width=&#34;500px&#34; height=&#34;500px&#34; style=&#34;display: block; margin: auto;&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;In other words, kickboxing is all about &lt;strong&gt;continuing striking action&lt;/strong&gt;, and thus fighters are expected to &lt;strong&gt;&amp;ldquo;transition out of clinch without referee&amp;rdquo;&lt;/strong&gt;. When the fighters engage in clinch and hold after, they force the referee to step in and break them, &lt;strong&gt;taking away a lot of time from the real action&lt;/strong&gt;.&lt;/p&gt;
 
@@ -156,7 +156,7 @@ We will answer those questions using few charts.&lt;/p&gt;
 &lt;em&gt;Click on the figure to enlarge it&lt;/em&gt;
 &lt;/center&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-06-06-onefc_wc_breaks_files/figure-html/tot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-06-06-onefc_wc_breaks_files/figure-html/tot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;In round1, action was mostly continuous in all of the 4 fights&lt;/strong&gt; and time in break was not more than 10% of the round time (Askerov-Kehel: 18 sec). Petchmorakot-Petrosyan were in break for about 5% of the round (10 sec that included the low blow by Petrosyan),
 whereas Yodsanklay-Sana and Nattawut-Moisa gave us a round of unstopped (or almost unstopped)  action.&lt;/p&gt;
@@ -225,7 +225,7 @@ Is this difference of time in break between Petchmorakot-Petrosyan and Askerov-K
 &lt;em&gt;Click on the figure to enlarge it&lt;/em&gt;
 &lt;/center&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-06-06-onefc_wc_breaks_files/figure-html/jitter-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-06-06-onefc_wc_breaks_files/figure-html/jitter-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;In the chart above, each point represents a break. The length of the break  is indicated on the y axis on the left, the fight where the break was observed is reported on the x-axis on the bottom. Again,  we have different colors associated to different fights. The more the points are high, the more the breaks are long. If you see many points of the same color, then that means that there were many breaks in that fight! As you can see, &lt;strong&gt;there were numerous breaks in Petchmorakot-Petrosyan but also in Askerov-Kehel&lt;/strong&gt; (where Onari was a referee too). The problem is that &lt;strong&gt;the breaks in Petchmorakot-Petrosyan fight tended to be longer than in the other fights!&lt;/strong&gt; There are 5 breaks that lasted between 6 to ~7 seconds in Petchmorakot-Petrosyan, but only one that is that long in Askerov-Kehel fight.&lt;/p&gt;
 
@@ -252,10 +252,10 @@ Is this difference of time in break between Petchmorakot-Petrosyan and Askerov-K
     
     <item>
       <title>ONE World GP: Petchmorakot vs Petrosyan</title>
-      <link>https://muaydata.netlify.com/post/onefc-wc/</link>
+      <link>/post/onefc-wc/</link>
       <pubDate>Mon, 20 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://muaydata.netlify.com/post/onefc-wc/</guid>
+      <guid>/post/onefc-wc/</guid>
       
         <description>&lt;p&gt;Last Friday, &lt;strong&gt;Petchmorakot Pechindee Academy&lt;/strong&gt; brought home a stunning win against  &lt;strong&gt;Giorgio &amp;ldquo;the Doctor&amp;rdquo; Petrosyan&lt;/strong&gt; and, as often happens with split decisions, the judges score generated a lot of discussion.
 The decision was later declared &lt;strong&gt;No Contest&lt;/strong&gt; because of the inadequate control by the referee of excessive clinching. &lt;strong&gt;I carefully looked at the video of the fight, patiently recorded each single strike to come out with few charts of stats&lt;/strong&gt;.&lt;/p&gt;
@@ -279,7 +279,7 @@ The decision was later declared &lt;strong&gt;No Contest&lt;/strong&gt; because 
 &lt;em&gt;Click on the figure to enlarge it&lt;/em&gt;
 &lt;/center&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-05-20-onefc-wc_files/figure-html/likert-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-05-20-onefc-wc_files/figure-html/likert-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The &lt;strong&gt;first round was all about Petrosyan&lt;/strong&gt;. He outboxed Petchmorakot (11 punches landed), he was successful with low and front kicks (8 kicks landed) and he also landed a couple of knees.  &lt;strong&gt;Pechmorakot&lt;/strong&gt; had really few answers. Most observators (Petchmorakot too!) agree that this was Petrosyan&amp;rsquo;s round.&lt;/p&gt;
 
@@ -340,7 +340,7 @@ The decision was later declared &lt;strong&gt;No Contest&lt;/strong&gt; because 
 &lt;p&gt;Let&amp;rsquo;s look at the total shots and distinguish them depending on the side used to strikes.
 In the following plot the lead side strikes are plotted on the right side of the polygon while the back side strikes on the left.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-05-20-onefc-wc_files/g134.png&#34; alt=&#34;radar&#34; width=&#34;500px&#34; height=&#34;500px&#34; style=&#34;display: block; margin: auto;&#34;/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-05-20-onefc-wc_files/g134.png&#34; alt=&#34;radar&#34; width=&#34;500px&#34; height=&#34;500px&#34; style=&#34;display: block; margin: auto;&#34;/&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Petrosyan extensively used his boxing throwing both his left and power hand in similar proportions&lt;/strong&gt;. He usually avoid to throw bare single shots and prefers to rely more on strike combinations, in this fight jab-cross-hook.&lt;/p&gt;
 
@@ -368,7 +368,7 @@ unsuccessful use of a technique, it was just part of the strategy: Petchmorak &l
 &lt;p&gt;&lt;strong&gt;Petrosyan Upper-Hook&lt;/strong&gt;
 &lt;br /&gt;&lt;/p&gt;
 
-&lt;iframe title=&#34;petrosyan&#34; height=&#34;400&#34; src=&#34;https://muaydata.netlify.com/data/data_post1/petrosyan.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;iframe title=&#34;petrosyan&#34; height=&#34;400&#34; src=&#34;/data/data_post1/petrosyan.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
 
 &lt;p&gt;&lt;br /&gt;
 &lt;br /&gt;
@@ -376,7 +376,7 @@ unsuccessful use of a technique, it was just part of the strategy: Petchmorak &l
 
 &lt;p&gt;&lt;strong&gt;Petchmorakot Overhand&lt;/strong&gt;
 &lt;br /&gt;
-&lt;iframe title=&#34;petrosyan&#34; height=&#34;400&#34; src=&#34;https://muaydata.netlify.com/data/data_post1/petch.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;</description>
+&lt;iframe title=&#34;petrosyan&#34; height=&#34;400&#34; src=&#34;/data/data_post1/petch.mp4&#34; frameBorder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;&lt;/p&gt;</description>
       
     </item>
     
