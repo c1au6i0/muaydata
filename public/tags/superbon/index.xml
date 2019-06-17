@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Superbon on MuayData blog</title>
+    <link>https://muaydata.netlify.com/tags/superbon/</link>
+    <description>Recent content in Superbon on MuayData blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
+    <lastBuildDate>Mon, 17 Jun 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://muaydata.netlify.com/tags/superbon/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The best lightweight kickboxers by the numbers</title>
+      <link>https://muaydata.netlify.com/post/lightweight-ranking/</link>
+      <pubDate>Mon, 17 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/post/lightweight-ranking/</guid>
+      <description>&lt;p&gt;How well do you know the best 5 lightweight kickboxers of the world? Do you know who is the tallest? &amp;hellip;or the oldest? Who would you say is the scariest in terms of knock-out power? Let&amp;rsquo;s check it out!&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

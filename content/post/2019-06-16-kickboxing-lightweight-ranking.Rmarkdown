@@ -1,0 +1,440 @@
+---
+title: The best lightweight kickboxers by the numbers
+author: c1aud6io_hh
+date: '2019-06-17'
+slug: lightweight-ranking
+categories:
+  - kickboxing
+tags: 
+  - Grigorian
+  - Sitthichai
+  - Superbon 
+  - Petrosyan
+  - Allazov
+  - ranking
+  - lightweight
+  
+keywords: []
+description: ''
+comment: yes
+toc: yes
+autoCollapseToc: yes
+contentCopyright: yes
+reward: no
+mathjax: no
+---
+
+How well do you know the best 5 lightweight kickboxers of the world? Do you know who is the tallest? ...or the oldest? Who would you say is the scariest in terms of knock-out power? Let's check it out!
+
+<!--more-->
+
+```{r all, message=FALSE, warning=FALSE, echo = FALSE}
+
+# libraries---------------------
+library(tidyverse)
+library(vroom)
+library(svDialogs)
+library(readr)
+library(janitor)
+library(rvest)
+library(ggthemes)
+library(scales)
+library(lubridate)
+library(RSQLite)
+library(fmsb)
+library(purrr)
+library(fmsb)
+library(cowplot)
+library(kableExtra)
+library(knitr)
+library(RColorBrewer)
+library(forcats)
+library(DT)
+library(htmlwidgets)
+theme_set(theme_grey())
+
+# api wiki-----------------------
+read_wiki <- function(name_f) {
+  # get the vcard from wikipedia
+  url <- paste0("https://en.m.wikipedia.org/wiki/", name_f)
+  
+  tokeep <-
+    c(
+      "name",
+      "born",
+      "nationality",
+      "height",
+      "stance",
+      "total",
+      "wins",
+      "by_knockout",
+      "losses",
+      "by_knockout_2",
+      "draws",
+      "no_contests"
+    )
+  
+  vcard <-
+    url  %>%
+    read_html() %>%
+    html_nodes("table.infobox.vcard") %>%
+    html_table(header = F) %>%
+    data.frame() %>%
+    rename(x = X1, value = X2) %>% {
+      .$x[1] <- "name"
+      .
+    } %>%
+    filter(x != "") %>%
+    mutate(x = make_clean_names(x)) %>%
+    filter(x %in% tokeep)  %>%
+    spread(x, value)
+  
+  
+  # table of records from wikipedia
+  tb <-
+    url %>%
+    read_html() %>%
+    html_nodes(".wikitable:not(.infobox.vcard)") %>%
+    html_table(header = TRUE, fill = TRUE)
+  
+  if (length(tb) > 1)
+    tb <-  tb[[1]] # select only first table
+  
+  tb_record <-
+    tb %>%
+    data.frame() %>%
+    clean_names() %>%
+    filter(!str_detect(date, "^[[:alpha:]]")) %>%
+    mutate(date = ymd(date))
+  
+  # current winning streak
+  curr_win <-
+    tb_record %>%
+    filter(result != "NC") %>% {
+      # no contest is not a lost
+      tibble(len =  rle(.$result)[[1]],
+             result =  rle(.$result)[[2]])
+    } %>%
+    head(1) %>%
+    mutate(cur_win = ifelse(result == "Win", len, 0))
+  
+  # max streak
+  max_streak <-
+    tibble(len =  rle(tb_record$result)[[1]],
+           result =  rle(tb_record$result)[[2]])  %>%
+    group_by(result) %>%
+    summarize(len = max(len)) %>%
+    mutate(result = paste0(result, "_streak")) %>%
+    spread(result, len) %>%
+    clean_names()
+  
+  cur_win <- curr_win$cur_win
+  cbind(vcard, cur_win, max_streak)
+}
+
+# get the data---------------------------
+
+fighters <- c(
+  "Marat Grigorian",
+  "Sitthichai Sitsongpeenong",
+  "Superbon Banchamek",
+  "Giorgio Petrosyan",
+  "Chingiz Allazov"
+)
+
+df <- map_dfr(fighters, read_wiki)
+
+#tab of data
+tab  <- 
+  df %>% 
+  mutate(born = as.numeric(str_extract(born, "[[:digit:]]{4}")), age = year(Sys.Date()) - born) %>% 
+  separate(height, c("height_m", "height_f"), sep = "m") %>% 
+  mutate(
+    height_f = str_remove_all(height_f, "[:punct:]" ), 
+    height_m = as.numeric(height_m),
+    stance = replace_na(stance, "Orthodox")
+  ) %>% 
+  mutate_all(type.convert, as.is = TRUE) %>%  # numbers to numerics
+  mutate_all(replace_na, 0) %>% 
+  rename(KO_wins = by_knockout, KO_losses = by_knockout_2) %>% 
+  mutate(color_f = brewer.pal(n = nrow(.), name = "Dark2")) %>% 
+  separate(name, c("first_name", "last_name"), remove = FALSE) %>%
+  mutate(ggname = paste0(first_name,"\n",last_name), rank = as.numeric(1:nrow(.))) %>% 
+  mutate(ggname = fct_reorder(ggname, rank))  
+
+# GRAPHS ------------------------------
+
+# age_plot ===========================
+
+age_plot <- 
+  tab %>%
+  ggplot(aes(ggname, age, fill = color_f)) +
+  geom_col() +
+  scale_fill_identity() +
+  scale_y_continuous(breaks = 1:35,
+                     labels = 1:35,
+                     minor_breaks = NULL) +
+  coord_cartesian(ylim = c(25, 35)) +
+  labs(x = "", title = "Age", y = "years") +
+  theme(
+    plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+    axis.text.x = element_text(face = "bold", size = 10),
+    axis.text.y = element_text(face = "bold", size = 10),
+  )
+
+# height_plot =====================
+
+height_plot <-
+  tab %>%
+  ggplot(aes(ggname, height_m, fill = color_f)) +
+  geom_col() +
+  scale_fill_identity() +
+  labs(x = "", title = "Height", y = "meters") +
+  coord_cartesian(ylim = c(1.73, 1.81)) +
+  scale_y_continuous(
+    breaks = seq(0, 1.85, 0.01),
+    labels = seq(0, 1.85, 0.01),
+    minor_breaks = NULL
+  ) +
+  geom_label(aes(y = height_m - 0.004,
+                 label = height_f, ),
+             # position = position_stack(vjust = .5),
+             # label.padding = unit(0.1,"lines"),
+             size = 3) +
+  theme(
+    plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+    axis.text.x = element_text(face = "bold", size = 10),
+    axis.text.y = element_text(face = "bold", size = 10),
+  )
+
+# perc_win_plot ===========================
+
+perc_win_plot <-
+  tab %>%
+  mutate(perc_win = wins/(total - no_contests) * 100) %>% 
+    ggplot(aes(ggname, perc_win, fill = color_f)) +
+    geom_col() +
+    scale_fill_identity() +
+    labs(x = "", 
+         y = "",
+         title = "Percent of Victories",
+         subtitle = "(over total - NC)"
+         ) +
+    coord_cartesian(ylim = c(70, 100)) +
+    scale_y_continuous(
+      breaks = seq(0, 100, 5),
+      labels = paste0(seq(0, 100, 5), "%"),
+      minor_breaks = NULL
+    ) +
+    geom_label(aes(y = perc_win - 4,
+                 label = paste0("W: ", wins, "\n",
+                                "L: ", losses, "\n",
+                                "D: ", draws, "\n",
+                                "NC: ", no_contests)
+                 ),
+             # position = position_stack(vjust = .5),
+             # label.padding = unit(0.1,"lines"),
+             size = 3) +
+    theme(
+      plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+      plot.subtitle  = element_text(size = 14, face = "bold", hjust = 0.5),
+      axis.text.x = element_text(face = "bold", size = 10),
+      axis.text.y = element_text(face = "bold", size = 10),
+    )
+
+# KO_wins_plot ===========================
+
+KO_wins_plot <-
+  tab %>%
+  mutate(perc_KO = KO_wins/(total - no_contests) * 100) %>% 
+    ggplot(aes(ggname, perc_KO, fill = color_f)) +
+    geom_col() +
+    scale_fill_identity() +
+    labs(x = "", 
+         title = "Percent of KOs Victories",
+         subtitle = "(over Total - NC)",
+         y = "") +
+    coord_cartesian(ylim = c(0, 70)) +
+    scale_y_continuous(
+      breaks = seq(0, 70, 10),
+      labels = paste0(seq(0, 70, 10), "%"),
+      # minor_breaks = NULL
+    ) +
+    geom_label(aes(y = perc_KO - 8,
+                 label = paste0("KOs: ", KO_wins,"\n",
+                                "Tot: ", total, "\n",
+                                "NC: ", no_contests)
+                 ),
+             size = 3) +
+    theme(
+      plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+      plot.subtitle  = element_text(size = 14, face = "bold", hjust = 0.5),
+      axis.text.x = element_text(face = "bold", size = 10),
+      axis.text.y = element_text(face = "bold", size = 10),
+    )
+
+
+# cur_win_streak_plot ===========================
+cur_win_streak_plot <- 
+  tab %>%
+    ggplot(aes(ggname, cur_win, fill = color_f)) +
+    geom_col() +
+    scale_fill_identity() +
+    labs(x = "", title = "Current Winning Streak", y = "") +
+    scale_y_continuous(
+      breaks = seq(0, 14, 2),
+      labels = seq(0, 14, 2),
+      # minor_breaks = NULL
+    ) +
+    theme(
+      plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+      axis.text.x = element_text(face = "bold", size = 10),
+      axis.text.y = element_text(face = "bold", size = 10),
+    )
+# longest_wstreak_plot ===========================
+longest_wstreak_plot <- 
+  tab %>%
+    ggplot(aes(ggname, win_streak, fill = color_f)) +
+    geom_col() +
+    scale_fill_identity() +
+    labs(x = "", title = "Longest Winning Streak", y = "") +
+    scale_y_continuous(
+      breaks = seq(0, 28, 2),
+      labels = seq(0, 28, 2),
+      minor_breaks = NULL
+    ) +
+    theme(
+      plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+      axis.text.x = element_text(face = "bold", size = 10),
+      axis.text.y = element_text(face = "bold", size = 10),
+    )
+```
+
+```{r table, include=FALSE}
+
+# create an interactive table with DT
+tab[tab$name == "Marat Grigorian", "nationality"] <- "Armenian and Belgian"
+d1 <- 
+  tab %>% 
+    select(
+      rank,
+      name,
+      nationality, 
+      born,
+      age,
+      stance,
+      height_m,    
+      height_f,
+      wins,
+      losses,
+      draws,
+      no_contests,
+      total,
+      KO_wins,
+      KO_losses,
+      cur_win,
+      win_streak
+      ) %>% 
+    rename(
+      "height (m)" = height_m,
+      "height (ft)" =  height_f,
+      "no contests" =  no_contests,
+      "wins by KO" = KO_wins,
+      "losses by KO" = KO_losses,
+      "current winning streak" = cur_win,
+      "highest winning streak" =  win_streak
+    ) %>% 
+    datatable()
+
+
+htmlwidgets::saveWidget(d1, 
+                        file = "/Users/heverz/Documents/R_projects/muaydata/static/data/data_post3/d1.html",
+                        selfcontained = TRUE)
+```
+
+**Who are the best?** </br>
+This June, the lightweight kickboxing ranking by [Combat Press](http://combatpress.com/2019/06/combat-press-kickboxing-rankings-june-2019/) was the following:
+
+1. **Marat Grigorian**
+2. **Sitthichai Sitsongpeenong**
+3. **Superbon Banchamek**
+4. **Giorgio Petrosyan**
+5. **Chingiz Allazov**
+6. Tayfun Ozcan
+7. Endy Semeleer 
+8. Jonay Risco 
+9. Samy Sana 
+10. Yodsanklai Fairtex 
+
+Let's compare the data of the top 5 fighters.
+
+In the charts, fighters will be arranged from left to right by their ranking. 
+
+## Height and Age
+
+The tallest fighter is Allazov (5 ft 11 in), whereas the shortest is Sitthichai (5 ft 8 1/2 in). **The top 2 ranked fighters are also the shortest.**
+
+
+```{r height, echo=FALSE, message=FALSE, warning=FALSE}
+height_plot
+```
+
+The top 5 fighters are **between 26 (Allazov) and 34 (Petrosyan) years old**. Grigorian and Sitthichai are both 28 years old (but Grigorian is few months younger).
+
+```{r age, echo=FALSE, message=FALSE, warning=FALSE}
+age_plot
+```
+
+## Wins and  KOs 
+
+**All of the top 5 kickboxers have phenomenal records, with ~75% (Superbon) to ~95% (Petrosyan and Allazov) of victories**.
+
+```{r perc_win, echo=FALSE, message=FALSE, warning=FALSE}
+KO_wins_plot
+```
+
+**Petrosyan and Allazov are close to perfection** with about 19 victories every 20 fights. Let's suppose that we toss a  coin 4 times and we get every single time head... Would you bet on that? Well, for those 2 fighters, the probability of **not winning a fight** is very close to that (actually a little bit less for Petrosyan)...we can say that is extremely unlikely!
+
+**Who is more likely to end up a fight with a KO win?**
+
+```{r KO_wins, echo=FALSE, message=FALSE, warning=FALSE}
+KO_wins_plot
+```
+
+**The KO machine is Allazov**. He finished **more than half of his fights with his opponent lying on the canvas**. 
+
+**Also Petrosyan and Grigorian have impressive KO power:** about ~45% of their fights ending with a win by KO. 
+
+The 2 Thai fighters, **Sitthichai and Superbon** have the **lowest percent of KOs victories** but on the other hand also the highest number of fights (159 and 143, respectively).
+
+## Winning Streak
+
+Among the 5 top kickboxer, **Petrosyan has the longest winning streak (14) and has not lost or draw a fight since 2013** (against Andy Ristie).  
+
+**Superbon is currently in 8 winning streak**. His last defeat was in a fight against the number 1 Grigorian and came by a tremendous KO stoppage.
+
+**Grigorian, Sitthichai, Allazov, they have all recently lost a fight in bouts against each other or Petrosyan**. 
+
+```{r curr_streak, echo=FALSE, message=FALSE, warning=FALSE}
+cur_win_streak_plot
+```
+
+## Summary and Table
+
+Here some few facts about the top 5 lightweight kickboxers:
+
+* The taller fighter is Allazov. The 2 shortest fighters, Grigorian and Sitthichai are also the top 2 in the current ranking.
+* Petrosyan is the oldest fighter (34) whereas Allazov the youngest (26).
+* With 95% of their fight won, Petrosyan and Allazov have the highest percentage of victories (the others are all above 75%).
+* Allazov is the KO machine with more than half of his fights finished by KO. Grigorian and Petrosyan have ~45%, whereas  Sitthichai and Superbon ~20% of their fights won by KO.
+* Petrosyan is currently in a 14-fight winning streak.
+
+Check the table below if you want to make more comparisons by your own! </br>
+*scroll to the left to see all the columns and the arrows to order them*
+
+
+<iframe seamless src="/data/data_post3/d1.html" width="100%" height="400"></iframe>
+
+Buonanotte e buone botte.
+
+*all the data was scraped from en.wikipedia*

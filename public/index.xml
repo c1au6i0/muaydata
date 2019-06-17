@@ -6,7 +6,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&lt;a rel=&#34;license noopener&#34; href=&#34;https://creativecommons.org/licenses/by-nc-nd/4.0/&#34; target=&#34;_blank&#34;&gt;CC BY-NC-ND 4.0&lt;/a&gt;</copyright>
-    <lastBuildDate>Thu, 06 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 17 Jun 2019 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="https://muaydata.netlify.com/index.xml" rel="self" type="application/rss+xml" />
     
@@ -28,6 +28,96 @@
 
 &lt;p&gt;This blog was built in &lt;code&gt;RStudio&lt;/code&gt; using &lt;code&gt;RMarkdown&lt;/code&gt;, &lt;code&gt;Rblogdown&lt;/code&gt; and &lt;code&gt;Hugo&lt;/code&gt;.&lt;/p&gt;
 </description>
+      
+    </item>
+    
+    <item>
+      <title>The best lightweight kickboxers by the numbers</title>
+      <link>https://muaydata.netlify.com/post/lightweight-ranking/</link>
+      <pubDate>Mon, 17 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://muaydata.netlify.com/post/lightweight-ranking/</guid>
+      
+        <description>&lt;p&gt;How well do you know the best 5 lightweight kickboxers of the world? Do you know who is the tallest? &amp;hellip;or the oldest? Who would you say is the scariest in terms of knock-out power? Let&amp;rsquo;s check it out!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Who are the best?&lt;/strong&gt; &lt;/br&gt;
+This June, the lightweight kickboxing ranking by &lt;a href=&#34;http://combatpress.com/2019/06/combat-press-kickboxing-rankings-june-2019/&#34;&gt;Combat Press&lt;/a&gt; was the following:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Marat Grigorian&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sitthichai Sitsongpeenong&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Superbon Banchamek&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Giorgio Petrosyan&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Chingiz Allazov&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Tayfun Ozcan&lt;/li&gt;
+&lt;li&gt;Endy Semeleer&lt;/li&gt;
+&lt;li&gt;Jonay Risco&lt;/li&gt;
+&lt;li&gt;Samy Sana&lt;/li&gt;
+&lt;li&gt;Yodsanklai Fairtex&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Let&amp;rsquo;s compare the data of the top 5 fighters.&lt;/p&gt;
+
+&lt;p&gt;In the charts, fighters will be arranged from left to right by their ranking.&lt;/p&gt;
+
+&lt;h2 id=&#34;height-and-age&#34;&gt;Height and Age&lt;/h2&gt;
+
+&lt;p&gt;The tallest fighter is Allazov (5 ft 11 in), whereas the shortest is Sitthichai (5 ft 8 &lt;sup&gt;1&lt;/sup&gt;&amp;frasl;&lt;sub&gt;2&lt;/sub&gt; in). &lt;strong&gt;The top 2 ranked fighters are also the shortest.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/height-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The top 5 fighters are &lt;strong&gt;between 26 (Allazov) and 34 (Petrosyan) years old&lt;/strong&gt;. Grigorian and Sitthichai are both 28 years old (but Grigorian is few months younger).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/age-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;wins-and-kos&#34;&gt;Wins and  KOs&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;All of the top 5 kickboxers have phenomenal records, with ~75% (Superbon) to ~95% (Petrosyan and Allazov) of victories&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/perc_win-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Petrosyan and Allazov are close to perfection&lt;/strong&gt; with about 19 victories every 20 fights. Let&amp;rsquo;s suppose that we toss a  coin 4 times and we get every single time head&amp;hellip; Would you bet on that? Well, for those 2 fighters, the probability of &lt;strong&gt;not winning a fight&lt;/strong&gt; is very close to that (actually a little bit less for Petrosyan)&amp;hellip;we can say that is extremely unlikely!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Who is more likely to end up a fight with a KO win?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/KO_wins-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The KO machine is Allazov&lt;/strong&gt;. He finished &lt;strong&gt;more than half of his fights with his opponent lying on the canvas&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Also Petrosyan and Grigorian have impressive KO power:&lt;/strong&gt; about ~45% of their fights ending with a win by KO.&lt;/p&gt;
+
+&lt;p&gt;The 2 Thai fighters, &lt;strong&gt;Sitthichai and Superbon&lt;/strong&gt; have the &lt;strong&gt;lowest percent of KOs victories&lt;/strong&gt; but on the other hand also the highest number of fights (159 and 143, respectively).&lt;/p&gt;
+
+&lt;h2 id=&#34;winning-streak&#34;&gt;Winning Streak&lt;/h2&gt;
+
+&lt;p&gt;Among the 5 top kickboxer, &lt;strong&gt;Petrosyan has the longest winning streak (14) and has not lost or draw a fight since 2013&lt;/strong&gt; (against Andy Ristie).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Superbon is currently in 8 winning streak&lt;/strong&gt;. His last defeat was in a fight against the number 1 Grigorian and came by a tremendous KO stoppage.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Grigorian, Sitthichai, Allazov, they have all recently lost a fight in bouts against each other or Petrosyan&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;https://muaydata.netlify.com/post/2019-06-16-kickboxing-lightweight-ranking_files/figure-html/curr_streak-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;summary-and-table&#34;&gt;Summary and Table&lt;/h2&gt;
+
+&lt;p&gt;Here some few facts about the top 5 lightweight kickboxers:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The taller fighter is Allazov. The 2 shortest fighters, Grigorian and Sitthichai are also the top 2 in the current ranking.&lt;/li&gt;
+&lt;li&gt;Petrosyan is the oldest fighter (34) whereas Allazov the youngest (26).&lt;/li&gt;
+&lt;li&gt;With 95% of their fight won, Petrosyan and Allazov have the highest percentage of victories (the others are all above 75%).&lt;/li&gt;
+&lt;li&gt;Allazov is the KO machine with more than half of his fights finished by KO. Grigorian and Petrosyan have ~45%, whereas  Sitthichai and Superbon ~20% of their fights won by KO.&lt;/li&gt;
+&lt;li&gt;Petrosyan is currently in a 14-fight winning streak.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Check the table below if you want to make more comparisons by your own! &lt;/br&gt;
+&lt;em&gt;scroll to the left to see all the columns and the arrows to order them&lt;/em&gt;&lt;/p&gt;
+
+&lt;iframe seamless src=&#34;https://muaydata.netlify.com/data/data_post3/d1.html&#34; width=&#34;100%&#34; height=&#34;400&#34;&gt;&lt;/iframe&gt;
+
+&lt;p&gt;Buonanotte e buone botte.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;all the data was scraped from en.wikipedia&lt;/em&gt;&lt;/p&gt;</description>
       
     </item>
     
