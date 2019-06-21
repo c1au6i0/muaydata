@@ -24,7 +24,7 @@ reward: no
 mathjax: no
 ---
 
-How well do you know the best 5 lightweight kickboxers of the world? Do you know who is the tallest? ...or the oldest? Who would you say is the scariest in terms of knock-out power? Let's check it out!
+How well do you know the best 5 lightweight kickboxers in the world? Do you know who is the tallest? ...or the oldest? Who would you say is the scariest in terms of knock-out power? Let's check it out!
 
 <!--more-->
 

@@ -1,168 +1,168 @@
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<?xml-stylesheet type="text/xsl" href="https://muaydata.netlify.com/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>/about/</loc>
+    <loc>https://muaydata.netlify.com/about/</loc>
     <lastmod>2019-05-20T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/tags/allazov/</loc>
+    <loc>https://muaydata.netlify.com/tags/allazov/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>https://muaydata.netlify.com/categories/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/grigorian/</loc>
+    <loc>https://muaydata.netlify.com/tags/grigorian/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>https://muaydata.netlify.com/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/petrosyan/</loc>
+    <loc>https://muaydata.netlify.com/tags/petrosyan/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/</loc>
+    <loc>https://muaydata.netlify.com/post/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/sitthichai/</loc>
+    <loc>https://muaydata.netlify.com/tags/sitthichai/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/superbon/</loc>
+    <loc>https://muaydata.netlify.com/tags/superbon/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://muaydata.netlify.com/tags/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/lightweight-ranking/</loc>
+    <loc>https://muaydata.netlify.com/post/lightweight-ranking/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/categories/kickboxing/</loc>
+    <loc>https://muaydata.netlify.com/categories/kickboxing/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/lightweight/</loc>
+    <loc>https://muaydata.netlify.com/tags/lightweight/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/ranking/</loc>
+    <loc>https://muaydata.netlify.com/tags/ranking/</loc>
     <lastmod>2019-06-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/askerov/</loc>
+    <loc>https://muaydata.netlify.com/tags/askerov/</loc>
     <lastmod>2019-06-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/kehel/</loc>
+    <loc>https://muaydata.netlify.com/tags/kehel/</loc>
     <lastmod>2019-06-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/moisa/</loc>
+    <loc>https://muaydata.netlify.com/tags/moisa/</loc>
     <lastmod>2019-06-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/nattawut/</loc>
+    <loc>https://muaydata.netlify.com/tags/nattawut/</loc>
     <lastmod>2019-06-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/one-world-gp-quarter-final-breaks/</loc>
+    <loc>https://muaydata.netlify.com/post/one-world-gp-quarter-final-breaks/</loc>
     <lastmod>2019-06-06T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/tags/petchmorakot/</loc>
+    <loc>https://muaydata.netlify.com/tags/petchmorakot/</loc>
     <lastmod>2019-06-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/sana/</loc>
+    <loc>https://muaydata.netlify.com/tags/sana/</loc>
     <lastmod>2019-06-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/yodsanklai/</loc>
+    <loc>https://muaydata.netlify.com/tags/yodsanklai/</loc>
     <lastmod>2019-06-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/one/</loc>
+    <loc>https://muaydata.netlify.com/categories/one/</loc>
     <lastmod>2019-06-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/onefc/</loc>
+    <loc>https://muaydata.netlify.com/tags/onefc/</loc>
     <lastmod>2019-06-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/world-gp/</loc>
+    <loc>https://muaydata.netlify.com/tags/world-gp/</loc>
     <lastmod>2019-06-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/post/onefc-wc/</loc>
+    <loc>https://muaydata.netlify.com/post/onefc-wc/</loc>
     <lastmod>2019-05-22T19:42:58-04:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>/tags/scoring/</loc>
+    <loc>https://muaydata.netlify.com/tags/scoring/</loc>
     <lastmod>2019-05-22T19:42:58-04:00</lastmod>
     <priority>0</priority>
   </url>
